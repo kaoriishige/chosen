@@ -234,6 +234,11 @@
     .help-details { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--muted); }
     .help-details summary { cursor: pointer; color: #176d66; font-size: .9rem; font-weight: 800; }
     .help-details p { margin: 10px 0 0; color: var(--muted); font-size: .87rem; line-height: 1.65; white-space: pre-wrap; }
+    .knowledge-note { margin-top: 14px !important; padding: 13px 14px; border-radius: 11px; color: #31564f !important; background: #f3fbf8; white-space: normal !important; }
+    .knowledge-note strong { display: block; margin-bottom: 7px; color: #075c56; font-size: .86rem; }
+    .knowledge-note ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+    .knowledge-note li { line-height: 1.55; }
+    .knowledge-note small { display: block; margin-top: 8px; color: var(--muted); font-size: .76rem; line-height: 1.45; }
 
     .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 28px; }
     .action-group { display: flex; gap: 9px; }
@@ -739,6 +744,7 @@
       let state = loadState();
       let toastTimer;
       let activeVoiceRecognition = null;
+      let knowledgeBase = { cards: [], source: null };
 
       const stageList = document.getElementById("stageList");
       const questionBody = document.getElementById("questionBody");
@@ -893,6 +899,52 @@
         try { recognition.abort(); } catch (_) {}
       }
 
+      function knowledgeCardsForStage(stageId) {
+        return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.includes(stageId));
+      }
+
+      function currentKnowledgeCards() {
+        const stageIds = new Set([
+          ...allQuestions.filter(question => hasAnswer(question)).map(question => question.stage.id),
+          allQuestions[state.current]?.stage.id
+        ].filter(Boolean));
+        return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.some(stageId => stageIds.has(stageId)));
+      }
+
+      function knowledgeSourceLabel() {
+        const count = (knowledgeBase.cards || []).length;
+        if (!count) return "実務知識データを読み込み中です。";
+        const pages = knowledgeBase.source?.sourcePages;
+        return `書籍画像${pages ? ` p.${pages}` : ""}をもとにした独自要約 ${count} 枚`;
+      }
+
+      function renderKnowledgeHint(stageId) {
+        const cards = knowledgeCardsForStage(stageId).slice(0, 3);
+        if (!cards.length) return "";
+        return `<div class="knowledge-note"><strong>この質問で使う考え方</strong><ul>${cards.map(card => `<li><b>${escapeHtml(card.title)}</b>：${escapeHtml(card.principle)}</li>`).join("")}</ul><small>${escapeHtml(knowledgeSourceLabel())}を、この段階の助言に使っています。</small></div>`;
+      }
+
+      function knowledgeContextForBrief() {
+        const cards = knowledgeBase.cards || [];
+        if (!cards.length) return "実務知識データは読み込み中です。";
+        return `${knowledgeSourceLabel()}\n\n${cards.map(card => `- ${card.title}（p.${(card.sourcePages || []).join("-")}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`).join("\n\n")}`;
+      }
+
+      function loadKnowledgeBase() {
+        if (typeof fetch !== "function") return;
+        fetch("./data/selected-reason-knowledge.json")
+          .then(response => {
+            if (!response.ok) throw new Error("Knowledge data could not be loaded.");
+            return response.json();
+          })
+          .then(data => {
+            if (!Array.isArray(data?.cards)) throw new Error("Knowledge data is invalid.");
+            knowledgeBase = data;
+            render();
+          })
+          .catch(() => {});
+      }
+
       function buildConversationSummary() {
         const business = answer("business").trim();
         const friction = answer("friction").trim();
@@ -1037,6 +1089,7 @@
             <summary>迷ったときのヒントを見る</summary>
             <p>${escapeHtml(question.stage.guidance)}</p>
             <p>${escapeHtml(industryAssist(question.stage.id))}</p>
+            ${renderKnowledgeHint(question.stage.id)}
           </details>
           <div class="actions">
             <div class="action-group">
@@ -1242,6 +1295,15 @@
         return `お客さんが聞きそうなこと: ${question || "未入力"}\n\nサイトに載せること: ${essentials || "未入力"}\n\nお客さんが確認できるページ: ${sources || "未入力"}\n\n大切なこと: AIに紹介されること自体は約束できません。だからこそ、AIにも人にも正しく伝わる公式情報を先に整えます。`;
       }
 
+      function buildKnowledgeReference() {
+        const allCards = knowledgeBase.cards || [];
+        if (!allCards.length) return "実務知識データを読み込んでいます。読み込み後、この質問に関係する考え方が表示されます。";
+        const relevantCards = currentKnowledgeCards();
+        const listed = relevantCards.slice(0, 5).map(card => `・${card.title}`).join("\n");
+        const overflow = relevantCards.length > 5 ? `\nほか ${relevantCards.length - 5} 枚` : "";
+        return `保存済み: ${knowledgeSourceLabel()}\n\n今の回答で参照している考え方: ${relevantCards.length} 枚\n${listed || "・次の質問に合わせて参照します。"}${overflow}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
+      }
+
       function mediaGuidance(channel) {
         const moment = answer("discoveryMoment") || "問題に気づき、解決策を探すとき";
         const outcome = answer("outcome") || answer("desired") || "顧客が得たい成果";
@@ -1309,6 +1371,7 @@
         const flags = buildFlags();
         strategyBoard.innerHTML = `
           <div class="status-card"><div class="status-label">いまの状態</div><div class="status-value">${escapeHtml(status.label)}</div></div>
+          ${section("このAIが使っている実務知識", buildKnowledgeReference(), "")}
           ${section("今の『選ばれる理由』の下書き", buildReason(), "答えていくと、ここにお客さん・良いこと・理由がつながって表示されます。")}
           ${prioritySection("いちばん大切：AI・検索で見つけてもらう準備（ここに力の9割）", buildSimpleAISearchPlan())}
           ${section("次にすること", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
@@ -1334,7 +1397,7 @@
           return `- ${question.label}: ${response || "［未回答］"}`;
         }).join("\n");
         const status = claimStatus().label;
-        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 最重要：AI検索で選ばれる設計（全体の90%）\n${buildAISearchPlan()}\n\n## 設計仮説\n${buildReason()}\n\n## AI検索を補強する媒体の計画\n${buildMediaPlan()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- ターゲットは、顧客がAIに何と質問する人かで定義する。\n- AI検索を最優先にし、公式の一次情報・FAQ・条件・更新日・根拠を、顧客自身も確認できる形で整える。\n- 外部AIでの回答採用・表示・順位を保証したり、操作できると示唆したりしない。\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 補強媒体は、AI回答の原典確認、予約・購入、地域での発見、反応検証の役割に分ける。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
+        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 最重要：AI検索で選ばれる設計（全体の90%）\n${buildAISearchPlan()}\n\n## 設計仮説\n${buildReason()}\n\n## AI検索を補強する媒体の計画\n${buildMediaPlan()}\n\n## この設計が参照する実務知識\n${knowledgeContextForBrief()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- ターゲットは、顧客がAIに何と質問する人かで定義する。\n- AI検索を最優先にし、公式の一次情報・FAQ・条件・更新日・根拠を、顧客自身も確認できる形で整える。\n- 外部AIでの回答採用・表示・順位を保証したり、操作できると示唆したりしない。\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 補強媒体は、AI回答の原典確認、予約・購入、地域での発見、反応検証の役割に分ける。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
       }
 
       function generateHandoffPrompt() {
@@ -1384,6 +1447,11 @@
           currentQuestion: allQuestions[state.current]?.id,
           claimStatus: claimStatus().label,
           strategy: {
+            knowledge: {
+              source: knowledgeBase.source || null,
+              cardCount: (knowledgeBase.cards || []).length,
+              currentCards: currentKnowledgeCards().map(card => ({ id: card.id, title: card.title, principle: card.principle }))
+            },
             industry: answer("industryFamily"),
             businessModel: answerList("businessModel"),
             industryGuide: industryGuide(),
@@ -1464,6 +1532,7 @@
       }
 
       render();
+      loadKnowledgeBase();
       registerWebMCP();
     })();
   </script>

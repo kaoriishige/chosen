@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "title": "選ばれる理由AI・実務知識カード",
+  "source": {
+    "type": "ユーザー提供の書籍画像から作成した独自要約",
+    "sourcePages": "229-262",
+    "sourcePageCount": 34,
+    "rawImagesStoredInRepository": false,
+    "note": "書籍ページの画像や原文を公開用サイトへ転載せず、実務で使うための独自の判断基準・質問・注意点として保存しています。"
+  },
+  "coverage": {
+    "method": "各ページを一つ以上の知識カードに対応づけ、画面の質問・提案・出力で参照する。",
+    "pageToCards": {
+      "229": ["because-matrix"],
+      "230": ["because-matrix"],
+      "231": ["promotion-tool-inventory"],
+      "232": ["cross-functional-rollout"],
+      "233": ["catchphrase-substance"],
+      "234": ["catchphrase-substance"],
+      "235": ["catchphrase-substance"],
+      "236": ["customer-journey-consistency"],
+      "237": ["customer-journey-consistency"],
+      "238": ["customer-journey-consistency"],
+      "239": ["customer-feedback-test"],
+      "240": ["customer-feedback-test", "message-priority"],
+      "241": ["message-priority"],
+      "242": ["video-structure"],
+      "243": ["reason-is-purchased"],
+      "244": ["execute-every-touchpoint"],
+      "245": ["execute-every-touchpoint", "self-disruption"],
+      "246": ["self-disruption"],
+      "247": ["gatekeeper-understanding"],
+      "248": ["gatekeeper-understanding"],
+      "249": ["objection-prevention"],
+      "250": ["limit-losses"],
+      "251": ["limit-losses"],
+      "252": ["limit-losses", "listening-organization"],
+      "253": ["listening-organization", "additional-sales"],
+      "254": ["additional-sales", "complete-offering"],
+      "255": ["follow-up-validation"],
+      "256": ["follow-up-validation", "referral-feedback"],
+      "257": ["referral-feedback", "internal-communication"],
+      "258": ["internal-communication", "organization-wide-adoption"],
+      "259": ["organization-wide-adoption", "continuous-renewal"],
+      "260": ["reason-is-purchased", "continuous-renewal"],
+      "261": ["reason-is-purchased", "continuous-renewal"],
+      "262": ["continuous-renewal"]
+    }
+  },
+  "usePolicy": [
+    "事実、仮説、未確認を分ける。",
+    "実績、数値、顧客の声、保証、比較を創作しない。",
+    "根拠がない主張は外部向けに確定せず、検証または改善の課題として扱う。",
+    "顧客の不安を過度に利用せず、条件・例外・提供できないことも明示する。"
+  ],
+  "cards": [
+    {
+      "id": "because-matrix",
+      "title": "洞察・成果・理由を一枚にまとめる",
+      "sourcePages": [229, 230],
+      "stages": ["customer", "insight", "outcome", "evidence"],
+      "principle": "顧客ごとの重要な洞察、約束する成果、その成果を言える理由を対応づけると、組織全体が同じ説明を使える。",
+      "questions": ["誰に伝えるか", "その人にどんな成果を約束するか", "その理由を何で確認できるか"],
+      "action": "顧客タイプまたは購入場面ごとに、成果と理由を表にし、実際の反応で更新する。",
+      "guardrail": "理由が未確認なら、魅力的な言葉ではなく『確認中』として扱う。"
+    },
+    {
+      "id": "customer-journey-consistency",
+      "title": "顧客の道のりで説明をそろえる",
+      "sourcePages": [236, 237, 238],
+      "stages": ["customer", "media", "execution"],
+      "principle": "問い合わせ、比較、予約・購入、利用、販売後まで、顧客が受け取る成果と理由が矛盾しないことが大切。",
+      "questions": ["お客さんは最初にどこで知るか", "途中で何を確認するか", "各場面で誰が同じ内容を伝えるか"],
+      "action": "販売フローを図にし、顧客接点ごとに必要な情報・担当者・確認方法を置く。",
+      "guardrail": "担当者ごとに異なる約束をしない。"
+    },
+    {
+      "id": "promotion-tool-inventory",
+      "title": "使っている媒体を全部見える化する",
+      "sourcePages": [231],
+      "stages": ["media", "execution"],
+      "principle": "公式サイト、営業、提案書、動画、SNS、広告、口コミ、紹介、店頭などは、どれも顧客を説得する接点になる。",
+      "questions": ["今使っている媒体は何か", "その媒体は誰のどの場面で使われるか", "成果と理由が入っているか"],
+      "action": "媒体一覧に担当者、目的、最初に伝えること、確認する反応を記録する。",
+      "guardrail": "媒体を増やす前に、公式情報と実際の提供内容をそろえる。"
+    },
+    {
+      "id": "cross-functional-rollout",
+      "title": "営業とマーケティングを一つの設計で動かす",
+      "sourcePages": [232],
+      "stages": ["media", "execution"],
+      "principle": "顧客への説明は一部門だけで完結しない。営業、マーケティング、現場が共通の成果と理由を使うことで力を合わせられる。",
+      "questions": ["誰が各媒体を管理するか", "いつまでに何を変えるか", "現場にも同じ情報が渡っているか"],
+      "action": "媒体ごとに責任者と期限を決め、公開前の確認を行う。",
+      "guardrail": "責任者と期限がない改善案は実行されない前提で扱う。"
+    },
+    {
+      "id": "catchphrase-substance",
+      "title": "短い言葉にも成果と理由を入れる",
+      "sourcePages": [233, 234, 235],
+      "stages": ["outcome", "evidence", "media"],
+      "principle": "印象だけのキャッチフレーズではなく、顧客が得ることと、それを選ぶ理由が短く伝わる表現をつくる。",
+      "questions": ["その短い言葉で、何が得られると分かるか", "なぜそう言えるかが想像できるか"],
+      "action": "長い説明を先に作り、成果と確認できる理由を残して短くする。",
+      "guardrail": "根拠のない最上級表現や、購入を急がせるだけの煽りにしない。"
+    },
+    {
+      "id": "video-structure",
+      "title": "動画は洞察・成果・理由の順に組み立てる",
+      "sourcePages": [242],
+      "stages": ["insight", "outcome", "evidence", "media"],
+      "principle": "動画では、相手の状況を理解していることを示し、得られる成果を伝え、最後に確認できる理由を置く。",
+      "questions": ["最初に誰のどんな場面を描くか", "約束する成果は何か", "画面で確認できる事実は何か"],
+      "action": "サイト、営業、採用、イベント、SNSなどで使う動画ごとに、同じ骨組みを使う。",
+      "guardrail": "映像の印象で事実を補ったように見せない。"
+    },
+    {
+      "id": "customer-feedback-test",
+      "title": "顧客の声で仮説を確かめる",
+      "sourcePages": [239, 240],
+      "stages": ["insight", "outcome", "evidence", "execution"],
+      "principle": "社内で最も説得力があると思う説明と、顧客が価値を感じる説明は一致するとは限らない。",
+      "questions": ["どの説明に共感があったか", "重要顧客は何を価値と見たか", "反対意見や例外は何か"],
+      "action": "会話、アンケート、既存の調査方法で反応を集め、仮説を更新する。",
+      "guardrail": "一人の感想を顧客全体の事実として扱わない。"
+    },
+    {
+      "id": "message-priority",
+      "title": "伝える順番を決める",
+      "sourcePages": [240, 241],
+      "stages": ["outcome", "evidence", "media"],
+      "principle": "人が短時間で理解できる量には限りがあるため、最も重要な成果と理由を先に置く。",
+      "questions": ["一番最初に見せる成果は何か", "それを支える一番強い理由は何か", "顧客はどの順番で知れば判断しやすいか"],
+      "action": "サイト、広告、営業資料、会話で、最初の三つのメッセージを確認する。",
+      "guardrail": "優先順位は思い込みではなく、顧客の反応と根拠で見直す。"
+    },
+    {
+      "id": "reason-is-purchased",
+      "title": "顧客は選ぶ根拠ごと買う",
+      "sourcePages": [243, 260, 261],
+      "stages": ["customer", "outcome", "evidence"],
+      "principle": "顧客は商品やサービスだけでなく、自分がそれを選んでよいと納得できる理由も求めている。",
+      "questions": ["顧客が『これなら選べる』と思える根拠は何か", "その根拠は誰でも確認できるか"],
+      "action": "顧客の洞察、成果、理由を、現場の全員が理解できるようにする。",
+      "guardrail": "顧客の代わりに理由を作り込まず、確認できる事実で支える。"
+    },
+    {
+      "id": "execute-every-touchpoint",
+      "title": "すべての顧客接点で実行する",
+      "sourcePages": [244, 245],
+      "stages": ["media", "execution"],
+      "principle": "よい設計は実行されて初めて意味を持つ。各接点に責任者・期限・必要な時間や資源を割り当てる。",
+      "questions": ["誰が実行するか", "何をやめるか・何を追加するか", "効果をどこで測るか"],
+      "action": "業務の優先順位を調整し、小さな実行単位で始める。",
+      "guardrail": "忙しい現場に仕事だけを追加し、必要な時間や権限を渡さない。"
+    },
+    {
+      "id": "self-disruption",
+      "title": "変化を待たずに自ら見直す",
+      "sourcePages": [245, 246],
+      "stages": ["insight", "outcome", "execution"],
+      "principle": "競争、技術、顧客期待の変化を受け身で待たず、商品・販売・採用・運用を先に見直す。",
+      "questions": ["今のままでは選ばれなくなる要因は何か", "何を小さく壊し、試し直すべきか"],
+      "action": "改善仮説を小さく試し、成果と副作用を測る。",
+      "guardrail": "変えること自体を目的にせず、顧客価値と提供能力で判断する。"
+    },
+    {
+      "id": "gatekeeper-understanding",
+      "title": "最初の相談相手の事情を理解する",
+      "sourcePages": [247, 248],
+      "stages": ["customer", "insight", "media"],
+      "principle": "受付、紹介元、購入担当、家族など、最初に情報を受け取る人が選択に大きく影響することがある。",
+      "questions": ["最初に相談を受けるのは誰か", "その人は何に困り、何を正確に知りたいか", "その人が説明しやすい情報になっているか"],
+      "action": "ゲートキーパーの実際の会話・判断基準を聞き、必要な情報を整える。",
+      "guardrail": "影響者を操作対象にせず、相手の仕事や顧客判断を助ける情報を出す。"
+    },
+    {
+      "id": "objection-prevention",
+      "title": "反論を予測し、先回りして確認できるようにする",
+      "sourcePages": [249],
+      "stages": ["evidence", "media", "execution"],
+      "principle": "顧客がためらう理由を、商品・条件・説明・運用のどこにあるかまで掘り下げると、行き詰まりを防げる。",
+      "questions": ["相手からどんな反論や確認が来るか", "その原因は何か", "事前に何を明記・テスト・改善できるか"],
+      "action": "反論ごとにFAQ、条件、実演、担当者対応を用意する。",
+      "guardrail": "不都合な条件を隠して反論を減らそうとしない。"
+    },
+    {
+      "id": "limit-losses",
+      "title": "失望の原因を見つけ、損失を小さくする",
+      "sourcePages": [250, 251, 252],
+      "stages": ["insight", "evidence", "execution"],
+      "principle": "顧客の期待と実際の差、伝達ミス、仕様の誤解は、販売後の大きな損失になる。",
+      "questions": ["期待と実際の違いはどこで起きたか", "誰が何を確認しなかったか", "返品・失注・苦情をどう防げるか"],
+      "action": "サンプル、仕様、条件、確認手順、現場連携を見直す。",
+      "guardrail": "顧客の不満を個人の問題にせず、仕組みの原因を探す。"
+    },
+    {
+      "id": "listening-organization",
+      "title": "顧客の声を聞ける組織にする",
+      "sourcePages": [252, 253],
+      "stages": ["insight", "execution"],
+      "principle": "現場の人が顧客の声に耳を傾け、顧客の前で判断できる範囲を持つと、価値ある洞察が集まる。",
+      "questions": ["現場は顧客の声をどう記録するか", "どこまで判断・対応できるか", "集めた声を誰が改善に使うか"],
+      "action": "顧客の声、現場の気づき、対応結果を定期的に共有する。",
+      "guardrail": "現場に責任だけを負わせず、権限・教育・報告経路を渡す。"
+    },
+    {
+      "id": "additional-sales",
+      "title": "追加提案は、顧客に役立つ不足を埋める",
+      "sourcePages": [253, 254],
+      "stages": ["insight", "outcome", "execution"],
+      "principle": "追加販売は、顧客が目的を達成するために本当に必要な要素を見つけて提案するときに価値がある。",
+      "questions": ["顧客の目的を妨げる不足は何か", "追加して役に立つものか", "押しつけずに選べるか"],
+      "action": "販売前・販売中・販売後の声から、必要な追加要素を検討する。",
+      "guardrail": "売上だけを理由に、必要性のない追加提案をしない。"
+    },
+    {
+      "id": "complete-offering",
+      "title": "必要な選択肢を、分かる形で揃える",
+      "sourcePages": [254],
+      "stages": ["outcome", "media"],
+      "principle": "顧客が望む可能性のあるサービスを整理して提示すると、自分で組み合わせて選びやすくなる。",
+      "questions": ["顧客が比較時に必要とする選択肢は何か", "各選択肢の条件・価格・向き不向きは分かるか"],
+      "action": "選択肢を一覧にし、顧客が自分で確認できるようにする。",
+      "guardrail": "選択肢を多く見せるだけで、重要な条件を埋もれさせない。"
+    },
+    {
+      "id": "follow-up-validation",
+      "title": "販売後に正しい判断だったと確認できるようにする",
+      "sourcePages": [255, 256],
+      "stages": ["evidence", "execution"],
+      "principle": "販売後の連絡は、売り込みではなく、顧客が判断した結果を確認し、不満や問題を早く見つける機会になる。",
+      "questions": ["顧客は期待どおりだったか", "困ったことはないか", "他者に説明できる理由が残っているか"],
+      "action": "電話、メール、アンケート、訪問などで確認し、対応結果を残す。",
+      "guardrail": "フォローアップを一方的な再販連絡だけにしない。"
+    },
+    {
+      "id": "referral-feedback",
+      "title": "紹介は関係と価値の確認から生まれる",
+      "sourcePages": [256, 257],
+      "stages": ["evidence", "media", "execution"],
+      "principle": "顧客が価値を実感し、紹介してよいと判断できる関係があって初めて紹介は起こりやすくなる。",
+      "questions": ["顧客は何に満足したか", "誰にどのような場合なら紹介したいか", "紹介先にも正確に伝わる情報があるか"],
+      "action": "優良顧客の声を許諾のもとで聞き、紹介されやすい説明と体験を整える。",
+      "guardrail": "レビューや紹介を強要・誘導・創作しない。"
+    },
+    {
+      "id": "internal-communication",
+      "title": "社内の全員が同じ言葉で説明できるようにする",
+      "sourcePages": [257, 258],
+      "stages": ["evidence", "media", "execution"],
+      "principle": "顧客からだけでなく、従業員からのフィードバックも集め、会社の全員が顧客に与える価値を理解する。",
+      "questions": ["社員は何をすれば顧客に役立つか理解しているか", "顧客への説明に矛盾がないか", "現場の意見を反映できるか"],
+      "action": "経営、営業、マーケティング、現場が同じ設計図を使い、改善を共有する。",
+      "guardrail": "経営だけの標語にせず、現場の実行方法まで落とす。"
+    },
+    {
+      "id": "organization-wide-adoption",
+      "title": "組織全体で選ばれる理由を機能させる",
+      "sourcePages": [258, 259],
+      "stages": ["media", "execution"],
+      "principle": "Web、営業、販促、サービス提供、顧客対応の全てで、組織のメンバーが何をどう伝え・提供するかを理解すると、成果が根付く。",
+      "questions": ["役員室だけで終わっていないか", "各部門の顧客接点に反映されたか", "成果と理由を学び直す場があるか"],
+      "action": "全社の接点を棚卸しし、部門ごとに導入計画と確認責任者を置く。",
+      "guardrail": "共通化のために、顧客ごとの重要な条件まで消さない。"
+    },
+    {
+      "id": "continuous-renewal",
+      "title": "毎年、洞察・成果・理由を見直す",
+      "sourcePages": [259, 260, 261, 262],
+      "stages": ["insight", "outcome", "evidence", "media", "execution"],
+      "principle": "顧客、競合、提供能力、媒体は変わるため、選ばれる理由は完成品ではなく継続的に改善する仕組みである。",
+      "questions": ["今年新しく分かった顧客のことは何か", "以前の成果や理由は今も正しいか", "次に変えるべき商品・情報・接点は何か"],
+      "action": "定期的に知識カード、顧客の声、成果、根拠、担当計画を見直す。",
+      "guardrail": "新しさだけを追わず、実際の顧客価値と検証可能な根拠を残す。"
+    }
+  ]
+}
