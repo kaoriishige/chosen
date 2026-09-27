@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="業種別に、優先顧客・根拠・届く媒体・現場実行をつなぎ、顧客に選ばれる理由を設計・検証する戦略AI" />
+  <meta name="description" content="AIに正確に理解・参照され、人にも選ばれるために、顧客の質問・根拠・回答・顧客接点・現場実行をつなぐ戦略AI" />
   <meta name="theme-color" content="#0b1528" />
   <title>選ばれる理由AI | 戦略ワークベンチ</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1528'/%3E%3Cpath d='M17 18h30v9H28v6h15v9H28v4h19v9H17z' fill='%232dd4bf'/%3E%3C/svg%3E" />
@@ -240,6 +240,9 @@
     .strategy-section h3 { margin: 0 0 8px; font-size: .95rem; }
     .strategy-section p { margin: 0; color: var(--ink-soft); font-size: .9rem; white-space: pre-wrap; }
     .strategy-section .placeholder { color: var(--muted); font-style: italic; }
+    .ai-priority-section { margin: 16px 0 4px; padding: 18px; border: 1px solid #0f766e; border-radius: 15px; background: linear-gradient(135deg, #e8fffa 0%, #f3fbff 100%); }
+    .ai-priority-section h3 { color: #075c56; }
+    .ai-priority-section p { color: #123d46; }
 
     .flag-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
     .flag-list li { position: relative; padding-left: 20px; color: var(--ink-soft); font-size: .84rem; }
@@ -286,7 +289,7 @@
         <div class="brand-mark" aria-hidden="true">R</div>
         <div>
           <h1>選ばれる理由AI</h1>
-          <p>業種別に、優先顧客・根拠・届く媒体・現場実行をつなぐ戦略AI</p>
+          <p>AIに正確に理解され、人にも選ばれるための戦略AI</p>
         </div>
       </div>
       <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
@@ -334,17 +337,17 @@
         {
           id: "customer",
           index: "1",
-          name: "対象顧客を決める",
-          guidance: "特徴の列挙から対象を決めません。複数の候補を「人×目的×場面」で出し、実需、提供適合、採算・空き、到達経路、競合との差を事実に基づいて比べます。点数は判断を助ける仮説であり、最終決定には根拠の確認が必要です。",
+          name: "AIへの質問から対象を決める",
+          guidance: "ターゲットとは、年齢や特徴の束ではなく、顧客がAIに投げる具体的な質問をする人です。複数のAI質問候補を、質問の実在性、正確に答えられるか、事業価値、AIが参照できる一次情報、選ばれる答えの余白で比べます。点数は判断を助ける仮説であり、最終決定には根拠の確認が必要です。",
           questions: [
             { id: "industryFamily", title: "あなたの事業に最も近い業種を選んでください", helper: "業種で答えを決めつけるためではなく、顧客の選び方、確認すべき根拠、届く媒体、表現上の注意を切り替えるために使います。", label: "業種", type: "choice", options: ["宿泊・観光", "飲食・カフェ", "小売・EC", "美容・健康・ウェルネス", "住宅・建設・修理", "高信頼サービス（医療・介護・士業など）", "教育・スクール・コーチング", "不動産・地域サービス", "BtoB・IT・コンサル", "製造・卸・専門商材", "その他・複合"], required: true },
             { id: "businessModel", title: "主な販売・利用の形を選んでください", helper: "複数選択できます。売り方によって、必要な根拠、関係者、媒体、次の行動が変わります。", label: "販売・利用の形", type: "multiple", options: ["予約・来店", "単発購入", "継続利用・会員制", "EC・配送", "法人・複数決裁者", "紹介・仲介・プラットフォーム", "地域密着・訪問型", "その他"], required: true },
             { id: "business", title: "あなたの事業を一言で教えてください", helper: "商品・サービス、提供地域や市場、主な提供方法を具体的に書きます。", label: "事業の説明", type: "text", required: true },
             { id: "action", title: "顧客に、次にどんな行動を選んでほしいですか？", helper: "購入、予約、問い合わせ、契約更新、紹介など、ひとつの行動に絞ります。", label: "望む顧客行動", type: "text", required: true },
-            { id: "targetMatrix", title: "対象顧客の候補を、根拠と一緒に比較してください", helper: "特徴ではなく「誰が × 何のために × どんな場面で」を候補にします。各項目は、1＝弱い・未確認、3＝一部確認、5＝強い・確認済みの目安です。", label: "対象顧客候補の比較", type: "targetMatrix", required: true },
-            { id: "targetEvidence", title: "候補を比べるための事実は、どこにありますか？", helper: "予約・売上・客単価・稼働・問合せ・検索語・レビュー・紹介元・現場の観察などを、候補ごとに分けて書きます。推測は推測と明記します。", label: "候補比較の根拠・出典", type: "text", required: true },
-            { id: "target", title: "最初に集中する優先顧客は、誰ですか？", helper: "最高点の候補を機械的に選ぶのではなく、実需、提供能力、採算、到達できる媒体、競合との差を踏まえて「人 × 目的 × 場面」で宣言します。", label: "第一優先の対象顧客", type: "text", required: true },
-            { id: "targetDecisionReason", title: "その候補を第一優先にする決め手は何ですか？", helper: "点数、観察事実、今ある空き・人員・商品、到達媒体、競合比較のうち、決定を支える根拠を記録します。", label: "優先順位の決定根拠", type: "text", required: true },
+            { id: "targetMatrix", title: "顧客がAIにする質問を、根拠と一緒に比較してください", helper: "対象顧客はAIへの質問として定義します。地域・目的・条件・比較軸を含む、顧客が実際に使いそうな言葉で書きます。各項目は、1＝弱い・未確認、3＝一部確認、5＝強い・確認済みの目安です。", label: "AIへの質問候補の比較", type: "targetMatrix", required: true },
+            { id: "targetEvidence", title: "そのAI質問が実際にされる根拠は、どこにありますか？", helper: "予約・売上・問合せ・サイト内検索・検索語・レビュー・紹介元・現場の観察・実際のAIとの会話などを、質問候補ごとに分けて書きます。推測は推測と明記します。", label: "AI質問の根拠・出典", type: "text", required: true },
+            { id: "target", title: "第一優先にする、顧客のAIへの質問は何ですか？", helper: "最高点の候補を機械的に選ぶのではなく、実需、正確に答えられる提供能力、採算、一次情報の準備、競合との差を踏まえ、一つの質問として宣言します。", label: "第一優先のAI質問", type: "text", required: true },
+            { id: "targetDecisionReason", title: "そのAI質問を第一優先にする決め手は何ですか？", helper: "点数、観察事実、今ある商品・空き・人員、AIが参照できる公式情報、競合比較のうち、決定を支える根拠を記録します。", label: "AI質問の優先順位・決定根拠", type: "text", required: true },
             { id: "decisionRole", title: "購入、利用、承認、紹介に関わる人は誰ですか？", helper: "役割が複数なら、それぞれが気にすることも書きます。", label: "関係者と役割", type: "text" }
           ]
         },
@@ -397,15 +400,20 @@
         {
           id: "media",
           index: "6",
-          name: "顧客の目の前に出す",
-          guidance: "選ばれる理由は、顧客が実際に見ている媒体・場面に現れなければ機能しません。媒体名だけで決めず、ターゲットの検索・比較・移動・相談の行動に根拠を置きます。",
+          name: "AI検索で顧客の目の前に出す",
+          guidance: "この設計ではAI検索を最重要課題（設計全体の90%）に置きます。顧客のAI質問に、公式の一次情報・FAQ・条件・更新日を使って正確に答えられる状態を先につくります。Google、SNS、OTA、クチコミなどは、その答えを補強・確認・検証する役割として設計します。外部AIでの回答採用や順位は保証できません。",
           questions: [
             { id: "discoveryMoment", title: "優先顧客は、どんな場面で問題に気づき、解決策を探しますか？", helper: "急ぎ、比較、来店前、旅行計画、引っ越し、困りごとの発生、社内稟議など、実際の状況を書きます。", label: "見つけてもらう場面・検索意図", type: "text", required: true },
-            { id: "mediaChannels", title: "その場面で優先顧客の目の前に出す媒体を選んでください", helper: "実際の利用行動が確認できた媒体を優先します。複数選択できます。", label: "優先媒体", type: "multiple", options: ["Google検索・Googleマップ", "AI検索（ChatGPT・Gemini・Perplexityなど）", "Instagram", "TikTok", "YouTube", "LINE", "X・Facebook", "クチコミ・紹介", "OTA・予約サイト", "比較サイト・専門ポータル", "Google広告などの検索広告", "チラシ・新聞折込", "ポスティング・DM", "地域イベント・店頭", "その他"], required: true },
-            { id: "mediaRationale", title: "なぜ、その顧客はその媒体を見ると言えますか？", helper: "既存顧客への聞き取り、アクセス解析、検索語、来店経路、予約経路、地域性など、事実と仮説を分けて書きます。", label: "媒体選定の根拠・検証仮説", type: "text", required: true },
-            { id: "mediaFirstMessage", title: "媒体ごとに、最初の数秒・一画面で何を見せますか？", helper: "顧客の状況→得られる成果→確認できる根拠の順に、媒体名ごとに改行して書きます。抽象的な自社紹介から始めません。", label: "媒体別の最初の伝え方", type: "text", required: true },
-            { id: "mediaCallToAction", title: "各媒体で、顧客にどの次の行動を選んでもらいますか？", helper: "検索結果を見る、地図で場所を確認する、空室を調べる、資料を見る、予約する、問い合わせる等、媒体に合う行動を決めます。", label: "媒体別の次の行動", type: "text", required: true },
-            { id: "mediaMeasurement", title: "媒体ごとの反応を、何で確認しますか？", helper: "表示、検索、保存、電話、来店、予約、問い合わせ、成約、紹介など、行動に近い指標と確認頻度を決めます。", label: "媒体別の検証指標", type: "text" }
+            { id: "aiQueryVariants", title: "優先顧客は、AIにほかにどんな言い方で質問しますか？", helper: "同じ目的でも言い方は変わります。地域・時期・同行者・予算・条件・比較対象を含む質問を、少なくとも3つ書きます。", label: "AI質問の言い換え・検索意図", type: "text", required: true },
+            { id: "aiAnswerEssentials", title: "AIと顧客が、答えとして最初に確認すべき事実は何ですか？", helper: "対象、提供内容、条件・例外、料金・在庫・予約、場所・時間、比較の前提、利用方法などを、答えられる事実として列挙します。", label: "AI回答に必要な事実", type: "text", required: true },
+            { id: "aiSourceInventory", title: "その答えを支える一次情報を、どのページ・FAQ・規約・料金表に置きますか？", helper: "公式サイトのURLまたは作成予定ページを書きます。AIの回答だけに頼らず、顧客が自分で確認できる原典を用意します。", label: "AI参照のための一次情報・公開先", type: "text", required: true },
+            { id: "aiAnswerEvidence", title: "どのAI質問に、どの根拠を対応させますか？", helper: "質問 → 正確な回答 → 根拠のURL・資料 → 確認担当者、の形で書きます。答えられない項目は、推測で埋めずに改善・確認の課題にします。", label: "質問・回答・根拠の対応表", type: "text", required: true },
+            { id: "aiSearchMeasurement", title: "AI検索からの認知・訪問・問い合わせを、どう確認しますか？", helper: "「AIで何と聞いたか」の聞き取り、流入・指名検索・予約経路・問い合わせ内容、回答の正確性レビューなどを、無理のない方法で測定します。AIの掲載や順位そのものは保証できません。", label: "AI検索の検証方法", type: "text", required: true },
+            { id: "mediaChannels", title: "AI検索を補強する媒体を選んでください", helper: "AI検索を最優先にしたうえで、公式情報の確認、予約・購入、地域での発見、口コミ・紹介、反応検証を支える媒体を選びます。複数選択できます。", label: "AI検索を補強する媒体", type: "multiple", options: ["Google検索・Googleマップ", "Instagram", "TikTok", "YouTube", "LINE", "X・Facebook", "クチコミ・紹介", "OTA・予約サイト", "比較サイト・専門ポータル", "Google広告などの検索広告", "チラシ・新聞折込", "ポスティング・DM", "地域イベント・店頭", "その他"] },
+            { id: "mediaRationale", title: "その媒体は、AI検索をどう補強・検証しますか？", helper: "公式情報への導線、顧客の確認行動、予約・購入、地域接点、顧客の声の収集など、役割を明確にします。事実と仮説を分けて書きます。", label: "補強媒体の役割・検証仮説", type: "text" },
+            { id: "mediaFirstMessage", title: "補強媒体で、最初の数秒・一画面で何を見せますか？", helper: "AIへの質問に対する答えと矛盾しないよう、顧客の状況→得られる成果→確認できる根拠の順に、媒体名ごとに書きます。", label: "補強媒体の最初の伝え方", type: "text" },
+            { id: "mediaCallToAction", title: "補強媒体で、顧客にどの次の行動を選んでもらいますか？", helper: "公式FAQを見る、条件を確認する、空室を調べる、資料を見る、予約する、問い合わせる等、AI回答の先にある確認行動を決めます。", label: "補強媒体の次の行動", type: "text" },
+            { id: "mediaMeasurement", title: "補強媒体の反応を、何で確認しますか？", helper: "表示、検索、保存、電話、来店、予約、問い合わせ、成約、紹介など、AI検索設計を改善するための行動に近い指標と確認頻度を決めます。", label: "補強媒体の検証指標", type: "text" }
           ]
         },
         {
@@ -434,11 +442,11 @@
       ];
 
       const CORE_TARGET_CRITERIA = [
-        { key: "demand", label: "実需の強さ", helper: "予約・問合せ・検索・口コミなど、実際に選ばれた兆し" },
-        { key: "fit", label: "提供適合", helper: "設備・料理・接客・規約が、その目的に確実に応えられるか" },
-        { key: "capacity", label: "採算・空き", helper: "客単価、利益、閑散日、部屋・人員の余力と合うか" },
-        { key: "reach", label: "到達しやすさ", helper: "検索・OTA・SNS・紹介など、実際の到達経路が分かるか" },
-        { key: "gap", label: "競合との余白", helper: "競合より優れることではなく、満たされていない選び方があるか" }
+        { key: "demand", label: "質問の実在性", helper: "予約・問合せ・検索語・AIとの会話・口コミなど、その質問をする実際の兆し" },
+        { key: "fit", label: "正確に答えられるか", helper: "設備・商品・接客・規約が、AIへの質問に事実として答えられる状態か" },
+        { key: "capacity", label: "事業価値・提供余力", helper: "利益、空き、人員、在庫、継続可能性と合うか" },
+        { key: "reach", label: "AI参照情報の準備", helper: "公式ページ・FAQ・条件・更新日・根拠を、顧客もAIも確認できる形にできるか" },
+        { key: "gap", label: "選ばれる答えの余白", helper: "他者を下げず、顧客に役立つ具体的な答えを提供できるか" }
       ];
 
       const DEFAULT_INDUSTRY_PROFILE = {
@@ -585,24 +593,34 @@
         return answerList(id).join("、");
       }
 
+      function supportingChannels() {
+        return answerList("mediaChannels").filter(channel => channel !== "AI検索（ChatGPT・Gemini・Perplexityなど）");
+      }
+
       function activeIndustryProfile() {
         return INDUSTRY_PROFILES[answer("industryFamily")] || DEFAULT_INDUSTRY_PROFILE;
       }
 
       function targetCriteria() {
         const profile = activeIndustryProfile();
-        return CORE_TARGET_CRITERIA.map(criteria => ({
-          ...criteria,
-          helper: profile.criteriaHints?.[criteria.key] || criteria.helper
-        }));
+        return CORE_TARGET_CRITERIA.map(criteria => {
+          const industryHint = profile.criteriaHints?.[criteria.key];
+          if (!industryHint) return criteria;
+          const lead = criteria.key === "reach"
+            ? "公式の一次情報・FAQ・条件・更新日を整備できるか。"
+            : criteria.key === "fit"
+            ? "その質問に、誇張せず事実として答えられるか。"
+            : "";
+          return { ...criteria, helper: `${lead}${lead ? " " : ""}業種別の確認: ${industryHint}` };
+        });
       }
 
       function industryGuide() {
         const industry = answer("industryFamily");
         const model = answer("businessModel");
-        if (!industry) return "業種と販売・利用の形を選ぶと、対象顧客の比較軸、優先媒体、表現上の確認事項を業種に合わせて切り替えます。";
+        if (!industry) return "業種と販売・利用の形を選ぶと、顧客がAIにする質問、回答を支える一次情報、補強媒体、公開前の確認事項を業種に合わせて切り替えます。";
         const profile = activeIndustryProfile();
-        return `業種: ${profile.label}${model ? `／販売・利用の形: ${model}` : ""}\n\n顧客候補の切り方: ${profile.targetHint}\n\n確認する実需: ${profile.demandEvidence}\n\n媒体の仮説: ${profile.mediaGuide}\n\n公開前の注意: ${profile.guardrail}`;
+        return `業種: ${profile.label}${model ? `／販売・利用の形: ${model}` : ""}\n\nAI質問のつくり方: 「${profile.targetHint}」を、顧客がそのままAIに聞く地域・目的・条件・比較軸を含む質問にします。\n\n質問の実在性を確かめる材料: ${profile.demandEvidence}\n\nAI検索を補強する媒体: ${profile.mediaGuide}\n\n公開前の注意: ${profile.guardrail}`;
       }
 
       function industryAssist(stageId) {
@@ -610,13 +628,13 @@
         if (!industry) return "まず業種を選ぶと、この事業に合う比較軸と確認事項が表示されます。";
         const profile = activeIndustryProfile();
         const assistance = {
-          customer: `顧客候補の切り方: ${profile.targetHint}\n実需の確認: ${profile.demandEvidence}`,
+          customer: `AI質問のつくり方: ${profile.targetHint}\n質問の実在性を確かめる材料: ${profile.demandEvidence}\n質問には、地域・目的・条件・比較軸をできるだけ入れます。`,
           insight: `この業種でまず集める観察事実: ${profile.demandEvidence}`,
           outcome: "成果は、提供物の名前ではなく、顧客の意思決定・仕事・生活がどう変わるかで定義します。提供できない条件も同時に明確にします。",
           evidence: `公開前の注意: ${profile.guardrail}`,
-          media: `媒体の仮説: ${profile.mediaGuide}`,
-          platform: "媒体、Web、営業・接客、提供現場、販売後で、同じ成果と根拠が矛盾しないよう確認します。",
-          execution: "最初は、優先顧客と優先媒体を一つずつ決め、小さく測定して学びます。"
+          media: `AI検索が最優先です。公式の一次情報・FAQ・条件・更新日を整えたうえで、補強媒体を設計します。\n補強媒体の仮説: ${profile.mediaGuide}`,
+          platform: "AI検索、公式Web、営業・接客、提供現場、販売後で、同じ成果と根拠が矛盾しないよう確認します。",
+          execution: "最初は、優先AI質問と、その答えを支える一次情報を一つずつ整え、小さく確認して学びます。"
         };
         return assistance[stageId] || "事実・仮説・未確認を分け、提供能力と公開表現の整合を確認します。";
       }
@@ -659,12 +677,12 @@
 
       function targetComparisonReport() {
         const candidates = scoredTargetCandidates();
-        if (!candidates.length) return "対象候補を入力すると、実需・提供適合・採算・到達経路・競合との余白で比較できます。";
+        if (!candidates.length) return "顧客がAIにする質問候補を入力すると、質問の実在性・正確に答えられるか・事業価値・AI参照情報・選ばれる答えの余白で比較できます。";
         return candidates.map((candidate, rank) => {
           const scores = targetCriteria().map(criteria => `${criteria.label}: ${candidate[criteria.key] === "0" ? "未評価" : candidate[criteria.key]}`).join(" / ");
           const total = candidate.score === null ? "総合: 評価未完了" : `総合: ${candidate.score}/25`;
           const note = candidate.note.trim() ? `判断メモ: ${candidate.note.trim()}` : "判断メモ: 未登録";
-          return `${rank + 1}. ${candidate.name.trim()}\n${total}\n${scores}\n${note}`;
+          return `${rank + 1}. AI質問: ${candidate.name.trim()}\n${total}\n${scores}\n${note}`;
         }).join("\n\n");
       }
 
@@ -709,13 +727,13 @@
       function renderTargetMatrix(question) {
         const candidates = targetCandidates(question.id);
         const scoreOptions = SCORE_OPTIONS.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join("");
-        return `<section class="target-matrix" aria-label="対象顧客候補の比較表">
-          <p class="matrix-intro">例：<strong>静けさを求める夫婦が、平日に心身を休めるための温泉旅</strong>。<br>「温泉」「料理」「猫」は特徴です。対象は、その特徴を必要とする<strong>人・目的・場面</strong>で書きます。数値の根拠がまだない項目は「未評価」のままにしてください。</p>
+        return `<section class="target-matrix" aria-label="AIへの質問候補の比較表">
+          <p class="matrix-intro">例：<strong>「塩原温泉で、静かに過ごせて、料理がよく、ペットと泊まれる旅館は？」</strong>。<br>「温泉」「料理」「猫」は特徴です。ターゲットは、それらを必要として<strong>AIにこの質問をする人</strong>です。質問には、地域・目的・条件・比較軸を入れます。数値の根拠がまだない項目は「未評価」のままにしてください。</p>
           ${candidates.map((candidate, index) => `<article class="matrix-card">
-            <h3>候補 ${index + 1}</h3>
+            <h3>AI質問候補 ${index + 1}</h3>
             <label class="matrix-field">
-              <span>人 × 目的 × 場面</span>
-              <input data-matrix-row="${index}" data-matrix-key="name" type="text" value="${escapeHtml(candidate.name)}" placeholder="例：愛猫と一緒に静かに温泉旅をしたい夫婦" />
+              <span>顧客がAIに何と質問するか</span>
+              <input data-matrix-row="${index}" data-matrix-key="name" type="text" value="${escapeHtml(candidate.name)}" placeholder="例：塩原温泉で、愛猫と静かに過ごせる旅館は？" />
             </label>
             <div class="score-grid">
               ${targetCriteria().map(criteria => `<label class="score-field">
@@ -728,8 +746,8 @@
               <div class="matrix-total" data-matrix-total="${index}">${targetScore(candidate) === null ? "総合点：評価を埋めると表示されます" : `総合点：${targetScore(candidate)}/25（比較の補助。決定は根拠確認後）`}</div>
             </div>
             <label class="matrix-field">
-              <span>この評価の根拠・未確認点</span>
-              <textarea class="matrix-note" data-matrix-row="${index}" data-matrix-key="note" placeholder="例：平日予約の多くが夫婦利用。猫同伴の問い合わせは月に数件。客単価・採算は要確認。">${escapeHtml(candidate.note)}</textarea>
+              <span>この質問の根拠・未確認点</span>
+              <textarea class="matrix-note" data-matrix-row="${index}" data-matrix-key="note" placeholder="例：猫同伴・静かな滞在の問い合わせが月に数件。平日予約の多くが夫婦利用。公式FAQは未整備。">${escapeHtml(candidate.note)}</textarea>
             </label>
           </article>`).join("")}
         </section>`;
@@ -835,6 +853,10 @@
         return `<section class="strategy-section"><h3>${escapeHtml(title)}</h3><p>${content}</p></section>`;
       }
 
+      function prioritySection(title, text) {
+        return `<section class="strategy-section ai-priority-section"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></section>`;
+      }
+
       function buildReason() {
         const target = answer("target");
         const friction = answer("friction");
@@ -843,12 +865,26 @@
         const delivery = answer("delivery");
         const evidence = answer("evidence");
         if (!target && !outcome && !evidence) return "回答が集まると、ここに顧客・成果・根拠をつないだ仮説が表示されます。";
-        const subject = target || "優先顧客";
+        const subject = target ? `AIに「${target}」と尋ねる人` : "優先顧客";
         const goal = outcome || desired || "望む成果";
         const obstacle = friction ? `「${friction}」を避けながら` : "自分に合う選択をするために";
         const method = delivery || "提供の仕組み";
         const proof = evidence || "未登録の根拠";
         return `${subject}が${obstacle}「${goal}」を得るために、${method}が役立つ可能性があります。根拠候補は「${proof}」です。これは検証・承認前の設計仮説です。`;
+      }
+
+      function buildAISearchPlan() {
+        const question = answer("target");
+        const variants = answer("aiQueryVariants");
+        const essentials = answer("aiAnswerEssentials");
+        const sources = answer("aiSourceInventory");
+        const mapping = answer("aiAnswerEvidence");
+        const measurement = answer("aiSearchMeasurement");
+        const profile = activeIndustryProfile();
+        if (!question && !variants && !essentials && !sources) {
+          return "設計全体の最優先はAI検索です。まず、顧客がAIに何と質問するかを一つ決め、その答えを支える公式の一次情報・FAQ・条件・更新日を整えます。AIでの回答採用や順位は保証できません。";
+        }
+        return `設計全体の最優先（90%）: AI検索\n\n第一優先のAI質問: ${question || "未設定"}\n\n言い換え・検索意図: ${variants || "未登録"}\n\nAIと顧客が最初に確認する事実: ${essentials || "未登録"}\n\n答えの原典（公式ページ・FAQ・規約・料金表など）: ${sources || "未登録"}\n\n質問 → 回答 → 根拠 → 確認担当者の対応: ${mapping || "未登録"}\n\n検証方法: ${measurement || "未登録"}\n\n${answer("industryFamily") ? `${profile.label}での補足: ${profile.guardrail}\n\n` : ""}大前提: 外部AIの回答採用・表示・順位は保証できません。根拠のない最上級表現や比較を作らず、顧客自身も確認できる一次情報を整えます。`;
       }
 
       function mediaGuidance(channel) {
@@ -877,29 +913,35 @@
       }
 
       function buildMediaPlan() {
-        const channels = answerList("mediaChannels");
-        const target = answer("target") || "優先顧客";
+        const channels = supportingChannels();
+        const target = answer("target") || "第一優先のAI質問";
         const moment = answer("discoveryMoment");
         const profile = activeIndustryProfile();
-        if (!channels.length && !moment) return "顧客が問題に気づく場面と、そのとき実際に見る媒体を選ぶと、媒体別の見せ方が表示されます。";
-        const rationale = answer("mediaRationale") || "媒体を使う根拠・仮説は未登録";
-        const opening = answer("mediaFirstMessage") || "媒体別の最初の伝え方は未登録";
-        const measurement = answer("mediaMeasurement") || "媒体ごとの反応指標は未登録";
-        const channelPlans = channels.length ? channels.map(mediaGuidance).join("\n\n") : "優先媒体を選択してください。";
-        return `${target}が${moment || "解決策を探す場面"}で、選ばれる理由に出会うための計画です。\n\n${answer("industryFamily") ? `【${profile.label}の媒体仮説】\n${profile.mediaGuide}\n\n` : ""}媒体選定の根拠・仮説: ${rationale}\n\n媒体別の見せ方:\n${channelPlans}\n\n担当者が作る媒体別の最初の伝え方:\n${opening}\n\n確認する反応: ${measurement}\n\n注意: ${profile.guardrail}`;
+        if (!channels.length && !moment) return "AI検索を補強する媒体は、AI回答の原典への導線、顧客による条件確認、予約・購入、地域での発見、反応検証のために選びます。必要な媒体だけを追加してください。";
+        const rationale = answer("mediaRationale") || "補強媒体の役割・仮説は未登録";
+        const opening = answer("mediaFirstMessage") || "補強媒体の最初の伝え方は未登録";
+        const measurement = answer("mediaMeasurement") || "補強媒体の反応指標は未登録";
+        const channelPlans = channels.length ? channels.map(mediaGuidance).join("\n\n") : "補強媒体は未設定です。AI検索の一次情報を整えた後、必要な接点だけ追加してください。";
+        return `AIに「${target}」と尋ねる人が、${moment || "解決策を探す場面"}で答えを確認し、次の行動へ進むための補強計画です。\n\n${answer("industryFamily") ? `【${profile.label}の補強媒体仮説】\n${profile.mediaGuide}\n\n` : ""}補強媒体の役割・仮説: ${rationale}\n\n補強媒体ごとの見せ方:\n${channelPlans}\n\n担当者が作る補強媒体の最初の伝え方:\n${opening}\n\n確認する反応: ${measurement}\n\n注意: ${profile.guardrail}`;
       }
 
       function buildNextMoves() {
         const moves = [];
         const profile = activeIndustryProfile();
-        if (!answer("industryFamily")) moves.push("業種を選び、顧客候補の比較軸と公開前の注意をこの事業向けに切り替える。");
+        if (!answer("industryFamily")) moves.push("業種を選び、AI質問の比較軸と公開前の注意をこの事業向けに切り替える。");
         if (!answer("businessModel")) moves.push("予約・来店、継続、EC、法人決裁、紹介など、顧客が選ぶ仕組みを特定する。");
-        if (!hasNamedTargetCandidate()) moves.push(`「${profile.targetHint}」を手がかりに、優先候補を3つ書き出す。`);
-        else if (scoredTargetCandidates().some(candidate => candidate.score === null)) moves.push(`候補ごとに、${profile.demandEvidence}を確認し、未評価の比較軸を埋める。`);
-        if (!answer("target")) moves.push("比較結果と提供能力を踏まえ、まず集中する「人×目的×場面」を一つ決める。");
+        if (!hasNamedTargetCandidate()) moves.push(`「${profile.targetHint}」を手がかりに、顧客がAIにする質問を3つ書き出す。`);
+        else if (scoredTargetCandidates().some(candidate => candidate.score === null)) moves.push(`AI質問候補ごとに、${profile.demandEvidence}を確認し、未評価の比較軸を埋める。`);
+        if (!answer("target")) moves.push("比較結果と提供能力を踏まえ、第一優先にするAI質問を一つ決める。");
+        if (!answer("aiQueryVariants")) moves.push("第一優先のAI質問を、地域・目的・条件・比較軸を変えながら3通り以上に言い換える。");
+        if (!answer("aiAnswerEssentials")) moves.push("AIと顧客が最初に確認する対象・条件・料金・在庫・場所・例外を、事実として列挙する。");
+        if (!answer("aiSourceInventory")) moves.push("答えの原典となる公式ページ・FAQ・規約・料金表を洗い出し、足りないページを作る。");
+        if (!answer("aiAnswerEvidence")) moves.push("AI質問 → 正確な回答 → 根拠URL・資料 → 確認担当者の対応表を作る。");
         if (!answer("facts")) moves.push("既存顧客・失注・問い合わせから、推測ではない顧客の言葉と行動を集める。");
         if (!answer("outcome")) moves.push("提供物の説明ではなく、優先顧客に起きる具体的な変化を一つ定義する。");
-        if (!answer("discoveryMoment") || !answer("mediaChannels")) moves.push(`優先顧客が解決策を探す場面を確認し、${profile.mediaGuide}`);
+        if (!answer("discoveryMoment")) moves.push("AIに質問する直前の状況（急ぎ、比較、旅行計画、稟議など）を確認する。");
+        if (!answer("aiSearchMeasurement")) moves.push("AIで何と聞いたかの聞き取り、流入・問い合わせ・予約経路など、AI検索設計を検証する方法を決める。");
+        if (supportingChannels().length && !answer("mediaRationale")) moves.push(`AI検索を補強する媒体の役割を確認し、${profile.mediaGuide}`);
         if (!answer("evidence") || !answer("evidenceSource")) moves.push("成果の根拠と出典を確認し、未検証の主張は検証計画へ戻す。");
         if (!answer("owner")) moves.push("最初の検証を担当する人、期限、測定指標を決める。");
         return (moves.length ? moves : ["根拠の原資料と現場の提供能力を再確認し、最小単位で公開・測定・改善を繰り返す。"]).slice(0, 3);
@@ -907,20 +949,25 @@
 
       function buildFlags() {
         const flags = [];
-        if (!answer("industryFamily")) flags.push("業種が未設定です。業種別の顧客候補、根拠、媒体、公開前の注意を切り替えるために選んでください。");
+        if (!answer("industryFamily")) flags.push("業種が未設定です。業種別のAI質問候補、根拠、補強媒体、公開前の注意を切り替えるために選んでください。");
         if (!answer("businessModel")) flags.push("販売・利用の形が未設定です。予約・来店、継続、EC、法人決裁、紹介などで顧客の判断過程が変わります。");
-        if (!hasNamedTargetCandidate()) flags.push("比較する対象顧客候補が未登録です。特徴ではなく「人×目的×場面」を3候補ほど出してください。");
-        if (hasNamedTargetCandidate() && scoredTargetCandidates().some(candidate => candidate.score === null)) flags.push("対象顧客候補の評価が未完了です。未確認の項目は無理に高くせず、根拠を集める計画に戻してください。");
-        if (!answer("targetEvidence")) flags.push("優先顧客を選ぶ根拠が未登録です。予約・問合せ・売上・稼働・検索語・レビュー・紹介元など、候補比較に使った事実を記録してください。");
-        if (!answer("targetDecisionReason")) flags.push("第一優先の決定根拠が未登録です。点数だけでなく、提供能力・採算・到達媒体・競合との余白を確認してください。");
+        if (!hasNamedTargetCandidate()) flags.push("比較するAI質問候補が未登録です。特徴ではなく、顧客がAIに何と聞くかを3候補ほど出してください。");
+        if (hasNamedTargetCandidate() && scoredTargetCandidates().some(candidate => candidate.score === null)) flags.push("AI質問候補の評価が未完了です。未確認の項目は無理に高くせず、根拠を集める計画に戻してください。");
+        if (!answer("targetEvidence")) flags.push("AI質問が実際にされる根拠が未登録です。予約・問合せ・検索語・レビュー・紹介元・AIとの会話など、候補比較に使った事実を記録してください。");
+        if (!answer("targetDecisionReason")) flags.push("第一優先のAI質問の決定根拠が未登録です。点数だけでなく、正確に答えられる提供能力・採算・一次情報・選ばれる答えの余白を確認してください。");
+        if (!answer("aiQueryVariants")) flags.push("AI質問の言い換え・検索意図が未登録です。地域・目的・条件・比較軸を変えた顧客の言葉を集めてください。");
+        if (!answer("aiAnswerEssentials")) flags.push("AI回答に必要な事実が未登録です。対象、条件・例外、料金・在庫、場所・時間などを確認してください。");
+        if (!answer("aiSourceInventory")) flags.push("AIが参照でき、顧客自身も確認できる公式の一次情報・FAQ・規約・料金表が未登録です。AI検索での回答採用や順位は保証できないため、原典の整備を優先してください。");
+        if (!answer("aiAnswerEvidence")) flags.push("AI質問・正確な回答・根拠URL・確認担当者の対応表が未登録です。推測や未検証の回答を公開しないでください。");
+        if (!answer("aiSearchMeasurement")) flags.push("AI検索の検証方法が未登録です。AIで何と聞いたか、流入・問い合わせ・予約経路、回答の正確性を確認する方法を決めてください。");
         if (!answer("facts")) flags.push("顧客の実際の声・行動が未登録です。推測だけで顧客像を断定しないでください。");
         if (!answer("outcome")) flags.push("顧客にもたらす成果が未定義です。機能の列挙だけでは訴求を確定できません。");
         if (!answer("scope")) flags.push("成果の対象・条件・例外が未登録です。公開前に必ず補完してください。");
         if (!answer("evidence") || !answer("evidenceSource")) flags.push("裏づけと出典が不足しています。数値、比較、顧客の声、保証を創作しないでください。");
         if (answer("evidenceStatus") !== "提供・確認済み") flags.push("根拠は対外的に断定できる状態ではありません。検証計画として扱ってください。");
-        if (!answer("discoveryMoment") || !answer("mediaChannels")) flags.push("顧客の目の前に出す場面・媒体が未設定です。良い訴求でも、見られなければ選ばれる理由になりません。");
-        if (!answer("mediaRationale")) flags.push("媒体選定の根拠が未登録です。ターゲットの実際の利用行動、検索意図、来店・予約経路から確認してください。");
-        if (!answer("mediaFirstMessage") || !answer("mediaCallToAction")) flags.push("媒体別の最初の伝え方か次の行動が未登録です。媒体ごとに、成果・根拠・行動を一つずつ設計してください。");
+        if (!answer("discoveryMoment")) flags.push("AIに質問する場面が未設定です。良い回答設計でも、顧客の状況と結びつかなければ選ばれる理由になりません。");
+        if (supportingChannels().length && !answer("mediaRationale")) flags.push("AI検索を補強する媒体の役割が未登録です。公式情報の確認、予約・購入、地域での発見、反応検証のどれを担うか確認してください。");
+        if (supportingChannels().length && (!answer("mediaFirstMessage") || !answer("mediaCallToAction"))) flags.push("補強媒体の最初の伝え方か次の行動が未登録です。AI回答と矛盾しない成果・根拠・行動を設計してください。");
         if (!answer("followup")) flags.push("販売後の確認方法が未登録です。満足・不満・失注・解約の声を、安全に学習へ戻す設計が必要です。");
         if (!answer("approval")) flags.push("公開前の事実・法令・提供能力の最終確認者が未登録です。");
         if (flags.length === 0) flags.push({ text: "主要な確認項目が入力されています。外部公開前に、根拠の原資料と提供能力を人が再確認してください。", success: true });
@@ -932,15 +979,16 @@
         const flags = buildFlags();
         strategyBoard.innerHTML = `
           <div class="status-card"><div class="status-label">現在の主張ステータス</div><div class="status-value">${escapeHtml(status.label)}</div></div>
+          ${prioritySection("最重要：AI検索で選ばれる設計（全体の90%）", buildAISearchPlan())}
           ${section("業種別の設計ガイド", industryGuide(), "")}
           ${section("いま最も価値のある次の3手", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
-          ${section("対象顧客候補の比較", targetComparisonReport(), "")}
-          ${section("優先顧客", answer("target"), "まだ設定されていません")}
-          ${section("優先順位の決定根拠", answer("targetDecisionReason"), "実需・提供能力・採算・到達媒体・競合との余白から判断します")}
+          ${section("AIへの質問候補の比較", targetComparisonReport(), "")}
+          ${section("第一優先のAI質問", answer("target"), "まだ設定されていません")}
+          ${section("AI質問の優先順位・決定根拠", answer("targetDecisionReason"), "質問の実在性・正確に答えられるか・事業価値・AI参照情報・選ばれる答えの余白から判断します")}
           ${section("顧客の重要な摩擦", answer("friction"), "顧客の事実と一緒に記録します")}
           ${section("約束する成果", answer("outcome"), "実行可能な変化として定義します")}
           ${section("選ばれる理由の仮説", buildReason(), "")}
-          ${section("顧客の目の前に出す計画", buildMediaPlan(), "")}
+          ${section("AI検索を補強する媒体の計画", buildMediaPlan(), "")}
           ${section("根拠・出典", answer("evidence") ? `${answer("evidence")}\n出典・範囲: ${answer("evidenceSource") || "未登録"}` : "根拠を登録すると、主張との対応を確認できます。", "")}
           <section class="strategy-section"><h3>公開前の確認事項</h3><ul class="flag-list">${flags.map(flag => typeof flag === "object" ? `<li class="success">${escapeHtml(flag.text)}</li>` : `<li>${escapeHtml(flag)}</li>`).join("")}</ul></section>
           <div class="export-actions">
@@ -948,7 +996,7 @@
             <button id="exportBrief" type="button" class="button primary">戦略ブリーフを書き出す</button>
             <button id="resetData" type="button" class="button danger">この端末の回答を削除</button>
           </div>
-          <p class="notice">この画面は、入力内容を整理し、検証が必要な点を明確にするためのものです。成果や競争優位を保証するものではありません。</p>`;
+          <p class="notice">この画面は、入力内容を整理し、AIと顧客が確認できる一次情報を整えるためのものです。外部AIでの回答採用・表示・順位、成果や競争優位を保証するものではありません。</p>`;
 
         document.getElementById("copyPrompt").addEventListener("click", copyPrompt);
         document.getElementById("exportBrief").addEventListener("click", exportBrief);
@@ -961,11 +1009,11 @@
           return `- ${question.label}: ${response || "［未回答］"}`;
         }).join("\n");
         const status = claimStatus().label;
-        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 設計仮説\n${buildReason()}\n\n## 顧客の目の前に出す計画\n${buildMediaPlan()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 媒体はターゲットの実際の利用行動・検索意図・地域性に基づいて選び、媒体別に成果・根拠・次の行動を設計する。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
+        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 最重要：AI検索で選ばれる設計（全体の90%）\n${buildAISearchPlan()}\n\n## 設計仮説\n${buildReason()}\n\n## AI検索を補強する媒体の計画\n${buildMediaPlan()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- ターゲットは、顧客がAIに何と質問する人かで定義する。\n- AI検索を最優先にし、公式の一次情報・FAQ・条件・更新日・根拠を、顧客自身も確認できる形で整える。\n- 外部AIでの回答採用・表示・順位を保証したり、操作できると示唆したりしない。\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 補強媒体は、AI回答の原典確認、予約・購入、地域での発見、反応検証の役割に分ける。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
       }
 
       function generateHandoffPrompt() {
-        return `あなたは、事実に基づく「選ばれる理由」を設計する専門AIです。以下の事業情報をもとに、顧客理解、実現可能な成果、検証可能な根拠、顧客の目の前に出す媒体計画、接点別の実行計画を順に深掘りしてください。\n\n【必須ルール】\n1. 事実・仮説・未確認を必ず分ける。\n2. 実績、数値、比較優位、顧客の声、保証、資格を創作しない。\n3. 根拠が弱い場合は広告文を確定せず、検証計画または提供改善案を出す。\n4. 媒体はターゲットの実際の利用行動、検索意図、地域性、比較場面から選ぶ。媒体ごとに、最初に見せる成果、確認できる根拠、次の行動を分けて提案する。\n5. 顧客の不安や弱さを過度に利用せず、条件・例外・リスクを明示する。\n6. 対外公開の前に、人による事実・法令・提供能力の確認を促す。\n7. 質問は一度に最大3問までにし、回答ごとに要約と次の仮説を示す。\n\n【現在の戦略ブリーフ】\n${generateBrief()}\n\nまず、現時点で強い事実、確認が必要な点、次に聞くべき質問を3つ以内で示してください。`;
+        return `あなたは、事実に基づく「選ばれる理由」を設計する専門AIです。以下の事業情報をもとに、顧客がAIに何と質問するかを起点に、顧客理解、実現可能な成果、検証可能な根拠、AI検索における回答準備、補強媒体、接点別の実行計画を順に深掘りしてください。\n\n【最重要の前提】\n- ターゲットとは、顧客がAIに何と質問する人かです。最初に、顧客の実際の言葉によるAI質問候補を作り、優先順位を決めてください。\n- 設計の90%はAI検索です。各質問に対し、正確な回答、公式の一次情報・FAQ・条件・更新日、確認担当者を対応させてください。\n- 外部AIの回答採用、表示、順位は保証できません。ランキング操作の提案や根拠のない最上級表現はしないでください。\n\n【必須ルール】\n1. 事実・仮説・未確認を必ず分ける。\n2. 実績、数値、比較優位、顧客の声、保証、資格を創作しない。\n3. 根拠が弱い場合は広告文を確定せず、検証計画または提供改善案を出す。\n4. AI検索を補強する媒体は、公式情報の確認、予約・購入、地域での発見、反応検証の役割に分ける。\n5. 顧客の不安や弱さを過度に利用せず、条件・例外・リスクを明示する。\n6. 対外公開の前に、人による事実・法令・提供能力の確認を促す。\n7. 質問は一度に最大3問までにし、回答ごとに要約と次の仮説を示す。\n\n【現在の戦略ブリーフ】\n${generateBrief()}\n\nまず、現時点で強い事実、AI質問の優先候補、確認が必要な点、次に聞くべき質問を3つ以内で示してください。`;
       }
 
       async function copyPrompt() {
@@ -1026,9 +1074,20 @@
             evidence: answer("evidence"),
             reasonHypothesis: buildReason(),
             nextMoves: buildNextMoves(),
+            aiSearch: {
+              priority: "設計全体の90%（最重要）",
+              primaryQuestion: answer("target"),
+              queryVariants: answer("aiQueryVariants"),
+              answerEssentials: answer("aiAnswerEssentials"),
+              sourceInventory: answer("aiSourceInventory"),
+              questionAnswerEvidenceMap: answer("aiAnswerEvidence"),
+              measurement: answer("aiSearchMeasurement"),
+              plan: buildAISearchPlan(),
+              limitation: "外部AIでの回答採用・表示・順位は保証できません。"
+            },
             distribution: {
               discoveryMoment: answer("discoveryMoment"),
-              channels: answerList("mediaChannels"),
+              supportingChannels: supportingChannels(),
               mediaPlan: buildMediaPlan()
             },
             reviewFlags: buildFlags().map(flag => typeof flag === "object" ? flag.text : flag)
