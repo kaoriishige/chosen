@@ -186,6 +186,26 @@
     .choice input { position: absolute; opacity: 0; pointer-events: none; }
     .choice:has(input:checked) { border-color: var(--teal); background: var(--teal-soft); color: #075c56; box-shadow: 0 0 0 3px rgba(15,118,110,.12); }
 
+    .target-matrix { margin-top: 24px; display: grid; gap: 14px; }
+    .matrix-intro { margin: 0; padding: 14px 15px; border-radius: 12px; color: #31564f; background: #effbf8; font-size: .88rem; line-height: 1.6; }
+    .matrix-card { padding: 16px; border: 1px solid #c6d3df; border-radius: 14px; background: #fff; }
+    .matrix-card h3 { margin: 0 0 12px; color: var(--ink-soft); font-size: .94rem; }
+    .matrix-field { display: grid; gap: 5px; margin-top: 12px; }
+    .matrix-field:first-of-type { margin-top: 0; }
+    .matrix-field > span { color: var(--ink-soft); font-size: .8rem; font-weight: 800; }
+    .matrix-field small { color: var(--muted); font-size: .74rem; line-height: 1.45; }
+    .matrix-field input, .matrix-field textarea, .matrix-field select {
+      width: 100%; border: 1px solid #aebccc; border-radius: 9px; padding: 9px 10px; color: var(--ink); background: #fff; outline: none;
+    }
+    .matrix-field textarea { min-height: 74px; resize: vertical; }
+    .matrix-field input:focus, .matrix-field textarea:focus, .matrix-field select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(15,118,110,.13); }
+    .score-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .score-field { display: grid; gap: 4px; padding: 10px; border-radius: 10px; background: var(--surface-alt); }
+    .score-field label { color: var(--ink-soft); font-size: .79rem; font-weight: 800; line-height: 1.35; }
+    .score-field small { color: var(--muted); font-size: .7rem; line-height: 1.35; }
+    .score-field select { padding: 7px 8px; }
+    .matrix-total { grid-column: 1 / -1; padding: 10px; border-radius: 10px; color: #075c56; background: var(--teal-soft); font-size: .85rem; font-weight: 800; }
+
     .expert-view {
       margin-top: 24px; padding: 16px 17px; border-left: 4px solid var(--teal); background: #effbf8; border-radius: 0 12px 12px 0;
     }
@@ -247,6 +267,7 @@
       .stage-count { display: none; }
       .stage-name { font-size: .8rem; }
       .choice-set { grid-template-columns: 1fr; }
+      .score-grid { grid-template-columns: 1fr; }
       .strategy-content { display: block; }
       .actions { align-items: stretch; flex-direction: column-reverse; }
       .action-group { width: 100%; }
@@ -311,11 +332,14 @@
           id: "customer",
           index: "1",
           name: "対象顧客を決める",
-          guidance: "「誰にでも」を避け、購入者・利用者・決裁者を分けて考えます。相性のよい場面に絞るほど、約束と根拠を設計しやすくなります。",
+          guidance: "特徴の列挙から対象を決めません。複数の候補を「人×目的×場面」で出し、実需、提供適合、採算・空き、到達経路、競合との差を事実に基づいて比べます。点数は判断を助ける仮説であり、最終決定には根拠の確認が必要です。",
           questions: [
             { id: "business", title: "あなたの事業を一言で教えてください", helper: "商品・サービス、提供地域や市場、主な提供方法を具体的に書きます。", label: "事業の説明", type: "text", required: true },
             { id: "action", title: "顧客に、次にどんな行動を選んでほしいですか？", helper: "購入、予約、問い合わせ、契約更新、紹介など、ひとつの行動に絞ります。", label: "望む顧客行動", type: "text", required: true },
-            { id: "target", title: "もっとも相性のよい顧客は、どんな人・組織ですか？", helper: "年齢や属性の一般論ではなく、必要性・状況・購買場面を記述します。", label: "優先顧客", type: "text", required: true },
+            { id: "targetMatrix", title: "対象顧客の候補を、根拠と一緒に比較してください", helper: "特徴ではなく「誰が × 何のために × どんな場面で」を候補にします。各項目は、1＝弱い・未確認、3＝一部確認、5＝強い・確認済みの目安です。", label: "対象顧客候補の比較", type: "targetMatrix", required: true },
+            { id: "targetEvidence", title: "候補を比べるための事実は、どこにありますか？", helper: "予約・売上・客単価・稼働・問合せ・検索語・レビュー・紹介元・現場の観察などを、候補ごとに分けて書きます。推測は推測と明記します。", label: "候補比較の根拠・出典", type: "text", required: true },
+            { id: "target", title: "最初に集中する優先顧客は、誰ですか？", helper: "最高点の候補を機械的に選ぶのではなく、実需、提供能力、採算、到達できる媒体、競合との差を踏まえて「人 × 目的 × 場面」で宣言します。", label: "第一優先の対象顧客", type: "text", required: true },
+            { id: "targetDecisionReason", title: "その候補を第一優先にする決め手は何ですか？", helper: "点数、観察事実、今ある空き・人員・商品、到達媒体、競合比較のうち、決定を支える根拠を記録します。", label: "優先順位の決定根拠", type: "text", required: true },
             { id: "decisionRole", title: "購入、利用、承認、紹介に関わる人は誰ですか？", helper: "役割が複数なら、それぞれが気にすることも書きます。", label: "関係者と役割", type: "text" }
           ]
         },
@@ -404,6 +428,23 @@
         }
       ];
 
+      const TARGET_CRITERIA = [
+        { key: "demand", label: "実需の強さ", helper: "予約・問合せ・検索・口コミなど、実際に選ばれた兆し" },
+        { key: "fit", label: "提供適合", helper: "設備・料理・接客・規約が、その目的に確実に応えられるか" },
+        { key: "capacity", label: "採算・空き", helper: "客単価、利益、閑散日、部屋・人員の余力と合うか" },
+        { key: "reach", label: "到達しやすさ", helper: "検索・OTA・SNS・紹介など、実際の到達経路が分かるか" },
+        { key: "gap", label: "競合との余白", helper: "競合より優れることではなく、満たされていない選び方があるか" }
+      ];
+
+      const SCORE_OPTIONS = [
+        ["0", "未評価"],
+        ["1", "1：弱い・未確認"],
+        ["2", "2：兆しはある"],
+        ["3", "3：一部確認"],
+        ["4", "4：強い"],
+        ["5", "5：強い・確認済み"]
+      ];
+
       const allQuestions = stages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
       const initialState = { current: 0, answers: {} };
       let state = loadState();
@@ -434,6 +475,7 @@
       function answerList(id) {
         const value = state.answers[id];
         if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
+        if (value && typeof value === "object") return [];
         const text = String(value || "").trim();
         return text ? [text] : [];
       }
@@ -442,12 +484,67 @@
         return answerList(id).join("、");
       }
 
+      function emptyTargetCandidate() {
+        return { name: "", note: "", demand: "0", fit: "0", capacity: "0", reach: "0", gap: "0" };
+      }
+
+      function normalizeTargetCandidate(candidate) {
+        const source = candidate && typeof candidate === "object" ? candidate : {};
+        const normalized = { name: String(source.name || ""), note: String(source.note || "") };
+        TARGET_CRITERIA.forEach(criteria => {
+          const score = String(source[criteria.key] ?? "0");
+          normalized[criteria.key] = SCORE_OPTIONS.some(([value]) => value === score) ? score : "0";
+        });
+        return normalized;
+      }
+
+      function targetCandidates(id = "targetMatrix") {
+        const value = state.answers[id];
+        const source = Array.isArray(value) ? value : [];
+        return Array.from({ length: 3 }, (_, index) => normalizeTargetCandidate(source[index]));
+      }
+
+      function hasNamedTargetCandidate(candidates = targetCandidates()) {
+        return candidates.some(candidate => candidate.name.trim());
+      }
+
+      function targetScore(candidate) {
+        const values = TARGET_CRITERIA.map(criteria => Number(candidate[criteria.key] || 0));
+        return values.every(value => value >= 1) ? values.reduce((total, value) => total + value, 0) : null;
+      }
+
+      function scoredTargetCandidates() {
+        return targetCandidates()
+          .map((candidate, index) => ({ ...candidate, index, score: targetScore(candidate) }))
+          .filter(candidate => candidate.name.trim())
+          .sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
+      }
+
+      function targetComparisonReport() {
+        const candidates = scoredTargetCandidates();
+        if (!candidates.length) return "対象候補を入力すると、実需・提供適合・採算・到達経路・競合との余白で比較できます。";
+        return candidates.map((candidate, rank) => {
+          const scores = TARGET_CRITERIA.map(criteria => `${criteria.label}: ${candidate[criteria.key] === "0" ? "未評価" : candidate[criteria.key]}`).join(" / ");
+          const total = candidate.score === null ? "総合: 評価未完了" : `総合: ${candidate.score}/25`;
+          const note = candidate.note.trim() ? `判断メモ: ${candidate.note.trim()}` : "判断メモ: 未登録";
+          return `${rank + 1}. ${candidate.name.trim()}\n${total}\n${scores}\n${note}`;
+        }).join("\n\n");
+      }
+
+      function hasAnswer(questionOrId) {
+        const question = typeof questionOrId === "string"
+          ? allQuestions.find(item => item.id === questionOrId)
+          : questionOrId;
+        if (question?.type === "targetMatrix") return hasNamedTargetCandidate(targetCandidates(question.id));
+        return Boolean(answer(question?.id || questionOrId));
+      }
+
       function escapeHtml(value) {
         return String(value || "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#039;", '"': "&quot;" })[char]);
       }
 
       function completeCount(stage) {
-        return stage.questions.filter(question => Boolean(answer(question.id))).length;
+        return stage.questions.filter(question => hasAnswer(question)).length;
       }
 
       function renderStages() {
@@ -465,22 +562,53 @@
         stageList.querySelectorAll("[data-stage]").forEach(button => {
           button.addEventListener("click", () => {
             const selected = stages.find(stage => stage.id === button.dataset.stage);
-            const firstEmpty = allQuestions.findIndex(question => question.stage.id === selected.id && !answer(question.id));
+            const firstEmpty = allQuestions.findIndex(question => question.stage.id === selected.id && !hasAnswer(question));
             state.current = firstEmpty >= 0 ? firstEmpty : allQuestions.findIndex(question => question.stage.id === selected.id);
             saveState(); render();
           });
         });
       }
 
+      function renderTargetMatrix(question) {
+        const candidates = targetCandidates(question.id);
+        const scoreOptions = SCORE_OPTIONS.map(([value, label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join("");
+        return `<section class="target-matrix" aria-label="対象顧客候補の比較表">
+          <p class="matrix-intro">例：<strong>静けさを求める夫婦が、平日に心身を休めるための温泉旅</strong>。<br>「温泉」「料理」「猫」は特徴です。対象は、その特徴を必要とする<strong>人・目的・場面</strong>で書きます。数値の根拠がまだない項目は「未評価」のままにしてください。</p>
+          ${candidates.map((candidate, index) => `<article class="matrix-card">
+            <h3>候補 ${index + 1}</h3>
+            <label class="matrix-field">
+              <span>人 × 目的 × 場面</span>
+              <input data-matrix-row="${index}" data-matrix-key="name" type="text" value="${escapeHtml(candidate.name)}" placeholder="例：愛猫と一緒に静かに温泉旅をしたい夫婦" />
+            </label>
+            <div class="score-grid">
+              ${TARGET_CRITERIA.map(criteria => `<label class="score-field">
+                <span>${escapeHtml(criteria.label)}</span>
+                <small>${escapeHtml(criteria.helper)}</small>
+                <select data-matrix-row="${index}" data-matrix-key="${criteria.key}" aria-label="候補${index + 1}の${escapeHtml(criteria.label)}">
+                  ${scoreOptions.replace(`value="${candidate[criteria.key]}"`, `value="${candidate[criteria.key]}" selected`)}
+                </select>
+              </label>`).join("")}
+              <div class="matrix-total" data-matrix-total="${index}">${targetScore(candidate) === null ? "総合点：評価を埋めると表示されます" : `総合点：${targetScore(candidate)}/25（比較の補助。決定は根拠確認後）`}</div>
+            </div>
+            <label class="matrix-field">
+              <span>この評価の根拠・未確認点</span>
+              <textarea class="matrix-note" data-matrix-row="${index}" data-matrix-key="note" placeholder="例：平日予約の多くが夫婦利用。猫同伴の問い合わせは月に数件。客単価・採算は要確認。">${escapeHtml(candidate.note)}</textarea>
+            </label>
+          </article>`).join("")}
+        </section>`;
+      }
+
       function renderQuestion() {
         const question = allQuestions[state.current];
         const step = state.current + 1;
-        const percentage = Math.round((Object.values(state.answers).filter(Boolean).length / allQuestions.length) * 100);
+        const percentage = Math.round((allQuestions.filter(question => hasAnswer(question)).length / allQuestions.length) * 100);
         progressText.textContent = `${question.stage.index}. ${question.stage.name}`;
         progressCount.textContent = `${step} / ${allQuestions.length}`;
         progressFill.style.width = `${percentage}%`;
 
-        const input = question.type === "choice"
+        const input = question.type === "targetMatrix"
+          ? renderTargetMatrix(question)
+          : question.type === "choice"
           ? `<div class="choice-set" role="radiogroup" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="radio" name="answer" value="${escapeHtml(option)}" ${answer(question.id) === option ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
             </div>`
@@ -509,6 +637,15 @@
           </div>`;
 
         const getInput = () => {
+          if (question.type === "targetMatrix") {
+            return targetCandidates(question.id).map((candidate, index) => {
+              const row = { ...candidate };
+              questionBody.querySelectorAll(`[data-matrix-row="${index}"]`).forEach(inputElement => {
+                row[inputElement.dataset.matrixKey] = inputElement.value;
+              });
+              return normalizeTargetCandidate(row);
+            });
+          }
           if (question.type === "choice") return questionBody.querySelector('input[name="answer"]:checked')?.value || "";
           if (question.type === "multiple") return Array.from(questionBody.querySelectorAll('input[name="answer"]:checked')).map(inputElement => inputElement.value);
           return questionBody.querySelector("#answer")?.value || "";
@@ -517,19 +654,24 @@
         const persist = () => {
           const rawValue = getInput();
           const value = Array.isArray(rawValue) ? rawValue : rawValue.trim();
-          if (Array.isArray(value) ? value.length : value) state.answers[question.id] = value;
+          const isFilled = question.type === "targetMatrix" ? hasNamedTargetCandidate(value) : (Array.isArray(value) ? value.length : value);
+          if (isFilled) state.answers[question.id] = value;
           else delete state.answers[question.id];
           saveState(); renderStages(); renderStrategy();
         };
 
-        if (question.type === "choice" || question.type === "multiple") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
+        if (question.type === "targetMatrix") questionBody.querySelectorAll("[data-matrix-row]").forEach(inputElement => {
+          inputElement.addEventListener("input", persist);
+          inputElement.addEventListener("change", persist);
+        });
+        else if (question.type === "choice" || question.type === "multiple") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
         else questionBody.querySelector("#answer").addEventListener("input", persist);
 
         document.getElementById("backButton").addEventListener("click", () => { if (state.current > 0) { state.current--; saveState(); render(); } });
         document.getElementById("skipButton").addEventListener("click", () => { if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); } });
         document.getElementById("nextButton").addEventListener("click", () => {
           persist();
-          if (question.required && !answer(question.id)) { showToast("この質問は設計の土台です。分かる範囲で入力するか、「あとで答える」を選んでください。"); return; }
+          if (question.required && !hasAnswer(question)) { showToast("この質問は設計の土台です。分かる範囲で入力するか、「あとで答える」を選んでください。"); return; }
           if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); }
           else { render(); showToast("設計図を更新しました。右側の確認事項を解消して、公開前の確認へ進んでください。"); }
         });
@@ -607,6 +749,10 @@
 
       function buildFlags() {
         const flags = [];
+        if (!hasNamedTargetCandidate()) flags.push("比較する対象顧客候補が未登録です。特徴ではなく「人×目的×場面」を3候補ほど出してください。");
+        if (hasNamedTargetCandidate() && scoredTargetCandidates().some(candidate => candidate.score === null)) flags.push("対象顧客候補の評価が未完了です。未確認の項目は無理に高くせず、根拠を集める計画に戻してください。");
+        if (!answer("targetEvidence")) flags.push("優先顧客を選ぶ根拠が未登録です。予約・問合せ・売上・稼働・検索語・レビュー・紹介元など、候補比較に使った事実を記録してください。");
+        if (!answer("targetDecisionReason")) flags.push("第一優先の決定根拠が未登録です。点数だけでなく、提供能力・採算・到達媒体・競合との余白を確認してください。");
         if (!answer("facts")) flags.push("顧客の実際の声・行動が未登録です。推測だけで顧客像を断定しないでください。");
         if (!answer("outcome")) flags.push("顧客にもたらす成果が未定義です。機能の列挙だけでは訴求を確定できません。");
         if (!answer("scope")) flags.push("成果の対象・条件・例外が未登録です。公開前に必ず補完してください。");
@@ -626,7 +772,9 @@
         const flags = buildFlags();
         strategyBoard.innerHTML = `
           <div class="status-card"><div class="status-label">現在の主張ステータス</div><div class="status-value">${escapeHtml(status.label)}</div></div>
+          ${section("対象顧客候補の比較", targetComparisonReport(), "")}
           ${section("優先顧客", answer("target"), "まだ設定されていません")}
+          ${section("優先順位の決定根拠", answer("targetDecisionReason"), "実需・提供能力・採算・到達媒体・競合との余白から判断します")}
           ${section("顧客の重要な摩擦", answer("friction"), "顧客の事実と一緒に記録します")}
           ${section("約束する成果", answer("outcome"), "実行可能な変化として定義します")}
           ${section("選ばれる理由の仮説", buildReason(), "")}
@@ -646,7 +794,10 @@
       }
 
       function generateBrief() {
-        const rows = allQuestions.map(question => `- ${question.label}: ${answer(question.id) || "［未回答］"}`).join("\n");
+        const rows = allQuestions.map(question => {
+          const response = question.type === "targetMatrix" ? targetComparisonReport() : answer(question.id);
+          return `- ${question.label}: ${response || "［未回答］"}`;
+        }).join("\n");
         const status = claimStatus().label;
         return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 設計仮説\n${buildReason()}\n\n## 顧客の目の前に出す計画\n${buildMediaPlan()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 媒体はターゲットの実際の利用行動・検索意図・地域性に基づいて選び、媒体別に成果・根拠・次の行動を設計する。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
       }
@@ -694,11 +845,18 @@
 
       function strategySnapshot() {
         return {
-          progress: { answered: Object.values(state.answers).filter(Boolean).length, total: allQuestions.length },
+          progress: { answered: allQuestions.filter(question => hasAnswer(question)).length, total: allQuestions.length },
           currentQuestion: allQuestions[state.current]?.id,
           claimStatus: claimStatus().label,
           strategy: {
             customer: answer("target"),
+            customerCandidates: scoredTargetCandidates().map(candidate => ({
+              name: candidate.name,
+              score: candidate.score,
+              scores: Object.fromEntries(TARGET_CRITERIA.map(criteria => [criteria.key, Number(candidate[criteria.key] || 0)])),
+              note: candidate.note
+            })),
+            targetDecisionReason: answer("targetDecisionReason"),
             outcome: answer("outcome"),
             evidence: answer("evidence"),
             reasonHypothesis: buildReason(),
