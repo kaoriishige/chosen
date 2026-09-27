@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="顧客に選ばれる理由を、対話を通じて整理・検証・実行するためのワークベンチ" />
+  <meta name="description" content="顧客に選ばれる理由を、ターゲットが実際に見る媒体・接点で設計・検証・実行するためのワークベンチ" />
   <meta name="theme-color" content="#0b1528" />
   <title>選ばれる理由AI | 戦略ワークベンチ</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1528'/%3E%3Cpath d='M17 18h30v9H28v6h15v9H28v4h19v9H17z' fill='%232dd4bf'/%3E%3C/svg%3E" />
@@ -177,6 +177,8 @@
     textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(15,118,110,.13); }
 
     .choice-set { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .choice-set.multiple { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .choice-set.multiple .choice { text-align: left; padding-left: 14px; }
     .choice {
       position: relative; display: block; border: 1px solid #b7c5d4; border-radius: 12px; padding: 13px 11px; text-align: center;
       background: #fff; color: var(--ink-soft); cursor: pointer; font-size: .91rem; font-weight: 750;
@@ -260,7 +262,7 @@
         <div class="brand-mark" aria-hidden="true">R</div>
         <div>
           <h1>選ばれる理由AI</h1>
-          <p>顧客に選ばれる根拠を、対話でつくる戦略ワークベンチ</p>
+          <p>選ばれる理由を、顧客の目の前に出す戦略ワークベンチ</p>
         </div>
       </div>
       <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
@@ -270,7 +272,7 @@
       <aside class="panel" aria-label="対話の進行">
         <div class="panel-header">
           <p class="eyebrow">Conversation flow</p>
-          <h2>7つの設計ステップ</h2>
+          <h2>8つの設計ステップ</h2>
           <p>答えはいつでも修正できます。</p>
         </div>
         <nav id="stageList" class="stage-list" aria-label="設計ステップ"></nav>
@@ -364,10 +366,24 @@
           ]
         },
         {
-          id: "platform",
+          id: "media",
           index: "6",
-          name: "接点ごとに伝える",
-          guidance: "すべての内容を一度に伝えません。顧客、場面、時間、優先順位に応じて、成果と根拠を適切に組み込みます。",
+          name: "顧客の目の前に出す",
+          guidance: "選ばれる理由は、顧客が実際に見ている媒体・場面に現れなければ機能しません。媒体名だけで決めず、ターゲットの検索・比較・移動・相談の行動に根拠を置きます。",
+          questions: [
+            { id: "discoveryMoment", title: "優先顧客は、どんな場面で問題に気づき、解決策を探しますか？", helper: "急ぎ、比較、来店前、旅行計画、引っ越し、困りごとの発生、社内稟議など、実際の状況を書きます。", label: "見つけてもらう場面・検索意図", type: "text", required: true },
+            { id: "mediaChannels", title: "その場面で優先顧客の目の前に出す媒体を選んでください", helper: "実際の利用行動が確認できた媒体を優先します。複数選択できます。", label: "優先媒体", type: "multiple", options: ["Google検索・Googleマップ", "AI検索（ChatGPT・Gemini・Perplexityなど）", "Instagram", "TikTok", "YouTube", "LINE", "X・Facebook", "クチコミ・紹介", "OTA・予約サイト", "比較サイト・専門ポータル", "Google広告などの検索広告", "チラシ・新聞折込", "ポスティング・DM", "地域イベント・店頭", "その他"], required: true },
+            { id: "mediaRationale", title: "なぜ、その顧客はその媒体を見ると言えますか？", helper: "既存顧客への聞き取り、アクセス解析、検索語、来店経路、予約経路、地域性など、事実と仮説を分けて書きます。", label: "媒体選定の根拠・検証仮説", type: "text", required: true },
+            { id: "mediaFirstMessage", title: "媒体ごとに、最初の数秒・一画面で何を見せますか？", helper: "顧客の状況→得られる成果→確認できる根拠の順に、媒体名ごとに改行して書きます。抽象的な自社紹介から始めません。", label: "媒体別の最初の伝え方", type: "text", required: true },
+            { id: "mediaCallToAction", title: "各媒体で、顧客にどの次の行動を選んでもらいますか？", helper: "検索結果を見る、地図で場所を確認する、空室を調べる、資料を見る、予約する、問い合わせる等、媒体に合う行動を決めます。", label: "媒体別の次の行動", type: "text", required: true },
+            { id: "mediaMeasurement", title: "媒体ごとの反応を、何で確認しますか？", helper: "表示、検索、保存、電話、来店、予約、問い合わせ、成約、紹介など、行動に近い指標と確認頻度を決めます。", label: "媒体別の検証指標", type: "text" }
+          ]
+        },
+        {
+          id: "platform",
+          index: "7",
+          name: "接点ごとに一貫して伝える",
+          guidance: "媒体で見つけてもらった後も、Web、商談、提案、購入、利用、販売後まで、同じ成果と根拠を顧客の状況に合わせて伝えます。",
           questions: [
             { id: "touchpoints", title: "顧客はどの接点を通って、選択・購入・利用へ進みますか？", helper: "Web、紹介、広告、商談、提案、導入、サポートなどを時系列で書きます。", label: "顧客接点の流れ", type: "text", required: true },
             { id: "priority", title: "最初に伝えるべき成果と根拠は何ですか？", helper: "限られた時間で理解される優先順位を決めます。", label: "伝える順番", type: "text" },
@@ -376,7 +392,7 @@
         },
         {
           id: "execution",
-          index: "7",
+          index: "8",
           name: "実行し、学び続ける",
           guidance: "選ばれる理由は、広告の中だけでは成立しません。提供・販売後支援・現場の対応まで含め、顧客の声から継続的に見直します。",
           questions: [
@@ -415,8 +431,15 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       }
 
+      function answerList(id) {
+        const value = state.answers[id];
+        if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
+        const text = String(value || "").trim();
+        return text ? [text] : [];
+      }
+
       function answer(id) {
-        return (state.answers[id] || "").trim();
+        return answerList(id).join("、");
       }
 
       function escapeHtml(value) {
@@ -461,6 +484,10 @@
           ? `<div class="choice-set" role="radiogroup" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="radio" name="answer" value="${escapeHtml(option)}" ${answer(question.id) === option ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
             </div>`
+          : question.type === "multiple"
+          ? `<div class="choice-set multiple" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
+              <label class="choice"><input type="checkbox" name="answer" value="${escapeHtml(option)}" ${answerList(question.id).includes(option) ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
+            </div>`
           : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="ここに入力してください">${escapeHtml(answer(question.id))}</textarea>`;
 
         const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
@@ -483,17 +510,19 @@
 
         const getInput = () => {
           if (question.type === "choice") return questionBody.querySelector('input[name="answer"]:checked')?.value || "";
+          if (question.type === "multiple") return Array.from(questionBody.querySelectorAll('input[name="answer"]:checked')).map(inputElement => inputElement.value);
           return questionBody.querySelector("#answer")?.value || "";
         };
 
         const persist = () => {
-          const value = getInput().trim();
-          if (value) state.answers[question.id] = value;
+          const rawValue = getInput();
+          const value = Array.isArray(rawValue) ? rawValue : rawValue.trim();
+          if (Array.isArray(value) ? value.length : value) state.answers[question.id] = value;
           else delete state.answers[question.id];
           saveState(); renderStages(); renderStrategy();
         };
 
-        if (question.type === "choice") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
+        if (question.type === "choice" || question.type === "multiple") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
         else questionBody.querySelector("#answer").addEventListener("input", persist);
 
         document.getElementById("backButton").addEventListener("click", () => { if (state.current > 0) { state.current--; saveState(); render(); } });
@@ -539,6 +568,43 @@
         return `${subject}が${obstacle}「${goal}」を得るために、${method}が役立つ可能性があります。根拠候補は「${proof}」です。これは検証・承認前の設計仮説です。`;
       }
 
+      function mediaGuidance(channel) {
+        const moment = answer("discoveryMoment") || "問題に気づき、解決策を探すとき";
+        const outcome = answer("outcome") || answer("desired") || "顧客が得たい成果";
+        const proof = answer("evidence") || "確認が必要な根拠";
+        const action = answer("mediaCallToAction") || "次の行動";
+        const guides = {
+          "Google検索・Googleマップ": "検索語・地域・営業時間・料金や条件など、今すぐ比較したい情報を正確に見せる。検索結果で選ばれるために、曖昧な表現より具体的な回答を優先する。",
+          "AI検索（ChatGPT・Gemini・Perplexityなど）": "AIが参照・要約しやすいよう、FAQ、対象条件、根拠の出典、更新日を整理する。根拠のない最上級表現や比較優位を置かない。",
+          "Instagram": "保存・共有される前提で、顧客の場面、得られる成果、実際の提供の様子、次の行動を短く一貫して見せる。",
+          "TikTok": "最初の数秒で顧客の状況を言語化し、短い実演や事実で関心をつなぐ。誇張した煽りより、具体的な変化と条件を示す。",
+          "YouTube": "比較や検討に必要な背景、手順、条件、実例を丁寧に説明し、視聴後の次の行動を一つに絞る。",
+          "LINE": "すでに関心を示した人に、予約・確認・再来などの文脈に合う短い情報を届ける。送信頻度と同意を守る。",
+          "X・Facebook": "話題性だけを追わず、顧客が判断に使える事実、地域性、専門性、更新情報を継続して届ける。",
+          "クチコミ・紹介": "利用後に価値を感じた顧客の自発的な声を、許諾と事実確認のもとで扱う。紹介やレビューを強要しない。",
+          "OTA・予約サイト": "予約時の比較に必要な空き状況、料金、条件、設備、評価への回答を揃え、期待と実際の差を小さくする。",
+          "比較サイト・専門ポータル": "比較軸に沿って、対象・条件・根拠を揃える。他社を不当に下げず、自社が合う条件を明確にする。",
+          "Google広告などの検索広告": "検索意図ごとに広告と遷移先を分け、検索語への答え、成果、条件、根拠を一致させる。クリック後に話を変えない。",
+          "チラシ・新聞折込": "地域・生活圏・配布時期に合わせ、一読で分かる顧客の悩み、成果、根拠、連絡方法を一つずつ伝える。",
+          "ポスティング・DM": "対象地域や生活状況に合う理由を明示し、不要な人にも届く前提で、誇張せずに役立つ情報と断りやすさを用意する。",
+          "地域イベント・店頭": "その場で相談・体験・比較できる情報を用意し、担当者が同じ成果と根拠を説明できるようにする。",
+          "その他": "その媒体を顧客が使う場面と、最初に確認したい情報を特定してから、成果・根拠・次の行動を組み立てる。"
+        };
+        return `【${channel}】\n${guides[channel] || guides["その他"]}\n見つけてもらう場面: ${moment}\n最初に伝える成果: ${outcome}\n提示できる根拠: ${proof}\n次の行動: ${action}`;
+      }
+
+      function buildMediaPlan() {
+        const channels = answerList("mediaChannels");
+        const target = answer("target") || "優先顧客";
+        const moment = answer("discoveryMoment");
+        if (!channels.length && !moment) return "顧客が問題に気づく場面と、そのとき実際に見る媒体を選ぶと、媒体別の見せ方が表示されます。";
+        const rationale = answer("mediaRationale") || "媒体を使う根拠・仮説は未登録";
+        const opening = answer("mediaFirstMessage") || "媒体別の最初の伝え方は未登録";
+        const measurement = answer("mediaMeasurement") || "媒体ごとの反応指標は未登録";
+        const channelPlans = channels.length ? channels.map(mediaGuidance).join("\n\n") : "優先媒体を選択してください。";
+        return `${target}が${moment || "解決策を探す場面"}で、選ばれる理由に出会うための計画です。\n\n媒体選定の根拠・仮説: ${rationale}\n\n媒体別の見せ方:\n${channelPlans}\n\n担当者が作る媒体別の最初の伝え方:\n${opening}\n\n確認する反応: ${measurement}\n\n注意: 実証されていない成果、数値、比較、顧客の声、保証は媒体に出さず、検証計画として扱います。`;
+      }
+
       function buildFlags() {
         const flags = [];
         if (!answer("facts")) flags.push("顧客の実際の声・行動が未登録です。推測だけで顧客像を断定しないでください。");
@@ -546,6 +612,9 @@
         if (!answer("scope")) flags.push("成果の対象・条件・例外が未登録です。公開前に必ず補完してください。");
         if (!answer("evidence") || !answer("evidenceSource")) flags.push("裏づけと出典が不足しています。数値、比較、顧客の声、保証を創作しないでください。");
         if (answer("evidenceStatus") !== "提供・確認済み") flags.push("根拠は対外的に断定できる状態ではありません。検証計画として扱ってください。");
+        if (!answer("discoveryMoment") || !answer("mediaChannels")) flags.push("顧客の目の前に出す場面・媒体が未設定です。良い訴求でも、見られなければ選ばれる理由になりません。");
+        if (!answer("mediaRationale")) flags.push("媒体選定の根拠が未登録です。ターゲットの実際の利用行動、検索意図、来店・予約経路から確認してください。");
+        if (!answer("mediaFirstMessage") || !answer("mediaCallToAction")) flags.push("媒体別の最初の伝え方か次の行動が未登録です。媒体ごとに、成果・根拠・行動を一つずつ設計してください。");
         if (!answer("followup")) flags.push("販売後の確認方法が未登録です。満足・不満・失注・解約の声を、安全に学習へ戻す設計が必要です。");
         if (!answer("approval")) flags.push("公開前の事実・法令・提供能力の最終確認者が未登録です。");
         if (flags.length === 0) flags.push({ text: "主要な確認項目が入力されています。外部公開前に、根拠の原資料と提供能力を人が再確認してください。", success: true });
@@ -561,6 +630,7 @@
           ${section("顧客の重要な摩擦", answer("friction"), "顧客の事実と一緒に記録します")}
           ${section("約束する成果", answer("outcome"), "実行可能な変化として定義します")}
           ${section("選ばれる理由の仮説", buildReason(), "")}
+          ${section("顧客の目の前に出す計画", buildMediaPlan(), "")}
           ${section("根拠・出典", answer("evidence") ? `${answer("evidence")}\n出典・範囲: ${answer("evidenceSource") || "未登録"}` : "根拠を登録すると、主張との対応を確認できます。", "")}
           <section class="strategy-section"><h3>公開前の確認事項</h3><ul class="flag-list">${flags.map(flag => typeof flag === "object" ? `<li class="success">${escapeHtml(flag.text)}</li>` : `<li>${escapeHtml(flag)}</li>`).join("")}</ul></section>
           <div class="export-actions">
@@ -578,11 +648,11 @@
       function generateBrief() {
         const rows = allQuestions.map(question => `- ${question.label}: ${answer(question.id) || "［未回答］"}`).join("\n");
         const status = claimStatus().label;
-        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 設計仮説\n${buildReason()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
+        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 設計仮説\n${buildReason()}\n\n## 顧客の目の前に出す計画\n${buildMediaPlan()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 媒体はターゲットの実際の利用行動・検索意図・地域性に基づいて選び、媒体別に成果・根拠・次の行動を設計する。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
       }
 
       function generateHandoffPrompt() {
-        return `あなたは、事実に基づく「選ばれる理由」を設計する専門AIです。以下の事業情報をもとに、顧客理解、実現可能な成果、検証可能な根拠、接点別の実行計画を順に深掘りしてください。\n\n【必須ルール】\n1. 事実・仮説・未確認を必ず分ける。\n2. 実績、数値、比較優位、顧客の声、保証、資格を創作しない。\n3. 根拠が弱い場合は広告文を確定せず、検証計画または提供改善案を出す。\n4. 顧客の不安や弱さを過度に利用せず、条件・例外・リスクを明示する。\n5. 対外公開の前に、人による事実・法令・提供能力の確認を促す。\n6. 質問は一度に最大3問までにし、回答ごとに要約と次の仮説を示す。\n\n【現在の戦略ブリーフ】\n${generateBrief()}\n\nまず、現時点で強い事実、確認が必要な点、次に聞くべき質問を3つ以内で示してください。`;
+        return `あなたは、事実に基づく「選ばれる理由」を設計する専門AIです。以下の事業情報をもとに、顧客理解、実現可能な成果、検証可能な根拠、顧客の目の前に出す媒体計画、接点別の実行計画を順に深掘りしてください。\n\n【必須ルール】\n1. 事実・仮説・未確認を必ず分ける。\n2. 実績、数値、比較優位、顧客の声、保証、資格を創作しない。\n3. 根拠が弱い場合は広告文を確定せず、検証計画または提供改善案を出す。\n4. 媒体はターゲットの実際の利用行動、検索意図、地域性、比較場面から選ぶ。媒体ごとに、最初に見せる成果、確認できる根拠、次の行動を分けて提案する。\n5. 顧客の不安や弱さを過度に利用せず、条件・例外・リスクを明示する。\n6. 対外公開の前に、人による事実・法令・提供能力の確認を促す。\n7. 質問は一度に最大3問までにし、回答ごとに要約と次の仮説を示す。\n\n【現在の戦略ブリーフ】\n${generateBrief()}\n\nまず、現時点で強い事実、確認が必要な点、次に聞くべき質問を3つ以内で示してください。`;
       }
 
       async function copyPrompt() {
@@ -632,6 +702,11 @@
             outcome: answer("outcome"),
             evidence: answer("evidence"),
             reasonHypothesis: buildReason(),
+            distribution: {
+              discoveryMoment: answer("discoveryMoment"),
+              channels: answerList("mediaChannels"),
+              mediaPlan: buildMediaPlan()
+            },
             reviewFlags: buildFlags().map(flag => typeof flag === "object" ? flag.text : flag)
           }
         };
