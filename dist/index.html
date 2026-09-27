@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="顧客に選ばれる理由を、対話を通じて整理・検証・実行するためのワークベンチ" />
+  <meta name="theme-color" content="#0b1528" />
+  <title>選ばれる理由AI | 戦略ワークベンチ</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1528'/%3E%3Cpath d='M17 18h30v9H28v6h15v9H28v4h19v9H17z' fill='%232dd4bf'/%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --ink: #0b1528;
+      --ink-soft: #293951;
+      --muted: #607087;
+      --line: #d8e1ea;
+      --canvas: #eef3f8;
+      --surface: #ffffff;
+      --surface-alt: #f7fafc;
+      --teal: #0f766e;
+      --teal-soft: #dff7f2;
+      --sky: #e8f3ff;
+      --amber: #a85f00;
+      --amber-soft: #fff5e3;
+      --rose: #a42942;
+      --rose-soft: #fff0f3;
+      --success: #1b7252;
+      --shadow: 0 14px 38px rgba(15, 33, 57, .08);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, .045) 1px, transparent 1px) 0 0 / 36px 36px,
+        linear-gradient(rgba(15, 118, 110, .045) 1px, transparent 1px) 0 0 / 36px 36px,
+        var(--canvas);
+      min-width: 320px;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    button, textarea, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .app-shell { min-height: 100vh; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px clamp(20px, 4vw, 64px);
+      background: rgba(11, 21, 40, .97);
+      color: #fff;
+      border-bottom: 3px solid #2dd4bf;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #2dd4bf;
+      color: var(--ink);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      font-size: 25px;
+    }
+
+    .brand h1 { margin: 0; font-size: clamp(1.05rem, 2vw, 1.35rem); letter-spacing: .02em; }
+    .brand p { margin: 1px 0 0; font-size: .82rem; color: #b9c7d8; }
+
+    .privacy-note {
+      margin: 0;
+      color: #d6e4f2;
+      font-size: .82rem;
+      text-align: right;
+      max-width: 36rem;
+    }
+
+    .workspace {
+      width: min(1560px, 100%);
+      margin: 0 auto;
+      padding: 28px clamp(18px, 3vw, 52px) 48px;
+      display: grid;
+      grid-template-columns: minmax(230px, 0.72fr) minmax(420px, 1.5fr) minmax(320px, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.96);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 18px 20px 15px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-alt);
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--teal);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .panel-header h2 { margin: 0; font-size: 1.05rem; }
+    .panel-header p { margin: 5px 0 0; color: var(--muted); font-size: .87rem; }
+
+    .stage-list { padding: 10px; }
+
+    .stage-button {
+      appearance: none;
+      border: 0;
+      border-radius: 11px;
+      width: 100%;
+      padding: 11px 10px;
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 9px;
+      background: transparent;
+      text-align: left;
+      color: var(--ink-soft);
+      transition: background .18s, color .18s, transform .18s;
+    }
+    .stage-button:hover { background: var(--sky); }
+    .stage-button.active { background: var(--teal-soft); color: #064d48; }
+    .stage-button.complete .stage-index { background: var(--success); color: white; border-color: var(--success); }
+
+    .stage-index {
+      width: 28px; height: 28px; display: grid; place-items: center;
+      border-radius: 50%; border: 1px solid #b8c6d5; font-size: .75rem; font-weight: 800;
+    }
+    .stage-name { font-size: .92rem; font-weight: 750; line-height: 1.25; }
+    .stage-count { color: var(--muted); font-size: .73rem; white-space: nowrap; }
+
+    .stage-footer { padding: 14px 18px 18px; border-top: 1px solid var(--line); }
+    .storage-note { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+
+    .question-panel { min-height: 664px; display: flex; flex-direction: column; }
+    .question-top { padding: 26px clamp(22px, 3vw, 38px) 18px; }
+    .progress-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: .83rem; }
+    .progress-bar { height: 7px; margin: 10px 0 0; background: #dce5ee; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #0f766e, #2dd4bf); transition: width .2s ease; }
+
+    .question-body { padding: 14px clamp(22px, 3vw, 38px) 30px; flex: 1; }
+    .stage-kicker { color: var(--teal); font-size: .85rem; font-weight: 800; letter-spacing: .08em; }
+    .question-title { margin: 10px 0 8px; font-size: clamp(1.35rem, 2.6vw, 2rem); line-height: 1.35; letter-spacing: -.025em; }
+    .question-helper { margin: 0; color: var(--muted); }
+
+    label[for="answer"] { display: block; margin: 26px 0 8px; color: var(--ink-soft); font-size: .88rem; font-weight: 800; }
+    textarea {
+      width: 100%; min-height: 175px; resize: vertical; border: 1px solid #aebccc; border-radius: 12px;
+      padding: 15px; color: var(--ink); background: #fff; outline: none; line-height: 1.65;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(15,118,110,.13); }
+
+    .choice-set { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .choice {
+      position: relative; display: block; border: 1px solid #b7c5d4; border-radius: 12px; padding: 13px 11px; text-align: center;
+      background: #fff; color: var(--ink-soft); cursor: pointer; font-size: .91rem; font-weight: 750;
+    }
+    .choice input { position: absolute; opacity: 0; pointer-events: none; }
+    .choice:has(input:checked) { border-color: var(--teal); background: var(--teal-soft); color: #075c56; box-shadow: 0 0 0 3px rgba(15,118,110,.12); }
+
+    .expert-view {
+      margin-top: 24px; padding: 16px 17px; border-left: 4px solid var(--teal); background: #effbf8; border-radius: 0 12px 12px 0;
+    }
+    .expert-view h3 { margin: 0 0 5px; font-size: .92rem; }
+    .expert-view p { margin: 0; color: #31564f; font-size: .9rem; }
+
+    .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 28px; }
+    .action-group { display: flex; gap: 9px; }
+    .button {
+      border: 1px solid transparent; border-radius: 10px; padding: 10px 15px; font-weight: 800; font-size: .9rem;
+      transition: transform .18s, background .18s, border-color .18s;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button:focus-visible, .stage-button:focus-visible { outline: 3px solid #5aaef8; outline-offset: 2px; }
+    .button.primary { color: white; background: var(--ink); }
+    .button.primary:hover { background: #182c4a; }
+    .button.secondary { color: var(--ink-soft); background: #fff; border-color: #bdcad7; }
+    .button.ghost { color: var(--teal); background: transparent; border-color: transparent; }
+    .button.danger { color: var(--rose); background: transparent; border-color: transparent; }
+
+    .strategy-panel { position: sticky; top: 18px; }
+    .strategy-content { padding: 18px; }
+    .status-card { padding: 14px; border-radius: 13px; background: var(--sky); border: 1px solid #c6dcf6; }
+    .status-label { color: var(--muted); font-size: .77rem; font-weight: 800; }
+    .status-value { margin-top: 3px; color: #104475; font-weight: 850; font-size: 1rem; }
+
+    .strategy-section { padding: 17px 0; border-bottom: 1px solid var(--line); }
+    .strategy-section:last-of-type { border-bottom: 0; }
+    .strategy-section h3 { margin: 0 0 8px; font-size: .95rem; }
+    .strategy-section p { margin: 0; color: var(--ink-soft); font-size: .9rem; white-space: pre-wrap; }
+    .strategy-section .placeholder { color: var(--muted); font-style: italic; }
+
+    .flag-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .flag-list li { position: relative; padding-left: 20px; color: var(--ink-soft); font-size: .84rem; }
+    .flag-list li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+    .flag-list li.success::before { background: var(--success); }
+
+    .export-actions { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 18px; }
+    .export-actions .button { width: 100%; }
+    .notice { margin: 13px 0 0; color: var(--muted); font-size: .77rem; line-height: 1.5; }
+
+    .toast { position: fixed; right: 18px; bottom: 18px; z-index: 4; max-width: min(420px, calc(100vw - 36px));
+      padding: 12px 15px; background: var(--ink); color: #fff; border-radius: 11px; box-shadow: 0 10px 26px rgba(11,21,40,.28);
+      transform: translateY(150%); opacity: 0; transition: transform .22s ease, opacity .22s ease; font-size: .88rem; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 1180px) {
+      .workspace { grid-template-columns: 230px minmax(0, 1fr); }
+      .strategy-panel { grid-column: 1 / -1; position: static; }
+      .strategy-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+      .status-card, .export-actions, .notice { grid-column: 1 / -1; }
+    }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; padding: 16px 18px; gap: 10px; }
+      .privacy-note { text-align: left; }
+      .workspace { padding: 18px 14px 36px; grid-template-columns: 1fr; gap: 14px; }
+      .stage-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; }
+      .stage-button { grid-template-columns: 26px minmax(0,1fr); padding: 9px 7px; }
+      .stage-count { display: none; }
+      .stage-name { font-size: .8rem; }
+      .choice-set { grid-template-columns: 1fr; }
+      .strategy-content { display: block; }
+      .actions { align-items: stretch; flex-direction: column-reverse; }
+      .action-group { width: 100%; }
+      .action-group .button { flex: 1; }
+      .button.primary { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">R</div>
+        <div>
+          <h1>選ばれる理由AI</h1>
+          <p>顧客に選ばれる根拠を、対話でつくる戦略ワークベンチ</p>
+        </div>
+      </div>
+      <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
+    </header>
+
+    <section class="workspace" aria-label="選ばれる理由をつくるワークスペース">
+      <aside class="panel" aria-label="対話の進行">
+        <div class="panel-header">
+          <p class="eyebrow">Conversation flow</p>
+          <h2>7つの設計ステップ</h2>
+          <p>答えはいつでも修正できます。</p>
+        </div>
+        <nav id="stageList" class="stage-list" aria-label="設計ステップ"></nav>
+        <div class="stage-footer">
+          <p class="storage-note">個人情報、未公表情報、許諾のない顧客の発言は入力しないでください。</p>
+        </div>
+      </aside>
+
+      <section class="panel question-panel" aria-live="polite">
+        <div class="question-top">
+          <div class="progress-row"><span id="progressText">準備中</span><span id="progressCount">0 / 0</span></div>
+          <div class="progress-bar" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+        </div>
+        <div id="questionBody" class="question-body"></div>
+      </section>
+
+      <aside class="panel strategy-panel" aria-label="戦略ボード">
+        <div class="panel-header">
+          <p class="eyebrow">Live strategy board</p>
+          <h2>選ばれる理由の設計図</h2>
+          <p>回答は「事実・仮説・未確認」に分けて扱います。</p>
+        </div>
+        <div id="strategyBoard" class="strategy-content"></div>
+      </aside>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE_KEY = "because-ai-expert-v1";
+      const stages = [
+        {
+          id: "customer",
+          index: "1",
+          name: "対象顧客を決める",
+          guidance: "「誰にでも」を避け、購入者・利用者・決裁者を分けて考えます。相性のよい場面に絞るほど、約束と根拠を設計しやすくなります。",
+          questions: [
+            { id: "business", title: "あなたの事業を一言で教えてください", helper: "商品・サービス、提供地域や市場、主な提供方法を具体的に書きます。", label: "事業の説明", type: "text", required: true },
+            { id: "action", title: "顧客に、次にどんな行動を選んでほしいですか？", helper: "購入、予約、問い合わせ、契約更新、紹介など、ひとつの行動に絞ります。", label: "望む顧客行動", type: "text", required: true },
+            { id: "target", title: "もっとも相性のよい顧客は、どんな人・組織ですか？", helper: "年齢や属性の一般論ではなく、必要性・状況・購買場面を記述します。", label: "優先顧客", type: "text", required: true },
+            { id: "decisionRole", title: "購入、利用、承認、紹介に関わる人は誰ですか？", helper: "役割が複数なら、それぞれが気にすることも書きます。", label: "関係者と役割", type: "text" }
+          ]
+        },
+        {
+          id: "insight",
+          index: "2",
+          name: "顧客を理解する",
+          guidance: "想像と事実を混ぜないことが重要です。顧客の言葉や行動は、許諾と匿名化を前提に、観察事実として残します。",
+          questions: [
+            { id: "facts", title: "顧客が実際に話したこと・行ったことは何ですか？", helper: "商談、問い合わせ、レビュー、失注、継続、サポート記録などから、創作せずに要約します。", label: "観察された事実", type: "text", required: true },
+            { id: "friction", title: "顧客が避けたい摩擦・不安・失敗は何ですか？", helper: "費用、時間、品質、手続き、不確実性、社内説明の難しさなどを記入します。", label: "避けたいこと", type: "text", required: true },
+            { id: "desired", title: "顧客が得たい状態は何ですか？", helper: "単なる機能ではなく、仕事や生活がどう変わるかを表現します。", label: "望む状態", type: "text", required: true },
+            { id: "alternatives", title: "顧客は何と比較し、どんな代替手段を使っていますか？", helper: "競合、内製、先送り、既存サービスなど、現実の選択肢を書きます。", label: "比較・代替手段", type: "text" }
+          ]
+        },
+        {
+          id: "outcome",
+          index: "3",
+          name: "約束する成果を決める",
+          guidance: "約束は魅力的である前に、実現可能でなければなりません。対象、条件、例外、実行体制を先に明確にします。",
+          questions: [
+            { id: "outcome", title: "あなたが実現できる、最も重要な成果は何ですか？", helper: "「提供するもの」ではなく、顧客に起きる変化で書きます。", label: "約束する成果", type: "text", required: true },
+            { id: "scope", title: "その成果が成立する対象・条件・期限・例外は何ですか？", helper: "できない範囲も同じくらい大切です。不明なら「要確認」と書きます。", label: "成果の範囲と条件", type: "text", required: true },
+            { id: "delivery", title: "誰が、どの仕組みで、その成果を実行しますか？", helper: "担当、工程、供給能力、品質確認、エスカレーションを簡潔に記入します。", label: "提供・実行の仕組み", type: "text", required: true }
+          ]
+        },
+        {
+          id: "evidence",
+          index: "4",
+          name: "根拠を確認する",
+          guidance: "証拠が弱い主張は、魅力的に言い換えるのではなく、検証・改善の対象に戻します。数字・比較・顧客の声・保証は創作できません。",
+          questions: [
+            { id: "evidence", title: "成果を裏づける事実・仕組み・実績は何ですか？", helper: "工程、測定結果、第三者確認、資格、運用記録、許諾済み事例などを書きます。", label: "根拠の内容", type: "text", required: true },
+            { id: "evidenceSource", title: "その根拠は、どこで確認できますか？", helper: "出典、時期、対象範囲、測定方法、担当者を記入します。", label: "出典と適用範囲", type: "text", required: true },
+            { id: "evidenceStatus", title: "根拠の検証状況を選んでください", helper: "「提供・確認済み」でも、対外公開前には人による最終確認が必要です。", label: "検証状況", type: "choice", options: ["未検証", "検証中", "提供・確認済み"], required: true },
+            { id: "claimLimits", title: "対外的に伝える際の条件・注意点は何ですか？", helper: "比較条件、対象外、料金条件、地域、法規制、許可の有無などを記入します。", label: "主張の条件・例外", type: "text" }
+          ]
+        },
+        {
+          id: "innovation",
+          index: "5",
+          name: "価値を改善する",
+          guidance: "未完成の案は外向けの根拠ではありません。小さく検証し、顧客への影響と実行能力を確認してから、提供価値に加えます。",
+          questions: [
+            { id: "difference", title: "顧客にとって意味のある違いは何ですか？", helper: "機能の違いだけでなく、手間、安心、品質、継続性、総コストへの違いを考えます。", label: "提供上の違い", type: "text" },
+            { id: "improvement", title: "成果や根拠を強くするために、何を改善・検証できますか？", helper: "商品、価格、保証、提供プロセス、教育、測定方法などから選びます。", label: "改善・実験の候補", type: "text" },
+            { id: "risks", title: "その改善で起こりうるリスクや、守るべき境界は何ですか？", helper: "顧客影響、品質、安全性、法務、供給能力、プライバシーを確認します。", label: "リスクとガードレール", type: "text" }
+          ]
+        },
+        {
+          id: "platform",
+          index: "6",
+          name: "接点ごとに伝える",
+          guidance: "すべての内容を一度に伝えません。顧客、場面、時間、優先順位に応じて、成果と根拠を適切に組み込みます。",
+          questions: [
+            { id: "touchpoints", title: "顧客はどの接点を通って、選択・購入・利用へ進みますか？", helper: "Web、紹介、広告、商談、提案、導入、サポートなどを時系列で書きます。", label: "顧客接点の流れ", type: "text", required: true },
+            { id: "priority", title: "最初に伝えるべき成果と根拠は何ですか？", helper: "限られた時間で理解される優先順位を決めます。", label: "伝える順番", type: "text" },
+            { id: "messageOwner", title: "各接点で、誰が内容の正確さを管理しますか？", helper: "営業、マーケティング、現場、法務、経営などの役割を記入します。", label: "メッセージの責任者", type: "text" }
+          ]
+        },
+        {
+          id: "execution",
+          index: "7",
+          name: "実行し、学び続ける",
+          guidance: "選ばれる理由は、広告の中だけでは成立しません。提供・販売後支援・現場の対応まで含め、顧客の声から継続的に見直します。",
+          questions: [
+            { id: "owner", title: "実行の責任者、期限、必要な資源は何ですか？", helper: "既存の仕事との優先順位も含めて、実行可能な単位にします。", label: "実行計画", type: "text", required: true },
+            { id: "measurement", title: "何を測定し、何が起きたら改善・停止・継続を判断しますか？", helper: "成果指標、基準値、確認頻度、判断者を記入します。", label: "測定と判断", type: "text", required: true },
+            { id: "followup", title: "販売後に、どのように顧客と現場の声を集めて対応しますか？", helper: "問い合わせ、失注、返品、解約、満足、紹介を含め、同意とプライバシーを守る方法を書きます。", label: "販売後のフォローと学習", type: "text", required: true },
+            { id: "approval", title: "対外表現を公開する前に、誰が最終確認しますか？", helper: "事実確認、法令・業界ルール、提供能力、顧客同意を確認する責任者を決めます。", label: "公開前の承認者", type: "text", required: true }
+          ]
+        }
+      ];
+
+      const allQuestions = stages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
+      const initialState = { current: 0, answers: {} };
+      let state = loadState();
+      let toastTimer;
+
+      const stageList = document.getElementById("stageList");
+      const questionBody = document.getElementById("questionBody");
+      const strategyBoard = document.getElementById("strategyBoard");
+      const progressText = document.getElementById("progressText");
+      const progressCount = document.getElementById("progressCount");
+      const progressFill = document.getElementById("progressFill");
+      const toast = document.getElementById("toast");
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (saved && typeof saved.current === "number" && saved.answers) {
+            return { current: Math.min(Math.max(saved.current, 0), allQuestions.length - 1), answers: saved.answers };
+          }
+        } catch (_) {}
+        return { ...initialState, answers: {} };
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function answer(id) {
+        return (state.answers[id] || "").trim();
+      }
+
+      function escapeHtml(value) {
+        return String(value || "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#039;", '"': "&quot;" })[char]);
+      }
+
+      function completeCount(stage) {
+        return stage.questions.filter(question => Boolean(answer(question.id))).length;
+      }
+
+      function renderStages() {
+        const currentStage = allQuestions[state.current].stage.id;
+        stageList.innerHTML = stages.map(stage => {
+          const complete = completeCount(stage);
+          const isComplete = complete === stage.questions.length;
+          return `
+            <button class="stage-button ${currentStage === stage.id ? "active" : ""} ${isComplete ? "complete" : ""}" type="button" data-stage="${stage.id}" aria-current="${currentStage === stage.id ? "step" : "false"}">
+              <span class="stage-index">${isComplete ? "✓" : stage.index}</span>
+              <span class="stage-name">${escapeHtml(stage.name)}</span>
+              <span class="stage-count">${complete}/${stage.questions.length}</span>
+            </button>`;
+        }).join("");
+        stageList.querySelectorAll("[data-stage]").forEach(button => {
+          button.addEventListener("click", () => {
+            const selected = stages.find(stage => stage.id === button.dataset.stage);
+            const firstEmpty = allQuestions.findIndex(question => question.stage.id === selected.id && !answer(question.id));
+            state.current = firstEmpty >= 0 ? firstEmpty : allQuestions.findIndex(question => question.stage.id === selected.id);
+            saveState(); render();
+          });
+        });
+      }
+
+      function renderQuestion() {
+        const question = allQuestions[state.current];
+        const step = state.current + 1;
+        const percentage = Math.round((Object.values(state.answers).filter(Boolean).length / allQuestions.length) * 100);
+        progressText.textContent = `${question.stage.index}. ${question.stage.name}`;
+        progressCount.textContent = `${step} / ${allQuestions.length}`;
+        progressFill.style.width = `${percentage}%`;
+
+        const input = question.type === "choice"
+          ? `<div class="choice-set" role="radiogroup" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
+              <label class="choice"><input type="radio" name="answer" value="${escapeHtml(option)}" ${answer(question.id) === option ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
+            </div>`
+          : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="ここに入力してください">${escapeHtml(answer(question.id))}</textarea>`;
+
+        const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
+        questionBody.innerHTML = `
+          <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
+          <h2 class="question-title">${escapeHtml(question.title)}</h2>
+          <p class="question-helper">${escapeHtml(question.helper)}</p>
+          ${input}
+          <section class="expert-view" aria-label="専門家の観点">
+            <h3>専門家の観点</h3>
+            <p>${escapeHtml(question.stage.guidance)}</p>
+          </section>
+          <div class="actions">
+            <div class="action-group">
+              <button id="backButton" type="button" class="button secondary" ${state.current === 0 ? "disabled" : ""}>戻る</button>
+              <button id="skipButton" type="button" class="button ghost">あとで答える</button>
+            </div>
+            <button id="nextButton" type="button" class="button primary">${nextLabel}</button>
+          </div>`;
+
+        const getInput = () => {
+          if (question.type === "choice") return questionBody.querySelector('input[name="answer"]:checked')?.value || "";
+          return questionBody.querySelector("#answer")?.value || "";
+        };
+
+        const persist = () => {
+          const value = getInput().trim();
+          if (value) state.answers[question.id] = value;
+          else delete state.answers[question.id];
+          saveState(); renderStages(); renderStrategy();
+        };
+
+        if (question.type === "choice") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
+        else questionBody.querySelector("#answer").addEventListener("input", persist);
+
+        document.getElementById("backButton").addEventListener("click", () => { if (state.current > 0) { state.current--; saveState(); render(); } });
+        document.getElementById("skipButton").addEventListener("click", () => { if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); } });
+        document.getElementById("nextButton").addEventListener("click", () => {
+          persist();
+          if (question.required && !answer(question.id)) { showToast("この質問は設計の土台です。分かる範囲で入力するか、「あとで答える」を選んでください。"); return; }
+          if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); }
+          else { render(); showToast("設計図を更新しました。右側の確認事項を解消して、公開前の確認へ進んでください。"); }
+        });
+      }
+
+      function claimStatus() {
+        const level = answer("evidenceStatus");
+        const hasEvidence = Boolean(answer("evidence"));
+        const hasSource = Boolean(answer("evidenceSource"));
+        const hasScope = Boolean(answer("scope")) && Boolean(answer("claimLimits"));
+        if (!hasEvidence || !hasSource) return { label: "根拠の登録が必要", className: "warning" };
+        if (level === "未検証") return { label: "社内検証用（対外公開不可）", className: "warning" };
+        if (level === "検証中") return { label: "検証中（対外断定不可）", className: "warning" };
+        if (level === "提供・確認済み" && hasScope && answer("approval")) return { label: "公開候補（人の最終確認が必要）", className: "ready" };
+        return { label: "確認情報を補完中", className: "warning" };
+      }
+
+      function section(title, text, fallback) {
+        const content = text ? escapeHtml(text) : `<span class="placeholder">${escapeHtml(fallback)}</span>`;
+        return `<section class="strategy-section"><h3>${escapeHtml(title)}</h3><p>${content}</p></section>`;
+      }
+
+      function buildReason() {
+        const target = answer("target");
+        const friction = answer("friction");
+        const desired = answer("desired");
+        const outcome = answer("outcome");
+        const delivery = answer("delivery");
+        const evidence = answer("evidence");
+        if (!target && !outcome && !evidence) return "回答が集まると、ここに顧客・成果・根拠をつないだ仮説が表示されます。";
+        const subject = target || "優先顧客";
+        const goal = outcome || desired || "望む成果";
+        const obstacle = friction ? `「${friction}」を避けながら` : "自分に合う選択をするために";
+        const method = delivery || "提供の仕組み";
+        const proof = evidence || "未登録の根拠";
+        return `${subject}が${obstacle}「${goal}」を得るために、${method}が役立つ可能性があります。根拠候補は「${proof}」です。これは検証・承認前の設計仮説です。`;
+      }
+
+      function buildFlags() {
+        const flags = [];
+        if (!answer("facts")) flags.push("顧客の実際の声・行動が未登録です。推測だけで顧客像を断定しないでください。");
+        if (!answer("outcome")) flags.push("顧客にもたらす成果が未定義です。機能の列挙だけでは訴求を確定できません。");
+        if (!answer("scope")) flags.push("成果の対象・条件・例外が未登録です。公開前に必ず補完してください。");
+        if (!answer("evidence") || !answer("evidenceSource")) flags.push("裏づけと出典が不足しています。数値、比較、顧客の声、保証を創作しないでください。");
+        if (answer("evidenceStatus") !== "提供・確認済み") flags.push("根拠は対外的に断定できる状態ではありません。検証計画として扱ってください。");
+        if (!answer("followup")) flags.push("販売後の確認方法が未登録です。満足・不満・失注・解約の声を、安全に学習へ戻す設計が必要です。");
+        if (!answer("approval")) flags.push("公開前の事実・法令・提供能力の最終確認者が未登録です。");
+        if (flags.length === 0) flags.push({ text: "主要な確認項目が入力されています。外部公開前に、根拠の原資料と提供能力を人が再確認してください。", success: true });
+        return flags;
+      }
+
+      function renderStrategy() {
+        const status = claimStatus();
+        const flags = buildFlags();
+        strategyBoard.innerHTML = `
+          <div class="status-card"><div class="status-label">現在の主張ステータス</div><div class="status-value">${escapeHtml(status.label)}</div></div>
+          ${section("優先顧客", answer("target"), "まだ設定されていません")}
+          ${section("顧客の重要な摩擦", answer("friction"), "顧客の事実と一緒に記録します")}
+          ${section("約束する成果", answer("outcome"), "実行可能な変化として定義します")}
+          ${section("選ばれる理由の仮説", buildReason(), "")}
+          ${section("根拠・出典", answer("evidence") ? `${answer("evidence")}\n出典・範囲: ${answer("evidenceSource") || "未登録"}` : "根拠を登録すると、主張との対応を確認できます。", "")}
+          <section class="strategy-section"><h3>公開前の確認事項</h3><ul class="flag-list">${flags.map(flag => typeof flag === "object" ? `<li class="success">${escapeHtml(flag.text)}</li>` : `<li>${escapeHtml(flag)}</li>`).join("")}</ul></section>
+          <div class="export-actions">
+            <button id="copyPrompt" type="button" class="button secondary">専門AIへの引継ぎをコピー</button>
+            <button id="exportBrief" type="button" class="button primary">戦略ブリーフを書き出す</button>
+            <button id="resetData" type="button" class="button danger">この端末の回答を削除</button>
+          </div>
+          <p class="notice">この画面は、入力内容を整理し、検証が必要な点を明確にするためのものです。成果や競争優位を保証するものではありません。</p>`;
+
+        document.getElementById("copyPrompt").addEventListener("click", copyPrompt);
+        document.getElementById("exportBrief").addEventListener("click", exportBrief);
+        document.getElementById("resetData").addEventListener("click", resetData);
+      }
+
+      function generateBrief() {
+        const rows = allQuestions.map(question => `- ${question.label}: ${answer(question.id) || "［未回答］"}`).join("\n");
+        const status = claimStatus().label;
+        return `# 選ばれる理由：戦略ブリーフ\n\n作成日: ${new Date().toLocaleDateString("ja-JP")}\n主張ステータス: ${status}\n\n## 設計仮説\n${buildReason()}\n\n## 入力内容\n${rows}\n\n## 公開前の確認事項\n${buildFlags().map(flag => `- ${typeof flag === "object" ? flag.text : flag}`).join("\n")}\n\n## 運用ルール\n- 事実、仮説、未確認事項を分ける。\n- 実証されていない数値、比較、顧客の声、保証、資格を作らない。\n- 個人情報や許諾のない顧客の発言を公開しない。\n- 条件・例外・提供能力を明示し、公開前に担当者が確認する。\n- 販売後の顧客・現場の反応から、改善・停止・継続を判断する。\n`;
+      }
+
+      function generateHandoffPrompt() {
+        return `あなたは、事実に基づく「選ばれる理由」を設計する専門AIです。以下の事業情報をもとに、顧客理解、実現可能な成果、検証可能な根拠、接点別の実行計画を順に深掘りしてください。\n\n【必須ルール】\n1. 事実・仮説・未確認を必ず分ける。\n2. 実績、数値、比較優位、顧客の声、保証、資格を創作しない。\n3. 根拠が弱い場合は広告文を確定せず、検証計画または提供改善案を出す。\n4. 顧客の不安や弱さを過度に利用せず、条件・例外・リスクを明示する。\n5. 対外公開の前に、人による事実・法令・提供能力の確認を促す。\n6. 質問は一度に最大3問までにし、回答ごとに要約と次の仮説を示す。\n\n【現在の戦略ブリーフ】\n${generateBrief()}\n\nまず、現時点で強い事実、確認が必要な点、次に聞くべき質問を3つ以内で示してください。`;
+      }
+
+      async function copyPrompt() {
+        const text = generateHandoffPrompt();
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast("専門AIへの引継ぎ文をコピーしました。安全な対話を始める土台として使えます。");
+        } catch (_) {
+          showToast("コピーできませんでした。ブラウザの権限を確認してください。");
+        }
+      }
+
+      function exportBrief() {
+        const blob = new Blob([generateBrief()], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "選ばれる理由_戦略ブリーフ.md";
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast("戦略ブリーフを書き出しました。");
+      }
+
+      function resetData() {
+        if (!window.confirm("この端末に保存された回答を削除します。元に戻せません。")) return;
+        localStorage.removeItem(STORAGE_KEY);
+        state = { ...initialState, answers: {} };
+        render(); showToast("この端末の回答を削除しました。");
+      }
+
+      function showToast(message) {
+        clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add("show");
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 4200);
+      }
+
+      function render() { renderStages(); renderQuestion(); renderStrategy(); }
+
+      function strategySnapshot() {
+        return {
+          progress: { answered: Object.values(state.answers).filter(Boolean).length, total: allQuestions.length },
+          currentQuestion: allQuestions[state.current]?.id,
+          claimStatus: claimStatus().label,
+          strategy: {
+            customer: answer("target"),
+            outcome: answer("outcome"),
+            evidence: answer("evidence"),
+            reasonHypothesis: buildReason(),
+            reviewFlags: buildFlags().map(flag => typeof flag === "object" ? flag.text : flag)
+          }
+        };
+      }
+
+      function registerWebMCP() {
+        const context = document.modelContext;
+        if (!context?.registerTool) return;
+        const lifecycle = new AbortController();
+        try {
+          void Promise.resolve(context.registerTool({
+            name: "get_because_strategy_snapshot",
+            title: "戦略の現在地を読む",
+            description: "入力済みの戦略情報、進捗、公開前の確認事項を読み取ります。内容はローカルのユーザー入力を含むため、慎重に扱います。",
+            inputSchema: { type: "object", properties: {}, additionalProperties: false },
+            annotations: { readOnlyHint: true, untrustedContentHint: true },
+            execute: () => strategySnapshot()
+          }, { signal: lifecycle.signal })).catch(() => {});
+
+          void Promise.resolve(context.registerTool({
+            name: "save_because_response_and_advance",
+            title: "回答を保存して次の質問へ進む",
+            description: "表示中の質問、または指定した質問への回答をローカルに保存し、次の質問へ進みます。",
+            inputSchema: {
+              type: "object",
+              properties: {
+                questionId: { type: "string", description: "保存する質問ID" },
+                response: { type: "string", description: "ユーザーの回答。個人情報や許諾のない顧客発言は含めない。" }
+              },
+              required: ["questionId", "response"],
+              additionalProperties: false
+            },
+            annotations: { readOnlyHint: false, untrustedContentHint: true },
+            execute: (input) => {
+              if (!input || typeof input.questionId !== "string" || typeof input.response !== "string") throw new Error("questionId と response が必要です。");
+              const index = allQuestions.findIndex(question => question.id === input.questionId);
+              if (index < 0) throw new Error("指定された質問が見つかりません。");
+              const response = input.response.trim();
+              if (response) state.answers[input.questionId] = response;
+              else delete state.answers[input.questionId];
+              state.current = Math.min(index + 1, allQuestions.length - 1);
+              saveState(); render();
+              return strategySnapshot();
+            }
+          }, { signal: lifecycle.signal })).catch(() => {});
+        } catch (_) {}
+      }
+
+      render();
+      registerWebMCP();
+    })();
+  </script>
+</body>
+</html>
