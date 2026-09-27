@@ -216,6 +216,16 @@
     .industry-view p { margin: 0; color: #315675; font-size: .86rem; white-space: pre-wrap; }
     .beginner-intro { margin: 4px 0 22px; padding: 14px 16px; border-radius: 12px; background: #effbf8; color: #31564f; line-height: 1.6; }
     .beginner-intro strong { display: block; color: #075c56; margin-bottom: 3px; }
+    .conversation-assist { display: grid; gap: 10px; margin: 18px 0 4px; }
+    .conversation-summary, .suggestion-card { padding: 14px 15px; border-radius: 12px; }
+    .conversation-summary { border: 1px solid #d6e2ec; background: #f8fbfd; }
+    .conversation-summary h3, .suggestion-card h3 { margin: 0 0 5px; color: var(--ink-soft); font-size: .86rem; }
+    .conversation-summary p, .suggestion-card p { margin: 0; color: #31564f; font-size: .88rem; line-height: 1.6; }
+    .suggestion-card { border: 1px solid #efdca8; background: #fffaf0; }
+    .suggestion-card h3 { color: #7a5400; }
+    .suggestion-card p { color: #66501c; }
+    .suggestion-example { margin-top: 9px !important; padding: 10px 11px; border-radius: 9px; background: rgba(255,255,255,.7); color: var(--ink-soft) !important; font-weight: 750; white-space: pre-wrap; }
+    .suggestion-card .button { margin-top: 10px; padding: 8px 11px; font-size: .82rem; }
     .help-details { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--muted); }
     .help-details summary { cursor: pointer; color: #176d66; font-size: .9rem; font-weight: 800; }
     .help-details p { margin: 10px 0 0; color: var(--muted); font-size: .87rem; line-height: 1.65; white-space: pre-wrap; }
@@ -866,6 +876,56 @@
         return String(value || "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#039;", '"': "&quot;" })[char]);
       }
 
+      function buildConversationSummary() {
+        const business = answer("business").trim();
+        const friction = answer("friction").trim();
+        const desired = answer("desired").trim();
+        const target = answer("target").trim();
+        if (!business) return "";
+        if (!friction) return `「${business}」ですね。まずはそれだけで大丈夫です。次は、お客さんがどんなことで困るかを一つ教えてください。`;
+        if (!desired) return `「${business}」を探す人は、「${friction}」に困っているかもしれません。次は、その人がどうなれたらうれしいかを聞かせてください。`;
+        if (!target) return `私はいま、「${friction}」を避けながら「${desired}」を望む人のために、「${business}」を探す場面だと理解しています。次は、その人がAIや検索で使いそうな言葉を一つ決めます。`;
+        return `私はいま、「${friction}」を避けて「${desired}」を望む人が、「${target}」と聞く場面を考えています。これはまだ下書きです。実際のお客さんの言葉に近づけていきましょう。`;
+      }
+
+      function questionSuggestion(question) {
+        const business = answer("business").trim();
+        const friction = answer("friction").trim();
+        const desired = answer("desired").trim();
+        const target = answer("target").trim();
+
+        if (question.id === "target" && !target && business) {
+          const situation = [
+            friction ? `「${friction}」で困っている` : "",
+            desired ? `「${desired}」を叶えたい` : ""
+          ].filter(Boolean).join("、");
+          return {
+            title: "言葉に迷ったら、ここから始められます",
+            description: "これは下書きです。実際のお客さんがAIや検索に言いそうな言い方に直してください。",
+            value: situation ? `${situation}人に合う、${business}は？` : `${business}を選ぶとき、何を確認すればよい？`
+          };
+        }
+
+        if (question.id === "aiAnswerEssentials" && !answer(question.id).trim() && target) {
+          return {
+            title: "サイトに載せることの下書き",
+            description: "答えを作るのではなく、実際に確認できる事実をそろえるためのメモです。自社に当てはまらない項目は消してください。",
+            value: `「${target}」に答えるために、対象、利用条件、料金・追加費用、場所・アクセス、申込み方法、できないことを、事実に基づいて載せる。`
+          };
+        }
+        return null;
+      }
+
+      function renderConversationAssist(question) {
+        const summary = buildConversationSummary();
+        const suggestion = questionSuggestion(question);
+        if (!summary && !suggestion) return "";
+        return `<div class="conversation-assist">
+          ${summary ? `<section class="conversation-summary"><h3>ここまで、こう理解しています</h3><p>${escapeHtml(summary)}</p></section>` : ""}
+          ${suggestion ? `<section class="suggestion-card"><h3>${escapeHtml(suggestion.title)}</h3><p>${escapeHtml(suggestion.description)}</p><p class="suggestion-example">${escapeHtml(suggestion.value)}</p><button id="useSuggestion" type="button" class="button secondary">この下書きを入力欄に入れる</button></section>` : ""}
+        </div>`;
+      }
+
       function completeCount(stage) {
         return stage.questions.filter(question => hasAnswer(question)).length;
       }
@@ -948,6 +1008,7 @@
           <h2 class="question-title">${escapeHtml(question.title)}</h2>
           <p class="question-helper">${escapeHtml(question.helper)}</p>
           ${input}
+          <div id="conversationAssist"></div>
           <details class="help-details">
             <summary>迷ったときのヒントを見る</summary>
             <p>${escapeHtml(question.stage.guidance)}</p>
@@ -982,8 +1043,25 @@
           const isFilled = question.type === "targetMatrix" ? hasNamedTargetCandidate(value) : (Array.isArray(value) ? value.length : value);
           if (isFilled) state.answers[question.id] = value;
           else delete state.answers[question.id];
-          saveState(); renderStages(); renderStrategy();
+          saveState(); renderStages(); renderStrategy(); refreshConversationAssist();
         };
+
+        const refreshConversationAssist = () => {
+          const assist = questionBody.querySelector("#conversationAssist");
+          if (!assist) return;
+          assist.innerHTML = renderConversationAssist(question);
+          const useSuggestion = assist.querySelector("#useSuggestion");
+          if (useSuggestion) useSuggestion.addEventListener("click", () => {
+            const suggestion = questionSuggestion(question);
+            const answerInput = questionBody.querySelector("#answer");
+            if (!suggestion || !answerInput) return;
+            answerInput.value = suggestion.value;
+            persist();
+            answerInput.focus();
+          });
+        };
+
+        refreshConversationAssist();
 
         if (question.type === "targetMatrix") questionBody.querySelectorAll("[data-matrix-row]").forEach(inputElement => {
           inputElement.addEventListener("input", persist);
