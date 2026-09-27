@@ -175,6 +175,11 @@
       transition: border-color .18s, box-shadow .18s;
     }
     textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(15,118,110,.13); }
+    .voice-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .voice-button { display: inline-flex; align-items: center; gap: 6px; color: #075c56; border-color: #8fc6c0 !important; background: #f1fffb !important; }
+    .voice-button.listening { color: #8c2438; border-color: #e8a5b2 !important; background: #fff2f4 !important; }
+    .voice-button:disabled { cursor: not-allowed; opacity: .55; transform: none; }
+    .voice-status { margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.5; }
 
     .choice-set { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .choice-set.multiple { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -733,6 +738,7 @@
       const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {} };
       let state = loadState();
       let toastTimer;
+      let activeVoiceRecognition = null;
 
       const stageList = document.getElementById("stageList");
       const questionBody = document.getElementById("questionBody");
@@ -876,6 +882,17 @@
         return String(value || "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#039;", '"': "&quot;" })[char]);
       }
 
+      function speechRecognitionConstructor() {
+        return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+      }
+
+      function stopVoiceRecognition() {
+        const recognition = activeVoiceRecognition;
+        activeVoiceRecognition = null;
+        if (!recognition) return;
+        try { recognition.abort(); } catch (_) {}
+      }
+
       function buildConversationSummary() {
         const business = answer("business").trim();
         const friction = answer("friction").trim();
@@ -982,12 +999,19 @@
       }
 
       function renderQuestion() {
+        stopVoiceRecognition();
         const question = allQuestions[state.current];
         const step = state.current + 1;
         const percentage = Math.round((allQuestions.filter(question => hasAnswer(question)).length / allQuestions.length) * 100);
         progressText.textContent = `${question.stage.index}. ${question.stage.name}`;
         progressCount.textContent = `${step} / ${allQuestions.length}`;
         progressFill.style.width = `${percentage}%`;
+
+        const supportsSpeech = Boolean(speechRecognitionConstructor());
+        const voiceControls = `<div class="voice-controls">
+          <button id="voiceButton" type="button" class="button secondary voice-button" ${supportsSpeech ? "" : "disabled"}>🎙 話して入力</button>
+          <p id="voiceStatus" class="voice-status" aria-live="polite">${supportsSpeech ? "マイクを押してから話してください。入力された文字は必ず見直してください。" : "このブラウザでは音声入力を使えません。Chrome または Edge、またはスマホのキーボードのマイクをお試しください。"}</p>
+        </div>`;
 
         const input = question.type === "targetMatrix"
           ? renderTargetMatrix(question)
@@ -999,7 +1023,7 @@
           ? `<div class="choice-set multiple" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="checkbox" name="answer" value="${escapeHtml(option)}" ${answerList(question.id).includes(option) ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
             </div>`
-          : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(question.placeholder || "思いつくことを、そのまま書いてください")}">${escapeHtml(answer(question.id))}</textarea>`;
+          : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(question.placeholder || "思いつくことを、そのまま書いてください")}">${escapeHtml(answer(question.id))}</textarea>${voiceControls}`;
 
         const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
         questionBody.innerHTML = `
@@ -1062,6 +1086,85 @@
         };
 
         refreshConversationAssist();
+
+        const setupVoiceInput = () => {
+          const voiceButton = questionBody.querySelector("#voiceButton");
+          const voiceStatus = questionBody.querySelector("#voiceStatus");
+          const answerInput = questionBody.querySelector("#answer");
+          const SpeechRecognition = speechRecognitionConstructor();
+          if (!voiceButton || !voiceStatus || !answerInput || !SpeechRecognition) return;
+
+          const recognition = new SpeechRecognition();
+          recognition.lang = "ja-JP";
+          recognition.interimResults = true;
+          recognition.continuous = false;
+          let startingText = "";
+          let receivedText = false;
+
+          const setIdle = () => {
+            voiceButton.classList.remove("listening");
+            voiceButton.textContent = "🎙 話して入力";
+            voiceButton.setAttribute("aria-pressed", "false");
+          };
+
+          recognition.onstart = () => {
+            activeVoiceRecognition = recognition;
+            voiceButton.classList.add("listening");
+            voiceButton.textContent = "■ 聞くのをやめる";
+            voiceButton.setAttribute("aria-pressed", "true");
+            voiceStatus.textContent = "聞いています。話し終えたら、もう一度ボタンを押すか、そのまま少し待ってください。";
+          };
+
+          recognition.onresult = event => {
+            const spoken = Array.from(event.results).map(result => result[0]?.transcript || "").join("").trim();
+            if (!spoken) return;
+            answerInput.value = `${startingText}${startingText ? "\n" : ""}${spoken}`;
+            receivedText = true;
+            persist();
+            voiceStatus.textContent = event.results[event.results.length - 1]?.isFinal
+              ? "文字にしました。内容を見直してから次へ進んでください。"
+              : "聞き取った内容を文字にしています…";
+          };
+
+          recognition.onerror = event => {
+            activeVoiceRecognition = null;
+            setIdle();
+            const messages = {
+              "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。",
+              "service-not-allowed": "このブラウザでは音声認識サービスを使えません。文字入力で続けてください。",
+              "no-speech": "声を聞き取れませんでした。もう一度、少しゆっくり話してください。",
+              "audio-capture": "マイクが見つかりません。接続とブラウザの設定を確認してください。",
+              "network": "音声認識に接続できませんでした。通信を確認して、もう一度試してください。"
+            };
+            voiceStatus.textContent = messages[event.error] || "音声入力を開始できませんでした。文字入力で続けることもできます。";
+          };
+
+          recognition.onend = () => {
+            if (activeVoiceRecognition !== recognition) return;
+            activeVoiceRecognition = null;
+            setIdle();
+            if (!receivedText) voiceStatus.textContent = "音声入力を終えました。文字が入らなかった場合は、もう一度試してください。";
+          };
+
+          voiceButton.addEventListener("click", () => {
+            if (activeVoiceRecognition === recognition) {
+              voiceStatus.textContent = "音声入力を終了します…";
+              recognition.stop();
+              return;
+            }
+            stopVoiceRecognition();
+            startingText = answerInput.value;
+            receivedText = false;
+            try {
+              recognition.start();
+            } catch (_) {
+              setIdle();
+              voiceStatus.textContent = "音声入力を開始できませんでした。少し待ってから、もう一度試してください。";
+            }
+          });
+        };
+
+        setupVoiceInput();
 
         if (question.type === "targetMatrix") questionBody.querySelectorAll("[data-matrix-row]").forEach(inputElement => {
           inputElement.addEventListener("input", persist);
