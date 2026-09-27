@@ -903,6 +903,14 @@
         return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.includes(stageId));
       }
 
+      function allKnowledgePageCards() {
+        return Array.isArray(knowledgeBase.pageCards) ? knowledgeBase.pageCards : [];
+      }
+
+      function pageCardsForStage(stageId) {
+        return allKnowledgePageCards().filter(card => Array.isArray(card.stages) && card.stages.includes(stageId));
+      }
+
       function currentKnowledgeCards() {
         const stageIds = new Set([
           ...allQuestions.filter(question => hasAnswer(question)).map(question => question.stage.id),
@@ -911,23 +919,44 @@
         return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.some(stageId => stageIds.has(stageId)));
       }
 
+      function currentPageCards() {
+        const stageIds = new Set([
+          ...allQuestions.filter(question => hasAnswer(question)).map(question => question.stage.id),
+          allQuestions[state.current]?.stage.id
+        ].filter(Boolean));
+        return allKnowledgePageCards().filter(card => Array.isArray(card.stages) && card.stages.some(stageId => stageIds.has(stageId)));
+      }
+
       function knowledgeSourceLabel() {
         const count = (knowledgeBase.cards || []).length;
-        if (!count) return "実務知識データを読み込み中です。";
+        const pageCount = allKnowledgePageCards().length;
+        if (!count && !pageCount) return "実務知識データを読み込み中です。";
         const pages = knowledgeBase.source?.sourcePages;
-        return `書籍画像${pages ? ` p.${pages}` : ""}をもとにした独自要約 ${count} 枚`;
+        const partial = knowledgeBase.source?.coverageScope === "partial";
+        return `${partial ? "先行して知識化した" : "書籍画像"}${pages ? ` p.${pages}` : ""}をもとにした、${pageCount || 0}ページ分の知識と${count || 0}枚の横断カード`;
       }
 
       function renderKnowledgeHint(stageId) {
         const cards = knowledgeCardsForStage(stageId).slice(0, 3);
-        if (!cards.length) return "";
-        return `<div class="knowledge-note"><strong>この質問で使う考え方</strong><ul>${cards.map(card => `<li><b>${escapeHtml(card.title)}</b>：${escapeHtml(card.principle)}</li>`).join("")}</ul><small>${escapeHtml(knowledgeSourceLabel())}を、この段階の助言に使っています。</small></div>`;
+        const pageCards = pageCardsForStage(stageId).slice(0, 2);
+        if (!cards.length && !pageCards.length) return "";
+        const indexedIdeas = cards.length
+          ? `<ul>${cards.map(card => `<li><b>${escapeHtml(card.title)}</b>：${escapeHtml(card.principle)}</li>`).join("")}</ul>`
+          : "";
+        const pageIdeas = pageCards.length
+          ? `<ul>${pageCards.map(card => `<li><b>p.${card.sourcePage}・${escapeHtml(card.chapter)}</b>：${escapeHtml(card.keyPoint)}</li>`).join("")}</ul>`
+          : "";
+        return `<div class="knowledge-note"><strong>この質問で使う考え方</strong>${indexedIdeas}${pageIdeas}<small>${escapeHtml(knowledgeSourceLabel())}を、この段階の助言に使っています。</small></div>`;
       }
 
       function knowledgeContextForBrief() {
         const cards = knowledgeBase.cards || [];
-        if (!cards.length) return "実務知識データは読み込み中です。";
-        return `${knowledgeSourceLabel()}\n\n${cards.map(card => `- ${card.title}（p.${(card.sourcePages || []).join("-")}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`).join("\n\n")}`;
+        const pageCards = allKnowledgePageCards();
+        if (!cards.length && !pageCards.length) return "実務知識データは読み込み中です。";
+        const crossReference = cards.map(card => `- ${card.title}（p.${(card.sourcePages || []).join("-")}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`).join("\n\n");
+        const pageReference = pageCards.map(card => `- p.${card.sourcePage}｜${card.chapter}\n  要点: ${card.keyPoint}\n  判断基準: ${(card.decisionCriteria || []).join("／")}\n  問い: ${(card.questions || []).join("／")}\n  実例: ${card.example}\n  注意: ${(card.cautions || []).join("／")}`).join("\n\n");
+        const scopeNote = knowledgeBase.source?.ingestionStatus || "この知識セットに登録済みのページ別知識を参照します。";
+        return `${knowledgeSourceLabel()}\n\n## 知識化の範囲\n${scopeNote}\n\n## 横断して使う知識\n${crossReference}\n\n## 先行して知識化したページ別知識\n${pageReference}`;
       }
 
       function loadKnowledgeBase() {
@@ -1297,11 +1326,14 @@
 
       function buildKnowledgeReference() {
         const allCards = knowledgeBase.cards || [];
-        if (!allCards.length) return "実務知識データを読み込んでいます。読み込み後、この質問に関係する考え方が表示されます。";
+        const allPageCards = allKnowledgePageCards();
+        if (!allCards.length && !allPageCards.length) return "実務知識データを読み込んでいます。読み込み後、この質問に関係する考え方が表示されます。";
         const relevantCards = currentKnowledgeCards();
+        const relevantPages = currentPageCards();
         const listed = relevantCards.slice(0, 5).map(card => `・${card.title}`).join("\n");
         const overflow = relevantCards.length > 5 ? `\nほか ${relevantCards.length - 5} 枚` : "";
-        return `保存済み: ${knowledgeSourceLabel()}\n\n今の回答で参照している考え方: ${relevantCards.length} 枚\n${listed || "・次の質問に合わせて参照します。"}${overflow}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
+        const ingestion = knowledgeBase.source?.ingestionStatus ? `\n原本の知識化状況: ${knowledgeBase.source.ingestionStatus}` : "";
+        return `保存済み: ${knowledgeSourceLabel()}\n\nページ別データ: ${allPageCards.length} / ${knowledgeBase.source?.sourcePageCount || allPageCards.length} ページ（この先行知識セット内）\n今の回答で参照している考え方: ${relevantCards.length} 枚・ページ別知識: ${relevantPages.length} ページ\n${listed || "・次の質問に合わせて参照します。"}${overflow}${ingestion}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
       }
 
       function mediaGuidance(channel) {
@@ -1450,7 +1482,9 @@
             knowledge: {
               source: knowledgeBase.source || null,
               cardCount: (knowledgeBase.cards || []).length,
-              currentCards: currentKnowledgeCards().map(card => ({ id: card.id, title: card.title, principle: card.principle }))
+              sourcePageCardCount: allKnowledgePageCards().length,
+              currentCards: currentKnowledgeCards().map(card => ({ id: card.id, title: card.title, principle: card.principle })),
+              currentPageCards: currentPageCards().map(card => ({ sourcePage: card.sourcePage, chapter: card.chapter, keyPoint: card.keyPoint, decisionCriteria: card.decisionCriteria }))
             },
             industry: answer("industryFamily"),
             businessModel: answerList("businessModel"),
