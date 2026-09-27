@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="顧客に選ばれる理由を、ターゲットが実際に見る媒体・接点で設計・検証・実行するためのワークベンチ" />
+  <meta name="description" content="業種別に、優先顧客・根拠・届く媒体・現場実行をつなぎ、顧客に選ばれる理由を設計・検証する戦略AI" />
   <meta name="theme-color" content="#0b1528" />
   <title>選ばれる理由AI | 戦略ワークベンチ</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1528'/%3E%3Cpath d='M17 18h30v9H28v6h15v9H28v4h19v9H17z' fill='%232dd4bf'/%3E%3C/svg%3E" />
@@ -211,6 +211,9 @@
     }
     .expert-view h3 { margin: 0 0 5px; font-size: .92rem; }
     .expert-view p { margin: 0; color: #31564f; font-size: .9rem; }
+    .industry-view { margin-top: 12px; padding: 14px 17px; border-left: 4px solid #3f79b6; background: #eef6ff; border-radius: 0 12px 12px 0; }
+    .industry-view h3 { margin: 0 0 5px; color: #164d80; font-size: .9rem; }
+    .industry-view p { margin: 0; color: #315675; font-size: .86rem; white-space: pre-wrap; }
 
     .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 28px; }
     .action-group { display: flex; gap: 9px; }
@@ -283,7 +286,7 @@
         <div class="brand-mark" aria-hidden="true">R</div>
         <div>
           <h1>選ばれる理由AI</h1>
-          <p>選ばれる理由を、顧客の目の前に出す戦略ワークベンチ</p>
+          <p>業種別に、優先顧客・根拠・届く媒体・現場実行をつなぐ戦略AI</p>
         </div>
       </div>
       <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
@@ -334,6 +337,8 @@
           name: "対象顧客を決める",
           guidance: "特徴の列挙から対象を決めません。複数の候補を「人×目的×場面」で出し、実需、提供適合、採算・空き、到達経路、競合との差を事実に基づいて比べます。点数は判断を助ける仮説であり、最終決定には根拠の確認が必要です。",
           questions: [
+            { id: "industryFamily", title: "あなたの事業に最も近い業種を選んでください", helper: "業種で答えを決めつけるためではなく、顧客の選び方、確認すべき根拠、届く媒体、表現上の注意を切り替えるために使います。", label: "業種", type: "choice", options: ["宿泊・観光", "飲食・カフェ", "小売・EC", "美容・健康・ウェルネス", "住宅・建設・修理", "高信頼サービス（医療・介護・士業など）", "教育・スクール・コーチング", "不動産・地域サービス", "BtoB・IT・コンサル", "製造・卸・専門商材", "その他・複合"], required: true },
+            { id: "businessModel", title: "主な販売・利用の形を選んでください", helper: "複数選択できます。売り方によって、必要な根拠、関係者、媒体、次の行動が変わります。", label: "販売・利用の形", type: "multiple", options: ["予約・来店", "単発購入", "継続利用・会員制", "EC・配送", "法人・複数決裁者", "紹介・仲介・プラットフォーム", "地域密着・訪問型", "その他"], required: true },
             { id: "business", title: "あなたの事業を一言で教えてください", helper: "商品・サービス、提供地域や市場、主な提供方法を具体的に書きます。", label: "事業の説明", type: "text", required: true },
             { id: "action", title: "顧客に、次にどんな行動を選んでほしいですか？", helper: "購入、予約、問い合わせ、契約更新、紹介など、ひとつの行動に絞ります。", label: "望む顧客行動", type: "text", required: true },
             { id: "targetMatrix", title: "対象顧客の候補を、根拠と一緒に比較してください", helper: "特徴ではなく「誰が × 何のために × どんな場面で」を候補にします。各項目は、1＝弱い・未確認、3＝一部確認、5＝強い・確認済みの目安です。", label: "対象顧客候補の比較", type: "targetMatrix", required: true },
@@ -428,13 +433,109 @@
         }
       ];
 
-      const TARGET_CRITERIA = [
+      const CORE_TARGET_CRITERIA = [
         { key: "demand", label: "実需の強さ", helper: "予約・問合せ・検索・口コミなど、実際に選ばれた兆し" },
         { key: "fit", label: "提供適合", helper: "設備・料理・接客・規約が、その目的に確実に応えられるか" },
         { key: "capacity", label: "採算・空き", helper: "客単価、利益、閑散日、部屋・人員の余力と合うか" },
         { key: "reach", label: "到達しやすさ", helper: "検索・OTA・SNS・紹介など、実際の到達経路が分かるか" },
         { key: "gap", label: "競合との余白", helper: "競合より優れることではなく、満たされていない選び方があるか" }
       ];
+
+      const DEFAULT_INDUSTRY_PROFILE = {
+        label: "共通設計",
+        targetHint: "利用者・購入者・決裁者のうち、誰がどの場面で選ぶかを分けます。",
+        demandEvidence: "売上、問合せ、失注、継続、紹介、検索、現場の観察から、実際の選ばれ方を確認します。",
+        mediaGuide: "顧客が比較・検索・相談する場面を調べ、実際に使われている媒体を優先します。",
+        guardrail: "実証されていない数値、比較、顧客の声、保証は公開せず、事実・仮説・未確認を分けます。",
+        criteriaHints: {}
+      };
+
+      const INDUSTRY_PROFILES = {
+        "宿泊・観光": {
+          label: "宿泊・観光",
+          targetHint: "同行者、旅の目的、季節・曜日、滞在日数、出発地を組み合わせます。例：平日に静養したい夫婦。",
+          demandEvidence: "予約台帳、OTAの予約・検索語、客室タイプ、食事プラン、曜日・季節、口コミ、電話問合せを確認します。",
+          mediaGuide: "Googleマップ、OTA、旅行検索、口コミ、SNS、地域観光導線を、旅の計画時期ごとに使い分けます。",
+          guardrail: "空室、料金、食事、設備、ペット同伴条件、送迎、温泉利用条件は、実際の提供内容と常に一致させます。",
+          criteriaHints: { demand: "予約・検索語・旅行時期・同行者別の実績", fit: "客室・食事・温泉・ペット対応が目的に合うか", capacity: "季節・曜日別の空室と客単価・人員", reach: "Google・OTA・旅行比較・口コミで見つかるか", gap: "同地域で満たされない旅の目的があるか" }
+        },
+        "飲食・カフェ": {
+          label: "飲食・カフェ",
+          targetHint: "来店目的、時間帯、同行者、商圏、利用頻度で分けます。例：平日昼に短時間で落ち着いて食事したい近隣勤務者。",
+          demandEvidence: "時間帯別売上、注文、予約、テイクアウト、検索、レビュー、再来店、周辺動線を確認します。",
+          mediaGuide: "Googleマップ、口コミ、予約サイト、SNS、店頭、近隣導線を、来店直前の検索行動に合わせます。",
+          guardrail: "価格、営業時間、予約可否、アレルギー、提供時間、写真と実物の差を正確に扱います。",
+          criteriaHints: { demand: "時間帯・曜日・注文・予約・再来店の実績", fit: "料理・席・提供速度・接客が目的に合うか", capacity: "席数・回転・仕込み・利益が合うか", reach: "地図・口コミ・近隣導線で見つかるか", gap: "商圏で満たされない利用目的があるか" }
+        },
+        "小売・EC": {
+          label: "小売・EC",
+          targetHint: "購入目的、比較場面、使用状況、購入頻度、配送先を分けます。例：失敗なく贈り物を選びたい人。",
+          demandEvidence: "商品別売上、検索語、カート離脱、返品、問い合わせ、レビュー、再購入、購入経路を確認します。",
+          mediaGuide: "検索、商品比較、ECモール、レビュー、SNS、メール・LINEを、購入前後の行動に合わせます。",
+          guardrail: "在庫、価格、送料、納期、返品条件、仕様、レビューの扱いを正確に表示します。",
+          criteriaHints: { demand: "商品別売上・検索・カート・再購入の事実", fit: "商品仕様・品質・配送が用途に合うか", capacity: "在庫・粗利・配送能力が合うか", reach: "検索・比較・モール・SNSで発見されるか", gap: "既存商品で解決されにくい不安があるか" }
+        },
+        "美容・健康・ウェルネス": {
+          label: "美容・健康・ウェルネス",
+          targetHint: "悩み、生活場面、継続意欲、通いやすさ、期待する変化で分けます。例：仕事帰りに定期的なケアを続けたい人。",
+          demandEvidence: "来店理由、継続率、予約経路、カウンセリング記録、失注理由、紹介、許諾済みの声を確認します。",
+          mediaGuide: "地図・検索、予約媒体、SNS、紹介、LINEを、予約前の不安と継続時の関係づくりに合わせます。",
+          guardrail: "結果保証や医療的な断定を避け、資格・施術範囲・料金・リスク・個人差を人が確認します。",
+          criteriaHints: { demand: "来店理由・継続・予約経路・失注の実績", fit: "施術・設備・担当者・通いやすさが合うか", capacity: "予約枠・継続単価・担当者の余力", reach: "検索・予約・SNS・紹介で届くか", gap: "不安なく継続できる選択肢が不足しているか" }
+        },
+        "住宅・建設・修理": {
+          label: "住宅・建設・修理",
+          targetHint: "住まいの課題、緊急度、物件状況、地域、決裁者で分けます。例：水回りの不具合を早く信頼できる業者に直してほしい戸建て世帯。",
+          demandEvidence: "問合せ内容、見積り、受注・失注、工事単価、地域、紹介、施工後の声を確認します。",
+          mediaGuide: "地域検索、地図、紹介、ポスティング、施工事例、比較サイトを、困りごと発生時の行動に合わせます。",
+          guardrail: "見積条件、工期、対応地域、資格・許認可、保証、施工範囲を事実に基づいて示します。",
+          criteriaHints: { demand: "問合せ・見積り・受注・地域別の実績", fit: "技術・資格・対応範囲が課題に合うか", capacity: "職人・工程・移動・粗利の余力", reach: "地域検索・紹介・施工事例で届くか", gap: "地域で不安なく頼める選択肢があるか" }
+        },
+        "高信頼サービス（医療・介護・士業など）": {
+          label: "高信頼サービス",
+          targetHint: "困りごと、緊急度、紹介元、意思決定者、支援が必要な条件で分けます。必要以上に不安をあおりません。",
+          demandEvidence: "相談内容、紹介経路、予約・継続、対応範囲、許諾済みのフィードバック、地域ニーズを確認します。",
+          mediaGuide: "地域検索、公式情報、紹介、専門ポータル、関係機関を中心に、正確さと安心を優先します。",
+          guardrail: "業法、広告規制、守秘義務、資格、同意、個人情報、個人差を必ず専門家・責任者が確認します。",
+          criteriaHints: { demand: "相談・紹介・継続・地域ニーズの事実", fit: "資格・対応範囲・安全性が合うか", capacity: "予約枠・連携・担当者の余力", reach: "公式情報・紹介・地域検索で届くか", gap: "安全に相談できる選択肢が不足しているか" }
+        },
+        "教育・スクール・コーチング": {
+          label: "教育・スクール・コーチング",
+          targetHint: "学びたいこと、現在地、期限、学習障壁、支払者で分けます。例：転職までに実務スキルを身につけたい社会人。",
+          demandEvidence: "問合せ、体験、入会、継続、修了、失注理由、検索語、紹介を確認します。",
+          mediaGuide: "検索、比較、動画、SNS、体験会、紹介、メール・LINEを、検討から継続まで分けて使います。",
+          guardrail: "成果保証、就職・合格・収入などの断定を避け、条件・期間・個人差・料金を明確にします。",
+          criteriaHints: { demand: "体験・入会・継続・失注・検索の実績", fit: "教材・講師・支援・期間が目的に合うか", capacity: "講師・席・サポート・単価の余力", reach: "検索・比較・動画・体験会で届くか", gap: "継続しやすい学習選択肢が不足しているか" }
+        },
+        "不動産・地域サービス": {
+          label: "不動産・地域サービス",
+          targetHint: "地域、ライフイベント、物件・生活課題、期限、決裁者で分けます。例：子育てを機に生活圏内で住み替えたい世帯。",
+          demandEvidence: "問合せ、成約・失注、地域、紹介、閲覧、来店、案件期間を確認します。",
+          mediaGuide: "地域検索、地図、物件・専門ポータル、紹介、地域媒体、イベントを検討段階に合わせます。",
+          guardrail: "価格、契約条件、対応地域、物件・サービスの状態、資格・免許、個人情報を正確に扱います。",
+          criteriaHints: { demand: "地域別の問合せ・成約・失注・紹介", fit: "提案力・地域知識・対応範囲が合うか", capacity: "案件数・対応時間・収益性が合うか", reach: "地域検索・専門ポータル・紹介で届くか", gap: "地域で解消されない不安や手間があるか" }
+        },
+        "BtoB・IT・コンサル": {
+          label: "BtoB・IT・コンサル",
+          targetHint: "業種、規模、役割、課題、導入時期、決裁プロセスで分けます。例：属人化した業務を標準化したい従業員50名規模の管理部門。",
+          demandEvidence: "商談、失注理由、既存顧客、導入期間、継続率、紹介、検索・資料請求を確認します。",
+          mediaGuide: "課題検索、AI検索、専門メディア、比較サイト、事例、ウェビナー、紹介、営業接点を購買段階ごとに使います。",
+          guardrail: "導入効果、ROI、実績、比較、セキュリティ、契約条件は測定・確認できる範囲だけを示します。",
+          criteriaHints: { demand: "商談・失注・継続・資料請求の実績", fit: "課題・業務・導入条件に応えられるか", capacity: "導入・支援・利益・担当者の余力", reach: "検索・専門媒体・紹介・営業で届くか", gap: "現状の代替手段で解消されない課題があるか" }
+        },
+        "製造・卸・専門商材": {
+          label: "製造・卸・専門商材",
+          targetHint: "用途、仕様、調達課題、発注量、品質条件、決裁・調達者で分けます。",
+          demandEvidence: "見積り、受注・失注、取引継続、仕様問合せ、納期、紹介、展示会反応を確認します。",
+          mediaGuide: "検索、専門ポータル、展示会、既存取引、代理店、技術資料、営業接点を調達プロセスに合わせます。",
+          guardrail: "仕様、品質、納期、供給量、認証、対応範囲、価格条件を確認できる事実だけで示します。",
+          criteriaHints: { demand: "見積り・受注・継続・仕様問合せの実績", fit: "仕様・品質・技術・供給が合うか", capacity: "生産・在庫・納期・粗利の余力", reach: "専門検索・展示会・代理店・営業で届くか", gap: "調達上の未充足な要件があるか" }
+        },
+        "その他・複合": {
+          ...DEFAULT_INDUSTRY_PROFILE,
+          label: "その他・複合"
+        }
+      };
 
       const SCORE_OPTIONS = [
         ["0", "未評価"],
@@ -484,6 +585,42 @@
         return answerList(id).join("、");
       }
 
+      function activeIndustryProfile() {
+        return INDUSTRY_PROFILES[answer("industryFamily")] || DEFAULT_INDUSTRY_PROFILE;
+      }
+
+      function targetCriteria() {
+        const profile = activeIndustryProfile();
+        return CORE_TARGET_CRITERIA.map(criteria => ({
+          ...criteria,
+          helper: profile.criteriaHints?.[criteria.key] || criteria.helper
+        }));
+      }
+
+      function industryGuide() {
+        const industry = answer("industryFamily");
+        const model = answer("businessModel");
+        if (!industry) return "業種と販売・利用の形を選ぶと、対象顧客の比較軸、優先媒体、表現上の確認事項を業種に合わせて切り替えます。";
+        const profile = activeIndustryProfile();
+        return `業種: ${profile.label}${model ? `／販売・利用の形: ${model}` : ""}\n\n顧客候補の切り方: ${profile.targetHint}\n\n確認する実需: ${profile.demandEvidence}\n\n媒体の仮説: ${profile.mediaGuide}\n\n公開前の注意: ${profile.guardrail}`;
+      }
+
+      function industryAssist(stageId) {
+        const industry = answer("industryFamily");
+        if (!industry) return "まず業種を選ぶと、この事業に合う比較軸と確認事項が表示されます。";
+        const profile = activeIndustryProfile();
+        const assistance = {
+          customer: `顧客候補の切り方: ${profile.targetHint}\n実需の確認: ${profile.demandEvidence}`,
+          insight: `この業種でまず集める観察事実: ${profile.demandEvidence}`,
+          outcome: "成果は、提供物の名前ではなく、顧客の意思決定・仕事・生活がどう変わるかで定義します。提供できない条件も同時に明確にします。",
+          evidence: `公開前の注意: ${profile.guardrail}`,
+          media: `媒体の仮説: ${profile.mediaGuide}`,
+          platform: "媒体、Web、営業・接客、提供現場、販売後で、同じ成果と根拠が矛盾しないよう確認します。",
+          execution: "最初は、優先顧客と優先媒体を一つずつ決め、小さく測定して学びます。"
+        };
+        return assistance[stageId] || "事実・仮説・未確認を分け、提供能力と公開表現の整合を確認します。";
+      }
+
       function emptyTargetCandidate() {
         return { name: "", note: "", demand: "0", fit: "0", capacity: "0", reach: "0", gap: "0" };
       }
@@ -491,7 +628,7 @@
       function normalizeTargetCandidate(candidate) {
         const source = candidate && typeof candidate === "object" ? candidate : {};
         const normalized = { name: String(source.name || ""), note: String(source.note || "") };
-        TARGET_CRITERIA.forEach(criteria => {
+        targetCriteria().forEach(criteria => {
           const score = String(source[criteria.key] ?? "0");
           normalized[criteria.key] = SCORE_OPTIONS.some(([value]) => value === score) ? score : "0";
         });
@@ -509,7 +646,7 @@
       }
 
       function targetScore(candidate) {
-        const values = TARGET_CRITERIA.map(criteria => Number(candidate[criteria.key] || 0));
+        const values = targetCriteria().map(criteria => Number(candidate[criteria.key] || 0));
         return values.every(value => value >= 1) ? values.reduce((total, value) => total + value, 0) : null;
       }
 
@@ -524,7 +661,7 @@
         const candidates = scoredTargetCandidates();
         if (!candidates.length) return "対象候補を入力すると、実需・提供適合・採算・到達経路・競合との余白で比較できます。";
         return candidates.map((candidate, rank) => {
-          const scores = TARGET_CRITERIA.map(criteria => `${criteria.label}: ${candidate[criteria.key] === "0" ? "未評価" : candidate[criteria.key]}`).join(" / ");
+          const scores = targetCriteria().map(criteria => `${criteria.label}: ${candidate[criteria.key] === "0" ? "未評価" : candidate[criteria.key]}`).join(" / ");
           const total = candidate.score === null ? "総合: 評価未完了" : `総合: ${candidate.score}/25`;
           const note = candidate.note.trim() ? `判断メモ: ${candidate.note.trim()}` : "判断メモ: 未登録";
           return `${rank + 1}. ${candidate.name.trim()}\n${total}\n${scores}\n${note}`;
@@ -581,7 +718,7 @@
               <input data-matrix-row="${index}" data-matrix-key="name" type="text" value="${escapeHtml(candidate.name)}" placeholder="例：愛猫と一緒に静かに温泉旅をしたい夫婦" />
             </label>
             <div class="score-grid">
-              ${TARGET_CRITERIA.map(criteria => `<label class="score-field">
+              ${targetCriteria().map(criteria => `<label class="score-field">
                 <span>${escapeHtml(criteria.label)}</span>
                 <small>${escapeHtml(criteria.helper)}</small>
                 <select data-matrix-row="${index}" data-matrix-key="${criteria.key}" aria-label="候補${index + 1}の${escapeHtml(criteria.label)}">
@@ -627,6 +764,10 @@
           <section class="expert-view" aria-label="専門家の観点">
             <h3>専門家の観点</h3>
             <p>${escapeHtml(question.stage.guidance)}</p>
+          </section>
+          <section class="industry-view" aria-label="業種別アシスト">
+            <h3>業種別アシスト</h3>
+            <p>${escapeHtml(industryAssist(question.stage.id))}</p>
           </section>
           <div class="actions">
             <div class="action-group">
@@ -739,16 +880,35 @@
         const channels = answerList("mediaChannels");
         const target = answer("target") || "優先顧客";
         const moment = answer("discoveryMoment");
+        const profile = activeIndustryProfile();
         if (!channels.length && !moment) return "顧客が問題に気づく場面と、そのとき実際に見る媒体を選ぶと、媒体別の見せ方が表示されます。";
         const rationale = answer("mediaRationale") || "媒体を使う根拠・仮説は未登録";
         const opening = answer("mediaFirstMessage") || "媒体別の最初の伝え方は未登録";
         const measurement = answer("mediaMeasurement") || "媒体ごとの反応指標は未登録";
         const channelPlans = channels.length ? channels.map(mediaGuidance).join("\n\n") : "優先媒体を選択してください。";
-        return `${target}が${moment || "解決策を探す場面"}で、選ばれる理由に出会うための計画です。\n\n媒体選定の根拠・仮説: ${rationale}\n\n媒体別の見せ方:\n${channelPlans}\n\n担当者が作る媒体別の最初の伝え方:\n${opening}\n\n確認する反応: ${measurement}\n\n注意: 実証されていない成果、数値、比較、顧客の声、保証は媒体に出さず、検証計画として扱います。`;
+        return `${target}が${moment || "解決策を探す場面"}で、選ばれる理由に出会うための計画です。\n\n${answer("industryFamily") ? `【${profile.label}の媒体仮説】\n${profile.mediaGuide}\n\n` : ""}媒体選定の根拠・仮説: ${rationale}\n\n媒体別の見せ方:\n${channelPlans}\n\n担当者が作る媒体別の最初の伝え方:\n${opening}\n\n確認する反応: ${measurement}\n\n注意: ${profile.guardrail}`;
+      }
+
+      function buildNextMoves() {
+        const moves = [];
+        const profile = activeIndustryProfile();
+        if (!answer("industryFamily")) moves.push("業種を選び、顧客候補の比較軸と公開前の注意をこの事業向けに切り替える。");
+        if (!answer("businessModel")) moves.push("予約・来店、継続、EC、法人決裁、紹介など、顧客が選ぶ仕組みを特定する。");
+        if (!hasNamedTargetCandidate()) moves.push(`「${profile.targetHint}」を手がかりに、優先候補を3つ書き出す。`);
+        else if (scoredTargetCandidates().some(candidate => candidate.score === null)) moves.push(`候補ごとに、${profile.demandEvidence}を確認し、未評価の比較軸を埋める。`);
+        if (!answer("target")) moves.push("比較結果と提供能力を踏まえ、まず集中する「人×目的×場面」を一つ決める。");
+        if (!answer("facts")) moves.push("既存顧客・失注・問い合わせから、推測ではない顧客の言葉と行動を集める。");
+        if (!answer("outcome")) moves.push("提供物の説明ではなく、優先顧客に起きる具体的な変化を一つ定義する。");
+        if (!answer("discoveryMoment") || !answer("mediaChannels")) moves.push(`優先顧客が解決策を探す場面を確認し、${profile.mediaGuide}`);
+        if (!answer("evidence") || !answer("evidenceSource")) moves.push("成果の根拠と出典を確認し、未検証の主張は検証計画へ戻す。");
+        if (!answer("owner")) moves.push("最初の検証を担当する人、期限、測定指標を決める。");
+        return (moves.length ? moves : ["根拠の原資料と現場の提供能力を再確認し、最小単位で公開・測定・改善を繰り返す。"]).slice(0, 3);
       }
 
       function buildFlags() {
         const flags = [];
+        if (!answer("industryFamily")) flags.push("業種が未設定です。業種別の顧客候補、根拠、媒体、公開前の注意を切り替えるために選んでください。");
+        if (!answer("businessModel")) flags.push("販売・利用の形が未設定です。予約・来店、継続、EC、法人決裁、紹介などで顧客の判断過程が変わります。");
         if (!hasNamedTargetCandidate()) flags.push("比較する対象顧客候補が未登録です。特徴ではなく「人×目的×場面」を3候補ほど出してください。");
         if (hasNamedTargetCandidate() && scoredTargetCandidates().some(candidate => candidate.score === null)) flags.push("対象顧客候補の評価が未完了です。未確認の項目は無理に高くせず、根拠を集める計画に戻してください。");
         if (!answer("targetEvidence")) flags.push("優先顧客を選ぶ根拠が未登録です。予約・問合せ・売上・稼働・検索語・レビュー・紹介元など、候補比較に使った事実を記録してください。");
@@ -772,6 +932,8 @@
         const flags = buildFlags();
         strategyBoard.innerHTML = `
           <div class="status-card"><div class="status-label">現在の主張ステータス</div><div class="status-value">${escapeHtml(status.label)}</div></div>
+          ${section("業種別の設計ガイド", industryGuide(), "")}
+          ${section("いま最も価値のある次の3手", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
           ${section("対象顧客候補の比較", targetComparisonReport(), "")}
           ${section("優先顧客", answer("target"), "まだ設定されていません")}
           ${section("優先順位の決定根拠", answer("targetDecisionReason"), "実需・提供能力・採算・到達媒体・競合との余白から判断します")}
@@ -849,17 +1011,21 @@
           currentQuestion: allQuestions[state.current]?.id,
           claimStatus: claimStatus().label,
           strategy: {
+            industry: answer("industryFamily"),
+            businessModel: answerList("businessModel"),
+            industryGuide: industryGuide(),
             customer: answer("target"),
             customerCandidates: scoredTargetCandidates().map(candidate => ({
               name: candidate.name,
               score: candidate.score,
-              scores: Object.fromEntries(TARGET_CRITERIA.map(criteria => [criteria.key, Number(candidate[criteria.key] || 0)])),
+              scores: Object.fromEntries(targetCriteria().map(criteria => [criteria.key, Number(candidate[criteria.key] || 0)])),
               note: candidate.note
             })),
             targetDecisionReason: answer("targetDecisionReason"),
             outcome: answer("outcome"),
             evidence: answer("evidence"),
             reasonHypothesis: buildReason(),
+            nextMoves: buildNextMoves(),
             distribution: {
               discoveryMoment: answer("discoveryMoment"),
               channels: answerList("mediaChannels"),
