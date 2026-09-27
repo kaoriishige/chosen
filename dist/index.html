@@ -170,7 +170,7 @@
 
     label[for="answer"] { display: block; margin: 26px 0 8px; color: var(--ink-soft); font-size: .88rem; font-weight: 800; }
     textarea {
-      width: 100%; min-height: 175px; resize: vertical; border: 1px solid #aebccc; border-radius: 12px;
+      width: 100%; min-height: 136px; resize: vertical; border: 1px solid #aebccc; border-radius: 12px;
       padding: 15px; color: var(--ink); background: #fff; outline: none; line-height: 1.65;
       transition: border-color .18s, box-shadow .18s;
     }
@@ -214,6 +214,11 @@
     .industry-view { margin-top: 12px; padding: 14px 17px; border-left: 4px solid #3f79b6; background: #eef6ff; border-radius: 0 12px 12px 0; }
     .industry-view h3 { margin: 0 0 5px; color: #164d80; font-size: .9rem; }
     .industry-view p { margin: 0; color: #315675; font-size: .86rem; white-space: pre-wrap; }
+    .beginner-intro { margin: 4px 0 22px; padding: 14px 16px; border-radius: 12px; background: #effbf8; color: #31564f; line-height: 1.6; }
+    .beginner-intro strong { display: block; color: #075c56; margin-bottom: 3px; }
+    .help-details { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--muted); }
+    .help-details summary { cursor: pointer; color: #176d66; font-size: .9rem; font-weight: 800; }
+    .help-details p { margin: 10px 0 0; color: var(--muted); font-size: .87rem; line-height: 1.65; white-space: pre-wrap; }
 
     .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 28px; }
     .action-group { display: flex; gap: 9px; }
@@ -302,7 +307,7 @@
           <h2>8つの設計ステップ</h2>
           <p>答えはいつでも修正できます。</p>
         </div>
-        <nav id="stageList" class="stage-list" aria-label="設計ステップ"></nav>
+        <nav id="stageList" class="stage-list" aria-label="答える順番"></nav>
         <div class="stage-footer">
           <p class="storage-note">個人情報、未公表情報、許諾のない顧客の発言は入力しないでください。</p>
         </div>
@@ -318,9 +323,9 @@
 
       <aside class="panel strategy-panel" aria-label="戦略ボード">
         <div class="panel-header">
-          <p class="eyebrow">Live strategy board</p>
-          <h2>選ばれる理由の設計図</h2>
-          <p>回答は「事実・仮説・未確認」に分けて扱います。</p>
+          <p class="eyebrow">あなたの答え</p>
+          <h2>いま、できていること</h2>
+          <p>途中でも大丈夫。答えるたびに、下書きが育ちます。</p>
         </div>
         <div id="strategyBoard" class="strategy-content"></div>
       </aside>
@@ -441,6 +446,165 @@
         }
       ];
 
+      const BEGINNER_QUESTION_IDS = [
+        "business", "action",
+        "friction", "desired", "target", "discoveryMoment",
+        "outcome",
+        "evidence", "evidenceSource",
+        "aiQueryVariants", "aiAnswerEssentials", "aiSourceInventory", "aiAnswerEvidence",
+        "owner", "followup", "approval"
+      ];
+
+      const BEGINNER_STAGE_OVERRIDES = {
+        customer: {
+          index: "1",
+          name: "まず教えてください",
+          guidance: "専門用語や数字は不要です。いつもお客さんに説明している言葉で、分かることだけ答えてください。"
+        },
+        insight: {
+          index: "2",
+          name: "お客さんのこと",
+          guidance: "難しく考えず、お客さんが困っていることと、喜ぶことを普段の言葉で書いてください。"
+        },
+        outcome: {
+          index: "3",
+          name: "選ばれる理由",
+          guidance: "商品名ではなく、お客さんにどんな良い変化があるかを一言で考えます。"
+        },
+        evidence: {
+          index: "4",
+          name: "本当だと言える理由",
+          guidance: "立派な実績でなくても大丈夫です。事実として確認できるものを一つずつ集めます。"
+        },
+        media: {
+          index: "5",
+          name: "AI・ネットで見つけてもらう",
+          guidance: "AIにも人にも分かるように、質問への答えと、その答えを確かめられる公式情報を用意します。"
+        },
+        execution: {
+          index: "6",
+          name: "まず動かす",
+          guidance: "完璧にしなくて大丈夫です。誰がいつ何をするかを、小さく決めます。"
+        }
+      };
+
+      const BEGINNER_QUESTION_OVERRIDES = {
+        business: {
+          title: "まず、あなたのお店・会社は何をしていますか？",
+          helper: "いつも人に説明している言葉で大丈夫です。地域や主な商品・サービスも、分かる範囲で書いてください。",
+          label: "お店・会社の説明",
+          placeholder: "例：塩原温泉で、猫と泊まれる小さな旅館です。"
+        },
+        action: {
+          title: "お客さんに、次に何をしてほしいですか？",
+          helper: "例：予約してほしい、来店してほしい、問い合わせてほしい、買ってほしい。ひとつで大丈夫です。",
+          label: "お客さんにしてほしいこと",
+          placeholder: "例：空室を確認して、予約してほしい。"
+        },
+        friction: {
+          title: "お客さんは、何に困っていますか？",
+          helper: "お客さんが言いそうな言葉のままで大丈夫です。",
+          label: "お客さんの困りごと",
+          placeholder: "例：猫と泊まれて、静かに過ごせる宿が見つからない。"
+        },
+        desired: {
+          title: "どうなれたら、お客さんは喜びますか？",
+          helper: "商品や機能ではなく、利用した後の嬉しい状態を書いてください。",
+          label: "お客さんが叶えたいこと",
+          placeholder: "例：愛猫と一緒に、気をつかわず温泉旅行を楽しめる。"
+        },
+        target: {
+          title: "お客さんがAIや検索に、何と聞きそうですか？",
+          helper: "そのままの質問を書くだけで大丈夫です。これが、この仕組みでいう「ターゲット」です。",
+          label: "お客さんが聞きそうな質問",
+          placeholder: "例：塩原温泉で、猫と泊まれて静かな旅館は？"
+        },
+        discoveryMoment: {
+          title: "お客さんは、どんなときに探し始めますか？",
+          helper: "例：旅行を考え始めたとき、急に困ったとき、比較して決める直前。",
+          label: "探し始める場面",
+          placeholder: "例：連休の予定を決める1〜2か月前。"
+        },
+        outcome: {
+          title: "あなたを選ぶと、お客さんにどんな良いことがありますか？",
+          helper: "大きな言葉にしなくて大丈夫です。お客さんの生活や仕事がどう変わるかを書いてください。",
+          label: "お客さんに起きる良い変化",
+          placeholder: "例：猫と一緒に、静かで気楽な温泉旅行ができる。"
+        },
+        evidence: {
+          title: "それを言える理由は何ですか？",
+          helper: "設備、商品、仕組み、実際の記録など、事実として確認できるものを書いてください。",
+          label: "本当だと言える理由",
+          placeholder: "例：ペット同伴可の客室、利用規約、実際の宿泊記録。"
+        },
+        evidenceSource: {
+          title: "その理由を、お客さんが確認できる場所はありますか？",
+          helper: "公式サイト、料金表、FAQ、写真、規約、店頭など。まだなければ「これから作る」と書いて大丈夫です。",
+          label: "確認できる場所",
+          placeholder: "例：公式サイトのペット同伴ページと利用規約。"
+        },
+        aiQueryVariants: {
+          title: "同じお客さんは、ほかにどんな言い方で聞きそうですか？",
+          helper: "二つか三つ、思いつく言い方を書いてください。分からなければ飛ばしても大丈夫です。",
+          label: "ほかの聞き方",
+          placeholder: "例：ペット可の塩原温泉旅館は？／静かな温泉宿を教えて。"
+        },
+        aiAnswerEssentials: {
+          title: "その質問に答えるため、サイトに何を書けばよいですか？",
+          helper: "料金、条件、場所、営業時間、予約方法、できること・できないことなど、聞かれそうなことを挙げます。",
+          label: "お客さんが知りたいこと",
+          placeholder: "例：ペットの条件、客室、料金、食事、温泉、予約方法。"
+        },
+        aiSourceInventory: {
+          title: "その内容を載せるページはありますか？",
+          helper: "今あるページでも、これから作るページでも大丈夫です。お客さんが自分で確かめられる場所を考えます。",
+          label: "公式サイトにある・作るページ",
+          placeholder: "例：ペット同伴のFAQを新しく作る。料金表を更新する。"
+        },
+        aiAnswerEvidence: {
+          title: "その内容が正しいか、誰が確認しますか？",
+          helper: "一人の名前や役割だけで大丈夫です。更新が必要なときの担当も書けると安心です。",
+          label: "内容の確認担当",
+          placeholder: "例：女将が毎月、料金・空室・ペット条件を確認する。"
+        },
+        owner: {
+          title: "まず、誰がいつまでに何をしますか？",
+          helper: "一番小さな一歩で大丈夫です。例：今週中にFAQページを作る。",
+          label: "最初の行動",
+          placeholder: "例：私が今週金曜までに、ペット同伴FAQを作る。"
+        },
+        followup: {
+          title: "お客さんの反応を、どう聞きますか？",
+          helper: "予約後や来店後に、何で知ったか・何が分かりにくかったかを一つ聞くだけでも大丈夫です。",
+          label: "反応の聞き方",
+          placeholder: "例：予約時に「何で知りましたか？」を聞く。"
+        },
+        approval: {
+          title: "公開する前に、誰が内容を確認しますか？",
+          helper: "ひとりでも大丈夫です。料金や条件が実際と違わないかを確認する人を書いてください。",
+          label: "公開前に確認する人",
+          placeholder: "例：女将と予約担当者。"
+        }
+      };
+
+      const activeStages = stages
+        .filter(stage => Object.prototype.hasOwnProperty.call(BEGINNER_STAGE_OVERRIDES, stage.id))
+        .map(stage => ({
+          ...stage,
+          ...BEGINNER_STAGE_OVERRIDES[stage.id],
+          questions: stage.questions
+            .filter(question => BEGINNER_QUESTION_IDS.includes(question.id))
+            .map(question => ({ ...question, ...BEGINNER_QUESTION_OVERRIDES[question.id], required: question.id !== "aiQueryVariants" && question.required !== false }))
+        }))
+        .filter(stage => stage.questions.length);
+
+      const customerStage = activeStages.find(stage => stage.id === "customer");
+      const customerQuestion = customerStage?.questions.find(question => question.id === "target");
+      if (customerStage && customerQuestion) {
+        customerStage.questions = customerStage.questions.filter(question => question.id !== "target");
+        activeStages.find(stage => stage.id === "insight")?.questions.push(customerQuestion);
+      }
+
       const CORE_TARGET_CRITERIA = [
         { key: "demand", label: "質問の実在性", helper: "予約・問合せ・検索語・AIとの会話・口コミなど、その質問をする実際の兆し" },
         { key: "fit", label: "正確に答えられるか", helper: "設備・商品・接客・規約が、AIへの質問に事実として答えられる状態か" },
@@ -554,8 +718,9 @@
         ["5", "5：強い・確認済み"]
       ];
 
-      const allQuestions = stages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
-      const initialState = { current: 0, answers: {} };
+      const allQuestions = activeStages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
+      const SCHEMA_VERSION = 2;
+      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {} };
       let state = loadState();
       let toastTimer;
 
@@ -571,7 +736,10 @@
         try {
           const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
           if (saved && typeof saved.current === "number" && saved.answers) {
-            return { current: Math.min(Math.max(saved.current, 0), allQuestions.length - 1), answers: saved.answers };
+            const current = saved.schemaVersion === SCHEMA_VERSION
+              ? Math.min(Math.max(saved.current, 0), allQuestions.length - 1)
+              : 0;
+            return { schemaVersion: SCHEMA_VERSION, current, answers: saved.answers };
           }
         } catch (_) {}
         return { ...initialState, answers: {} };
@@ -704,7 +872,7 @@
 
       function renderStages() {
         const currentStage = allQuestions[state.current].stage.id;
-        stageList.innerHTML = stages.map(stage => {
+        stageList.innerHTML = activeStages.map(stage => {
           const complete = completeCount(stage);
           const isComplete = complete === stage.questions.length;
           return `
@@ -716,7 +884,7 @@
         }).join("");
         stageList.querySelectorAll("[data-stage]").forEach(button => {
           button.addEventListener("click", () => {
-            const selected = stages.find(stage => stage.id === button.dataset.stage);
+            const selected = activeStages.find(stage => stage.id === button.dataset.stage);
             const firstEmpty = allQuestions.findIndex(question => question.stage.id === selected.id && !hasAnswer(question));
             state.current = firstEmpty >= 0 ? firstEmpty : allQuestions.findIndex(question => question.stage.id === selected.id);
             saveState(); render();
@@ -771,22 +939,20 @@
           ? `<div class="choice-set multiple" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="checkbox" name="answer" value="${escapeHtml(option)}" ${answerList(question.id).includes(option) ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
             </div>`
-          : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="ここに入力してください">${escapeHtml(answer(question.id))}</textarea>`;
+          : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(question.placeholder || "思いつくことを、そのまま書いてください")}">${escapeHtml(answer(question.id))}</textarea>`;
 
         const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
         questionBody.innerHTML = `
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
+          ${state.current === 0 ? `<div class="beginner-intro"><strong>難しい言葉は使いません。</strong>まずは、分かることを普段の言葉で書くだけで大丈夫です。分からない質問は「あとで答える」で飛ばせます。</div>` : ""}
           <h2 class="question-title">${escapeHtml(question.title)}</h2>
           <p class="question-helper">${escapeHtml(question.helper)}</p>
           ${input}
-          <section class="expert-view" aria-label="専門家の観点">
-            <h3>専門家の観点</h3>
+          <details class="help-details">
+            <summary>迷ったときのヒントを見る</summary>
             <p>${escapeHtml(question.stage.guidance)}</p>
-          </section>
-          <section class="industry-view" aria-label="業種別アシスト">
-            <h3>業種別アシスト</h3>
             <p>${escapeHtml(industryAssist(question.stage.id))}</p>
-          </section>
+          </details>
           <div class="actions">
             <div class="action-group">
               <button id="backButton" type="button" class="button secondary" ${state.current === 0 ? "disabled" : ""}>戻る</button>
@@ -841,11 +1007,11 @@
         const hasEvidence = Boolean(answer("evidence"));
         const hasSource = Boolean(answer("evidenceSource"));
         const hasScope = Boolean(answer("scope")) && Boolean(answer("claimLimits"));
-        if (!hasEvidence || !hasSource) return { label: "根拠の登録が必要", className: "warning" };
-        if (level === "未検証") return { label: "社内検証用（対外公開不可）", className: "warning" };
-        if (level === "検証中") return { label: "検証中（対外断定不可）", className: "warning" };
-        if (level === "提供・確認済み" && hasScope && answer("approval")) return { label: "公開候補（人の最終確認が必要）", className: "ready" };
-        return { label: "確認情報を補完中", className: "warning" };
+        if (!hasEvidence || !hasSource) return { label: "まだ下書きです", className: "warning" };
+        if (level === "未検証") return { label: "確認しながら作っています", className: "warning" };
+        if (level === "検証中") return { label: "確認中です", className: "warning" };
+        if (level === "提供・確認済み" && hasScope && answer("approval")) return { label: "公開前の最終確認待ち", className: "ready" };
+        return { label: "内容をそろえている途中です", className: "warning" };
       }
 
       function section(title, text, fallback) {
@@ -885,6 +1051,14 @@
           return "設計全体の最優先はAI検索です。まず、顧客がAIに何と質問するかを一つ決め、その答えを支える公式の一次情報・FAQ・条件・更新日を整えます。AIでの回答採用や順位は保証できません。";
         }
         return `設計全体の最優先（90%）: AI検索\n\n第一優先のAI質問: ${question || "未設定"}\n\n言い換え・検索意図: ${variants || "未登録"}\n\nAIと顧客が最初に確認する事実: ${essentials || "未登録"}\n\n答えの原典（公式ページ・FAQ・規約・料金表など）: ${sources || "未登録"}\n\n質問 → 回答 → 根拠 → 確認担当者の対応: ${mapping || "未登録"}\n\n検証方法: ${measurement || "未登録"}\n\n${answer("industryFamily") ? `${profile.label}での補足: ${profile.guardrail}\n\n` : ""}大前提: 外部AIの回答採用・表示・順位は保証できません。根拠のない最上級表現や比較を作らず、顧客自身も確認できる一次情報を整えます。`;
+      }
+
+      function buildSimpleAISearchPlan() {
+        const question = answer("target");
+        const essentials = answer("aiAnswerEssentials");
+        const sources = answer("aiSourceInventory");
+        if (!question && !essentials && !sources) return "まずは「お客さんがAIや検索に何と聞くか」を一つ決めます。次に、その答えを公式サイトで確認できるようにします。";
+        return `お客さんが聞きそうなこと: ${question || "未入力"}\n\nサイトに載せること: ${essentials || "未入力"}\n\nお客さんが確認できるページ: ${sources || "未入力"}\n\n大切なこと: AIに紹介されること自体は約束できません。だからこそ、AIにも人にも正しく伝わる公式情報を先に整えます。`;
       }
 
       function mediaGuidance(channel) {
@@ -927,50 +1101,25 @@
 
       function buildNextMoves() {
         const moves = [];
-        const profile = activeIndustryProfile();
-        if (!answer("industryFamily")) moves.push("業種を選び、AI質問の比較軸と公開前の注意をこの事業向けに切り替える。");
-        if (!answer("businessModel")) moves.push("予約・来店、継続、EC、法人決裁、紹介など、顧客が選ぶ仕組みを特定する。");
-        if (!hasNamedTargetCandidate()) moves.push(`「${profile.targetHint}」を手がかりに、顧客がAIにする質問を3つ書き出す。`);
-        else if (scoredTargetCandidates().some(candidate => candidate.score === null)) moves.push(`AI質問候補ごとに、${profile.demandEvidence}を確認し、未評価の比較軸を埋める。`);
-        if (!answer("target")) moves.push("比較結果と提供能力を踏まえ、第一優先にするAI質問を一つ決める。");
-        if (!answer("aiQueryVariants")) moves.push("第一優先のAI質問を、地域・目的・条件・比較軸を変えながら3通り以上に言い換える。");
-        if (!answer("aiAnswerEssentials")) moves.push("AIと顧客が最初に確認する対象・条件・料金・在庫・場所・例外を、事実として列挙する。");
-        if (!answer("aiSourceInventory")) moves.push("答えの原典となる公式ページ・FAQ・規約・料金表を洗い出し、足りないページを作る。");
-        if (!answer("aiAnswerEvidence")) moves.push("AI質問 → 正確な回答 → 根拠URL・資料 → 確認担当者の対応表を作る。");
-        if (!answer("facts")) moves.push("既存顧客・失注・問い合わせから、推測ではない顧客の言葉と行動を集める。");
-        if (!answer("outcome")) moves.push("提供物の説明ではなく、優先顧客に起きる具体的な変化を一つ定義する。");
-        if (!answer("discoveryMoment")) moves.push("AIに質問する直前の状況（急ぎ、比較、旅行計画、稟議など）を確認する。");
-        if (!answer("aiSearchMeasurement")) moves.push("AIで何と聞いたかの聞き取り、流入・問い合わせ・予約経路など、AI検索設計を検証する方法を決める。");
-        if (supportingChannels().length && !answer("mediaRationale")) moves.push(`AI検索を補強する媒体の役割を確認し、${profile.mediaGuide}`);
-        if (!answer("evidence") || !answer("evidenceSource")) moves.push("成果の根拠と出典を確認し、未検証の主張は検証計画へ戻す。");
-        if (!answer("owner")) moves.push("最初の検証を担当する人、期限、測定指標を決める。");
-        return (moves.length ? moves : ["根拠の原資料と現場の提供能力を再確認し、最小単位で公開・測定・改善を繰り返す。"]).slice(0, 3);
+        if (!answer("business")) moves.push("まず、お店・会社が何をしているかを、普段の言葉で一言書く。");
+        if (!answer("friction")) moves.push("お客さんが困っていることを一つ書く。");
+        if (!answer("target")) moves.push("お客さんがAIや検索に何と聞きそうかを、そのまま一つ書く。");
+        if (!answer("outcome")) moves.push("あなたを選ぶと、お客さんにどんな良いことがあるかを一つ書く。");
+        if (!answer("evidence") || !answer("evidenceSource")) moves.push("その良いことを言える理由と、お客さんが確認できる場所を一つ書く。");
+        if (!answer("aiAnswerEssentials") || !answer("aiSourceInventory")) moves.push("質問への答えとしてサイトに何を書くか、どのページに載せるかを決める。");
+        if (!answer("owner")) moves.push("最初に誰がいつ何をするかを、小さく決める。");
+        return (moves.length ? moves : ["内容が実際と違わないかを確認して、少しずつ公開・確認・改善を続ける。"]).slice(0, 3);
       }
 
       function buildFlags() {
         const flags = [];
-        if (!answer("industryFamily")) flags.push("業種が未設定です。業種別のAI質問候補、根拠、補強媒体、公開前の注意を切り替えるために選んでください。");
-        if (!answer("businessModel")) flags.push("販売・利用の形が未設定です。予約・来店、継続、EC、法人決裁、紹介などで顧客の判断過程が変わります。");
-        if (!hasNamedTargetCandidate()) flags.push("比較するAI質問候補が未登録です。特徴ではなく、顧客がAIに何と聞くかを3候補ほど出してください。");
-        if (hasNamedTargetCandidate() && scoredTargetCandidates().some(candidate => candidate.score === null)) flags.push("AI質問候補の評価が未完了です。未確認の項目は無理に高くせず、根拠を集める計画に戻してください。");
-        if (!answer("targetEvidence")) flags.push("AI質問が実際にされる根拠が未登録です。予約・問合せ・検索語・レビュー・紹介元・AIとの会話など、候補比較に使った事実を記録してください。");
-        if (!answer("targetDecisionReason")) flags.push("第一優先のAI質問の決定根拠が未登録です。点数だけでなく、正確に答えられる提供能力・採算・一次情報・選ばれる答えの余白を確認してください。");
-        if (!answer("aiQueryVariants")) flags.push("AI質問の言い換え・検索意図が未登録です。地域・目的・条件・比較軸を変えた顧客の言葉を集めてください。");
-        if (!answer("aiAnswerEssentials")) flags.push("AI回答に必要な事実が未登録です。対象、条件・例外、料金・在庫、場所・時間などを確認してください。");
-        if (!answer("aiSourceInventory")) flags.push("AIが参照でき、顧客自身も確認できる公式の一次情報・FAQ・規約・料金表が未登録です。AI検索での回答採用や順位は保証できないため、原典の整備を優先してください。");
-        if (!answer("aiAnswerEvidence")) flags.push("AI質問・正確な回答・根拠URL・確認担当者の対応表が未登録です。推測や未検証の回答を公開しないでください。");
-        if (!answer("aiSearchMeasurement")) flags.push("AI検索の検証方法が未登録です。AIで何と聞いたか、流入・問い合わせ・予約経路、回答の正確性を確認する方法を決めてください。");
-        if (!answer("facts")) flags.push("顧客の実際の声・行動が未登録です。推測だけで顧客像を断定しないでください。");
-        if (!answer("outcome")) flags.push("顧客にもたらす成果が未定義です。機能の列挙だけでは訴求を確定できません。");
-        if (!answer("scope")) flags.push("成果の対象・条件・例外が未登録です。公開前に必ず補完してください。");
-        if (!answer("evidence") || !answer("evidenceSource")) flags.push("裏づけと出典が不足しています。数値、比較、顧客の声、保証を創作しないでください。");
-        if (answer("evidenceStatus") !== "提供・確認済み") flags.push("根拠は対外的に断定できる状態ではありません。検証計画として扱ってください。");
-        if (!answer("discoveryMoment")) flags.push("AIに質問する場面が未設定です。良い回答設計でも、顧客の状況と結びつかなければ選ばれる理由になりません。");
-        if (supportingChannels().length && !answer("mediaRationale")) flags.push("AI検索を補強する媒体の役割が未登録です。公式情報の確認、予約・購入、地域での発見、反応検証のどれを担うか確認してください。");
-        if (supportingChannels().length && (!answer("mediaFirstMessage") || !answer("mediaCallToAction"))) flags.push("補強媒体の最初の伝え方か次の行動が未登録です。AI回答と矛盾しない成果・根拠・行動を設計してください。");
-        if (!answer("followup")) flags.push("販売後の確認方法が未登録です。満足・不満・失注・解約の声を、安全に学習へ戻す設計が必要です。");
-        if (!answer("approval")) flags.push("公開前の事実・法令・提供能力の最終確認者が未登録です。");
-        if (flags.length === 0) flags.push({ text: "主要な確認項目が入力されています。外部公開前に、根拠の原資料と提供能力を人が再確認してください。", success: true });
+        if (!answer("business")) flags.push("お店・会社の説明を一言入れると、ここから設計できます。");
+        if (!answer("target")) flags.push("お客さんがAIや検索に何と聞きそうかを、一つ書いてみましょう。");
+        if (!answer("outcome")) flags.push("あなたを選ぶとお客さんにどんな良いことがあるかを、一つ書きましょう。");
+        if (!answer("evidence") || !answer("evidenceSource")) flags.push("その良いことを言える理由と、お客さんが確認できる場所を入れましょう。");
+        if (!answer("aiAnswerEssentials") || !answer("aiSourceInventory")) flags.push("AIや検索で見つけてもらうため、サイトに何を書くかと、載せるページを決めましょう。");
+        if (!answer("owner")) flags.push("最後に、誰がいつ何をするかを決めましょう。");
+        if (flags.length === 0) flags.push({ text: "必要な内容がそろいました。公開前に、料金・条件・できることが実際と違わないかを確認してください。", success: true });
         return flags;
       }
 
@@ -978,25 +1127,20 @@
         const status = claimStatus();
         const flags = buildFlags();
         strategyBoard.innerHTML = `
-          <div class="status-card"><div class="status-label">現在の主張ステータス</div><div class="status-value">${escapeHtml(status.label)}</div></div>
-          ${prioritySection("最重要：AI検索で選ばれる設計（全体の90%）", buildAISearchPlan())}
-          ${section("業種別の設計ガイド", industryGuide(), "")}
-          ${section("いま最も価値のある次の3手", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
-          ${section("AIへの質問候補の比較", targetComparisonReport(), "")}
-          ${section("第一優先のAI質問", answer("target"), "まだ設定されていません")}
-          ${section("AI質問の優先順位・決定根拠", answer("targetDecisionReason"), "質問の実在性・正確に答えられるか・事業価値・AI参照情報・選ばれる答えの余白から判断します")}
-          ${section("顧客の重要な摩擦", answer("friction"), "顧客の事実と一緒に記録します")}
-          ${section("約束する成果", answer("outcome"), "実行可能な変化として定義します")}
-          ${section("選ばれる理由の仮説", buildReason(), "")}
-          ${section("AI検索を補強する媒体の計画", buildMediaPlan(), "")}
-          ${section("根拠・出典", answer("evidence") ? `${answer("evidence")}\n出典・範囲: ${answer("evidenceSource") || "未登録"}` : "根拠を登録すると、主張との対応を確認できます。", "")}
-          <section class="strategy-section"><h3>公開前の確認事項</h3><ul class="flag-list">${flags.map(flag => typeof flag === "object" ? `<li class="success">${escapeHtml(flag.text)}</li>` : `<li>${escapeHtml(flag)}</li>`).join("")}</ul></section>
+          <div class="status-card"><div class="status-label">いまの状態</div><div class="status-value">${escapeHtml(status.label)}</div></div>
+          ${section("今の『選ばれる理由』の下書き", buildReason(), "答えていくと、ここにお客さん・良いこと・理由がつながって表示されます。")}
+          ${prioritySection("いちばん大切：AI・検索で見つけてもらう準備（ここに力の9割）", buildSimpleAISearchPlan())}
+          ${section("次にすること", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
+          ${section("お客さんの困りごと", answer("friction"), "まだ入力していません")}
+          ${section("お客さんが叶えたいこと", answer("desired"), "まだ入力していません")}
+          ${section("本当だと言える理由", answer("evidence") ? `${answer("evidence")}\n確認できる場所: ${answer("evidenceSource") || "未入力"}` : "まだ入力していません", "")}
+          <section class="strategy-section"><h3>あとで確認すること</h3><ul class="flag-list">${flags.map(flag => typeof flag === "object" ? `<li class="success">${escapeHtml(flag.text)}</li>` : `<li>${escapeHtml(flag)}</li>`).join("")}</ul></section>
           <div class="export-actions">
             <button id="copyPrompt" type="button" class="button secondary">専門AIへの引継ぎをコピー</button>
             <button id="exportBrief" type="button" class="button primary">戦略ブリーフを書き出す</button>
             <button id="resetData" type="button" class="button danger">この端末の回答を削除</button>
           </div>
-          <p class="notice">この画面は、入力内容を整理し、AIと顧客が確認できる一次情報を整えるためのものです。外部AIでの回答採用・表示・順位、成果や競争優位を保証するものではありません。</p>`;
+          <p class="notice">ここに書くのは、まず下書きです。実際と違う内容や、約束できないことは公開しないでください。</p>`;
 
         document.getElementById("copyPrompt").addEventListener("click", copyPrompt);
         document.getElementById("exportBrief").addEventListener("click", exportBrief);
