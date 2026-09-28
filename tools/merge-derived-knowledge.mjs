@@ -45,6 +45,7 @@ if (invalid.length) {
 
 const existing = Array.isArray(knowledge.cards) ? knowledge.cards : [];
 const existingKeys = new Set(existing.map(card => `${card.title}\u0000${card.principle}`));
+const derivedSourceType = '非公開原本アーカイブからの独自要約';
 
 function inferStages(card) {
   if (Array.isArray(card.stages) && card.stages.length) return card.stages;
@@ -72,15 +73,36 @@ const derived = usable
     questions: Array.isArray(card.questions) ? card.questions : [],
     stages: inferStages(card),
     sourcePages: [],
-    sourceType: '非公開原本アーカイブからの独自要約',
+    sourceType: derivedSourceType,
   }));
+
+const existingDerived = existing.filter(card => card.sourceType === derivedSourceType);
+const totalDerived = existingDerived.length + derived.length;
+const normalizedSourceFiles = candidates
+  .flatMap(card => Array.isArray(card.sourceArchiveFiles) ? card.sourceArchiveFiles : [])
+  .map(file => String(file).replace(/\.txt$/i, '.jpg'));
+const cardizedSourceImageCount = new Set(normalizedSourceFiles).size;
+const reviewSourceImageCount = new Set(
+  candidates
+    .filter(card => card.status !== 'verified')
+    .flatMap(card => Array.isArray(card.sourceArchiveFiles) ? card.sourceArchiveFiles : [])
+    .map(file => String(file).replace(/\.txt$/i, '.jpg'))
+).size;
+const archiveCount = Number(knowledge.source?.archivedSourceImageCount || 0);
+const remainingSourceImageCount = archiveCount > 0
+  ? Math.max(archiveCount - cardizedSourceImageCount, 0)
+  : null;
+const cardizationStatus = `非公開原本アーカイブから検証済みの独自要約カードを${totalDerived}枚反映。原本${cardizedSourceImageCount}枚をカード化済み${reviewSourceImageCount ? `（うち${reviewSourceImageCount}枚は原本照合待ち）` : ''}${remainingSourceImageCount !== null ? `、残り${remainingSourceImageCount}枚を知識化中` : ''}。`;
 
 const next = {
   ...knowledge,
   source: {
     ...knowledge.source,
-    derivedKnowledgeCardCount: derived.length,
-    derivedKnowledgeStatus: `非公開原本アーカイブから検証済みの独自要約カードを${derived.length}枚反映`,
+    derivedKnowledgeCardCount: totalDerived,
+    cardizedSourceImageCount,
+    cardizationNeedsReviewSourceImageCount: reviewSourceImageCount,
+    derivedKnowledgeStatus: cardizationStatus,
+    ingestionStatus: `原本${archiveCount || '全'}枚を非公開で保管し、OCRは完了しています。${cardizationStatus}書籍の画像や原文は公開せず、確認済みの独自要約だけを助言に使います。`,
   },
   cards: [...existing, ...derived],
 };
