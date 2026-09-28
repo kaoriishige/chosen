@@ -7,7 +7,7 @@
     "sourcePageCount": 34,
     "coverageScope": "partial",
     "archivedSourceImageCount": 233,
-    "ingestionStatus": "原本233枚を非公開で保管し、全件をOCR・知識化する処理を進行中です。現在この公開データが参照するのはp.229-262の34ページです。",
+    "ingestionStatus": "原本233枚を非公開で保管し、OCRは233/233枚完了（うち62枚は原本照合が必要）です。現在この公開データが参照するのはp.229-262の34ページで、残りの原本は独自知識カード化を進行中です。",
     "rawImagesStoredInRepository": false,
     "note": "書籍ページの画像や原文を公開用サイトへ転載せず、実務で使うための独自の判断基準・質問・注意点として保存しています。"
   },

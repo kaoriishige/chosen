@@ -4,3 +4,6 @@
 # Private local tooling and OCR environments. Source images and OCR output are
 # deliberately kept outside this public deployment repository.
 .tools/
+
+# Private source-to-card traceability; public data contains only derived summaries.
+work/
