@@ -221,6 +221,21 @@
     .industry-view p { margin: 0; color: #315675; font-size: .86rem; white-space: pre-wrap; }
     .beginner-intro { margin: 4px 0 22px; padding: 14px 16px; border-radius: 12px; background: #effbf8; color: #31564f; line-height: 1.6; }
     .beginner-intro strong { display: block; color: #075c56; margin-bottom: 3px; }
+    .quick-start { display: grid; gap: 16px; }
+    .quick-start-lead { margin: 0; padding: 17px 18px; border: 1px solid #a9ddd4; border-radius: 14px; color: #164e4a; background: linear-gradient(135deg, #e8fbf6, #f4fbff); line-height: 1.7; }
+    .quick-start-lead strong { display: block; margin-bottom: 5px; color: #075c56; font-size: 1.02rem; }
+    .quick-start-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .quick-start-field { display: grid; gap: 6px; padding: 14px; border: 1px solid #c6d3df; border-radius: 13px; background: #fff; }
+    .quick-start-field.wide { grid-column: 1 / -1; }
+    .quick-start-field > span { color: var(--ink-soft); font-size: .87rem; font-weight: 850; }
+    .quick-start-field small { color: var(--muted); font-size: .77rem; line-height: 1.45; }
+    .quick-start-field input, .quick-start-field textarea, .quick-start-field select { width: 100%; border: 1px solid #aebccc; border-radius: 10px; padding: 10px 11px; color: var(--ink); background: #fff; outline: none; }
+    .quick-start-field textarea { min-height: 100px; resize: vertical; }
+    .quick-start-field input:focus, .quick-start-field textarea:focus, .quick-start-field select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(15,118,110,.13); }
+    .quick-start-preview { padding: 15px 16px; border: 1px solid #c6dcf6; border-radius: 13px; background: var(--sky); }
+    .quick-start-preview h3 { margin: 0 0 5px; color: #104475; font-size: .92rem; }
+    .quick-start-preview p { margin: 0; color: #315675; font-size: .89rem; line-height: 1.65; white-space: pre-wrap; }
+    .quick-start-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 4px; }
     .conversation-assist { display: grid; gap: 10px; margin: 18px 0 4px; }
     .conversation-summary, .suggestion-card { padding: 14px 15px; border-radius: 12px; }
     .conversation-summary { border: 1px solid #d6e2ec; background: #f8fbfd; }
@@ -298,6 +313,10 @@
       .stage-count { display: none; }
       .stage-name { font-size: .8rem; }
       .choice-set { grid-template-columns: 1fr; }
+      .quick-start-grid { grid-template-columns: 1fr; }
+      .quick-start-field.wide { grid-column: auto; }
+      .quick-start-actions { align-items: stretch; flex-direction: column; }
+      .quick-start-actions .button { width: 100%; }
       .score-grid { grid-template-columns: 1fr; }
       .strategy-content { display: block; }
       .actions { align-items: stretch; flex-direction: column-reverse; }
@@ -323,9 +342,9 @@
     <section class="workspace" aria-label="選ばれる理由をつくるワークスペース">
       <aside class="panel" aria-label="対話の進行">
         <div class="panel-header">
-          <p class="eyebrow">Conversation flow</p>
-          <h2>8つの設計ステップ</h2>
-          <p>答えはいつでも修正できます。</p>
+          <p class="eyebrow">一緒に考える順番</p>
+          <h2>最初は3つだけ</h2>
+          <p>あとは、必要になったときだけ聞きます。答えはいつでも修正できます。</p>
         </div>
         <nav id="stageList" class="stage-list" aria-label="答える順番"></nav>
         <div class="stage-footer">
@@ -739,8 +758,8 @@
       ];
 
       const allQuestions = activeStages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
-      const SCHEMA_VERSION = 2;
-      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {} };
+      const SCHEMA_VERSION = 3;
+      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {}, onboardingComplete: false };
       let state = loadState();
       let toastTimer;
       let activeVoiceRecognition = null;
@@ -761,7 +780,12 @@
             const current = saved.schemaVersion === SCHEMA_VERSION
               ? Math.min(Math.max(saved.current, 0), allQuestions.length - 1)
               : 0;
-            return { schemaVersion: SCHEMA_VERSION, current, answers: saved.answers };
+            return {
+              schemaVersion: SCHEMA_VERSION,
+              current,
+              answers: saved.answers,
+              onboardingComplete: saved.schemaVersion === SCHEMA_VERSION && saved.onboardingComplete === true
+            };
           }
         } catch (_) {}
         return { ...initialState, answers: {} };
@@ -899,6 +923,80 @@
         try { recognition.abort(); } catch (_) {}
       }
 
+      function bindSpeechInput(voiceButton, voiceStatus, input, onInput) {
+        const SpeechRecognition = speechRecognitionConstructor();
+        if (!voiceButton || !voiceStatus || !input || !SpeechRecognition) return;
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = "ja-JP";
+        recognition.interimResults = true;
+        recognition.continuous = false;
+        let startingText = "";
+        let receivedText = false;
+
+        const setIdle = () => {
+          voiceButton.classList.remove("listening");
+          voiceButton.textContent = "🎙 話して入力";
+          voiceButton.setAttribute("aria-pressed", "false");
+        };
+
+        recognition.onstart = () => {
+          activeVoiceRecognition = recognition;
+          voiceButton.classList.add("listening");
+          voiceButton.textContent = "■ 聞くのをやめる";
+          voiceButton.setAttribute("aria-pressed", "true");
+          voiceStatus.textContent = "聞いています。話し終えたら、もう一度ボタンを押すか、そのまま少し待ってください。";
+        };
+
+        recognition.onresult = event => {
+          const spoken = Array.from(event.results).map(result => result[0]?.transcript || "").join("").trim();
+          if (!spoken) return;
+          input.value = `${startingText}${startingText ? "\n" : ""}${spoken}`;
+          receivedText = true;
+          if (typeof onInput === "function") onInput();
+          voiceStatus.textContent = event.results[event.results.length - 1]?.isFinal
+            ? "文字にしました。内容を見直してから次へ進んでください。"
+            : "聞き取った内容を文字にしています…";
+        };
+
+        recognition.onerror = event => {
+          activeVoiceRecognition = null;
+          setIdle();
+          const messages = {
+            "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。",
+            "service-not-allowed": "このブラウザでは音声認識サービスを使えません。文字入力で続けてください。",
+            "no-speech": "声を聞き取れませんでした。もう一度、少しゆっくり話してください。",
+            "audio-capture": "マイクが見つかりません。接続とブラウザの設定を確認してください。",
+            "network": "音声認識に接続できませんでした。通信を確認して、もう一度試してください。"
+          };
+          voiceStatus.textContent = messages[event.error] || "音声入力を開始できませんでした。文字入力で続けることもできます。";
+        };
+
+        recognition.onend = () => {
+          if (activeVoiceRecognition !== recognition) return;
+          activeVoiceRecognition = null;
+          setIdle();
+          if (!receivedText) voiceStatus.textContent = "音声入力を終えました。文字が入らなかった場合は、もう一度試してください。";
+        };
+
+        voiceButton.addEventListener("click", () => {
+          if (activeVoiceRecognition === recognition) {
+            voiceStatus.textContent = "音声入力を終了します…";
+            recognition.stop();
+            return;
+          }
+          stopVoiceRecognition();
+          startingText = input.value;
+          receivedText = false;
+          try {
+            recognition.start();
+          } catch (_) {
+            setIdle();
+            voiceStatus.textContent = "音声入力を開始できませんでした。少し待ってから、もう一度試してください。";
+          }
+        });
+      }
+
       function knowledgeCardsForStage(stageId) {
         return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.includes(stageId));
       }
@@ -931,9 +1029,12 @@
         const count = (knowledgeBase.cards || []).length;
         const pageCount = allKnowledgePageCards().length;
         if (!count && !pageCount) return "実務知識データを読み込み中です。";
-        const pages = knowledgeBase.source?.sourcePages;
-        const partial = knowledgeBase.source?.coverageScope === "partial";
-        return `${partial ? "先行して知識化した" : "書籍画像"}${pages ? ` p.${pages}` : ""}をもとにした、${pageCount || 0}ページ分の知識と${count || 0}枚の横断カード`;
+        const archived = Number(knowledgeBase.source?.archivedSourceImageCount || 0);
+        const cardized = Number(knowledgeBase.source?.cardizedSourceImageCount || 0);
+        const imageScope = archived
+          ? `非公開で保管した原本${archived}枚${cardized ? `（対応付け済み${cardized}枚）` : ""}`
+          : "登録済みの実務資料";
+        return `${imageScope}をもとにした、${pageCount || 0}ページ分の知識と${count || 0}枚の横断カード`;
       }
 
       function renderKnowledgeHint(stageId) {
@@ -1031,8 +1132,108 @@
         return stage.questions.filter(question => hasAnswer(question)).length;
       }
 
+      function quickStartIndustryOptions() {
+        return ["", ...Object.keys(INDUSTRY_PROFILES)].map(industry => {
+          const label = industry || "業種はまだ選ばない（あとで大丈夫）";
+          return `<option value="${escapeHtml(industry)}" ${answer("industryFamily") === industry ? "selected" : ""}>${escapeHtml(label)}</option>`;
+        }).join("");
+      }
+
+      function quickStartHypothesis(values) {
+        const business = String(values.business || "").trim();
+        const place = String(values.place || "").trim();
+        const action = String(values.action || "").trim();
+        if (!business) return "ここに、AIが最初に一緒に考えることを表示します。まだ正解を決める必要はありません。";
+        const where = place ? `「${place}」で` : "";
+        const nextAction = action || "選ばれて、次の行動をしてもらう";
+        return `いまの下書き：${where}「${business}」を必要とする人に見つけてもらい、「${nextAction}」につなげます。\n\n次は、どんな人がどんな困りごとで探すのかを、普段の言葉で一つずつ聞きます。AIへの難しい質問を最初から作る必要はありません。`;
+      }
+
+      function renderQuickStart() {
+        const knownBusiness = answer("business").replace(/（主な地域・市場：.*?）$/, "");
+        const knownAction = answer("action");
+        const knownPlace = String(state.answers.quickStartPlace || "");
+        questionBody.innerHTML = `
+          <div class="stage-kicker">はじめに / 3つだけ</div>
+          <h2 class="question-title">難しい質問から始めません。</h2>
+          <p class="quick-start-lead"><strong>まずは、ふだん人に話す言葉で3つだけ教えてください。</strong>ここで正解を決めません。入力後に、AIが「どんなお客さんに、何を伝えればよいか」の最初の下書きを作り、必要なことだけを順番に聞きます。</p>
+          <section class="quick-start" aria-label="はじめの3つの質問">
+            <div class="quick-start-grid">
+              <label class="quick-start-field wide">
+                <span>1. あなたのお店・会社は、何をしていますか？</span>
+                <small>商品、サービス、特徴を、短くそのまま書いてください。</small>
+                <textarea id="quickBusiness" placeholder="例：猫と泊まれる小さな温泉旅館です。">${escapeHtml(knownBusiness)}</textarea>
+                <div class="voice-controls">
+                  <button id="quickVoiceButton" type="button" class="button secondary voice-button" ${speechRecognitionConstructor() ? "" : "disabled"}>🎙 話して入力</button>
+                  <p id="quickVoiceStatus" class="voice-status" aria-live="polite">声で説明しても大丈夫です。文字になった内容は、必ず見直してください。</p>
+                </div>
+              </label>
+              <label class="quick-start-field">
+                <span>2. どこで売っていますか？</span>
+                <small>地域名、全国、オンラインなど。分からなければ空欄で大丈夫です。</small>
+                <input id="quickPlace" type="text" value="${escapeHtml(knownPlace)}" placeholder="例：栃木県那須塩原市" />
+              </label>
+              <label class="quick-start-field">
+                <span>3. お客さんに、次に何をしてほしいですか？</span>
+                <small>予約、購入、来店、問い合わせ、相談など。一つで大丈夫です。</small>
+                <input id="quickAction" type="text" value="${escapeHtml(knownAction)}" placeholder="例：空室を見て予約してほしい" />
+              </label>
+              <label class="quick-start-field wide">
+                <span>業種が分かれば選んでください（おまかせでも大丈夫）</span>
+                <select id="quickIndustry" aria-label="業種">${quickStartIndustryOptions()}</select>
+              </label>
+            </div>
+            <section class="quick-start-preview" aria-live="polite"><h3>AIの最初の理解</h3><p id="quickStartPreview"></p></section>
+            <div class="quick-start-actions"><button id="beginConversation" type="button" class="button primary">この3つから、選ばれる理由を一緒につくる</button></div>
+          </section>`;
+
+        const readValues = () => ({
+          business: questionBody.querySelector("#quickBusiness")?.value || "",
+          place: questionBody.querySelector("#quickPlace")?.value || "",
+          action: questionBody.querySelector("#quickAction")?.value || ""
+        });
+        const refreshPreview = () => {
+          const preview = questionBody.querySelector("#quickStartPreview");
+          if (preview) preview.textContent = quickStartHypothesis(readValues());
+        };
+        questionBody.querySelectorAll("#quickBusiness, #quickPlace, #quickAction").forEach(input => input.addEventListener("input", refreshPreview));
+        refreshPreview();
+        bindSpeechInput(
+          questionBody.querySelector("#quickVoiceButton"),
+          questionBody.querySelector("#quickVoiceStatus"),
+          questionBody.querySelector("#quickBusiness"),
+          refreshPreview
+        );
+
+        questionBody.querySelector("#beginConversation").addEventListener("click", () => {
+          const values = readValues();
+          const business = values.business.trim();
+          if (!business) {
+            showToast("まずは、何をしているお店・会社かを一言だけ教えてください。");
+            questionBody.querySelector("#quickBusiness")?.focus();
+            return;
+          }
+          const place = values.place.trim();
+          const action = values.action.trim();
+          const industry = questionBody.querySelector("#quickIndustry")?.value || "";
+          state.answers.business = place ? `${business}（主な地域・市場：${place}）` : business;
+          state.answers.quickStartPlace = place;
+          if (action) state.answers.action = action;
+          if (industry) state.answers.industryFamily = industry;
+          state.onboardingComplete = true;
+          const nextQuestion = allQuestions.findIndex(question => !hasAnswer(question));
+          state.current = nextQuestion >= 0 ? nextQuestion : 0;
+          saveState();
+          render();
+        });
+      }
+
       function renderStages() {
-        const currentStage = allQuestions[state.current].stage.id;
+        if (!state.onboardingComplete) {
+          stageList.innerHTML = `<div class="stage-footer"><p class="storage-note"><strong>最初は3つだけ。</strong><br>入力後に、必要な質問だけを普段の言葉で進めます。分からないことは、あとで大丈夫です。</p></div>`;
+          return;
+        }
+        const currentStage = (allQuestions[state.current] || allQuestions[0]).stage.id;
         stageList.innerHTML = activeStages.map(stage => {
           const complete = completeCount(stage);
           const isComplete = complete === stage.questions.length;
@@ -1084,6 +1285,10 @@
 
       function renderQuestion() {
         stopVoiceRecognition();
+        if (!state.onboardingComplete) {
+          renderQuickStart();
+          return;
+        }
         const question = allQuestions[state.current];
         const step = state.current + 1;
         const percentage = Math.round((allQuestions.filter(question => hasAnswer(question)).length / allQuestions.length) * 100);
@@ -1176,77 +1381,7 @@
           const voiceButton = questionBody.querySelector("#voiceButton");
           const voiceStatus = questionBody.querySelector("#voiceStatus");
           const answerInput = questionBody.querySelector("#answer");
-          const SpeechRecognition = speechRecognitionConstructor();
-          if (!voiceButton || !voiceStatus || !answerInput || !SpeechRecognition) return;
-
-          const recognition = new SpeechRecognition();
-          recognition.lang = "ja-JP";
-          recognition.interimResults = true;
-          recognition.continuous = false;
-          let startingText = "";
-          let receivedText = false;
-
-          const setIdle = () => {
-            voiceButton.classList.remove("listening");
-            voiceButton.textContent = "🎙 話して入力";
-            voiceButton.setAttribute("aria-pressed", "false");
-          };
-
-          recognition.onstart = () => {
-            activeVoiceRecognition = recognition;
-            voiceButton.classList.add("listening");
-            voiceButton.textContent = "■ 聞くのをやめる";
-            voiceButton.setAttribute("aria-pressed", "true");
-            voiceStatus.textContent = "聞いています。話し終えたら、もう一度ボタンを押すか、そのまま少し待ってください。";
-          };
-
-          recognition.onresult = event => {
-            const spoken = Array.from(event.results).map(result => result[0]?.transcript || "").join("").trim();
-            if (!spoken) return;
-            answerInput.value = `${startingText}${startingText ? "\n" : ""}${spoken}`;
-            receivedText = true;
-            persist();
-            voiceStatus.textContent = event.results[event.results.length - 1]?.isFinal
-              ? "文字にしました。内容を見直してから次へ進んでください。"
-              : "聞き取った内容を文字にしています…";
-          };
-
-          recognition.onerror = event => {
-            activeVoiceRecognition = null;
-            setIdle();
-            const messages = {
-              "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。",
-              "service-not-allowed": "このブラウザでは音声認識サービスを使えません。文字入力で続けてください。",
-              "no-speech": "声を聞き取れませんでした。もう一度、少しゆっくり話してください。",
-              "audio-capture": "マイクが見つかりません。接続とブラウザの設定を確認してください。",
-              "network": "音声認識に接続できませんでした。通信を確認して、もう一度試してください。"
-            };
-            voiceStatus.textContent = messages[event.error] || "音声入力を開始できませんでした。文字入力で続けることもできます。";
-          };
-
-          recognition.onend = () => {
-            if (activeVoiceRecognition !== recognition) return;
-            activeVoiceRecognition = null;
-            setIdle();
-            if (!receivedText) voiceStatus.textContent = "音声入力を終えました。文字が入らなかった場合は、もう一度試してください。";
-          };
-
-          voiceButton.addEventListener("click", () => {
-            if (activeVoiceRecognition === recognition) {
-              voiceStatus.textContent = "音声入力を終了します…";
-              recognition.stop();
-              return;
-            }
-            stopVoiceRecognition();
-            startingText = answerInput.value;
-            receivedText = false;
-            try {
-              recognition.start();
-            } catch (_) {
-              setIdle();
-              voiceStatus.textContent = "音声入力を開始できませんでした。少し待ってから、もう一度試してください。";
-            }
-          });
+          bindSpeechInput(voiceButton, voiceStatus, answerInput, persist);
         };
 
         setupVoiceInput();
@@ -1336,7 +1471,8 @@
         const listed = relevantCards.slice(0, 5).map(card => `・${card.title}`).join("\n");
         const overflow = relevantCards.length > 5 ? `\nほか ${relevantCards.length - 5} 枚` : "";
         const ingestion = knowledgeBase.source?.ingestionStatus ? `\n原本の知識化状況: ${knowledgeBase.source.ingestionStatus}` : "";
-        return `保存済み: ${knowledgeSourceLabel()}\n\nページ別データ: ${allPageCards.length} / ${knowledgeBase.source?.sourcePageCount || allPageCards.length} ページ（この先行知識セット内）\n今の回答で参照している考え方: ${relevantCards.length} 枚・ページ別知識: ${relevantPages.length} ページ\n${listed || "・次の質問に合わせて参照します。"}${overflow}${ingestion}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
+        const pageSet = knowledgeBase.source?.sourcePages ? `p.${knowledgeBase.source.sourcePages}` : "登録済みページ";
+        return `保存済み: ${knowledgeSourceLabel()}\n\nページ別に整理済み: ${allPageCards.length} ページ（${pageSet}）\n今の回答で参照している考え方: ${relevantCards.length} 枚・ページ別知識: ${relevantPages.length} ページ\n${listed || "・次の質問に合わせて参照します。"}${overflow}${ingestion}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
       }
 
       function mediaGuidance(channel) {
