@@ -9,45 +9,126 @@
     "archivedSourceImageCount": 233,
     "ingestionStatus": "原本233枚を非公開で保管し、OCRは233/233枚完了（うち62枚は原本照合が必要）です。現在この公開データが参照するのはp.229-262の34ページで、残りの原本は独自知識カード化を進行中です。",
     "rawImagesStoredInRepository": false,
-    "note": "書籍ページの画像や原文を公開用サイトへ転載せず、実務で使うための独自の判断基準・質問・注意点として保存しています。"
+    "note": "書籍ページの画像や原文を公開用サイトへ転載せず、実務で使うための独自の判断基準・質問・注意点として保存しています。",
+    "derivedKnowledgeCardCount": 31,
+    "derivedKnowledgeStatus": "非公開原本アーカイブから検証済みの独自要約カードを31枚反映"
   },
   "coverage": {
     "method": "各ページを一つ以上の知識カードに対応づけ、画面の質問・提案・出力で参照する。",
     "pageToCards": {
-      "229": ["because-matrix"],
-      "230": ["because-matrix"],
-      "231": ["promotion-tool-inventory"],
-      "232": ["cross-functional-rollout"],
-      "233": ["catchphrase-substance"],
-      "234": ["catchphrase-substance"],
-      "235": ["catchphrase-substance"],
-      "236": ["customer-journey-consistency"],
-      "237": ["customer-journey-consistency"],
-      "238": ["customer-journey-consistency"],
-      "239": ["customer-feedback-test"],
-      "240": ["customer-feedback-test", "message-priority"],
-      "241": ["message-priority"],
-      "242": ["video-structure"],
-      "243": ["reason-is-purchased"],
-      "244": ["execute-every-touchpoint"],
-      "245": ["execute-every-touchpoint", "self-disruption"],
-      "246": ["self-disruption"],
-      "247": ["gatekeeper-understanding"],
-      "248": ["gatekeeper-understanding"],
-      "249": ["objection-prevention"],
-      "250": ["limit-losses"],
-      "251": ["limit-losses"],
-      "252": ["limit-losses", "listening-organization"],
-      "253": ["listening-organization", "additional-sales"],
-      "254": ["additional-sales", "complete-offering"],
-      "255": ["follow-up-validation"],
-      "256": ["follow-up-validation", "referral-feedback"],
-      "257": ["referral-feedback", "internal-communication"],
-      "258": ["internal-communication", "organization-wide-adoption"],
-      "259": ["organization-wide-adoption", "continuous-renewal"],
-      "260": ["reason-is-purchased", "continuous-renewal"],
-      "261": ["reason-is-purchased", "continuous-renewal"],
-      "262": ["continuous-renewal"]
+      "229": [
+        "because-matrix"
+      ],
+      "230": [
+        "because-matrix"
+      ],
+      "231": [
+        "promotion-tool-inventory"
+      ],
+      "232": [
+        "cross-functional-rollout"
+      ],
+      "233": [
+        "catchphrase-substance"
+      ],
+      "234": [
+        "catchphrase-substance"
+      ],
+      "235": [
+        "catchphrase-substance"
+      ],
+      "236": [
+        "customer-journey-consistency"
+      ],
+      "237": [
+        "customer-journey-consistency"
+      ],
+      "238": [
+        "customer-journey-consistency"
+      ],
+      "239": [
+        "customer-feedback-test"
+      ],
+      "240": [
+        "customer-feedback-test",
+        "message-priority"
+      ],
+      "241": [
+        "message-priority"
+      ],
+      "242": [
+        "video-structure"
+      ],
+      "243": [
+        "reason-is-purchased"
+      ],
+      "244": [
+        "execute-every-touchpoint"
+      ],
+      "245": [
+        "execute-every-touchpoint",
+        "self-disruption"
+      ],
+      "246": [
+        "self-disruption"
+      ],
+      "247": [
+        "gatekeeper-understanding"
+      ],
+      "248": [
+        "gatekeeper-understanding"
+      ],
+      "249": [
+        "objection-prevention"
+      ],
+      "250": [
+        "limit-losses"
+      ],
+      "251": [
+        "limit-losses"
+      ],
+      "252": [
+        "limit-losses",
+        "listening-organization"
+      ],
+      "253": [
+        "listening-organization",
+        "additional-sales"
+      ],
+      "254": [
+        "additional-sales",
+        "complete-offering"
+      ],
+      "255": [
+        "follow-up-validation"
+      ],
+      "256": [
+        "follow-up-validation",
+        "referral-feedback"
+      ],
+      "257": [
+        "referral-feedback",
+        "internal-communication"
+      ],
+      "258": [
+        "internal-communication",
+        "organization-wide-adoption"
+      ],
+      "259": [
+        "organization-wide-adoption",
+        "continuous-renewal"
+      ],
+      "260": [
+        "reason-is-purchased",
+        "continuous-renewal"
+      ],
+      "261": [
+        "reason-is-purchased",
+        "continuous-renewal"
+      ],
+      "262": [
+        "continuous-renewal"
+      ]
     }
   },
   "pageCards": [
@@ -56,374 +137,849 @@
       "sourcePage": 229,
       "chapter": "4. ビコーズマトリクス",
       "keyPoint": "顧客について分かったこと、顧客が得る成果、その成果を言える理由を一つの作業表に集める。",
-      "decisionCriteria": ["顧客ごとに成果と理由が対応している", "洞察・成果・理由のどれにも根拠の出所がある"],
-      "questions": ["誰のどんな場面を扱うか", "その人に何を約束できるか", "なぜそう言えるか"],
+      "decisionCriteria": [
+        "顧客ごとに成果と理由が対応している",
+        "洞察・成果・理由のどれにも根拠の出所がある"
+      ],
+      "questions": [
+        "誰のどんな場面を扱うか",
+        "その人に何を約束できるか",
+        "なぜそう言えるか"
+      ],
       "example": "家族旅行を検討する人向けに、滞在で得られる状態と、実際の設備・運用を同じ行に置く。",
-      "cautions": ["顧客像だけを表にして終わらせない", "未確認の理由を販売表現にしない"],
-      "stages": ["customer", "insight", "outcome", "evidence"]
+      "cautions": [
+        "顧客像だけを表にして終わらせない",
+        "未確認の理由を販売表現にしない"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome",
+        "evidence"
+      ]
     },
     {
       "id": "page-230",
       "sourcePage": 230,
       "chapter": "4. ビコーズマトリクス",
       "keyPoint": "顧客タイプや販売段階ごとに、重要なメッセージの成果と理由を並べ、反応に応じて更新する。",
-      "decisionCriteria": ["誰に、いつ、何を伝えるかが明確", "メッセージは実際の反応で見直せる"],
-      "questions": ["この相手に今もっとも必要な情報は何か", "次に確認したい不安は何か", "どの反応を更新材料にするか"],
+      "decisionCriteria": [
+        "誰に、いつ、何を伝えるかが明確",
+        "メッセージは実際の反応で見直せる"
+      ],
+      "questions": [
+        "この相手に今もっとも必要な情報は何か",
+        "次に確認したい不安は何か",
+        "どの反応を更新材料にするか"
+      ],
       "example": "初回検索では条件、比較時には違い、購入直前には利用手順を優先して示す。",
-      "cautions": ["すべての情報を一度に詰め込まない", "個人の感想を全顧客の事実にしない"],
-      "stages": ["customer", "media", "execution"]
+      "cautions": [
+        "すべての情報を一度に詰め込まない",
+        "個人の感想を全顧客の事実にしない"
+      ],
+      "stages": [
+        "customer",
+        "media",
+        "execution"
+      ]
     },
     {
       "id": "page-231",
       "sourcePage": 231,
       "chapter": "5. 販促ツール一覧",
       "keyPoint": "サイト、営業、資料、動画、SNS、広告、業界媒体、紹介など、顧客との全接点を一覧にする。",
-      "decisionCriteria": ["媒体ごとに目的と顧客段階がある", "同じ成果と理由が矛盾なく載っている"],
-      "questions": ["今使っている接点は何か", "誰が管理し、どの場面で使うか", "そこで検証できる反応は何か"],
+      "decisionCriteria": [
+        "媒体ごとに目的と顧客段階がある",
+        "同じ成果と理由が矛盾なく載っている"
+      ],
+      "questions": [
+        "今使っている接点は何か",
+        "誰が管理し、どの場面で使うか",
+        "そこで検証できる反応は何か"
+      ],
       "example": "公式サイトは一次情報、SNSは気づき、営業資料は比較、口コミは検証材料として役割を分ける。",
-      "cautions": ["媒体数を増やすこと自体を目的にしない", "実態と異なる資料を残さない"],
-      "stages": ["media", "execution"]
+      "cautions": [
+        "媒体数を増やすこと自体を目的にしない",
+        "実態と異なる資料を残さない"
+      ],
+      "stages": [
+        "media",
+        "execution"
+      ]
     },
     {
       "id": "page-232",
       "sourcePage": 232,
       "chapter": "部門連携とキャッチフレーズ",
       "keyPoint": "マーケティングと営業だけでなく、各顧客接点の担当者を巻き込み、導入の責任者と期限を決める。",
-      "decisionCriteria": ["媒体ごとの担当者と完了日がある", "現場が説明内容を理解している"],
-      "questions": ["誰が変更を実行するか", "いつ公開・導入するか", "現場は何を約束してよいか"],
+      "decisionCriteria": [
+        "媒体ごとの担当者と完了日がある",
+        "現場が説明内容を理解している"
+      ],
+      "questions": [
+        "誰が変更を実行するか",
+        "いつ公開・導入するか",
+        "現場は何を約束してよいか"
+      ],
       "example": "サイトの訴求変更を、予約担当・販売担当・現場責任者が公開前に確認する。",
-      "cautions": ["会議だけで担当者を置かない", "現場の提供能力を超える表現にしない"],
-      "stages": ["media", "execution"]
+      "cautions": [
+        "会議だけで担当者を置かない",
+        "現場の提供能力を超える表現にしない"
+      ],
+      "stages": [
+        "media",
+        "execution"
+      ]
     },
     {
       "id": "page-233",
       "sourcePage": 233,
       "chapter": "6. キャッチフレーズ",
       "keyPoint": "短い言葉は印象だけでなく、事業がすることと顧客にとっての理由を同時に伝える。",
-      "decisionCriteria": ["何を提供するかが分かる", "選ぶ理由が推測でなく確認できる"],
-      "questions": ["短い言葉で何を約束しているか", "それを裏付ける仕組みは何か", "顧客は自分に関係があると分かるか"],
+      "decisionCriteria": [
+        "何を提供するかが分かる",
+        "選ぶ理由が推測でなく確認できる"
+      ],
+      "questions": [
+        "短い言葉で何を約束しているか",
+        "それを裏付ける仕組みは何か",
+        "顧客は自分に関係があると分かるか"
+      ],
       "example": "提供内容と顧客が得る状態を短く結び、詳細ページで条件と根拠を示す。",
-      "cautions": ["格好よさだけの抽象語にしない", "根拠のない優位性を含めない"],
-      "stages": ["outcome", "evidence", "media"]
+      "cautions": [
+        "格好よさだけの抽象語にしない",
+        "根拠のない優位性を含めない"
+      ],
+      "stages": [
+        "outcome",
+        "evidence",
+        "media"
+      ]
     },
     {
       "id": "page-234",
       "sourcePage": 234,
       "chapter": "6. キャッチフレーズ",
       "keyPoint": "伝わる短い表現は、先に作った顧客理解・成果・理由から削り出す。",
-      "decisionCriteria": ["長い説明に戻って意味を確認できる", "顧客が受け取る価値が主語になっている"],
-      "questions": ["長い説明を一文にすると何が残るか", "顧客が次に知りたい条件は何か", "言葉と実際の提供に差がないか"],
+      "decisionCriteria": [
+        "長い説明に戻って意味を確認できる",
+        "顧客が受け取る価値が主語になっている"
+      ],
+      "questions": [
+        "長い説明を一文にすると何が残るか",
+        "顧客が次に知りたい条件は何か",
+        "言葉と実際の提供に差がないか"
+      ],
       "example": "見出しは成果を示し、その直下で対象者・条件・実現方法を説明する。",
-      "cautions": ["省略し過ぎて意味を失わない", "本文で検証不能な主張を補わない"],
-      "stages": ["outcome", "evidence", "media"]
+      "cautions": [
+        "省略し過ぎて意味を失わない",
+        "本文で検証不能な主張を補わない"
+      ],
+      "stages": [
+        "outcome",
+        "evidence",
+        "media"
+      ]
     },
     {
       "id": "page-235",
       "sourcePage": 235,
       "chapter": "6. キャッチフレーズ",
       "keyPoint": "キャッチフレーズは入口であり、顧客が選ぶための説明と証拠へ確実につなげる。",
-      "decisionCriteria": ["見出しから詳細・条件・根拠へ進める", "媒体が変わっても約束が一貫している"],
-      "questions": ["見出しを見た後、何を確認できるか", "異なる媒体でも同じ意味で使えるか", "反論が出たとき何で答えるか"],
+      "decisionCriteria": [
+        "見出しから詳細・条件・根拠へ進める",
+        "媒体が変わっても約束が一貫している"
+      ],
+      "questions": [
+        "見出しを見た後、何を確認できるか",
+        "異なる媒体でも同じ意味で使えるか",
+        "反論が出たとき何で答えるか"
+      ],
       "example": "広告の短い訴求からFAQや商品詳細に遷移させ、質問に答えられる形にする。",
-      "cautions": ["入口の言葉を事実確認より優先しない", "誤解を生む省略をしない"],
-      "stages": ["media", "evidence", "execution"]
+      "cautions": [
+        "入口の言葉を事実確認より優先しない",
+        "誤解を生む省略をしない"
+      ],
+      "stages": [
+        "media",
+        "evidence",
+        "execution"
+      ]
     },
     {
       "id": "page-236",
       "sourcePage": 236,
       "chapter": "法律事務所の販売プロセス",
       "keyPoint": "顧客が最初に知り、問い合わせ、適合を判断され、担当者へ引き継がれる道のりを可視化する。",
-      "decisionCriteria": ["顧客が進む順番を現場と共有している", "窓口から提供者までの引継ぎが明確"],
-      "questions": ["最初の接点はどこか", "誰が適合を判断するか", "次の担当へ何を渡すか"],
+      "decisionCriteria": [
+        "顧客が進む順番を現場と共有している",
+        "窓口から提供者までの引継ぎが明確"
+      ],
+      "questions": [
+        "最初の接点はどこか",
+        "誰が適合を判断するか",
+        "次の担当へ何を渡すか"
+      ],
       "example": "紹介・検索からの相談を受けた人が、対象条件を確認して専門担当へつなぐ。",
-      "cautions": ["組織側の都合だけで流れを作らない", "引継ぎ時に顧客が説明を繰り返さなくてよいようにする"],
-      "stages": ["customer", "media", "execution"]
+      "cautions": [
+        "組織側の都合だけで流れを作らない",
+        "引継ぎ時に顧客が説明を繰り返さなくてよいようにする"
+      ],
+      "stages": [
+        "customer",
+        "media",
+        "execution"
+      ]
     },
     {
       "id": "page-237",
       "sourcePage": 237,
       "chapter": "カスタマージャーニー",
       "keyPoint": "販売フローの段階が変われば、顧客が見る洞察、成果、理由も変わる。",
-      "decisionCriteria": ["段階ごとに必要な情報を変えている", "早すぎる提案や遅すぎる根拠がない"],
-      "questions": ["この人は気づき・比較・決定・利用のどこにいるか", "今必要な判断材料は何か", "次に進む障害は何か"],
+      "decisionCriteria": [
+        "段階ごとに必要な情報を変えている",
+        "早すぎる提案や遅すぎる根拠がない"
+      ],
+      "questions": [
+        "この人は気づき・比較・決定・利用のどこにいるか",
+        "今必要な判断材料は何か",
+        "次に進む障害は何か"
+      ],
       "example": "比較前には判断条件を、比較中には差と証拠を、契約前には条件と手順を示す。",
-      "cautions": ["全員を同じ導線へ押し込まない", "顧客段階を推測だけで固定しない"],
-      "stages": ["customer", "insight", "media"]
+      "cautions": [
+        "全員を同じ導線へ押し込まない",
+        "顧客段階を推測だけで固定しない"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "media"
+      ]
     },
     {
       "id": "page-238",
       "sourcePage": 238,
       "chapter": "カスタマージャーニー",
       "keyPoint": "組織として一貫した顧客体験をつくるには、各接点で何を伝えるかを共通化し、反応で改善する。",
-      "decisionCriteria": ["接点間で説明が矛盾しない", "改善を反応・転換・問い合わせで確かめられる"],
-      "questions": ["どの接点で不安が増えているか", "どの説明が次の行動につながったか", "誰が更新を決めるか"],
+      "decisionCriteria": [
+        "接点間で説明が矛盾しない",
+        "改善を反応・転換・問い合わせで確かめられる"
+      ],
+      "questions": [
+        "どの接点で不安が増えているか",
+        "どの説明が次の行動につながったか",
+        "誰が更新を決めるか"
+      ],
       "example": "サイト、電話、対面、販売後メールで、同じ条件と例外を確認できるようにする。",
-      "cautions": ["一貫性を同じ文面の繰り返しと取り違えない", "現場の実情を無視して標準化しない"],
-      "stages": ["media", "execution", "customer"]
+      "cautions": [
+        "一貫性を同じ文面の繰り返しと取り違えない",
+        "現場の実情を無視して標準化しない"
+      ],
+      "stages": [
+        "media",
+        "execution",
+        "customer"
+      ]
     },
     {
       "id": "page-239",
       "sourcePage": 239,
       "chapter": "8. 顧客からのフィードバック",
       "keyPoint": "説得力があると思う理由を社内だけで決めず、顧客に提示して反応を聞く。",
-      "decisionCriteria": ["重要顧客の声を直接確認した", "仮説と顧客の反応を区別している"],
-      "questions": ["どの説明に納得したか", "何が自分にとって価値に見えるか", "どの表現に違和感があるか"],
+      "decisionCriteria": [
+        "重要顧客の声を直接確認した",
+        "仮説と顧客の反応を区別している"
+      ],
+      "questions": [
+        "どの説明に納得したか",
+        "何が自分にとって価値に見えるか",
+        "どの表現に違和感があるか"
+      ],
       "example": "候補の説明を複数示し、利用経験のある顧客に最も納得できるものを聞く。",
-      "cautions": ["都合のよい反応だけ集めない", "顧客の協力を当然と考えない"],
-      "stages": ["insight", "evidence", "execution"]
+      "cautions": [
+        "都合のよい反応だけ集めない",
+        "顧客の協力を当然と考えない"
+      ],
+      "stages": [
+        "insight",
+        "evidence",
+        "execution"
+      ]
     },
     {
       "id": "page-240",
       "sourcePage": 240,
       "chapter": "顧客フィードバックと伝える内容の優先順位",
       "keyPoint": "一対一の会話、アンケート、問い合わせなどで得た反応から、伝えるべき内容の優先順位を決める。",
-      "decisionCriteria": ["反応を取得する方法がある", "限られた表示時間で最重要事項を先に出せる"],
-      "questions": ["顧客は何を確認したいか", "短時間で最初に伝えるべきことは何か", "どの反応が仮説を否定しているか"],
+      "decisionCriteria": [
+        "反応を取得する方法がある",
+        "限られた表示時間で最重要事項を先に出せる"
+      ],
+      "questions": [
+        "顧客は何を確認したいか",
+        "短時間で最初に伝えるべきことは何か",
+        "どの反応が仮説を否定しているか"
+      ],
       "example": "サイトの冒頭に、最も判断に影響する成果と理由を置き、詳細は順に補足する。",
-      "cautions": ["情報量で不安を隠さない", "クリックや閲覧だけを理解の証拠にしない"],
-      "stages": ["media", "insight", "execution"]
+      "cautions": [
+        "情報量で不安を隠さない",
+        "クリックや閲覧だけを理解の証拠にしない"
+      ],
+      "stages": [
+        "media",
+        "insight",
+        "execution"
+      ]
     },
     {
       "id": "page-241",
       "sourcePage": 241,
       "chapter": "伝える内容に優先順位を付ける",
       "keyPoint": "すべての販促ツールで、最も重要な成果と理由から伝え、顧客段階に応じて意図的に導線を設計する。",
-      "decisionCriteria": ["一番伝えたいことが最初に見える", "各媒体の説得場面に優先順位がある"],
-      "questions": ["第一・第二・第三に見せる内容は何か", "その順番は顧客の判断を助けるか", "媒体ごとの重要度はどう違うか"],
+      "decisionCriteria": [
+        "一番伝えたいことが最初に見える",
+        "各媒体の説得場面に優先順位がある"
+      ],
+      "questions": [
+        "第一・第二・第三に見せる内容は何か",
+        "その順番は顧客の判断を助けるか",
+        "媒体ごとの重要度はどう違うか"
+      ],
       "example": "検索結果、LP、提案書、対面説明で、先頭に置く成果と理由を決めておく。",
-      "cautions": ["社内で言いたいこと順にしない", "一番強い表現を根拠なく先頭に置かない"],
-      "stages": ["media", "outcome", "evidence"]
+      "cautions": [
+        "社内で言いたいこと順にしない",
+        "一番強い表現を根拠なく先頭に置かない"
+      ],
+      "stages": [
+        "media",
+        "outcome",
+        "evidence"
+      ]
     },
     {
       "id": "page-242",
       "sourcePage": 242,
       "chapter": "ビコーズをもとに動画を作成する",
       "keyPoint": "動画は顧客の状況への理解、顧客が得る成果、その裏付けの順に構成する。",
-      "decisionCriteria": ["映像が顧客の注意と理解を両立している", "画面で示す理由が事実として確認できる"],
-      "questions": ["冒頭で誰の状況を示すか", "約束する成果は何か", "どの事実を映像で確認させるか"],
+      "decisionCriteria": [
+        "映像が顧客の注意と理解を両立している",
+        "画面で示す理由が事実として確認できる"
+      ],
+      "questions": [
+        "冒頭で誰の状況を示すか",
+        "約束する成果は何か",
+        "どの事実を映像で確認させるか"
+      ],
       "example": "困りごとの場面から始め、利用後の状態を示し、設備・手順・担当者などを理由として見せる。",
-      "cautions": ["演出で実際以上の成果を印象づけない", "媒体ごとに条件説明を省かない"],
-      "stages": ["insight", "outcome", "evidence", "media"]
+      "cautions": [
+        "演出で実際以上の成果を印象づけない",
+        "媒体ごとに条件説明を省かない"
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "evidence",
+        "media"
+      ]
     },
     {
       "id": "page-243",
       "sourcePage": 243,
       "chapter": "顧客はあなたのビコーズを買う",
       "keyPoint": "顧客は提供物だけでなく、自分にとってそれを選ぶ理由が納得できるときに選ぶ。",
-      "decisionCriteria": ["洞察・成果・理由が一つの説明になっている", "組織の全員がその意味を理解している"],
-      "questions": ["顧客の目には選ぶ理由が見えているか", "競合ではなく自社を選ぶ合理性は何か", "その理由は現場で提供できるか"],
+      "decisionCriteria": [
+        "洞察・成果・理由が一つの説明になっている",
+        "組織の全員がその意味を理解している"
+      ],
+      "questions": [
+        "顧客の目には選ぶ理由が見えているか",
+        "競合ではなく自社を選ぶ合理性は何か",
+        "その理由は現場で提供できるか"
+      ],
       "example": "商品名や設備の列挙ではなく、顧客の目的にとって何が変わるかと、それを支える事実を結ぶ。",
-      "cautions": ["理由をコピーだけで作らない", "実行できない理由を約束しない"],
-      "stages": ["customer", "outcome", "evidence"]
+      "cautions": [
+        "理由をコピーだけで作らない",
+        "実行できない理由を約束しない"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence"
+      ]
     },
     {
       "id": "page-244",
       "sourcePage": 244,
       "chapter": "STEP 7 あらゆる顧客接点で取り組みを実行する",
       "keyPoint": "設計しただけでは価値にならないため、実行する取組、責任者、期限、必要な資源を決める。",
-      "decisionCriteria": ["実行者・期限・優先順位が決まっている", "新しい作業のために止める作業も決めている"],
-      "questions": ["誰が何をいつまでに行うか", "何をやめれば実行できるか", "追加で必要な時間・予算・権限は何か"],
+      "decisionCriteria": [
+        "実行者・期限・優先順位が決まっている",
+        "新しい作業のために止める作業も決めている"
+      ],
+      "questions": [
+        "誰が何をいつまでに行うか",
+        "何をやめれば実行できるか",
+        "追加で必要な時間・予算・権限は何か"
+      ],
       "example": "FAQ更新、写真撮影、予約導線修正を担当者と公開日まで決め、週次で確認する。",
-      "cautions": ["忙しい現場に仕事を積み増すだけにしない", "責任の所在が曖昧な計画を出さない"],
-      "stages": ["execution", "media"]
+      "cautions": [
+        "忙しい現場に仕事を積み増すだけにしない",
+        "責任の所在が曖昧な計画を出さない"
+      ],
+      "stages": [
+        "execution",
+        "media"
+      ]
     },
     {
       "id": "page-245",
       "sourcePage": 245,
       "chapter": "フレームワークの実行と変革",
       "keyPoint": "顧客・媒体・販売過程・強み・障害を見渡して、どこに集中するかを判断し、変化へ備える。",
-      "decisionCriteria": ["最重要のボトルネックを選べている", "市場や顧客の変化を定期的に見直す"],
-      "questions": ["今もっとも壁になっているのはどこか", "強い媒体と弱い媒体は何か", "今壊して変えるべき前提は何か"],
+      "decisionCriteria": [
+        "最重要のボトルネックを選べている",
+        "市場や顧客の変化を定期的に見直す"
+      ],
+      "questions": [
+        "今もっとも壁になっているのはどこか",
+        "強い媒体と弱い媒体は何か",
+        "今壊して変えるべき前提は何か"
+      ],
       "example": "集客不足ではなく、比較段階で条件説明が不足していると判明した場合、そこを先に改善する。",
-      "cautions": ["流行だけで大規模な変更をしない", "変化を恐れて検証を止めない"],
-      "stages": ["execution", "media", "insight"]
+      "cautions": [
+        "流行だけで大規模な変更をしない",
+        "変化を恐れて検証を止めない"
+      ],
+      "stages": [
+        "execution",
+        "media",
+        "insight"
+      ]
     },
     {
       "id": "page-246",
       "sourcePage": 246,
       "chapter": "自ら破壊を選ぶ変革",
       "keyPoint": "より強くなるために、今うまくいっている方法でも先を見越して見直す必要がある。",
-      "decisionCriteria": ["変える目的が顧客価値と将来の競争力に結びつく", "一時的な悪化を測定・管理できる"],
-      "questions": ["何を変えないことで機会を失っているか", "変化の途中で何を測るか", "顧客への影響をどう小さくするか"],
+      "decisionCriteria": [
+        "変える目的が顧客価値と将来の競争力に結びつく",
+        "一時的な悪化を測定・管理できる"
+      ],
+      "questions": [
+        "何を変えないことで機会を失っているか",
+        "変化の途中で何を測るか",
+        "顧客への影響をどう小さくするか"
+      ],
       "example": "予約手順を新しくする前に、小さな対象で試し、問い合わせや離脱がどう変わるかを確かめる。",
-      "cautions": ["変革を目的化しない", "顧客への説明や代替手段なしに既存サービスを止めない"],
-      "stages": ["execution", "insight"]
+      "cautions": [
+        "変革を目的化しない",
+        "顧客への説明や代替手段なしに既存サービスを止めない"
+      ],
+      "stages": [
+        "execution",
+        "insight"
+      ]
     },
     {
       "id": "page-247",
       "sourcePage": 247,
       "chapter": "ゲートキーパーを突破する",
       "keyPoint": "購入に関わる受付・窓口・紹介者など、最初の関門にいる人の役割と判断を理解する。",
-      "decisionCriteria": ["購入者以外の影響者を把握している", "窓口の不安・評価基準にも答えられる"],
-      "questions": ["最初に話す人は誰か", "その人は何を守ろうとしているか", "その人が次へ渡せる情報は何か"],
+      "decisionCriteria": [
+        "購入者以外の影響者を把握している",
+        "窓口の不安・評価基準にも答えられる"
+      ],
+      "questions": [
+        "最初に話す人は誰か",
+        "その人は何を守ろうとしているか",
+        "その人が次へ渡せる情報は何か"
+      ],
       "example": "問い合わせ窓口が、専門用語ではなく相手の状況を理解する質問を使い、適切な担当へ渡す。",
-      "cautions": ["窓口を障害物として扱わない", "役割や権限を飛び越えるような働きかけをしない"],
-      "stages": ["customer", "insight", "execution"]
+      "cautions": [
+        "窓口を障害物として扱わない",
+        "役割や権限を飛び越えるような働きかけをしない"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "execution"
+      ]
     },
     {
       "id": "page-248",
       "sourcePage": 248,
       "chapter": "ゲートキーパーの洞察を得る",
       "keyPoint": "現場の受付・窓口は顧客の困りごとを日常的に知っているため、対話から重要な洞察を得られる。",
-      "decisionCriteria": ["窓口の観察を定期的に集める", "聞いた内容を顧客の事実と仮説に分ける"],
-      "questions": ["顧客は最初に何を尋ねるか", "窓口が繰り返し聞く不安は何か", "案内時に足りない情報は何か"],
+      "decisionCriteria": [
+        "窓口の観察を定期的に集める",
+        "聞いた内容を顧客の事実と仮説に分ける"
+      ],
+      "questions": [
+        "顧客は最初に何を尋ねるか",
+        "窓口が繰り返し聞く不安は何か",
+        "案内時に足りない情報は何か"
+      ],
       "example": "受付担当へ、よくある質問・問い合わせの背景・説明しにくい点を定期的に聞く。",
-      "cautions": ["一人の印象だけで顧客全体を断定しない", "個人情報を無断で記録・利用しない"],
-      "stages": ["insight", "customer", "execution"]
+      "cautions": [
+        "一人の印象だけで顧客全体を断定しない",
+        "個人情報を無断で記録・利用しない"
+      ],
+      "stages": [
+        "insight",
+        "customer",
+        "execution"
+      ]
     },
     {
       "id": "page-249",
       "sourcePage": 249,
       "chapter": "約束どおりのことを実現する",
       "keyPoint": "相手からの反論や失敗の原因を先回りして把握し、約束を現実に実行できる条件を整える。",
-      "decisionCriteria": ["起こり得る反論・失敗を予測している", "約束を実行する担当・手順・検証がある"],
-      "questions": ["相手は何を不安に思うか", "約束を妨げる原因は何か", "実行できたことを何で確認するか"],
+      "decisionCriteria": [
+        "起こり得る反論・失敗を予測している",
+        "約束を実行する担当・手順・検証がある"
+      ],
+      "questions": [
+        "相手は何を不安に思うか",
+        "約束を妨げる原因は何か",
+        "実行できたことを何で確認するか"
+      ],
       "example": "購入後に必要な準備、提供できない場合、代替手段を事前にFAQと担当者の両方で示す。",
-      "cautions": ["反論を隠して契約を急がせない", "実行不能な条件を黙って約束しない"],
-      "stages": ["evidence", "execution", "customer"]
+      "cautions": [
+        "反論を隠して契約を急がせない",
+        "実行不能な条件を黙って約束しない"
+      ],
+      "stages": [
+        "evidence",
+        "execution",
+        "customer"
+      ]
     },
     {
       "id": "page-250",
       "sourcePage": 250,
       "chapter": "現場のスタッフに権限を与えて巻き込む",
       "keyPoint": "現場が顧客の問題を解決できるよう、必要な情報・判断権限・改善への参加機会を与える。",
-      "decisionCriteria": ["現場が対応できる範囲が明確", "現場が顧客との違和感を報告できる"],
-      "questions": ["その場で何を決めてよいか", "困ったとき誰に相談できるか", "現場の発見をどこに残すか"],
+      "decisionCriteria": [
+        "現場が対応できる範囲が明確",
+        "現場が顧客との違和感を報告できる"
+      ],
+      "questions": [
+        "その場で何を決めてよいか",
+        "困ったとき誰に相談できるか",
+        "現場の発見をどこに残すか"
+      ],
       "example": "接客担当が小さな不満を解消できる範囲を定め、繰り返す問題は改善会議へ渡す。",
-      "cautions": ["権限だけ渡して教育・基準を渡さない状態にしない", "担当者に責任だけを負わせない"],
-      "stages": ["execution", "customer"]
+      "cautions": [
+        "権限だけ渡して教育・基準を渡さない状態にしない",
+        "担当者に責任だけを負わせない"
+      ],
+      "stages": [
+        "execution",
+        "customer"
+      ]
     },
     {
       "id": "page-251",
       "sourcePage": 251,
       "chapter": "現場のスタッフに権限を与えて巻き込む",
       "keyPoint": "現場で起きた提供物と顧客期待のずれは、担当者を責める材料ではなく、仕組みを改善する材料である。",
-      "decisionCriteria": ["期待と実物の差を検知できる", "返品・不満・失注を改善データとして扱う"],
-      "questions": ["顧客が期待したものと何が違ったか", "どの説明・工程でずれが生まれたか", "再発を防ぐには何を変えるか"],
+      "decisionCriteria": [
+        "期待と実物の差を検知できる",
+        "返品・不満・失注を改善データとして扱う"
+      ],
+      "questions": [
+        "顧客が期待したものと何が違ったか",
+        "どの説明・工程でずれが生まれたか",
+        "再発を防ぐには何を変えるか"
+      ],
       "example": "写真・見本・説明と実際の提供物に差が出た場合、販売前の確認方法と現場の検品を見直す。",
-      "cautions": ["顧客に責任を押し付けない", "一件の問題を隠して同じ誤解を繰り返さない"],
-      "stages": ["evidence", "execution", "customer"]
+      "cautions": [
+        "顧客に責任を押し付けない",
+        "一件の問題を隠して同じ誤解を繰り返さない"
+      ],
+      "stages": [
+        "evidence",
+        "execution",
+        "customer"
+      ]
     },
     {
       "id": "page-252",
       "sourcePage": 252,
       "chapter": "顧客の声に耳を傾ける",
       "keyPoint": "失望した顧客や失注顧客の反応には、選ばれなかった原因と改善の手がかりがある。",
-      "decisionCriteria": ["不満・返品・失注の理由を聞く仕組みがある", "相手の声を防御せず記録できる"],
-      "questions": ["何に期待し、何が満たされなかったか", "どの時点で選ばれなくなったか", "同じ問題を減らすには何が必要か"],
+      "decisionCriteria": [
+        "不満・返品・失注の理由を聞く仕組みがある",
+        "相手の声を防御せず記録できる"
+      ],
+      "questions": [
+        "何に期待し、何が満たされなかったか",
+        "どの時点で選ばれなくなったか",
+        "同じ問題を減らすには何が必要か"
+      ],
       "example": "キャンセル・返品後に短い任意アンケートを送り、回答を商品・説明・導線の改善に分類する。",
-      "cautions": ["苦情を個人攻撃として扱わない", "顧客の許可なく発言を販促に使わない"],
-      "stages": ["insight", "execution", "customer"]
+      "cautions": [
+        "苦情を個人攻撃として扱わない",
+        "顧客の許可なく発言を販促に使わない"
+      ],
+      "stages": [
+        "insight",
+        "execution",
+        "customer"
+      ]
     },
     {
       "id": "page-253",
       "sourcePage": 253,
       "chapter": "傾聴型の組織と追加の売り込み",
       "keyPoint": "組織全員が顧客の声を受け取り、学んだ洞察を共有すると、顧客に合う追加提案ができる。",
-      "decisionCriteria": ["顧客の声が部門を越えて届く", "追加提案は顧客の状況と利益に合っている"],
-      "questions": ["顧客の声は誰に届いているか", "既存顧客に本当に役立つ次の提案は何か", "提案しない方がよい場面はどこか"],
+      "decisionCriteria": [
+        "顧客の声が部門を越えて届く",
+        "追加提案は顧客の状況と利益に合っている"
+      ],
+      "questions": [
+        "顧客の声は誰に届いているか",
+        "既存顧客に本当に役立つ次の提案は何か",
+        "提案しない方がよい場面はどこか"
+      ],
       "example": "利用状況から追加サポートが役立つ顧客だけに、理由と条件を説明して案内する。",
-      "cautions": ["売上のためだけに不要な追加販売をしない", "一度の声を全顧客向け施策へ飛躍させない"],
-      "stages": ["customer", "insight", "execution"]
+      "cautions": [
+        "売上のためだけに不要な追加販売をしない",
+        "一度の声を全顧客向け施策へ飛躍させない"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "execution"
+      ]
     },
     {
       "id": "page-254",
       "sourcePage": 254,
       "chapter": "追加の売り込みと完全な提供",
       "keyPoint": "顧客が望む結果を実現するために必要な選択肢を過不足なく示し、購入後も判断を支援する。",
-      "decisionCriteria": ["必要な選択肢・条件・代替案を説明している", "購入前後の判断を後押しできる"],
-      "questions": ["顧客の目的に必要なものは何か", "選択肢を示さないことで困らせていないか", "購入後に確認すべき判断は何か"],
+      "decisionCriteria": [
+        "必要な選択肢・条件・代替案を説明している",
+        "購入前後の判断を後押しできる"
+      ],
+      "questions": [
+        "顧客の目的に必要なものは何か",
+        "選択肢を示さないことで困らせていないか",
+        "購入後に確認すべき判断は何か"
+      ],
       "example": "基本プランだけで目的を満たせない場合、必要性と不要な場合を両方説明して選べるようにする。",
-      "cautions": ["完全な提供を高額化の口実にしない", "選ばない選択肢を不当に隠さない"],
-      "stages": ["outcome", "evidence", "execution"]
+      "cautions": [
+        "完全な提供を高額化の口実にしない",
+        "選ばない選択肢を不当に隠さない"
+      ],
+      "stages": [
+        "outcome",
+        "evidence",
+        "execution"
+      ]
     },
     {
       "id": "page-255",
       "sourcePage": 255,
       "chapter": "販売後のフォローアップ",
       "keyPoint": "販売後に顧客の判断と利用状況を確認すると、不満の予防、改善、次の提案の手がかりになる。",
-      "decisionCriteria": ["購入後に連絡する目的と時期が明確", "顧客に役立つ情報・確認がある"],
-      "questions": ["利用後に何を確認すべきか", "いつ連絡すれば負担にならないか", "不満をどう受け止めて改善するか"],
+      "decisionCriteria": [
+        "購入後に連絡する目的と時期が明確",
+        "顧客に役立つ情報・確認がある"
+      ],
+      "questions": [
+        "利用後に何を確認すべきか",
+        "いつ連絡すれば負担にならないか",
+        "不満をどう受け止めて改善するか"
+      ],
       "example": "利用直後に使い方・不足・次の困りごとを確認し、必要なときだけ追加支援を案内する。",
-      "cautions": ["売り込みだけの連絡にしない", "顧客の同意なく頻繁に連絡しない"],
-      "stages": ["execution", "customer", "insight"]
+      "cautions": [
+        "売り込みだけの連絡にしない",
+        "顧客の同意なく頻繁に連絡しない"
+      ],
+      "stages": [
+        "execution",
+        "customer",
+        "insight"
+      ]
     },
     {
       "id": "page-256",
       "sourcePage": 256,
       "chapter": "販売後のフォローアップと紹介",
       "keyPoint": "丁寧な販売後対応は顧客との関係を深め、紹介や追加の顧客フィードバックにつながる。",
-      "decisionCriteria": ["顧客の満足・不満を確認してから紹介を考える", "紹介は顧客の自主性を尊重している"],
-      "questions": ["顧客は期待どおりの判断ができたか", "誰に役立つかを顧客自身が説明できるか", "紹介を依頼する前に何を改善すべきか"],
+      "decisionCriteria": [
+        "顧客の満足・不満を確認してから紹介を考える",
+        "紹介は顧客の自主性を尊重している"
+      ],
+      "questions": [
+        "顧客は期待どおりの判断ができたか",
+        "誰に役立つかを顧客自身が説明できるか",
+        "紹介を依頼する前に何を改善すべきか"
+      ],
       "example": "満足を確認した後、似た状況の人に役立つ場合だけ紹介方法を案内する。",
-      "cautions": ["満足確認なしに紹介を求めない", "紹介への圧力や見返りで誤認を生まない"],
-      "stages": ["customer", "execution", "insight"]
+      "cautions": [
+        "満足確認なしに紹介を求めない",
+        "紹介への圧力や見返りで誤認を生まない"
+      ],
+      "stages": [
+        "customer",
+        "execution",
+        "insight"
+      ]
     },
     {
       "id": "page-257",
       "sourcePage": 257,
       "chapter": "コミュニケーションと組織内の連携",
       "keyPoint": "ビコーズを実行するには、顧客からだけでなく従業員からのフィードバックを得て、組織内で共有する。",
-      "decisionCriteria": ["従業員が顧客への影響を理解している", "現場のアイデアが経営・施策に届く"],
-      "questions": ["誰が顧客に最も近いか", "現場から何を聞くべきか", "共有した洞察を誰が実行に変えるか"],
+      "decisionCriteria": [
+        "従業員が顧客への影響を理解している",
+        "現場のアイデアが経営・施策に届く"
+      ],
+      "questions": [
+        "誰が顧客に最も近いか",
+        "現場から何を聞くべきか",
+        "共有した洞察を誰が実行に変えるか"
+      ],
       "example": "月次の共有で、問い合わせ・失注・改善案を営業、現場、マーケティングが同じ形式で扱う。",
-      "cautions": ["情報共有を報告会だけで終わらせない", "現場の声を集めるだけで対応しない"],
-      "stages": ["execution", "insight"]
+      "cautions": [
+        "情報共有を報告会だけで終わらせない",
+        "現場の声を集めるだけで対応しない"
+      ],
+      "stages": [
+        "execution",
+        "insight"
+      ]
     },
     {
       "id": "page-258",
       "sourcePage": 258,
       "chapter": "組織全体への展開",
       "keyPoint": "経営層だけでなく全員が、何を提供し、どのように顧客を選ばれる状態にするかを理解して動く。",
-      "decisionCriteria": ["組織全体が共通の成果・理由・役割を理解している", "経営と現場の間で実行が途切れない"],
-      "questions": ["全員は何を知ればよいか", "各役割で何を実行するか", "共通理解をどう確認するか"],
+      "decisionCriteria": [
+        "組織全体が共通の成果・理由・役割を理解している",
+        "経営と現場の間で実行が途切れない"
+      ],
+      "questions": [
+        "全員は何を知ればよいか",
+        "各役割で何を実行するか",
+        "共通理解をどう確認するか"
+      ],
       "example": "役員、現場、外部委託先まで、顧客に約束する内容と例外を短い共通資料で共有する。",
-      "cautions": ["経営者の言葉だけで浸透したと判断しない", "役割ごとの具体的行動を欠かさない"],
-      "stages": ["execution", "media", "customer"]
+      "cautions": [
+        "経営者の言葉だけで浸透したと判断しない",
+        "役割ごとの具体的行動を欠かさない"
+      ],
+      "stages": [
+        "execution",
+        "media",
+        "customer"
+      ]
     },
     {
       "id": "page-259",
       "sourcePage": 259,
       "chapter": "ビコーズ・フレームワークの完成",
       "keyPoint": "フレームワークは完成宣言で終わりではなく、顧客を誤って想定していないか、説得力があるかを見直し続ける。",
-      "decisionCriteria": ["対象顧客の仮説を検証している", "売れない原因を顧客・組織・媒体・根拠から調べている"],
-      "questions": ["顧客の選び方を取り違えていないか", "買われない原因はどこにあるか", "何を変えれば実行可能な成果になるか"],
+      "decisionCriteria": [
+        "対象顧客の仮説を検証している",
+        "売れない原因を顧客・組織・媒体・根拠から調べている"
+      ],
+      "questions": [
+        "顧客の選び方を取り違えていないか",
+        "買われない原因はどこにあるか",
+        "何を変えれば実行可能な成果になるか"
+      ],
       "example": "購入が伸びないとき、広告量だけでなく、対象・説明・提供・価格・手順を順に確認する。",
-      "cautions": ["失敗を顧客の理解不足だけに帰さない", "一度の施策結果だけで結論を出さない"],
-      "stages": ["customer", "insight", "evidence", "execution"]
+      "cautions": [
+        "失敗を顧客の理解不足だけに帰さない",
+        "一度の施策結果だけで結論を出さない"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence",
+        "execution"
+      ]
     },
     {
       "id": "page-260",
       "sourcePage": 260,
       "chapter": "あなたのビコーズは買ってもらえる",
       "keyPoint": "継続的に顧客理解を深め、顧客にとって意味のある成果と理由を更新する企業は、より選ばれやすくなる。",
-      "decisionCriteria": ["顧客洞察が定期的に更新されている", "新しい理由が現場の提供能力と結びついている"],
-      "questions": ["最近、顧客の判断はどう変わったか", "新しい価値を何で確認できるか", "次の計画に何を反映するか"],
+      "decisionCriteria": [
+        "顧客洞察が定期的に更新されている",
+        "新しい理由が現場の提供能力と結びついている"
+      ],
+      "questions": [
+        "最近、顧客の判断はどう変わったか",
+        "新しい価値を何で確認できるか",
+        "次の計画に何を反映するか"
+      ],
       "example": "季節・市場・顧客の反応が変わったとき、FAQ、媒体、提供手順を同時に見直す。",
-      "cautions": ["新しさを理由に実績のない主張を公開しない", "前年の正解を自動的に今年も適用しない"],
-      "stages": ["insight", "outcome", "evidence", "execution"]
+      "cautions": [
+        "新しさを理由に実績のない主張を公開しない",
+        "前年の正解を自動的に今年も適用しない"
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "evidence",
+        "execution"
+      ]
     },
     {
       "id": "page-261",
       "sourcePage": 261,
       "chapter": "顧客が選ぶ理由を積み上げる",
       "keyPoint": "顧客が選び続けるためには、顧客の状況、成果、理由、実行のすべてを結び、継続的に確かめる。",
-      "decisionCriteria": ["説明・提供・販売後対応がつながっている", "顧客が自分で確認できる情報がある"],
-      "questions": ["顧客は選ぶ前に何を確かめられるか", "実際の体験は約束と一致したか", "学びを次の説明へ戻せているか"],
+      "decisionCriteria": [
+        "説明・提供・販売後対応がつながっている",
+        "顧客が自分で確認できる情報がある"
+      ],
+      "questions": [
+        "顧客は選ぶ前に何を確かめられるか",
+        "実際の体験は約束と一致したか",
+        "学びを次の説明へ戻せているか"
+      ],
       "example": "サイトの説明、予約前の案内、利用中の体験、利用後の確認で同じ重要条件を示す。",
-      "cautions": ["一度作った理由を固定化しない", "成果・根拠・運用のどれかを欠いたまま拡大しない"],
-      "stages": ["customer", "outcome", "evidence", "execution"]
+      "cautions": [
+        "一度作った理由を固定化しない",
+        "成果・根拠・運用のどれかを欠いたまま拡大しない"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence",
+        "execution"
+      ]
     },
     {
       "id": "page-262",
       "sourcePage": 262,
       "chapter": "継続的な実行と更新",
       "keyPoint": "選ばれる理由は、顧客接点で実行され、反応を受け、改善されることで初めて事業の力になる。",
-      "decisionCriteria": ["改善の周期と責任者がある", "新しい顧客反応を次の設計に戻せる"],
-      "questions": ["次に検証する仮説は何か", "どの指標・顧客の声で判断するか", "改善を誰がいつ実行するか"],
+      "decisionCriteria": [
+        "改善の周期と責任者がある",
+        "新しい顧客反応を次の設計に戻せる"
+      ],
+      "questions": [
+        "次に検証する仮説は何か",
+        "どの指標・顧客の声で判断するか",
+        "改善を誰がいつ実行するか"
+      ],
       "example": "月次で反応を確認し、最も影響が大きい一つの接点を次の期間に改善する。",
-      "cautions": ["完成したと思って検証を止めない", "改善履歴と根拠を失わない"],
-      "stages": ["execution", "insight", "media"]
+      "cautions": [
+        "完成したと思って検証を止めない",
+        "改善履歴と根拠を失わない"
+      ],
+      "stages": [
+        "execution",
+        "insight",
+        "media"
+      ]
     }
   ],
   "usePolicy": [
@@ -436,222 +992,1219 @@
     {
       "id": "because-matrix",
       "title": "洞察・成果・理由を一枚にまとめる",
-      "sourcePages": [229, 230],
-      "stages": ["customer", "insight", "outcome", "evidence"],
+      "sourcePages": [
+        229,
+        230
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome",
+        "evidence"
+      ],
       "principle": "顧客ごとの重要な洞察、約束する成果、その成果を言える理由を対応づけると、組織全体が同じ説明を使える。",
-      "questions": ["誰に伝えるか", "その人にどんな成果を約束するか", "その理由を何で確認できるか"],
+      "questions": [
+        "誰に伝えるか",
+        "その人にどんな成果を約束するか",
+        "その理由を何で確認できるか"
+      ],
       "action": "顧客タイプまたは購入場面ごとに、成果と理由を表にし、実際の反応で更新する。",
       "guardrail": "理由が未確認なら、魅力的な言葉ではなく『確認中』として扱う。"
     },
     {
       "id": "customer-journey-consistency",
       "title": "顧客の道のりで説明をそろえる",
-      "sourcePages": [236, 237, 238],
-      "stages": ["customer", "media", "execution"],
+      "sourcePages": [
+        236,
+        237,
+        238
+      ],
+      "stages": [
+        "customer",
+        "media",
+        "execution"
+      ],
       "principle": "問い合わせ、比較、予約・購入、利用、販売後まで、顧客が受け取る成果と理由が矛盾しないことが大切。",
-      "questions": ["お客さんは最初にどこで知るか", "途中で何を確認するか", "各場面で誰が同じ内容を伝えるか"],
+      "questions": [
+        "お客さんは最初にどこで知るか",
+        "途中で何を確認するか",
+        "各場面で誰が同じ内容を伝えるか"
+      ],
       "action": "販売フローを図にし、顧客接点ごとに必要な情報・担当者・確認方法を置く。",
       "guardrail": "担当者ごとに異なる約束をしない。"
     },
     {
       "id": "promotion-tool-inventory",
       "title": "使っている媒体を全部見える化する",
-      "sourcePages": [231],
-      "stages": ["media", "execution"],
+      "sourcePages": [
+        231
+      ],
+      "stages": [
+        "media",
+        "execution"
+      ],
       "principle": "公式サイト、営業、提案書、動画、SNS、広告、口コミ、紹介、店頭などは、どれも顧客を説得する接点になる。",
-      "questions": ["今使っている媒体は何か", "その媒体は誰のどの場面で使われるか", "成果と理由が入っているか"],
+      "questions": [
+        "今使っている媒体は何か",
+        "その媒体は誰のどの場面で使われるか",
+        "成果と理由が入っているか"
+      ],
       "action": "媒体一覧に担当者、目的、最初に伝えること、確認する反応を記録する。",
       "guardrail": "媒体を増やす前に、公式情報と実際の提供内容をそろえる。"
     },
     {
       "id": "cross-functional-rollout",
       "title": "営業とマーケティングを一つの設計で動かす",
-      "sourcePages": [232],
-      "stages": ["media", "execution"],
+      "sourcePages": [
+        232
+      ],
+      "stages": [
+        "media",
+        "execution"
+      ],
       "principle": "顧客への説明は一部門だけで完結しない。営業、マーケティング、現場が共通の成果と理由を使うことで力を合わせられる。",
-      "questions": ["誰が各媒体を管理するか", "いつまでに何を変えるか", "現場にも同じ情報が渡っているか"],
+      "questions": [
+        "誰が各媒体を管理するか",
+        "いつまでに何を変えるか",
+        "現場にも同じ情報が渡っているか"
+      ],
       "action": "媒体ごとに責任者と期限を決め、公開前の確認を行う。",
       "guardrail": "責任者と期限がない改善案は実行されない前提で扱う。"
     },
     {
       "id": "catchphrase-substance",
       "title": "短い言葉にも成果と理由を入れる",
-      "sourcePages": [233, 234, 235],
-      "stages": ["outcome", "evidence", "media"],
+      "sourcePages": [
+        233,
+        234,
+        235
+      ],
+      "stages": [
+        "outcome",
+        "evidence",
+        "media"
+      ],
       "principle": "印象だけのキャッチフレーズではなく、顧客が得ることと、それを選ぶ理由が短く伝わる表現をつくる。",
-      "questions": ["その短い言葉で、何が得られると分かるか", "なぜそう言えるかが想像できるか"],
+      "questions": [
+        "その短い言葉で、何が得られると分かるか",
+        "なぜそう言えるかが想像できるか"
+      ],
       "action": "長い説明を先に作り、成果と確認できる理由を残して短くする。",
       "guardrail": "根拠のない最上級表現や、購入を急がせるだけの煽りにしない。"
     },
     {
       "id": "video-structure",
       "title": "動画は洞察・成果・理由の順に組み立てる",
-      "sourcePages": [242],
-      "stages": ["insight", "outcome", "evidence", "media"],
+      "sourcePages": [
+        242
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "evidence",
+        "media"
+      ],
       "principle": "動画では、相手の状況を理解していることを示し、得られる成果を伝え、最後に確認できる理由を置く。",
-      "questions": ["最初に誰のどんな場面を描くか", "約束する成果は何か", "画面で確認できる事実は何か"],
+      "questions": [
+        "最初に誰のどんな場面を描くか",
+        "約束する成果は何か",
+        "画面で確認できる事実は何か"
+      ],
       "action": "サイト、営業、採用、イベント、SNSなどで使う動画ごとに、同じ骨組みを使う。",
       "guardrail": "映像の印象で事実を補ったように見せない。"
     },
     {
       "id": "customer-feedback-test",
       "title": "顧客の声で仮説を確かめる",
-      "sourcePages": [239, 240],
-      "stages": ["insight", "outcome", "evidence", "execution"],
+      "sourcePages": [
+        239,
+        240
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "evidence",
+        "execution"
+      ],
       "principle": "社内で最も説得力があると思う説明と、顧客が価値を感じる説明は一致するとは限らない。",
-      "questions": ["どの説明に共感があったか", "重要顧客は何を価値と見たか", "反対意見や例外は何か"],
+      "questions": [
+        "どの説明に共感があったか",
+        "重要顧客は何を価値と見たか",
+        "反対意見や例外は何か"
+      ],
       "action": "会話、アンケート、既存の調査方法で反応を集め、仮説を更新する。",
       "guardrail": "一人の感想を顧客全体の事実として扱わない。"
     },
     {
       "id": "message-priority",
       "title": "伝える順番を決める",
-      "sourcePages": [240, 241],
-      "stages": ["outcome", "evidence", "media"],
+      "sourcePages": [
+        240,
+        241
+      ],
+      "stages": [
+        "outcome",
+        "evidence",
+        "media"
+      ],
       "principle": "人が短時間で理解できる量には限りがあるため、最も重要な成果と理由を先に置く。",
-      "questions": ["一番最初に見せる成果は何か", "それを支える一番強い理由は何か", "顧客はどの順番で知れば判断しやすいか"],
+      "questions": [
+        "一番最初に見せる成果は何か",
+        "それを支える一番強い理由は何か",
+        "顧客はどの順番で知れば判断しやすいか"
+      ],
       "action": "サイト、広告、営業資料、会話で、最初の三つのメッセージを確認する。",
       "guardrail": "優先順位は思い込みではなく、顧客の反応と根拠で見直す。"
     },
     {
       "id": "reason-is-purchased",
       "title": "顧客は選ぶ根拠ごと買う",
-      "sourcePages": [243, 260, 261],
-      "stages": ["customer", "outcome", "evidence"],
+      "sourcePages": [
+        243,
+        260,
+        261
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence"
+      ],
       "principle": "顧客は商品やサービスだけでなく、自分がそれを選んでよいと納得できる理由も求めている。",
-      "questions": ["顧客が『これなら選べる』と思える根拠は何か", "その根拠は誰でも確認できるか"],
+      "questions": [
+        "顧客が『これなら選べる』と思える根拠は何か",
+        "その根拠は誰でも確認できるか"
+      ],
       "action": "顧客の洞察、成果、理由を、現場の全員が理解できるようにする。",
       "guardrail": "顧客の代わりに理由を作り込まず、確認できる事実で支える。"
     },
     {
       "id": "execute-every-touchpoint",
       "title": "すべての顧客接点で実行する",
-      "sourcePages": [244, 245],
-      "stages": ["media", "execution"],
+      "sourcePages": [
+        244,
+        245
+      ],
+      "stages": [
+        "media",
+        "execution"
+      ],
       "principle": "よい設計は実行されて初めて意味を持つ。各接点に責任者・期限・必要な時間や資源を割り当てる。",
-      "questions": ["誰が実行するか", "何をやめるか・何を追加するか", "効果をどこで測るか"],
+      "questions": [
+        "誰が実行するか",
+        "何をやめるか・何を追加するか",
+        "効果をどこで測るか"
+      ],
       "action": "業務の優先順位を調整し、小さな実行単位で始める。",
       "guardrail": "忙しい現場に仕事だけを追加し、必要な時間や権限を渡さない。"
     },
     {
       "id": "self-disruption",
       "title": "変化を待たずに自ら見直す",
-      "sourcePages": [245, 246],
-      "stages": ["insight", "outcome", "execution"],
+      "sourcePages": [
+        245,
+        246
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "execution"
+      ],
       "principle": "競争、技術、顧客期待の変化を受け身で待たず、商品・販売・採用・運用を先に見直す。",
-      "questions": ["今のままでは選ばれなくなる要因は何か", "何を小さく壊し、試し直すべきか"],
+      "questions": [
+        "今のままでは選ばれなくなる要因は何か",
+        "何を小さく壊し、試し直すべきか"
+      ],
       "action": "改善仮説を小さく試し、成果と副作用を測る。",
       "guardrail": "変えること自体を目的にせず、顧客価値と提供能力で判断する。"
     },
     {
       "id": "gatekeeper-understanding",
       "title": "最初の相談相手の事情を理解する",
-      "sourcePages": [247, 248],
-      "stages": ["customer", "insight", "media"],
+      "sourcePages": [
+        247,
+        248
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "media"
+      ],
       "principle": "受付、紹介元、購入担当、家族など、最初に情報を受け取る人が選択に大きく影響することがある。",
-      "questions": ["最初に相談を受けるのは誰か", "その人は何に困り、何を正確に知りたいか", "その人が説明しやすい情報になっているか"],
+      "questions": [
+        "最初に相談を受けるのは誰か",
+        "その人は何に困り、何を正確に知りたいか",
+        "その人が説明しやすい情報になっているか"
+      ],
       "action": "ゲートキーパーの実際の会話・判断基準を聞き、必要な情報を整える。",
       "guardrail": "影響者を操作対象にせず、相手の仕事や顧客判断を助ける情報を出す。"
     },
     {
       "id": "objection-prevention",
       "title": "反論を予測し、先回りして確認できるようにする",
-      "sourcePages": [249],
-      "stages": ["evidence", "media", "execution"],
+      "sourcePages": [
+        249
+      ],
+      "stages": [
+        "evidence",
+        "media",
+        "execution"
+      ],
       "principle": "顧客がためらう理由を、商品・条件・説明・運用のどこにあるかまで掘り下げると、行き詰まりを防げる。",
-      "questions": ["相手からどんな反論や確認が来るか", "その原因は何か", "事前に何を明記・テスト・改善できるか"],
+      "questions": [
+        "相手からどんな反論や確認が来るか",
+        "その原因は何か",
+        "事前に何を明記・テスト・改善できるか"
+      ],
       "action": "反論ごとにFAQ、条件、実演、担当者対応を用意する。",
       "guardrail": "不都合な条件を隠して反論を減らそうとしない。"
     },
     {
       "id": "limit-losses",
       "title": "失望の原因を見つけ、損失を小さくする",
-      "sourcePages": [250, 251, 252],
-      "stages": ["insight", "evidence", "execution"],
+      "sourcePages": [
+        250,
+        251,
+        252
+      ],
+      "stages": [
+        "insight",
+        "evidence",
+        "execution"
+      ],
       "principle": "顧客の期待と実際の差、伝達ミス、仕様の誤解は、販売後の大きな損失になる。",
-      "questions": ["期待と実際の違いはどこで起きたか", "誰が何を確認しなかったか", "返品・失注・苦情をどう防げるか"],
+      "questions": [
+        "期待と実際の違いはどこで起きたか",
+        "誰が何を確認しなかったか",
+        "返品・失注・苦情をどう防げるか"
+      ],
       "action": "サンプル、仕様、条件、確認手順、現場連携を見直す。",
       "guardrail": "顧客の不満を個人の問題にせず、仕組みの原因を探す。"
     },
     {
       "id": "listening-organization",
       "title": "顧客の声を聞ける組織にする",
-      "sourcePages": [252, 253],
-      "stages": ["insight", "execution"],
+      "sourcePages": [
+        252,
+        253
+      ],
+      "stages": [
+        "insight",
+        "execution"
+      ],
       "principle": "現場の人が顧客の声に耳を傾け、顧客の前で判断できる範囲を持つと、価値ある洞察が集まる。",
-      "questions": ["現場は顧客の声をどう記録するか", "どこまで判断・対応できるか", "集めた声を誰が改善に使うか"],
+      "questions": [
+        "現場は顧客の声をどう記録するか",
+        "どこまで判断・対応できるか",
+        "集めた声を誰が改善に使うか"
+      ],
       "action": "顧客の声、現場の気づき、対応結果を定期的に共有する。",
       "guardrail": "現場に責任だけを負わせず、権限・教育・報告経路を渡す。"
     },
     {
       "id": "additional-sales",
       "title": "追加提案は、顧客に役立つ不足を埋める",
-      "sourcePages": [253, 254],
-      "stages": ["insight", "outcome", "execution"],
+      "sourcePages": [
+        253,
+        254
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "execution"
+      ],
       "principle": "追加販売は、顧客が目的を達成するために本当に必要な要素を見つけて提案するときに価値がある。",
-      "questions": ["顧客の目的を妨げる不足は何か", "追加して役に立つものか", "押しつけずに選べるか"],
+      "questions": [
+        "顧客の目的を妨げる不足は何か",
+        "追加して役に立つものか",
+        "押しつけずに選べるか"
+      ],
       "action": "販売前・販売中・販売後の声から、必要な追加要素を検討する。",
       "guardrail": "売上だけを理由に、必要性のない追加提案をしない。"
     },
     {
       "id": "complete-offering",
       "title": "必要な選択肢を、分かる形で揃える",
-      "sourcePages": [254],
-      "stages": ["outcome", "media"],
+      "sourcePages": [
+        254
+      ],
+      "stages": [
+        "outcome",
+        "media"
+      ],
       "principle": "顧客が望む可能性のあるサービスを整理して提示すると、自分で組み合わせて選びやすくなる。",
-      "questions": ["顧客が比較時に必要とする選択肢は何か", "各選択肢の条件・価格・向き不向きは分かるか"],
+      "questions": [
+        "顧客が比較時に必要とする選択肢は何か",
+        "各選択肢の条件・価格・向き不向きは分かるか"
+      ],
       "action": "選択肢を一覧にし、顧客が自分で確認できるようにする。",
       "guardrail": "選択肢を多く見せるだけで、重要な条件を埋もれさせない。"
     },
     {
       "id": "follow-up-validation",
       "title": "販売後に正しい判断だったと確認できるようにする",
-      "sourcePages": [255, 256],
-      "stages": ["evidence", "execution"],
+      "sourcePages": [
+        255,
+        256
+      ],
+      "stages": [
+        "evidence",
+        "execution"
+      ],
       "principle": "販売後の連絡は、売り込みではなく、顧客が判断した結果を確認し、不満や問題を早く見つける機会になる。",
-      "questions": ["顧客は期待どおりだったか", "困ったことはないか", "他者に説明できる理由が残っているか"],
+      "questions": [
+        "顧客は期待どおりだったか",
+        "困ったことはないか",
+        "他者に説明できる理由が残っているか"
+      ],
       "action": "電話、メール、アンケート、訪問などで確認し、対応結果を残す。",
       "guardrail": "フォローアップを一方的な再販連絡だけにしない。"
     },
     {
       "id": "referral-feedback",
       "title": "紹介は関係と価値の確認から生まれる",
-      "sourcePages": [256, 257],
-      "stages": ["evidence", "media", "execution"],
+      "sourcePages": [
+        256,
+        257
+      ],
+      "stages": [
+        "evidence",
+        "media",
+        "execution"
+      ],
       "principle": "顧客が価値を実感し、紹介してよいと判断できる関係があって初めて紹介は起こりやすくなる。",
-      "questions": ["顧客は何に満足したか", "誰にどのような場合なら紹介したいか", "紹介先にも正確に伝わる情報があるか"],
+      "questions": [
+        "顧客は何に満足したか",
+        "誰にどのような場合なら紹介したいか",
+        "紹介先にも正確に伝わる情報があるか"
+      ],
       "action": "優良顧客の声を許諾のもとで聞き、紹介されやすい説明と体験を整える。",
       "guardrail": "レビューや紹介を強要・誘導・創作しない。"
     },
     {
       "id": "internal-communication",
       "title": "社内の全員が同じ言葉で説明できるようにする",
-      "sourcePages": [257, 258],
-      "stages": ["evidence", "media", "execution"],
+      "sourcePages": [
+        257,
+        258
+      ],
+      "stages": [
+        "evidence",
+        "media",
+        "execution"
+      ],
       "principle": "顧客からだけでなく、従業員からのフィードバックも集め、会社の全員が顧客に与える価値を理解する。",
-      "questions": ["社員は何をすれば顧客に役立つか理解しているか", "顧客への説明に矛盾がないか", "現場の意見を反映できるか"],
+      "questions": [
+        "社員は何をすれば顧客に役立つか理解しているか",
+        "顧客への説明に矛盾がないか",
+        "現場の意見を反映できるか"
+      ],
       "action": "経営、営業、マーケティング、現場が同じ設計図を使い、改善を共有する。",
       "guardrail": "経営だけの標語にせず、現場の実行方法まで落とす。"
     },
     {
       "id": "organization-wide-adoption",
       "title": "組織全体で選ばれる理由を機能させる",
-      "sourcePages": [258, 259],
-      "stages": ["media", "execution"],
+      "sourcePages": [
+        258,
+        259
+      ],
+      "stages": [
+        "media",
+        "execution"
+      ],
       "principle": "Web、営業、販促、サービス提供、顧客対応の全てで、組織のメンバーが何をどう伝え・提供するかを理解すると、成果が根付く。",
-      "questions": ["役員室だけで終わっていないか", "各部門の顧客接点に反映されたか", "成果と理由を学び直す場があるか"],
+      "questions": [
+        "役員室だけで終わっていないか",
+        "各部門の顧客接点に反映されたか",
+        "成果と理由を学び直す場があるか"
+      ],
       "action": "全社の接点を棚卸しし、部門ごとに導入計画と確認責任者を置く。",
       "guardrail": "共通化のために、顧客ごとの重要な条件まで消さない。"
     },
     {
       "id": "continuous-renewal",
       "title": "毎年、洞察・成果・理由を見直す",
-      "sourcePages": [259, 260, 261, 262],
-      "stages": ["insight", "outcome", "evidence", "media", "execution"],
+      "sourcePages": [
+        259,
+        260,
+        261,
+        262
+      ],
+      "stages": [
+        "insight",
+        "outcome",
+        "evidence",
+        "media",
+        "execution"
+      ],
       "principle": "顧客、競合、提供能力、媒体は変わるため、選ばれる理由は完成品ではなく継続的に改善する仕組みである。",
-      "questions": ["今年新しく分かった顧客のことは何か", "以前の成果や理由は今も正しいか", "次に変えるべき商品・情報・接点は何か"],
+      "questions": [
+        "今年新しく分かった顧客のことは何か",
+        "以前の成果や理由は今も正しいか",
+        "次に変えるべき商品・情報・接点は何か"
+      ],
       "action": "定期的に知識カード、顧客の声、成果、根拠、担当計画を見直す。",
       "guardrail": "新しさだけを追わず、実際の顧客価値と検証可能な根拠を残す。"
+    },
+    {
+      "id": "selection-reason",
+      "title": "選択理由を明確にする",
+      "principle": "顧客は候補を比較して選ぶため、得られる成果と、その提供者を選ぶ根拠を理解できるほど判断しやすくなる。",
+      "action": "選択場面ごとに、対象顧客・顧客成果・選ぶ理由・証拠・条件を一行で整理し、証拠がそろった項目だけを対外表現に使う。",
+      "guardrail": "不安を過度にあおらず、根拠のない最適・唯一・必ずという表現を使わない。",
+      "decisionCriteria": [
+        "比較する候補と意思決定の場面が特定されている",
+        "顧客成果と、その根拠が分けて説明されている",
+        "対象範囲と前提条件が示されている"
+      ],
+      "questions": [
+        "顧客は今、何と比較しているか",
+        "避けたい失敗と得たい状態は何か",
+        "その選択を安心して決める確認材料は何か"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "emotion-and-rationale",
+      "title": "感情的な関心と合理的な判断を分ける",
+      "principle": "選択には関心や共感と、選択を正当化できる事実の両方が関わる。伝える内容は、顧客の状況への理解と検証可能な理由を対応させる。",
+      "action": "各メッセージを、共感させる導入・確認可能な根拠・適用条件の三層に分けてレビューする。",
+      "guardrail": "心理的な弱みの悪用、隠れた条件、根拠のない感情誘導を許可しない。",
+      "decisionCriteria": [
+        "顧客の困りごとや希望に具体的に触れている",
+        "性能・価格・手順などの事実が確認できる",
+        "感情的な訴求と事実の主張が矛盾しない"
+      ],
+      "questions": [
+        "顧客が気にしている状況は何か",
+        "安心して決めるために必要な事実は何か",
+        "感情表現を除いても成立する理由はあるか"
+      ],
+      "stages": [
+        "customer",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "action-and-decision-maker",
+      "title": "求める行動と意思決定者を先に定める",
+      "principle": "購入、継続、紹介、社内承認など、求める行動ごとに相手・判断材料・次の一歩は異なる。",
+      "action": "案件ごとに行動・意思決定者・利用者・承認条件・次の接点を記録した意思決定マップを作る。",
+      "guardrail": "購入者だけを想定して利用者や承認者の不利益を見落とさず、行動を不当に急かさない。",
+      "decisionCriteria": [
+        "求める行動が一つに定義されている",
+        "購入者・利用者・承認者などの役割が区別されている",
+        "行動後に確認する指標が決まっている"
+      ],
+      "questions": [
+        "今回、相手に取ってほしい具体的な行動は何か",
+        "誰が決め、誰が使い、誰が影響を受けるか",
+        "その人が次に必要とする証拠は何か"
+      ],
+      "stages": [
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "reasoning-loop",
+      "title": "顧客理解から実行までを循環させる",
+      "principle": "顧客像、顧客理解、約束する成果、根拠、提供の改善、発信基盤、顧客接点での実行は、一方向のコピー作成ではなく検証を伴う循環として扱う。",
+      "action": "顧客、洞察、成果、根拠、改善案、媒体、実行指標を一つの案件カードで管理し、不足項目は検証タスクに戻す。",
+      "guardrail": "未検証の仮説を成果や実績として公開せず、すべての段階を機械的に埋めることを目的にしない。",
+      "decisionCriteria": [
+        "成果の約束が顧客理解と結び付いている",
+        "各主張に根拠または検証計画がある",
+        "実行後の反応を次の改善に戻せる"
+      ],
+      "questions": [
+        "根拠が弱い場合、表現ではなく何を改善・検証するか",
+        "どの顧客接点で反応を観測するか",
+        "次回の更新判断を誰が行うか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome",
+        "evidence",
+        "innovation",
+        "media",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "shared-reason-across-touchpoints",
+      "title": "顧客接点で理由を共有する",
+      "principle": "営業、代理店、Web、資料などで顧客に説明する理由がそろうと、直接会えない場面でも一貫した判断材料を届けやすい。",
+      "action": "主張、根拠、適用条件、禁止表現、担当者、更新日を含む共有用の理由台帳を作る。",
+      "guardrail": "統一の名目で未承認の主張を拡散せず、現場が履行できない約束を資料に残さない。",
+      "decisionCriteria": [
+        "主張・根拠・条件の正本が一つある",
+        "各接点の担当者が説明してよい範囲を理解している",
+        "現場の提供能力と発信内容が一致している"
+      ],
+      "questions": [
+        "どの接点で誰が説明するか",
+        "担当者が確認すべき根拠と条件は何か",
+        "顧客の質問をどこに集約するか"
+      ],
+      "stages": [
+        "customer",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "ideal-customer-fit",
+      "title": "理想顧客を相互適合で定義する",
+      "principle": "理想顧客は、最も売れそうな属性ではなく、顧客が大きな価値を受け取り、自社も責任を持って成果を提供できる条件で定義する。",
+      "action": "顧客を属性だけでなく、課題、利用場面、必要な支援、提供可能性、除外条件で記述し、対象定義を営業と現場で確認する。",
+      "guardrail": "保護属性や不当な固定観念で顧客を排除せず、対象外でも必要な代替案や案内を検討する。",
+      "decisionCriteria": [
+        "顧客の課題と望む成果が具体的である",
+        "自社の専門性・提供能力・収益性と両立する",
+        "対象外にする条件が業務上の適合性で説明できる"
+      ],
+      "questions": [
+        "自社が最も役に立てるのはどんな状況の相手か",
+        "競合や代替手段では解決しにくい課題は何か",
+        "無理な受注になりやすい条件は何か"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "ideal-customer-validation",
+      "title": "理想顧客の仮説をデータと現場で検証する",
+      "principle": "理想顧客の定義は、経営者の印象だけで固定せず、顧客データ、販売データ、現場の観察を照合して更新する。",
+      "action": "顧客セグメントごとに、成果、継続、紹介、問い合わせ負荷、実現コストを定期的にレビューし、定義変更の根拠を記録する。",
+      "guardrail": "小さな標本、偏った営業記録、個人情報の過剰利用を避け、利益だけで顧客価値を決めない。",
+      "decisionCriteria": [
+        "継続、紹介、満足、提供負荷など複数の指標を見る",
+        "現場の見立てと記録されたデータを比較する",
+        "反対事例や例外も残している"
+      ],
+      "questions": [
+        "価値を最も受け取れている顧客に共通する条件は何か",
+        "収益だけでなく、提供負荷や継続性はどうか",
+        "現在の仮説に反する顧客はいるか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome",
+        "evidence",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "serviceable-segment",
+      "title": "絞り込みと市場成立性を両立させる",
+      "principle": "対象を絞るほど訴求と提供は明確になるが、実際に到達でき、価値を提供できる十分な顧客群かも同時に確かめる必要がある。",
+      "action": "顧客数、到達経路、成約率、継続率、提供容量を仮説として置き、小さな対象群で検証してから拡大する。",
+      "guardrail": "市場規模を水増しせず、人数だけを根拠に適合性や差別化を断定しない。",
+      "decisionCriteria": [
+        "対象の課題と利用場面が観測可能である",
+        "到達可能な顧客数と提供能力を概算している",
+        "狙わない顧客とのトレードオフを理解している"
+      ],
+      "questions": [
+        "この課題を持つ相手は、実際にどこにどの程度いるか",
+        "自社はその相手に継続して価値を届けられるか",
+        "対象を広げると何が薄まるか"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "referral-ready-positioning",
+      "title": "紹介されやすい専門性を言語化する",
+      "principle": "誰のどんな状況を、どのように助けるかが具体的なら、顧客や協力者は紹介すべき相手を見分けやすくなる。",
+      "action": "紹介用に、対象状況、提供成果、根拠、問い合わせ先、対象外条件を含む短い案内を作り、実際の紹介者に分かりやすさを確認してもらう。",
+      "guardrail": "紹介や推薦を偽装せず、同意なく顧客名・事例・連絡先を利用しない。",
+      "decisionCriteria": [
+        "対象者、困りごと、提供範囲が短く説明できる",
+        "専門性を裏付ける経験・体制・実績がある",
+        "紹介後に提供できる対応範囲が明確である"
+      ],
+      "questions": [
+        "どんな相談を受けた人なら紹介してほしいか",
+        "紹介者が一文で説明するなら何と言えるか",
+        "紹介先に約束できないことは何か"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-01",
+      "title": "対象定義を「見つけられる状況」まで落とす",
+      "principle": "優先顧客は属性の羅列ではなく、共通する状況・課題・到達経路まで含めて定義すると、訴求と検証を具体化できる。",
+      "action": "顧客候補を3つまで並べ、各候補について『状況・課題・到達経路・提供できる価値・除外条件』を1枚のセグメントカードにする。",
+      "guardrail": "年齢・性別などの属性だけから適性や心理を決めつけない。保護属性を排除や不利益な扱いの根拠にしない。",
+      "decisionCriteria": [
+        "対象を状況、課題、役割、行動の組合せで説明できる",
+        "その対象へ到達できる媒体または紹介経路がある",
+        "対象を絞ったときに、提供価値と表現が明確になる"
+      ],
+      "questions": [
+        "この人はどの出来事の直後に検討を始めるか？",
+        "既存顧客のうち、成果と利益の両方が再現しているのは誰か？",
+        "個人を特定せずに、この人たちをどこで見つけられるか？"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-02",
+      "title": "専門化は履行可能な約束と結び付ける",
+      "principle": "特定領域への集中は、顧客に選びやすさと紹介しやすさを与え得る。ただし、専門性の表示だけでは足りず、期待どおりに提供できる能力と証拠が必要である。",
+      "action": "専門領域ごとに、対象・解決範囲・根拠・制約をまとめた『紹介可能な専門性カード』を作る。",
+      "guardrail": "根拠のない専門家表示、誇大な比較、保証できない成果の断定をしない。",
+      "decisionCriteria": [
+        "対象固有の問題に対応する知識・体制・実績がある",
+        "約束の範囲、条件、例外を説明できる",
+        "顧客や紹介者が『誰に勧めるか』を具体的に言える"
+      ],
+      "questions": [
+        "この領域で、他の提供者より確かにできることは何か？",
+        "それを裏づける一次情報、実績、工程、資格は何か？",
+        "約束を守れない条件は何か？"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence",
+        "innovation"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-03",
+      "title": "洞察は細かく残し、後で優先順位を付ける",
+      "principle": "顧客理解を早く大きなラベルへ丸めると、購入判断に効く具体的な違いを失う。粒度を保って収集し、顧客価値と実行可能性で優先順位を決める。",
+      "action": "洞察を原子カードとして記録し、チームで『顧客への効き目』と『実装の現実性』を採点して上位テーマを選ぶ。",
+      "guardrail": "多数決だけで顧客の事実を決めない。少数意見や反証は削除せず、証拠とともに保留する。",
+      "decisionCriteria": [
+        "洞察が一つの状況・摩擦・期待に絞られている",
+        "その洞察が顧客の選択または継続に影響する",
+        "自社が商品、運用、証拠、伝え方のいずれかを変えられる"
+      ],
+      "questions": [
+        "この記述には複数の問題を混ぜていないか？",
+        "誰に、いつ、どんな影響がある洞察か？",
+        "実行候補にしない洞察も、後で使える形で残しているか？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-04",
+      "title": "期待水準と選ばれる理由を分ける",
+      "principle": "多くの顧客が当然とみなす品質や対応は、欠ければ失格になるが、備えているだけでは第一選択の理由になりにくい。必須条件と選択を動かす条件を別に扱う。",
+      "action": "提供価値を『必須品質』『比較優位の候補』『未検証の主張』の3列に棚卸しし、外部向け表現は根拠のある比較優位だけから作る。",
+      "guardrail": "基本品質を軽視しない。また、競合の実態を確認せずに独自性を断定しない。",
+      "decisionCriteria": [
+        "業界の最低期待を満たしているか",
+        "競合にも同じく言える主張ではないか",
+        "その条件が顧客の比較・決裁・紹介を実際に動かすか"
+      ],
+      "questions": [
+        "これは顧客が当然と思う条件か、それとも比較で効く違いか？",
+        "競合が同じ表現を使っても成立するか？",
+        "顧客はこの条件を選択理由として説明できるか？"
+      ],
+      "stages": [
+        "customer",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-05",
+      "title": "合理的な条件と感情的な安心を同時に調べる",
+      "principle": "購入判断には価格・性能・手間などの説明可能な基準と、失敗回避・安心・評価への不安などの感情的な基準が重なる。片方だけを聞くと判断構造を取り違えやすい。",
+      "action": "各洞察カードに『合理面』『感情面』『確認根拠』の欄を設け、双方を満たす提供・証拠・説明を検討する。",
+      "guardrail": "感情面を推測で断定しない。不安、羞恥、依存などの脆弱性を不当に刺激する訴求へ転用しない。",
+      "decisionCriteria": [
+        "合理面の比較条件を把握している",
+        "感情面の不安・期待を顧客の言葉または行動で確認している",
+        "二つの面が同じ購入場面でどう結び付くか説明できる"
+      ],
+      "questions": [
+        "顧客が表向きに挙げる条件の背後で、何を避けたいのか？",
+        "購入後に誰へ説明し、どんな失敗を避けたいのか？",
+        "合理的な証拠が、どの不安を減らすのか？"
+      ],
+      "stages": [
+        "insight",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-06",
+      "title": "顧客の望み・回避・期待・不安を分けて聞く",
+      "principle": "顧客洞察は自社の提供可能性から始めるのではなく、顧客が置かれた状況から始める。望む変化、避けたい結果、当然期待すること、不安、未解決課題、現在の考え方を分けると、改善の焦点が見えやすい。",
+      "action": "商談、失注、サポート、レビューを6分類の洞察ログへ集約し、頻度・深刻度・証拠を付けて月次で見直す。",
+      "guardrail": "顧客への不満を人格評価に変えない。少数の否定的意見を市場全体の結論として扱わない。",
+      "decisionCriteria": [
+        "顧客の状況と購入場面が明記されている",
+        "要望と回避したいことが混同されていない",
+        "失注・苦情・不満も同じ形式で記録されている"
+      ],
+      "questions": [
+        "顧客は何を前進と感じ、何を避けたいのか？",
+        "今の代替手段で解けていない問題は何か？",
+        "買わない、やめる、苦情を言う直前に何が起きたか？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence",
+        "innovation"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-07",
+      "title": "顧客体験の摩擦を価値設計の材料にする",
+      "principle": "顧客が欲しい結果を増やし、不要な手間・不確実性・罰則的な負担を減らす視点は、訴求だけでなく提供モデルそのものの改善機会を生む。",
+      "action": "顧客行動を時系列に並べ、各接点で『増やす価値』『減らす摩擦』『小さく試す改善』を一つずつ設定する。",
+      "guardrail": "安易な値下げや無制限の約束で問題を隠さない。変更前に提供能力、契約条件、法令、採算を確認する。",
+      "decisionCriteria": [
+        "摩擦が購入前・利用中・継続時のどこで起きるか特定できる",
+        "摩擦が顧客の時間、費用、安心、成功確率へ与える影響を示せる",
+        "負担の削減が自社の提供能力と収益性を損なわずに実装できる"
+      ],
+      "questions": [
+        "顧客が『やりたくない』と感じる作業や不安は何か？",
+        "その摩擦をなくすと、どの顧客価値が増えるか？",
+        "現在の収益が顧客の不満に依存していないか？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "innovation"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-08",
+      "title": "深い対話と小さな実地検証を組み合わせる",
+      "principle": "高コストの調査だけに頼らなくても、少人数との丁寧な対話と小さな販売・利用テストを組み合わせれば、顧客が実際に選ぶ条件を学べる。",
+      "action": "1対1の顧客対話を記録し、仮説ごとに小さな試作、導線変更、説明変更などの検証計画を作る。",
+      "guardrail": "顧客インタビューの同意と個人情報の扱いを明確にする。小規模テストの結果を過度に一般化しない。",
+      "decisionCriteria": [
+        "既存顧客と見込み客の両方から話を聞いている",
+        "発言だけでなく、実際の選択・購入・継続の行動を確認する",
+        "小さな検証で失敗しても修正可能な範囲にしている"
+      ],
+      "questions": [
+        "顧客が話す願望と、実際の選択は一致しているか？",
+        "最小の試作・試験販売で何を確かめられるか？",
+        "次の検証で反証されるべき仮説は何か？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-09",
+      "title": "非顧客の反論を要件へ翻訳する",
+      "principle": "既存顧客だけでは見えない比較基準や未充足要件は、失注先・競合利用者・見込み客との対話で明らかになる。反論は防御すべき雑音ではなく、提供設計を検証する材料である。",
+      "action": "失注理由と競合利用者への聞き取りを『主張』『顧客の質問』『未充足要件』『対応案』で記録し、製品・営業の合同レビューにかける。",
+      "guardrail": "見込み客を圧迫して情報を取らない。競合の機密情報を求めず、推測で競合比較を公表しない。",
+      "decisionCriteria": [
+        "話を聞く相手が、現実に別の選択肢を選んでいる",
+        "反論を性能、信頼性、総費用、導入条件などの検証可能な要件に分けられる",
+        "自社の主張と相手の優先順位のずれを示せる"
+      ],
+      "questions": [
+        "相手は何を最優先に比較しているか？",
+        "自社が強調していることは、本当に購入判断の中心か？",
+        "選ばれない理由を解消するには、説明・証拠・商品設計のどれを変えるべきか？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-10",
+      "title": "洞察を模倣されにくい運用モデルへ変える",
+      "principle": "顧客の不満を解く方法が、価格表現や広告文だけでなく、担当体制、工程、報酬、研修、販売手順まで一貫していると、価値は再現されやすく模倣されにくくなる。",
+      "action": "選ぶ理由ごとに『顧客便益→必要な運用変更→責任者→検証指標』の因果表を作り、小規模導入から検証する。",
+      "guardrail": "模倣困難さを目的化しない。顧客価値がなく、現場に過剰な負担をかける変更は採用しない。",
+      "decisionCriteria": [
+        "顧客価値を支える業務プロセスが明示されている",
+        "その変更に必要な人員、教育、報酬、システムの影響を見積もっている",
+        "顧客便益と採算を同時に測る指標がある"
+      ],
+      "questions": [
+        "顧客の摩擦を減らすには、裏側の何を変える必要があるか？",
+        "競合が文言だけを真似しても再現できない部分は何か？",
+        "変更後に品質、利益、従業員負荷をどう監視するか？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence",
+        "innovation",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-11",
+      "title": "最前線の接点を約束の証拠にする",
+      "principle": "顧客が頻繁に接する現場担当者のふるまいは、企業の約束を裏づけも損ないもする。顧客洞察を接点設計、教育、権限、見た目、連絡方法まで反映すると、信頼が運用として定着する。",
+      "action": "顧客接点ごとに、望ましい行動、必要な道具・研修、顧客へ見せる証拠、失敗時のエスカレーションを設計する。",
+      "guardrail": "現場担当者に根拠のない保証や無理な責任を負わせない。監視目的で顧客・従業員データを過剰収集しない。",
+      "decisionCriteria": [
+        "重要な顧客接点と担当者が特定されている",
+        "担当者が約束を実行するための知識・権限・連絡手段を持つ",
+        "顧客体験と従業員体験の両方を測定している"
+      ],
+      "questions": [
+        "顧客は誰との接点で最も強く会社を評価するか？",
+        "その担当者は顧客の不安を減らす説明と行動ができるか？",
+        "現場が約束を守れない障害は何か？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome",
+        "evidence",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "batch-002-12",
+      "title": "購入後の会話と競合観察を学習ループにする",
+      "principle": "購入に至るまでの比較過程、購入後の反応、紹介の可否、競合が掲げる価値を継続して記録すると、選ばれる理由の仮説を更新できる。",
+      "action": "契約後・失注後・更新後に短い振り返りを行い、競合メモ、顧客の声、改善仮説を同じ知識台帳へ戻す。",
+      "guardrail": "フォローアップを執拗な営業にしない。競合の非公開情報、顧客の秘密、許諾のない推薦文を保存・利用しない。",
+      "decisionCriteria": [
+        "購入・失注・継続・紹介の各時点で質問をする仕組みがある",
+        "競合の公開情報と顧客から聞く評価を分けて記録している",
+        "収集した知見が次のメッセージ、証拠、販売導線の改善へ戻る"
+      ],
+      "questions": [
+        "顧客はどの比較を経て最終判断したか？",
+        "購入後に期待と違った点は何か？",
+        "競合との重複と、自社だけが証明できる価値は何か？"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence",
+        "innovation",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "research-priority-backlog",
+      "title": "意思決定に直結する調査だけを優先する",
+      "principle": "調べたいことを増やす前に、その情報で変えたい意思決定、確かめる方法、期待する価値を明らかにすると、調査の優先順位を付けられる。",
+      "action": "仮説ごとに『知りたい事実・使う意思決定・検証方法・価値スコア』を記録し、価値と実行可能性が高い項目から調査する。",
+      "guardrail": "望む結論を前提に質問を作らない。競合情報は公開情報や適法に得た顧客の意見に限り、未確認の比較を外部向けに使わない。",
+      "decisionCriteria": [
+        "判明したときに商品・顧客・販売方法のどれを変えられるか",
+        "信頼できる方法で確認できるか",
+        "学習コストに対して判断価値が高いか"
+      ],
+      "questions": [
+        "今いちばん知る必要がある顧客・競合・自社の事実は何か",
+        "分かればどの判断を変えられるか",
+        "誰に聞くか、どの記録を見るか、いつまでに確認するか"
+      ],
+      "stages": [
+        "insight",
+        "evidence",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "candid-customer-learning",
+      "title": "好意的でない顧客と失注から学ぶ",
+      "principle": "既存の支持者だけを聞くと都合のよい解釈に偏りやすい。選ばれなかった理由や不満を、商品・提供・販売方法の改善材料として扱う。",
+      "action": "失注・解約・低評価の顧客に、回答を強要しない短い振り返りを行い、商品、サービス、販売プロセスごとに原因を分類する。",
+      "guardrail": "失注顧客を説得し直す場にしない。個人の発言を匿名化し、事実・意見・自社の仮説を分けて記録する。",
+      "decisionCriteria": [
+        "失注理由が具体的な購入場面と結び付いているか",
+        "不満が単発の感想か、繰り返し現れる問題か",
+        "改善によって顧客価値または選ばれる確率を高められるか"
+      ],
+      "questions": [
+        "顧客は何を優先し、何が不足していると感じたか",
+        "競合や代替手段を選んだ決め手は何か",
+        "失注後にどの問題が残ったか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "innovation"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "frontline-and-advisory-input",
+      "title": "顧客に近い人と継続的な助言者から洞察を得る",
+      "principle": "経営層だけでなく、受付・営業・提供現場など顧客と接する人には、繰り返される質問や不安についての具体的な知見がある。少人数の顧客・見込み客の助言者も、継続的な学習源になり得る。",
+      "action": "現場ヒアリングを定例化し、目的と守秘範囲を明示した顧客・見込み客の小規模な助言グループをつくる。",
+      "guardrail": "役職や一人の経験だけを顧客全体の事実としない。助言グループを販売の口実にせず、参加同意と個人情報保護を守る。",
+      "decisionCriteria": [
+        "顧客接点で繰り返される観察に基づいているか",
+        "助言者が率直な反対意見を出せる設計か",
+        "得た意見を商品・説明・運用の改善に戻せるか"
+      ],
+      "questions": [
+        "現場が繰り返し受ける質問や躊躇は何か",
+        "最初の窓口は顧客の状況をどう見分けているか",
+        "助言者に、どの判断をよりよくするための意見を求めるか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "survey-and-postpurchase-learning",
+      "title": "短い調査と販売後の確認で学習を続ける",
+      "principle": "顧客が意見を出しやすい短い調査と、販売後の計画的な確認を組み合わせると、満足度だけでは見えない改善機会を拾える。",
+      "action": "質問数を絞ったアンケートと販売後フォローの質問票を用意し、回答を洞察・改善候補・検証待ちに分ける。",
+      "guardrail": "同意のない連絡、過度な督促、目的外利用をしない。回答数だけで一般化せず、個人の情報は最小限に扱う。",
+      "decisionCriteria": [
+        "質問が次の判断や改善に使えるか",
+        "回答の対象・時点・偏りを把握できるか",
+        "販売後の体験や未解決の不安まで確かめられるか"
+      ],
+      "questions": [
+        "購入前に何が不安だったか",
+        "購入後に期待と異なった点は何か",
+        "次の顧客に先回りして説明すべきことは何か"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence",
+        "innovation",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "listening-organization-loop",
+      "title": "聞く・学ぶ・変えるを組織の循環にする",
+      "principle": "顧客理解は一度の調査で終わらない。顧客、現場、部門横断の対話などから声を集め、実際の改善に反映し、その行動を見える形で返すことが信頼と次の学習を生む。",
+      "action": "声の収集、優先順位付け、施策化、結果確認、顧客への報告を一つの継続サイクルとして運用する。",
+      "guardrail": "顧客の不満を演出用に利用しない。改善を約束する場合は提供能力を先に確認し、実施できない内容を成果として公表しない。",
+      "decisionCriteria": [
+        "収集した声が担当者と改善テーマに結び付いているか",
+        "改善後に顧客体験がどう変わったか確認できるか",
+        "聞く姿勢を宣伝だけでなく行動で示しているか"
+      ],
+      "questions": [
+        "最近集めた声から、何を変えるべきか",
+        "誰が改善を実行し、どの反応で確かめるか",
+        "顧客にどのように変化を伝え、再び意見を受け取るか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "evidence",
+        "innovation",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "promise-needs-evidence",
+      "title": "約束は検証可能な理由で閉じる",
+      "principle": "顧客にとって望ましい成果を述べるだけでは、選ぶ判断を支えきれない。約束には、それを実現できると示す具体的で確認可能な根拠を対応付ける必要がある。",
+      "action": "各訴求を『顧客の課題・約束する成果・裏付け・条件・未確認点』の一行に整理し、根拠不足のものは公開前に改善課題へ戻す。",
+      "guardrail": "実績、比較、受賞、素材、保証、レビューを創作しない。法令・契約・実運用で裏付けられない最上級表現や保証表現を出さない。",
+      "decisionCriteria": [
+        "成果が顧客の状況にとって意味があるか",
+        "根拠が実在し、主張との因果関係を説明できるか",
+        "顧客が根拠を自分で確認または質問できるか"
+      ],
+      "questions": [
+        "この成果を本当に約束できる条件は何か",
+        "その主張を支える工程、実績、第三者確認、保証は何か",
+        "根拠がなければ何を先に改善・検証すべきか"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence",
+        "innovation"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "outcome-not-feature",
+      "title": "機能説明を顧客の到達状態へ翻訳する",
+      "principle": "顧客が判断で求めるのは、提供物そのものより、利用後に生活や業務がどう変わるかである。商品特徴は、その到達状態に結び付けて初めて意味を持つ。",
+      "action": "機能一覧を出発点にせず、優先度の高い顧客洞察を選び、そこから実現可能な成果と必要な提供要素を設計する。",
+      "guardrail": "成果を顧客の声なしに決め付けない。提供範囲・例外・測定方法を省き、結果だけを過大に約束しない。",
+      "decisionCriteria": [
+        "成果が顧客の望み、不安、課題から導かれているか",
+        "顧客にとって有益で、自社が現実に提供できるか",
+        "機能と成果の間に飛躍がないか"
+      ],
+      "questions": [
+        "顧客は購入後、どんな状態を実現したいか",
+        "避けたい不安や損失は何か",
+        "自社の機能・運用のうち、どれがその変化を生むか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "anxiety-to-service-design",
+      "title": "購入時の不安をサービス設計に変える",
+      "principle": "顧客の不安は、申込み前だけでなく、訪問、提供、販売後までの体験に現れる。具体的な不安を洗い出すと、説明、接遇、提供手順、追加支援を含む一貫した成果を設計できる。",
+      "action": "顧客の不安を時系列に並べ、各場面に対応する説明、運用、担当者、必要なら追加サービスを割り当てる。",
+      "guardrail": "属性や見た目だけで顧客像を決めない。安全・衛生・法令・プライバシーに関わる約束は、実施手順と責任者を確認してから示す。",
+      "decisionCriteria": [
+        "不安が実際の購入場面・利用場面に基づくか",
+        "各不安に、説明だけでなく運用上の対応があるか",
+        "顧客が正しい判断をしたと確認できるか"
+      ],
+      "questions": [
+        "顧客は誰が来ること、何が起こることを心配しているか",
+        "最初の接点から完了後まで、どこで不安が増えるか",
+        "不安を減らすために、何を説明し、何を実際に変えられるか"
+      ],
+      "stages": [
+        "customer",
+        "insight",
+        "outcome",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "difficult-customer-value-differentiation",
+      "title": "自社には難しくても顧客に重要なことを差別化にする",
+      "principle": "顧客にとって大きな摩擦を減らすが、提供側には運用負荷の高い改善は、実行できれば模倣されにくい差別化になる。",
+      "action": "顧客摩擦ごとに、時間の見通し、事前連絡、進捗共有、再発防止など複数の解決案を小さく試し、実行条件を整える。",
+      "guardrail": "運用能力や補償原資を確認せずに強い約束を出さない。顧客にとって不利な効率化を、利便性として見せかけない。",
+      "decisionCriteria": [
+        "顧客にとって失う時間・不安・手間を大きく減らせるか",
+        "自社が継続して実行し、失敗時も責任を負えるか",
+        "競合の表現ではなく、実際の運用上の違いとして示せるか"
+      ],
+      "questions": [
+        "顧客にとって最も無駄・不安・待ち時間になる点は何か",
+        "競合が避けているが、自社なら改善できる負担は何か",
+        "一つの約束が守れない場合、どんな補償や代替対応が必要か"
+      ],
+      "stages": [
+        "customer",
+        "innovation",
+        "execution"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
+    },
+    {
+      "id": "outcome-evidence-competition-map",
+      "title": "競合との比較は成果と根拠を分けて行う",
+      "principle": "比較では、各社が何を約束しているかだけでなく、その約束をどの程度確認可能な根拠で支えているかを見る。顧客に重要で、自社が実現・証明できる未充足の成果が候補になる。",
+      "action": "成果、根拠、条件、出典、確認日を列にした比較表を作り、自社の主張は検証済みの項目だけで組み立てる。",
+      "guardrail": "競合の事実を推測・中傷・古い情報で比較しない。比較広告や優位性の表現は、公開前に根拠と適用法令を人が確認する。",
+      "decisionCriteria": [
+        "顧客にとって重要な成果か",
+        "競合の情報が現在の一次情報または確認可能な資料に基づくか",
+        "自社が同じ成果をより確かに提供・証明できるか"
+      ],
+      "questions": [
+        "顧客が比較している代替手段は何か",
+        "各選択肢はどんな成果を示し、何で支えているか",
+        "顧客にとって重要なのに、十分に裏付けられていない領域は何か"
+      ],
+      "stages": [
+        "customer",
+        "outcome",
+        "evidence"
+      ],
+      "sourcePages": [],
+      "sourceType": "非公開原本アーカイブからの独自要約"
     }
   ]
 }

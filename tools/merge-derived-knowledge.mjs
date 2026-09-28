@@ -45,6 +45,21 @@ if (invalid.length) {
 
 const existing = Array.isArray(knowledge.cards) ? knowledge.cards : [];
 const existingKeys = new Set(existing.map(card => `${card.title}\u0000${card.principle}`));
+
+function inferStages(card) {
+  if (Array.isArray(card.stages) && card.stages.length) return card.stages;
+  const text = `${card.title ?? ''}\n${card.principle ?? ''}\n${card.action ?? ''}`;
+  const stages = new Set();
+  if (/対象|顧客|選択|見つけ|専門化/.test(text)) stages.add('customer');
+  if (/洞察|調査|失注|不安|体験|顧客の声|対話|観察/.test(text)) stages.add('insight');
+  if (/成果|約束|到達|機能/.test(text)) stages.add('outcome');
+  if (/根拠|証拠|検証|比較|実績|確認/.test(text)) stages.add('evidence');
+  if (/改善|差別化|価値設計|模倣|専門化/.test(text)) stages.add('innovation');
+  if (/媒体|検索|発信|AI/.test(text)) stages.add('media');
+  if (/実行|現場|組織|販売後|継続|学習|運用|フォロー/.test(text)) stages.add('execution');
+  return stages.size ? [...stages] : ['customer', 'insight'];
+}
+
 const derived = usable
   .filter(card => !existingKeys.has(`${card.title}\u0000${card.principle}`))
   .map((card, index) => ({
@@ -55,9 +70,7 @@ const derived = usable
     guardrail: card.guardrail,
     decisionCriteria: Array.isArray(card.decisionCriteria) ? card.decisionCriteria : [],
     questions: Array.isArray(card.questions) ? card.questions : [],
-    stages: Array.isArray(card.stages) && card.stages.length
-      ? card.stages
-      : ['customer', 'insight', 'outcome', 'evidence', 'media', 'execution'],
+    stages: inferStages(card),
     sourcePages: [],
     sourceType: '非公開原本アーカイブからの独自要約',
   }));
@@ -73,7 +86,7 @@ const next = {
 };
 
 console.log(JSON.stringify({
-  candidateFiles: sourceFiles.map(basename),
+  candidateFiles: sourceFiles.map(name => basename(name)),
   totalCandidates: candidates.length,
   verifiedCandidates: usable.length,
   needsReview: candidates.filter(card => card.status !== 'verified').length,

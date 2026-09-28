@@ -953,7 +953,10 @@
         const cards = knowledgeBase.cards || [];
         const pageCards = allKnowledgePageCards();
         if (!cards.length && !pageCards.length) return "実務知識データは読み込み中です。";
-        const crossReference = cards.map(card => `- ${card.title}（p.${(card.sourcePages || []).join("-")}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`).join("\n\n");
+        const crossReference = cards.map(card => {
+          const sourceLabel = card.sourceType || `p.${(card.sourcePages || []).join("-")}`;
+          return `- ${card.title}（${sourceLabel}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`;
+        }).join("\n\n");
         const pageReference = pageCards.map(card => `- p.${card.sourcePage}｜${card.chapter}\n  要点: ${card.keyPoint}\n  判断基準: ${(card.decisionCriteria || []).join("／")}\n  問い: ${(card.questions || []).join("／")}\n  実例: ${card.example}\n  注意: ${(card.cautions || []).join("／")}`).join("\n\n");
         const scopeNote = knowledgeBase.source?.ingestionStatus || "この知識セットに登録済みのページ別知識を参照します。";
         return `${knowledgeSourceLabel()}\n\n## 知識化の範囲\n${scopeNote}\n\n## 横断して使う知識\n${crossReference}\n\n## 先行して知識化したページ別知識\n${pageReference}`;
