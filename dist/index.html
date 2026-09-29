@@ -493,13 +493,13 @@
         }
       ];
 
+      // 初回は、答えが分かりやすく、設計図をつくるのに不可欠な7問だけにする。
+      // 細かな媒体別の調整や測定は、初回の設計図を見た後に必要な分だけ追加する。
       const BEGINNER_QUESTION_IDS = [
-        "business", "action",
-        "friction", "desired", "target", "discoveryMoment",
+        "friction", "desired", "target",
         "outcome",
         "evidence", "evidenceSource",
-        "aiQueryVariants", "aiAnswerEssentials", "aiSourceInventory", "aiAnswerEvidence",
-        "owner", "followup", "approval"
+        "owner"
       ];
 
       const BEGINNER_STAGE_OVERRIDES = {
@@ -509,17 +509,17 @@
           guidance: "専門用語や数字は不要です。いつもお客さんに説明している言葉で、分かることだけ答えてください。"
         },
         insight: {
-          index: "2",
+          index: "1",
           name: "お客さんのこと",
           guidance: "難しく考えず、お客さんが困っていることと、喜ぶことを普段の言葉で書いてください。"
         },
         outcome: {
-          index: "3",
+          index: "2",
           name: "選ばれる理由",
           guidance: "商品名ではなく、お客さんにどんな良い変化があるかを一言で考えます。"
         },
         evidence: {
-          index: "4",
+          index: "3",
           name: "本当だと言える理由",
           guidance: "立派な実績でなくても大丈夫です。事実として確認できるものを一つずつ集めます。"
         },
@@ -529,7 +529,7 @@
           guidance: "AIにも人にも分かるように、質問への答えと、その答えを確かめられる公式情報を用意します。"
         },
         execution: {
-          index: "6",
+          index: "4",
           name: "まず動かす",
           guidance: "完璧にしなくて大丈夫です。誰がいつ何をするかを、小さく決めます。"
         }
@@ -766,8 +766,8 @@
       ];
 
       const allQuestions = activeStages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
-      const SCHEMA_VERSION = 3;
-      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {}, onboardingComplete: false };
+      const SCHEMA_VERSION = 4;
+      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {}, onboardingComplete: false, starterComplete: false };
       let state = loadState();
       let toastTimer;
       let activeVoiceRecognition = null;
@@ -792,7 +792,8 @@
               schemaVersion: SCHEMA_VERSION,
               current,
               answers: saved.answers,
-              onboardingComplete: saved.schemaVersion === SCHEMA_VERSION && saved.onboardingComplete === true
+              onboardingComplete: saved.schemaVersion === SCHEMA_VERSION && saved.onboardingComplete === true,
+              starterComplete: saved.schemaVersion === SCHEMA_VERSION && saved.starterComplete === true
             };
           }
         } catch (_) {}
@@ -1167,7 +1168,7 @@
         questionBody.innerHTML = `
           <div class="stage-kicker">はじめに / 3つだけ</div>
           <h2 class="question-title">難しい質問から始めません。</h2>
-          <p class="quick-start-lead"><strong>まずは、ふだん人に話す言葉で3つだけ教えてください。</strong>ここで正解を決めません。入力後に、このAIが「どんなお客さんに、何を伝えればよいか」の最初の下書きを作り、必要なことだけを順番に聞きます。</p>
+          <p class="quick-start-lead"><strong>まずは、ふだん人に話す言葉で3つだけ教えてください。</strong>ここで正解を決めません。入力後は、初回の設計図に必要な最大7問だけ。このAIが「どんなお客さんに、何を伝えればよいか」の下書きをつくります。</p>
           <section class="quick-start" aria-label="はじめの3つの質問">
             <div class="quick-start-grid">
               <label class="quick-start-field wide">
@@ -1242,6 +1243,7 @@
           if (action) state.answers.action = action;
           if (industry) state.answers.industryFamily = industry;
           state.onboardingComplete = true;
+          state.starterComplete = false;
           const nextQuestion = allQuestions.findIndex(question => !hasAnswer(question));
           state.current = nextQuestion >= 0 ? nextQuestion : 0;
           saveState();
@@ -1251,7 +1253,11 @@
 
       function renderStages() {
         if (!state.onboardingComplete) {
-          stageList.innerHTML = `<div class="stage-footer"><p class="storage-note"><strong>最初は3つだけ。</strong><br>入力後に、必要な質問だけを普段の言葉で進めます。分からないことは、あとで大丈夫です。</p></div>`;
+          stageList.innerHTML = `<div class="stage-footer"><p class="storage-note"><strong>最初は3つだけ。</strong><br>その後は初回の設計図に必要な最大7問を、普段の言葉で進めます。分からないことは、あとで大丈夫です。</p></div>`;
+          return;
+        }
+        if (state.starterComplete) {
+          stageList.innerHTML = `<div class="stage-footer"><p class="storage-note"><strong>初回の設計図ができました。</strong><br>右の戦略ボードで、選ばれる理由・AI検索・伝える場所・最初の実行を確認できます。答えはいつでも見直せます。</p></div>`;
           return;
         }
         const currentStage = (allQuestions[state.current] || allQuestions[0]).stage.id;
@@ -1304,10 +1310,42 @@
         </section>`;
       }
 
+      function renderStarterComplete() {
+        stopVoiceRecognition();
+        progressText.textContent = "初回の設計";
+        progressCount.textContent = "完成";
+        progressFill.style.width = "100%";
+        questionBody.innerHTML = `
+          <div class="stage-kicker">初回の設計 / 完成</div>
+          <h2 class="question-title">最初の「選ばれる理由」ができました。</h2>
+          <p class="quick-start-lead"><strong>右側の戦略ボードに、今の答えからつくった設計図を表示しています。</strong>これは公開用の文章ではなく、事実を確認しながら磨くための下書きです。約束できないことや未確認の情報は公開しません。</p>
+          <section class="quick-start-outcomes" aria-label="初回設計で確認できること">
+            <h3>いま確認できる4つ</h3>
+            <p>次にやることは、右のボードを上から順に確認するだけです。</p>
+            <ol class="quick-start-outcome-list">
+              <li class="quick-start-outcome"><strong>選ばれる理由</strong><span>誰が、どんな困りごとを避け、どんな良いことを得るか。</span></li>
+              <li class="quick-start-outcome"><strong>AI・検索での答え方</strong><span>お客さんの質問に、公式サイトで何を答えるか。</span></li>
+              <li class="quick-start-outcome"><strong>人の目の前に出す場所</strong><span>業種とお客さんの探し方から、優先する媒体の初期案。</span></li>
+              <li class="quick-start-outcome"><strong>最初の実行</strong><span>誰が、いつまでに、何を確認・改善するか。</span></li>
+            </ol>
+          </section>
+          <div class="quick-start-actions"><button id="reviewStarter" type="button" class="button secondary">答えを見直す</button></div>`;
+        questionBody.querySelector("#reviewStarter").addEventListener("click", () => {
+          state.starterComplete = false;
+          state.current = 0;
+          saveState();
+          render();
+        });
+      }
+
       function renderQuestion() {
         stopVoiceRecognition();
         if (!state.onboardingComplete) {
           renderQuickStart();
+          return;
+        }
+        if (state.starterComplete) {
+          renderStarterComplete();
           return;
         }
         const question = allQuestions[state.current];
@@ -1335,7 +1373,8 @@
             </div>`
           : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(question.placeholder || "思いつくことを、そのまま書いてください")}">${escapeHtml(answer(question.id))}</textarea>${voiceControls}`;
 
-        const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
+        const isLastQuestion = state.current === allQuestions.length - 1;
+        const nextLabel = isLastQuestion ? "最初の設計図をつくる" : "保存して次へ";
         questionBody.innerHTML = `
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
           ${state.current === 0 ? `<div class="beginner-intro"><strong>難しい言葉は使いません。</strong>まずは、分かることを普段の言葉で書くだけで大丈夫です。分からない質問は「あとで答える」で飛ばせます。</div>` : ""}
@@ -1414,13 +1453,23 @@
         else if (question.type === "choice" || question.type === "multiple") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
         else questionBody.querySelector("#answer").addEventListener("input", persist);
 
+        const finishStarter = () => {
+          state.starterComplete = true;
+          saveState();
+          render();
+          showToast("初回の設計図をつくりました。右の戦略ボードを確認してください。");
+        };
+
         document.getElementById("backButton").addEventListener("click", () => { if (state.current > 0) { state.current--; saveState(); render(); } });
-        document.getElementById("skipButton").addEventListener("click", () => { if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); } });
+        document.getElementById("skipButton").addEventListener("click", () => {
+          if (isLastQuestion) finishStarter();
+          else { state.current++; saveState(); render(); }
+        });
         document.getElementById("nextButton").addEventListener("click", () => {
           persist();
           if (question.required && !hasAnswer(question)) { showToast("この質問は設計の土台です。分かる範囲で入力するか、「あとで答える」を選んでください。"); return; }
-          if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); }
-          else { render(); showToast("設計図を更新しました。右側の確認事項を解消して、公開前の確認へ進んでください。"); }
+          if (!isLastQuestion) { state.current++; saveState(); render(); }
+          else finishStarter();
         });
       }
 
@@ -1456,7 +1505,7 @@
         const subject = target ? `AIに「${target}」と尋ねる人` : "優先顧客";
         const goal = outcome || desired || "望む成果";
         const obstacle = friction ? `「${friction}」を避けながら` : "自分に合う選択をするために";
-        const method = delivery || "提供の仕組み";
+        const method = delivery || answer("business") || "提供の仕組み";
         const proof = evidence || "未登録の根拠";
         return `${subject}が${obstacle}「${goal}」を得るために、${method}が役立つ可能性があります。根拠候補は「${proof}」です。これは検証・承認前の設計仮説です。`;
       }
@@ -1479,8 +1528,21 @@
         const question = answer("target");
         const essentials = answer("aiAnswerEssentials");
         const sources = answer("aiSourceInventory");
+        const evidence = answer("evidence");
+        const evidenceSource = answer("evidenceSource");
+        const profile = activeIndustryProfile();
         if (!question && !essentials && !sources) return "まずは「お客さんがAIや検索に何と聞くか」を一つ決めます。次に、その答えを公式サイトで確認できるようにします。";
-        return `お客さんが聞きそうなこと: ${question || "未入力"}\n\nサイトに載せること: ${essentials || "未入力"}\n\nお客さんが確認できるページ: ${sources || "未入力"}\n\n大切なこと: AIに紹介されること自体は約束できません。だからこそ、AIにも人にも正しく伝わる公式情報を先に整えます。`;
+        return `最初に答えられるようにする質問: ${question || "未入力"}\n\n公式サイトに先に載せること: ${essentials || "この質問への答え／対象条件／できること・できないこと／料金・予約・問い合わせの方法"}\n\nお客さんが確認できる場所: ${sources || evidenceSource || "公式サイトに、質問への答えをまとめたFAQまたは案内ページを一つ作る"}\n\n答えを支える事実: ${evidence || "未入力。提供内容・条件・実績を確認してから書く"}\n\nこの業種での初期の見つけてもらい方: ${profile.mediaGuide}\n\n大切なこと: AIに紹介されること自体は約束できません。だからこそ、AIにも人にも正しく伝わる公式情報を先に整えます。`;
+      }
+
+      function buildSimpleMediaPlan() {
+        const channels = supportingChannels();
+        const profile = activeIndustryProfile();
+        const target = answer("target") || "お客さんがAIや検索にする質問";
+        if (channels.length) {
+          return `中心はAI検索と公式サイトです。補強する場所: ${channels.join("、")}\n\n各媒体でも、まず「${target}」への答え、得られること、確認できる条件を同じ順番で伝えます。媒体ごとの細かな表現は、初回の設計図を確認してから整えます。`;
+        }
+        return `中心はAI検索と公式サイトです。\n\nこの業種の最初の媒体仮説: ${profile.mediaGuide}\n\nお客さんが実際に使う場所は、予約・問い合わせ・検索語・口コミ・紹介元を確認してから追加します。最初から全媒体を使う必要はありません。`;
       }
 
       function buildKnowledgeReference() {
@@ -1566,6 +1628,7 @@
           ${section("このAIが使っている実務知識", buildKnowledgeReference(), "")}
           ${section("今の『選ばれる理由』の下書き", buildReason(), "答えていくと、ここにお客さん・良いこと・理由がつながって表示されます。")}
           ${prioritySection("いちばん大切：AI・検索で見つけてもらう準備（ここに力の9割）", buildSimpleAISearchPlan())}
+          ${prioritySection("人の目の前にも出す：伝える場所の初期案", buildSimpleMediaPlan())}
           ${section("次にすること", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
           ${section("お客さんの困りごと", answer("friction"), "まだ入力していません")}
           ${section("お客さんが叶えたいこと", answer("desired"), "まだ入力していません")}
