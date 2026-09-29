@@ -221,28 +221,6 @@
     .industry-view p { margin: 0; color: #315675; font-size: .86rem; white-space: pre-wrap; }
     .beginner-intro { margin: 4px 0 22px; padding: 14px 16px; border-radius: 12px; background: #effbf8; color: #31564f; line-height: 1.6; }
     .beginner-intro strong { display: block; color: #075c56; margin-bottom: 3px; }
-    .quick-start { display: grid; gap: 16px; }
-    .quick-start-lead { margin: 0; padding: 17px 18px; border: 1px solid #a9ddd4; border-radius: 14px; color: #164e4a; background: linear-gradient(135deg, #e8fbf6, #f4fbff); line-height: 1.7; }
-    .quick-start-lead strong { display: block; margin-bottom: 5px; color: #075c56; font-size: 1.02rem; }
-    .quick-start-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .quick-start-field { display: grid; gap: 6px; padding: 14px; border: 1px solid #c6d3df; border-radius: 13px; background: #fff; }
-    .quick-start-field.wide { grid-column: 1 / -1; }
-    .quick-start-field > span { color: var(--ink-soft); font-size: .87rem; font-weight: 850; }
-    .quick-start-field small { color: var(--muted); font-size: .77rem; line-height: 1.45; }
-    .quick-start-field input, .quick-start-field textarea, .quick-start-field select { width: 100%; border: 1px solid #aebccc; border-radius: 10px; padding: 10px 11px; color: var(--ink); background: #fff; outline: none; }
-    .quick-start-field textarea { min-height: 100px; resize: vertical; }
-    .quick-start-field input:focus, .quick-start-field textarea:focus, .quick-start-field select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(15,118,110,.13); }
-    .quick-start-preview { padding: 15px 16px; border: 1px solid #c6dcf6; border-radius: 13px; background: var(--sky); }
-    .quick-start-preview h3 { margin: 0 0 5px; color: #104475; font-size: .92rem; }
-    .quick-start-preview p { margin: 0; color: #315675; font-size: .89rem; line-height: 1.65; white-space: pre-wrap; }
-    .quick-start-outcomes { padding: 16px; border: 1px solid #cde2d9; border-radius: 13px; background: #fbfffd; }
-    .quick-start-outcomes h3 { margin: 0 0 5px; color: #075c56; font-size: .95rem; }
-    .quick-start-outcomes > p { margin: 0 0 11px; color: #42635d; font-size: .84rem; line-height: 1.55; }
-    .quick-start-outcome-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 0; padding: 0; list-style: none; }
-    .quick-start-outcome { padding: 11px 12px; border-radius: 10px; background: #effbf8; }
-    .quick-start-outcome strong { display: block; color: #075c56; font-size: .83rem; }
-    .quick-start-outcome span { display: block; margin-top: 3px; color: #42635d; font-size: .76rem; line-height: 1.45; }
-    .quick-start-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 4px; }
     .conversation-assist { display: grid; gap: 10px; margin: 18px 0 4px; }
     .conversation-summary, .suggestion-card { padding: 14px 15px; border-radius: 12px; }
     .conversation-summary { border: 1px solid #d6e2ec; background: #f8fbfd; }
@@ -305,6 +283,192 @@
       transform: translateY(150%); opacity: 0; transition: transform .22s ease, opacity .22s ease; font-size: .88rem; }
     .toast.show { transform: translateY(0); opacity: 1; }
 
+    /* URL自動反映コンポーネント */
+    .url-fetcher-card {
+      margin: 18px 0 20px;
+      padding: 16px 18px;
+      border: 1px solid #b2dfdb;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+      box-shadow: 0 4px 14px rgba(15, 118, 110, .06);
+    }
+    .url-fetcher-head {
+      margin-bottom: 12px;
+    }
+    .url-fetcher-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .84rem;
+      font-weight: 800;
+      color: #0d6159;
+      background: #ccfbf1;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    .url-fetcher-desc {
+      margin: 0;
+      color: #285953;
+      font-size: .86rem;
+      line-height: 1.5;
+    }
+    .url-fetcher-desc strong {
+      color: #0a4f48;
+    }
+    .url-fetcher-input-row {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .url-input-wrap {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .url-icon {
+      position: absolute;
+      left: 12px;
+      font-size: 1rem;
+      pointer-events: none;
+      opacity: .6;
+    }
+    .url-input {
+      width: 100%;
+      padding: 10px 32px 10px 36px;
+      border: 1px solid #99d5cf;
+      border-radius: 10px;
+      background: #fff;
+      font-size: .9rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .url-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .14);
+    }
+    .clear-url-btn {
+      position: absolute;
+      right: 8px;
+      background: transparent;
+      border: none;
+      color: #7b9491;
+      font-size: .85rem;
+      padding: 4px 6px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .clear-url-btn:hover {
+      color: #204e49;
+    }
+    .fetch-website-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      padding: 10px 16px;
+      font-size: .88rem;
+    }
+    .btn-spinner {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border: 2px solid rgba(255, 255, 255, .3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .url-fetch-message {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+    .url-fetch-message.info {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .url-fetch-message.success {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .url-fetch-message.error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .url-preview-section {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid #c7e8e3;
+    }
+    .url-preview-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .preview-tag {
+      font-size: .78rem;
+      font-weight: 800;
+      color: #0f766e;
+    }
+    .preview-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .small-btn {
+      padding: 4px 10px !important;
+      font-size: .78rem !important;
+      border-radius: 7px !important;
+    }
+    .url-preview-content {
+      font-size: .83rem;
+      line-height: 1.55;
+      color: #24413d;
+      white-space: pre-wrap;
+      max-height: 160px;
+      overflow-y: auto;
+      padding: 8px;
+      background: #f8fafc;
+      border-radius: 6px;
+    }
+    .undo-reflect-wrap {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .undo-reflect-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: .8rem;
+      padding: 6px 12px;
+      border-radius: 7px;
+      color: #92400e;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background .15s;
+    }
+    .undo-reflect-btn:hover {
+      background: #fde68a;
+    }
+
     @media (max-width: 1180px) {
       .workspace { grid-template-columns: 230px minmax(0, 1fr); }
       .strategy-panel { grid-column: 1 / -1; position: static; }
@@ -320,17 +484,14 @@
       .stage-count { display: none; }
       .stage-name { font-size: .8rem; }
       .choice-set { grid-template-columns: 1fr; }
-      .quick-start-grid { grid-template-columns: 1fr; }
-      .quick-start-field.wide { grid-column: auto; }
-      .quick-start-outcome-list { grid-template-columns: 1fr; }
-      .quick-start-actions { align-items: stretch; flex-direction: column; }
-      .quick-start-actions .button { width: 100%; }
       .score-grid { grid-template-columns: 1fr; }
       .strategy-content { display: block; }
       .actions { align-items: stretch; flex-direction: column-reverse; }
       .action-group { width: 100%; }
       .action-group .button { flex: 1; }
       .button.primary { width: 100%; }
+      .url-fetcher-input-row { flex-direction: column; align-items: stretch; }
+      .fetch-website-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -350,9 +511,9 @@
     <section class="workspace" aria-label="選ばれる理由をつくるワークスペース">
       <aside class="panel" aria-label="対話の進行">
         <div class="panel-header">
-          <p class="eyebrow">一緒に考える順番</p>
-          <h2>最初は3つだけ</h2>
-          <p>あとは、必要になったときだけ聞きます。答えはいつでも修正できます。</p>
+          <p class="eyebrow">Conversation flow</p>
+          <h2>8つの設計ステップ</h2>
+          <p>答えはいつでも修正できます。</p>
         </div>
         <nav id="stageList" class="stage-list" aria-label="答える順番"></nav>
         <div class="stage-footer">
@@ -394,7 +555,7 @@
           questions: [
             { id: "industryFamily", title: "あなたの事業に最も近い業種を選んでください", helper: "業種で答えを決めつけるためではなく、顧客の選び方、確認すべき根拠、届く媒体、表現上の注意を切り替えるために使います。", label: "業種", type: "choice", options: ["宿泊・観光", "飲食・カフェ", "小売・EC", "美容・健康・ウェルネス", "住宅・建設・修理", "高信頼サービス（医療・介護・士業など）", "教育・スクール・コーチング", "不動産・地域サービス", "BtoB・IT・コンサル", "製造・卸・専門商材", "その他・複合"], required: true },
             { id: "businessModel", title: "主な販売・利用の形を選んでください", helper: "複数選択できます。売り方によって、必要な根拠、関係者、媒体、次の行動が変わります。", label: "販売・利用の形", type: "multiple", options: ["予約・来店", "単発購入", "継続利用・会員制", "EC・配送", "法人・複数決裁者", "紹介・仲介・プラットフォーム", "地域密着・訪問型", "その他"], required: true },
-            { id: "business", title: "あなたの事業を一言で教えてください", helper: "商品・サービス、提供地域や市場、主な提供方法を具体的に書きます。", label: "事業の説明", type: "text", required: true },
+            { id: "business", title: "1. あなたのお店・会社は、何をしていますか？", helper: "商品、サービス、特徴を、短くそのまま書いてください。企業のホームページURLを入力すると自動反映もできます。", label: "お店・会社の説明（商品・サービス・特徴）", placeholder: "例：塩原温泉で、猫と泊まれる小さな旅館です。全室ペット対応客室と源泉かけ流し温泉を提供しています。", type: "text", required: true },
             { id: "action", title: "顧客に、次にどんな行動を選んでほしいですか？", helper: "購入、予約、問い合わせ、契約更新、紹介など、ひとつの行動に絞ります。", label: "望む顧客行動", type: "text", required: true },
             { id: "targetMatrix", title: "顧客がAIにする質問を、根拠と一緒に比較してください", helper: "対象顧客はAIへの質問として定義します。地域・目的・条件・比較軸を含む、顧客が実際に使いそうな言葉で書きます。各項目は、1＝弱い・未確認、3＝一部確認、5＝強い・確認済みの目安です。", label: "AIへの質問候補の比較", type: "targetMatrix", required: true },
             { id: "targetEvidence", title: "そのAI質問が実際にされる根拠は、どこにありますか？", helper: "予約・売上・問合せ・サイト内検索・検索語・レビュー・紹介元・現場の観察・実際のAIとの会話などを、質問候補ごとに分けて書きます。推測は推測と明記します。", label: "AI質問の根拠・出典", type: "text", required: true },
@@ -493,13 +654,13 @@
         }
       ];
 
-      // 初回は、答えが分かりやすく、設計図をつくるのに不可欠な7問だけにする。
-      // 細かな媒体別の調整や測定は、初回の設計図を見た後に必要な分だけ追加する。
       const BEGINNER_QUESTION_IDS = [
-        "friction", "desired", "target",
+        "business", "action",
+        "friction", "desired", "target", "discoveryMoment",
         "outcome",
         "evidence", "evidenceSource",
-        "owner"
+        "aiQueryVariants", "aiAnswerEssentials", "aiSourceInventory", "aiAnswerEvidence",
+        "owner", "followup", "approval"
       ];
 
       const BEGINNER_STAGE_OVERRIDES = {
@@ -509,17 +670,17 @@
           guidance: "専門用語や数字は不要です。いつもお客さんに説明している言葉で、分かることだけ答えてください。"
         },
         insight: {
-          index: "1",
+          index: "2",
           name: "お客さんのこと",
           guidance: "難しく考えず、お客さんが困っていることと、喜ぶことを普段の言葉で書いてください。"
         },
         outcome: {
-          index: "2",
+          index: "3",
           name: "選ばれる理由",
           guidance: "商品名ではなく、お客さんにどんな良い変化があるかを一言で考えます。"
         },
         evidence: {
-          index: "3",
+          index: "4",
           name: "本当だと言える理由",
           guidance: "立派な実績でなくても大丈夫です。事実として確認できるものを一つずつ集めます。"
         },
@@ -529,7 +690,7 @@
           guidance: "AIにも人にも分かるように、質問への答えと、その答えを確かめられる公式情報を用意します。"
         },
         execution: {
-          index: "4",
+          index: "6",
           name: "まず動かす",
           guidance: "完璧にしなくて大丈夫です。誰がいつ何をするかを、小さく決めます。"
         }
@@ -537,10 +698,10 @@
 
       const BEGINNER_QUESTION_OVERRIDES = {
         business: {
-          title: "まず、あなたのお店・会社は何をしていますか？",
-          helper: "いつも人に説明している言葉で大丈夫です。地域や主な商品・サービスも、分かる範囲で書いてください。",
-          label: "お店・会社の説明",
-          placeholder: "例：塩原温泉で、猫と泊まれる小さな旅館です。"
+          title: "1. あなたのお店・会社は、何をしていますか？",
+          helper: "商品、サービス、特徴を、短くそのまま書いてください。下のホームページURL入力から自動で読み込んで反映することもできます。",
+          label: "お店・会社の説明（商品・サービス・特徴）",
+          placeholder: "例：塩原温泉で、猫と泊まれる小さな旅館です。全室ペット同伴対応の客室と、地元素材の個室食を提供しています。"
         },
         action: {
           title: "お客さんに、次に何をしてほしいですか？",
@@ -766,8 +927,8 @@
       ];
 
       const allQuestions = activeStages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
-      const SCHEMA_VERSION = 4;
-      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {}, onboardingComplete: false, starterComplete: false };
+      const SCHEMA_VERSION = 2;
+      const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {} };
       let state = loadState();
       let toastTimer;
       let activeVoiceRecognition = null;
@@ -788,13 +949,7 @@
             const current = saved.schemaVersion === SCHEMA_VERSION
               ? Math.min(Math.max(saved.current, 0), allQuestions.length - 1)
               : 0;
-            return {
-              schemaVersion: SCHEMA_VERSION,
-              current,
-              answers: saved.answers,
-              onboardingComplete: saved.schemaVersion === SCHEMA_VERSION && saved.onboardingComplete === true,
-              starterComplete: saved.schemaVersion === SCHEMA_VERSION && saved.starterComplete === true
-            };
+            return { schemaVersion: SCHEMA_VERSION, current, answers: saved.answers };
           }
         } catch (_) {}
         return { ...initialState, answers: {} };
@@ -932,90 +1087,8 @@
         try { recognition.abort(); } catch (_) {}
       }
 
-      function bindSpeechInput(voiceButton, voiceStatus, input, onInput) {
-        const SpeechRecognition = speechRecognitionConstructor();
-        if (!voiceButton || !voiceStatus || !input || !SpeechRecognition) return;
-
-        const recognition = new SpeechRecognition();
-        recognition.lang = "ja-JP";
-        recognition.interimResults = true;
-        recognition.continuous = false;
-        let startingText = "";
-        let receivedText = false;
-
-        const setIdle = () => {
-          voiceButton.classList.remove("listening");
-          voiceButton.textContent = "🎙 話して入力";
-          voiceButton.setAttribute("aria-pressed", "false");
-        };
-
-        recognition.onstart = () => {
-          activeVoiceRecognition = recognition;
-          voiceButton.classList.add("listening");
-          voiceButton.textContent = "■ 聞くのをやめる";
-          voiceButton.setAttribute("aria-pressed", "true");
-          voiceStatus.textContent = "聞いています。話し終えたら、もう一度ボタンを押すか、そのまま少し待ってください。";
-        };
-
-        recognition.onresult = event => {
-          const spoken = Array.from(event.results).map(result => result[0]?.transcript || "").join("").trim();
-          if (!spoken) return;
-          input.value = `${startingText}${startingText ? "\n" : ""}${spoken}`;
-          receivedText = true;
-          if (typeof onInput === "function") onInput();
-          voiceStatus.textContent = event.results[event.results.length - 1]?.isFinal
-            ? "文字にしました。内容を見直してから次へ進んでください。"
-            : "聞き取った内容を文字にしています…";
-        };
-
-        recognition.onerror = event => {
-          activeVoiceRecognition = null;
-          setIdle();
-          const messages = {
-            "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。",
-            "service-not-allowed": "このブラウザでは音声認識サービスを使えません。文字入力で続けてください。",
-            "no-speech": "声を聞き取れませんでした。もう一度、少しゆっくり話してください。",
-            "audio-capture": "マイクが見つかりません。接続とブラウザの設定を確認してください。",
-            "network": "音声認識に接続できませんでした。通信を確認して、もう一度試してください。"
-          };
-          voiceStatus.textContent = messages[event.error] || "音声入力を開始できませんでした。文字入力で続けることもできます。";
-        };
-
-        recognition.onend = () => {
-          if (activeVoiceRecognition !== recognition) return;
-          activeVoiceRecognition = null;
-          setIdle();
-          if (!receivedText) voiceStatus.textContent = "音声入力を終えました。文字が入らなかった場合は、もう一度試してください。";
-        };
-
-        voiceButton.addEventListener("click", () => {
-          if (activeVoiceRecognition === recognition) {
-            voiceStatus.textContent = "音声入力を終了します…";
-            recognition.stop();
-            return;
-          }
-          stopVoiceRecognition();
-          startingText = input.value;
-          receivedText = false;
-          try {
-            recognition.start();
-          } catch (_) {
-            setIdle();
-            voiceStatus.textContent = "音声入力を開始できませんでした。少し待ってから、もう一度試してください。";
-          }
-        });
-      }
-
       function knowledgeCardsForStage(stageId) {
         return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.includes(stageId));
-      }
-
-      function allKnowledgePageCards() {
-        return Array.isArray(knowledgeBase.pageCards) ? knowledgeBase.pageCards : [];
-      }
-
-      function pageCardsForStage(stageId) {
-        return allKnowledgePageCards().filter(card => Array.isArray(card.stages) && card.stages.includes(stageId));
       }
 
       function currentKnowledgeCards() {
@@ -1026,50 +1099,23 @@
         return (knowledgeBase.cards || []).filter(card => Array.isArray(card.stages) && card.stages.some(stageId => stageIds.has(stageId)));
       }
 
-      function currentPageCards() {
-        const stageIds = new Set([
-          ...allQuestions.filter(question => hasAnswer(question)).map(question => question.stage.id),
-          allQuestions[state.current]?.stage.id
-        ].filter(Boolean));
-        return allKnowledgePageCards().filter(card => Array.isArray(card.stages) && card.stages.some(stageId => stageIds.has(stageId)));
-      }
-
       function knowledgeSourceLabel() {
         const count = (knowledgeBase.cards || []).length;
-        const pageCount = allKnowledgePageCards().length;
-        if (!count && !pageCount) return "実務知識データを読み込み中です。";
-        const archived = Number(knowledgeBase.source?.archivedSourceImageCount || 0);
-        const cardized = Number(knowledgeBase.source?.cardizedSourceImageCount || 0);
-        const imageScope = archived
-          ? `非公開で保管した原本${archived}枚${cardized ? `（対応付け済み${cardized}枚）` : ""}`
-          : "登録済みの実務資料";
-        return `${imageScope}をもとにした、${pageCount || 0}ページ分の知識と${count || 0}枚の横断カード`;
+        if (!count) return "実務知識データを読み込み中です。";
+        const pages = knowledgeBase.source?.sourcePages;
+        return `書籍画像${pages ? ` p.${pages}` : ""}をもとにした独自要約 ${count} 枚`;
       }
 
       function renderKnowledgeHint(stageId) {
         const cards = knowledgeCardsForStage(stageId).slice(0, 3);
-        const pageCards = pageCardsForStage(stageId).slice(0, 2);
-        if (!cards.length && !pageCards.length) return "";
-        const indexedIdeas = cards.length
-          ? `<ul>${cards.map(card => `<li><b>${escapeHtml(card.title)}</b>：${escapeHtml(card.principle)}</li>`).join("")}</ul>`
-          : "";
-        const pageIdeas = pageCards.length
-          ? `<ul>${pageCards.map(card => `<li><b>p.${card.sourcePage}・${escapeHtml(card.chapter)}</b>：${escapeHtml(card.keyPoint)}</li>`).join("")}</ul>`
-          : "";
-        return `<div class="knowledge-note"><strong>この質問で使う考え方</strong>${indexedIdeas}${pageIdeas}<small>${escapeHtml(knowledgeSourceLabel())}を、この段階の助言に使っています。</small></div>`;
+        if (!cards.length) return "";
+        return `<div class="knowledge-note"><strong>この質問で使う考え方</strong><ul>${cards.map(card => `<li><b>${escapeHtml(card.title)}</b>：${escapeHtml(card.principle)}</li>`).join("")}</ul><small>${escapeHtml(knowledgeSourceLabel())}を、この段階の助言に使っています。</small></div>`;
       }
 
       function knowledgeContextForBrief() {
         const cards = knowledgeBase.cards || [];
-        const pageCards = allKnowledgePageCards();
-        if (!cards.length && !pageCards.length) return "実務知識データは読み込み中です。";
-        const crossReference = cards.map(card => {
-          const sourceLabel = card.sourceType || `p.${(card.sourcePages || []).join("-")}`;
-          return `- ${card.title}（${sourceLabel}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`;
-        }).join("\n\n");
-        const pageReference = pageCards.map(card => `- p.${card.sourcePage}｜${card.chapter}\n  要点: ${card.keyPoint}\n  判断基準: ${(card.decisionCriteria || []).join("／")}\n  問い: ${(card.questions || []).join("／")}\n  実例: ${card.example}\n  注意: ${(card.cautions || []).join("／")}`).join("\n\n");
-        const scopeNote = knowledgeBase.source?.ingestionStatus || "この知識セットに登録済みのページ別知識を参照します。";
-        return `${knowledgeSourceLabel()}\n\n## 知識化の範囲\n${scopeNote}\n\n## 横断して使う知識\n${crossReference}\n\n## 先行して知識化したページ別知識\n${pageReference}`;
+        if (!cards.length) return "実務知識データは読み込み中です。";
+        return `${knowledgeSourceLabel()}\n\n${cards.map(card => `- ${card.title}（p.${(card.sourcePages || []).join("-")}）\n  考え方: ${card.principle}\n  実行: ${card.action}\n  注意: ${card.guardrail}`).join("\n\n")}`;
       }
 
       function loadKnowledgeBase() {
@@ -1099,11 +1145,214 @@
         return `私はいま、「${friction}」を避けて「${desired}」を望む人が、「${target}」と聞く場面を考えています。これはまだ下書きです。実際のお客さんの言葉に近づけていきましょう。`;
       }
 
+      function normalizeUrl(input) {
+        let url = (input || "").trim();
+        if (!url) return "";
+        if (!/^https?:\/\//i.test(url)) {
+          url = "https://" + url;
+        }
+        return url;
+      }
+
+      async function fetchWebsiteData(rawUrl) {
+        const url = normalizeUrl(rawUrl);
+        if (!url) throw new Error("ホームページのURLを入力してください。");
+
+        // 1. Jina Reader API（最優先：CORS対応、高品質Markdown＆メタ情報取得）
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 9500);
+          const jinaUrl = `https://r.jina.ai/${url}`;
+          const res = await fetch(jinaUrl, {
+            signal: controller.signal,
+            headers: { Accept: "text/plain" }
+          });
+          clearTimeout(timeoutId);
+          if (res.ok) {
+            const text = await res.text();
+            if (text && text.trim().length > 40) {
+              return { source: "jina", content: text, url };
+            }
+          }
+        } catch (err) {
+          console.warn("Jina Reader fetch failed, trying proxy...", err);
+        }
+
+        // 2. AllOrigins CORS Proxy（生HTML取得フォールバック）
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 9500);
+          const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+          const res = await fetch(proxyUrl, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (res.ok) {
+            const json = await res.json();
+            if (json && json.contents && json.contents.length > 50) {
+              return { source: "html", content: json.contents, url };
+            }
+          }
+        } catch (err) {
+          console.warn("AllOrigins proxy failed, trying CorsProxy...", err);
+        }
+
+        // 3. CorsProxy.io（第3フォールバック）
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 9500);
+          const corsProxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+          const res = await fetch(corsProxyUrl, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (res.ok) {
+            const text = await res.text();
+            if (text && text.length > 50) {
+              return { source: "html", content: text, url };
+            }
+          }
+        } catch (err) {
+          console.warn("CorsProxy failed...", err);
+        }
+
+        throw new Error("ホームページから情報を取得できませんでした。URLをご確認いただくか、手動で直接ご入力ください。");
+      }
+
+      function parseCompanyDetails(data) {
+        let title = "";
+        let description = "";
+        let services = [];
+        let features = [];
+        let rawSnippets = [];
+
+        if (data.source === "jina") {
+          const text = data.content;
+          const lines = text.split("\n");
+
+          for (const line of lines) {
+            const titleMatch = line.match(/^Title:\s*(.+)$/i);
+            if (titleMatch && !title) {
+              title = titleMatch[1].trim();
+              break;
+            }
+          }
+
+          let currentSection = "";
+          for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+
+            if (/^#{1,3}\s+(.+)$/.test(line)) {
+              currentSection = line.replace(/^#{1,3}\s+/, "").toLowerCase();
+              continue;
+            }
+
+            const isServiceSec = /サービス|事業|商品|プロダクト|メニュー|業務|提供|service|product|business/i.test(currentSection);
+            const isFeatureSec = /特徴|強み|選ばれる|選ばれる理由|こだわり|メリット|ポイント|feature|reason|strength/i.test(currentSection);
+
+            if (line.startsWith("- ") || line.startsWith("* ") || /^\d+\.\s/.test(line)) {
+              const item = line.replace(/^[-*]|\d+\.\s*/, "").replace(/\*\*/g, "").trim();
+              if (item.length > 4 && item.length < 130) {
+                if (isFeatureSec) features.push(item);
+                else if (isServiceSec) services.push(item);
+                else if (/特徴|強み|こだわり|専任|品質|スピード|安心|実績|安全|保証/.test(item)) features.push(item);
+                else if (/サービス|開発|販売|提供|支援|サポート|製造|プラン|メニュー/.test(item)) services.push(item);
+              }
+            } else if (!description && !line.startsWith("URL Source:") && !line.startsWith("Markdown Content:") && line.length > 20 && line.length < 240) {
+              description = line.replace(/\*\*/g, "").trim();
+            }
+          }
+        } else {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data.content, "text/html");
+
+          title = doc.title || "";
+          const metaDesc = doc.querySelector('meta[name="description"]')?.getAttribute("content")
+            || doc.querySelector('meta[property="og:description"]')?.getAttribute("content")
+            || "";
+          description = metaDesc.trim();
+
+          doc.querySelectorAll("script, style, noscript, nav, footer, header").forEach(el => el.remove());
+
+          const headings = Array.from(doc.querySelectorAll("h1, h2, h3"));
+          headings.forEach(h => {
+            const hText = h.textContent.trim();
+            if (/特徴|強み|選ばれる|こだわり/i.test(hText)) {
+              const next = h.nextElementSibling;
+              if (next) {
+                const items = Array.from(next.querySelectorAll("li")).map(li => li.textContent.trim()).filter(Boolean);
+                if (items.length) features.push(...items);
+                else if (next.textContent.trim().length > 10) features.push(next.textContent.trim().slice(0, 100));
+              }
+            } else if (/サービス|事業|商品|プロダクト|業務/i.test(hText)) {
+              const next = h.nextElementSibling;
+              if (next) {
+                const items = Array.from(next.querySelectorAll("li")).map(li => li.textContent.trim()).filter(Boolean);
+                if (items.length) services.push(...items);
+                else if (next.textContent.trim().length > 10) services.push(next.textContent.trim().slice(0, 100));
+              }
+            }
+          });
+
+          if (features.length === 0 && services.length === 0) {
+            const pElements = Array.from(doc.querySelectorAll("p"))
+              .map(p => p.textContent.trim())
+              .filter(t => t.length > 25 && t.length < 180 && !/javascript|cookie/i.test(t));
+            if (pElements.length > 0) {
+              rawSnippets = pElements.slice(0, 3);
+            }
+          }
+        }
+
+        let companyName = title
+          .replace(/\s*[-|–—:：]\s*(公式|公式サイト|トップページ|ホーム|HOME|Official|オフィシャル).*$/i, "")
+          .trim();
+        if (!companyName && title) {
+          companyName = title.split(/[|–—]/)[0].trim();
+        }
+
+        services = [...new Set(services)].slice(0, 3);
+        features = [...new Set(features)].slice(0, 3);
+
+        const lines = [];
+        if (companyName && !description.includes(companyName)) {
+          lines.push(`【店名・会社名】${companyName}`);
+        }
+        if (services.length > 0) {
+          lines.push(`【商品・サービス】${services.join("、")}`);
+        }
+        if (features.length > 0) {
+          lines.push(`【主な特徴】\n${features.map(f => `・${f}`).join("\n")}`);
+        } else if (rawSnippets.length > 0 && !description) {
+          lines.push(`【特徴・概要】\n${rawSnippets.map(s => `・${s}`).join("\n")}`);
+        }
+
+        let result = "";
+        if (description) {
+          result = description;
+          if (lines.length > 0) {
+            result += "\n\n" + lines.join("\n");
+          }
+        } else if (lines.length > 0) {
+          result = lines.join("\n");
+        } else {
+          result = title ? `【会社・店舗】${title}` : "ホームページから情報を取得しました。";
+        }
+
+        return {
+          rawUrl: data.url,
+          title,
+          companyName,
+          description,
+          services,
+          features,
+          formattedText: result.trim()
+        };
+      }
+
       function questionSuggestion(question) {
         const business = answer("business").trim();
         const friction = answer("friction").trim();
         const desired = answer("desired").trim();
         const target = answer("target").trim();
+        const siteUrl = state.answers.companyWebsiteUrl || "";
 
         if (question.id === "target" && !target && business) {
           const situation = [
@@ -1124,6 +1373,17 @@
             value: `「${target}」に答えるために、対象、利用条件、料金・追加費用、場所・アクセス、申込み方法、できないことを、事実に基づいて載せる。`
           };
         }
+
+        if (question.id === "aiSourceInventory" && !answer(question.id).trim()) {
+          if (siteUrl) {
+            return {
+              title: "公式サイトの一次情報ページ下書き",
+              description: "先ほど入力されたホームページURLを起点に、顧客とAIが確認できる公式ページを定めます。",
+              value: `${siteUrl} のトップページ、FAQ（よくある質問）ページ、および利用条件・料金案内ページ。`
+            };
+          }
+        }
+
         return null;
       }
 
@@ -1141,126 +1401,8 @@
         return stage.questions.filter(question => hasAnswer(question)).length;
       }
 
-      function quickStartIndustryOptions() {
-        return ["", ...Object.keys(INDUSTRY_PROFILES)].map(industry => {
-          const label = industry || "業種はまだ選ばない（あとで大丈夫）";
-          return `<option value="${escapeHtml(industry)}" ${answer("industryFamily") === industry ? "selected" : ""}>${escapeHtml(label)}</option>`;
-        }).join("");
-      }
-
-      function quickStartHypothesis(values) {
-        const business = String(values.business || "").trim();
-        const place = String(values.place || "").trim();
-        const action = String(values.action || "").trim();
-        if (!business) return "ここに、AIが最初に一緒に考えることを表示します。まだ正解を決める必要はありません。";
-        const where = place ? `「${place}」で` : "";
-        const nextAction = action || "選ばれて、次の行動をしてもらう";
-        return `いまの下書き：${where}「${business}」を必要とする人に見つけてもらい、「${nextAction}」につなげます。\n\n次は、どんな人がどんな困りごとで探すのかを、普段の言葉で一つずつ聞きます。AIへの難しい質問を最初から作る必要はありません。`;
-      }
-
-      function renderQuickStart() {
-        progressText.textContent = "最初の準備";
-        progressCount.textContent = "3つ";
-        progressFill.style.width = "0%";
-        const knownBusiness = answer("business").replace(/（主な地域・市場：.*?）$/, "");
-        const knownAction = answer("action");
-        const knownPlace = String(state.answers.quickStartPlace || "");
-        questionBody.innerHTML = `
-          <div class="stage-kicker">はじめに / 3つだけ</div>
-          <h2 class="question-title">難しい質問から始めません。</h2>
-          <p class="quick-start-lead"><strong>まずは、ふだん人に話す言葉で3つだけ教えてください。</strong>ここで正解を決めません。入力後は、初回の設計図に必要な最大7問だけ。このAIが「どんなお客さんに、何を伝えればよいか」の下書きをつくります。</p>
-          <section class="quick-start" aria-label="はじめの3つの質問">
-            <div class="quick-start-grid">
-              <label class="quick-start-field wide">
-                <span>1. あなたのお店・会社は、何をしていますか？</span>
-                <small>商品、サービス、特徴を、短くそのまま書いてください。</small>
-                <textarea id="quickBusiness" placeholder="例：猫と泊まれる小さな温泉旅館です。">${escapeHtml(knownBusiness)}</textarea>
-                <div class="voice-controls">
-                  <button id="quickVoiceButton" type="button" class="button secondary voice-button" ${speechRecognitionConstructor() ? "" : "disabled"}>🎙 話して入力</button>
-                  <p id="quickVoiceStatus" class="voice-status" aria-live="polite">声で説明しても大丈夫です。文字になった内容は、必ず見直してください。</p>
-                </div>
-              </label>
-              <label class="quick-start-field">
-                <span>2. どこで売っていますか？</span>
-                <small>地域名、全国、オンラインなど。分からなければ空欄で大丈夫です。</small>
-                <input id="quickPlace" type="text" value="${escapeHtml(knownPlace)}" placeholder="例：栃木県那須塩原市" />
-              </label>
-              <label class="quick-start-field">
-                <span>3. お客さんに、次に何をしてほしいですか？</span>
-                <small>予約、購入、来店、問い合わせ、相談など。一つで大丈夫です。</small>
-                <input id="quickAction" type="text" value="${escapeHtml(knownAction)}" placeholder="例：空室を見て予約してほしい" />
-              </label>
-              <label class="quick-start-field wide">
-                <span>業種が分かれば選んでください（おまかせでも大丈夫）</span>
-                <select id="quickIndustry" aria-label="業種">${quickStartIndustryOptions()}</select>
-              </label>
-            </div>
-            <section class="quick-start-preview" aria-live="polite"><h3>AIの最初の理解</h3><p id="quickStartPreview"></p></section>
-            <section class="quick-start-outcomes" aria-label="このAIで完成するもの">
-              <h3>このAIで、最後に作るもの</h3>
-              <p>質問に答えると、ただの宣伝文ではなく、AIにも人にも選ばれるための実行できる設計図にします。</p>
-              <ol class="quick-start-outcome-list">
-                <li class="quick-start-outcome"><strong>1. 見つけてもらう質問</strong><span>お客さんがAIやGoogleに何と聞くかを決めます。</span></li>
-                <li class="quick-start-outcome"><strong>2. 選ばれる理由と根拠</strong><span>お客さんに約束する価値と、それを証明する事実を整理します。</span></li>
-                <li class="quick-start-outcome"><strong>3. 伝える場所と最初の言葉</strong><span>AI検索、公式サイト、SNS、OTA、紹介など、相手に合う伝え方を決めます。</span></li>
-                <li class="quick-start-outcome"><strong>4. 今日からの実行リスト</strong><span>誰が、いつ、何を直すかまで決めます。</span></li>
-              </ol>
-            </section>
-            <div class="quick-start-actions"><button id="beginConversation" type="button" class="button primary">この3つから、選ばれる理由を一緒につくる</button></div>
-          </section>`;
-
-        const readValues = () => ({
-          business: questionBody.querySelector("#quickBusiness")?.value || "",
-          place: questionBody.querySelector("#quickPlace")?.value || "",
-          action: questionBody.querySelector("#quickAction")?.value || ""
-        });
-        const refreshPreview = () => {
-          const preview = questionBody.querySelector("#quickStartPreview");
-          if (preview) preview.textContent = quickStartHypothesis(readValues());
-        };
-        questionBody.querySelectorAll("#quickBusiness, #quickPlace, #quickAction").forEach(input => input.addEventListener("input", refreshPreview));
-        refreshPreview();
-        bindSpeechInput(
-          questionBody.querySelector("#quickVoiceButton"),
-          questionBody.querySelector("#quickVoiceStatus"),
-          questionBody.querySelector("#quickBusiness"),
-          refreshPreview
-        );
-
-        questionBody.querySelector("#beginConversation").addEventListener("click", () => {
-          const values = readValues();
-          const business = values.business.trim();
-          if (!business) {
-            showToast("まずは、何をしているお店・会社かを一言だけ教えてください。");
-            questionBody.querySelector("#quickBusiness")?.focus();
-            return;
-          }
-          const place = values.place.trim();
-          const action = values.action.trim();
-          const industry = questionBody.querySelector("#quickIndustry")?.value || "";
-          state.answers.business = place ? `${business}（主な地域・市場：${place}）` : business;
-          state.answers.quickStartPlace = place;
-          if (action) state.answers.action = action;
-          if (industry) state.answers.industryFamily = industry;
-          state.onboardingComplete = true;
-          state.starterComplete = false;
-          const nextQuestion = allQuestions.findIndex(question => !hasAnswer(question));
-          state.current = nextQuestion >= 0 ? nextQuestion : 0;
-          saveState();
-          render();
-        });
-      }
-
       function renderStages() {
-        if (!state.onboardingComplete) {
-          stageList.innerHTML = `<div class="stage-footer"><p class="storage-note"><strong>最初は3つだけ。</strong><br>その後は初回の設計図に必要な最大7問を、普段の言葉で進めます。分からないことは、あとで大丈夫です。</p></div>`;
-          return;
-        }
-        if (state.starterComplete) {
-          stageList.innerHTML = `<div class="stage-footer"><p class="storage-note"><strong>初回の設計図ができました。</strong><br>右の戦略ボードで、選ばれる理由・AI検索・伝える場所・最初の実行を確認できます。答えはいつでも見直せます。</p></div>`;
-          return;
-        }
-        const currentStage = (allQuestions[state.current] || allQuestions[0]).stage.id;
+        const currentStage = allQuestions[state.current].stage.id;
         stageList.innerHTML = activeStages.map(stage => {
           const complete = completeCount(stage);
           const isComplete = complete === stage.questions.length;
@@ -1310,44 +1452,8 @@
         </section>`;
       }
 
-      function renderStarterComplete() {
-        stopVoiceRecognition();
-        progressText.textContent = "初回の設計";
-        progressCount.textContent = "完成";
-        progressFill.style.width = "100%";
-        questionBody.innerHTML = `
-          <div class="stage-kicker">初回の設計 / 完成</div>
-          <h2 class="question-title">最初の「選ばれる理由」ができました。</h2>
-          <p class="quick-start-lead"><strong>右側の戦略ボードに、今の答えからつくった設計図を表示しています。</strong>これは公開用の文章ではなく、事実を確認しながら磨くための下書きです。約束できないことや未確認の情報は公開しません。</p>
-          <section class="quick-start-outcomes" aria-label="初回設計で確認できること">
-            <h3>いま確認できる4つ</h3>
-            <p>次にやることは、右のボードを上から順に確認するだけです。</p>
-            <ol class="quick-start-outcome-list">
-              <li class="quick-start-outcome"><strong>選ばれる理由</strong><span>誰が、どんな困りごとを避け、どんな良いことを得るか。</span></li>
-              <li class="quick-start-outcome"><strong>AI・検索での答え方</strong><span>お客さんの質問に、公式サイトで何を答えるか。</span></li>
-              <li class="quick-start-outcome"><strong>人の目の前に出す場所</strong><span>業種とお客さんの探し方から、優先する媒体の初期案。</span></li>
-              <li class="quick-start-outcome"><strong>最初の実行</strong><span>誰が、いつまでに、何を確認・改善するか。</span></li>
-            </ol>
-          </section>
-          <div class="quick-start-actions"><button id="reviewStarter" type="button" class="button secondary">答えを見直す</button></div>`;
-        questionBody.querySelector("#reviewStarter").addEventListener("click", () => {
-          state.starterComplete = false;
-          state.current = 0;
-          saveState();
-          render();
-        });
-      }
-
       function renderQuestion() {
         stopVoiceRecognition();
-        if (!state.onboardingComplete) {
-          renderQuickStart();
-          return;
-        }
-        if (state.starterComplete) {
-          renderStarterComplete();
-          return;
-        }
         const question = allQuestions[state.current];
         const step = state.current + 1;
         const percentage = Math.round((allQuestions.filter(question => hasAnswer(question)).length / allQuestions.length) * 100);
@@ -1361,6 +1467,41 @@
           <p id="voiceStatus" class="voice-status" aria-live="polite">${supportsSpeech ? "マイクを押してから話してください。入力された文字は必ず見直してください。" : "このブラウザでは音声入力を使えません。Chrome または Edge、またはスマホのキーボードのマイクをお試しください。"}</p>
         </div>`;
 
+        const urlFetcherHtml = question.id === "business" ? `
+          <div class="url-fetcher-card" id="urlFetcherCard">
+            <div class="url-fetcher-head">
+              <span class="url-fetcher-badge">🌐 ホームページから自動反映</span>
+              <p class="url-fetcher-desc">
+                企業のホームページURLを入力すると、<strong>商品、サービス、特徴</strong>を読み取って下の入力欄に反映します。
+              </p>
+            </div>
+            <div class="url-fetcher-input-row">
+              <div class="url-input-wrap">
+                <span class="url-icon">🔗</span>
+                <input type="url" id="websiteUrlInput" class="url-input" placeholder="https://example.com （企業のホームページURL）" value="${escapeHtml(state.answers.companyWebsiteUrl || "")}" />
+                <button type="button" id="clearUrlBtn" class="clear-url-btn" title="URLをクリア" style="${state.answers.companyWebsiteUrl ? "" : "display:none;"}">✕</button>
+              </div>
+              <button type="button" id="fetchWebsiteBtn" class="button primary fetch-website-btn">
+                <span class="btn-spinner" style="display:none;"></span>
+                <span class="btn-text">URLから反映する</span>
+              </button>
+            </div>
+            <div id="urlFetchMessage" class="url-fetch-message" style="display:none;"></div>
+            <div id="urlPreviewSection" class="url-preview-section" style="display:none;">
+              <div class="url-preview-head">
+                <span class="preview-tag">📄 抽出された内容のプレビュー</span>
+                <div class="preview-actions">
+                  <button type="button" id="applySummaryBtn" class="button secondary small-btn">✓ 入力欄に反映</button>
+                  <button type="button" id="cancelSummaryBtn" class="button ghost small-btn">閉じる</button>
+                </div>
+              </div>
+              <div id="urlPreviewText" class="url-preview-content"></div>
+            </div>
+            <div id="undoReflectWrap" class="undo-reflect-wrap" style="display:none;">
+              <button type="button" id="undoReflectBtn" class="undo-reflect-btn">↩ 反映前の内容に戻す</button>
+            </div>
+          </div>` : "";
+
         const input = question.type === "targetMatrix"
           ? renderTargetMatrix(question)
           : question.type === "choice"
@@ -1371,10 +1512,9 @@
           ? `<div class="choice-set multiple" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="checkbox" name="answer" value="${escapeHtml(option)}" ${answerList(question.id).includes(option) ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
             </div>`
-          : `<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(question.placeholder || "思いつくことを、そのまま書いてください")}">${escapeHtml(answer(question.id))}</textarea>${voiceControls}`;
+          : `${urlFetcherHtml}<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(question.placeholder || "思いつくことを、そのまま書いてください")}">${escapeHtml(answer(question.id))}</textarea>${voiceControls}`;
 
-        const isLastQuestion = state.current === allQuestions.length - 1;
-        const nextLabel = isLastQuestion ? "最初の設計図をつくる" : "保存して次へ";
+        const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
         questionBody.innerHTML = `
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
           ${state.current === 0 ? `<div class="beginner-intro"><strong>難しい言葉は使いません。</strong>まずは、分かることを普段の言葉で書くだけで大丈夫です。分からない質問は「あとで答える」で飛ばせます。</div>` : ""}
@@ -1441,10 +1581,234 @@
           const voiceButton = questionBody.querySelector("#voiceButton");
           const voiceStatus = questionBody.querySelector("#voiceStatus");
           const answerInput = questionBody.querySelector("#answer");
-          bindSpeechInput(voiceButton, voiceStatus, answerInput, persist);
+          const SpeechRecognition = speechRecognitionConstructor();
+          if (!voiceButton || !voiceStatus || !answerInput || !SpeechRecognition) return;
+
+          const recognition = new SpeechRecognition();
+          recognition.lang = "ja-JP";
+          recognition.interimResults = true;
+          recognition.continuous = false;
+          let startingText = "";
+          let receivedText = false;
+
+          const setIdle = () => {
+            voiceButton.classList.remove("listening");
+            voiceButton.textContent = "🎙 話して入力";
+            voiceButton.setAttribute("aria-pressed", "false");
+          };
+
+          recognition.onstart = () => {
+            activeVoiceRecognition = recognition;
+            voiceButton.classList.add("listening");
+            voiceButton.textContent = "■ 聞くのをやめる";
+            voiceButton.setAttribute("aria-pressed", "true");
+            voiceStatus.textContent = "聞いています。話し終えたら、もう一度ボタンを押すか、そのまま少し待ってください。";
+          };
+
+          recognition.onresult = event => {
+            const spoken = Array.from(event.results).map(result => result[0]?.transcript || "").join("").trim();
+            if (!spoken) return;
+            answerInput.value = `${startingText}${startingText ? "\n" : ""}${spoken}`;
+            receivedText = true;
+            persist();
+            voiceStatus.textContent = event.results[event.results.length - 1]?.isFinal
+              ? "文字にしました。内容を見直してから次へ進んでください。"
+              : "聞き取った内容を文字にしています…";
+          };
+
+          recognition.onerror = event => {
+            activeVoiceRecognition = null;
+            setIdle();
+            const messages = {
+              "not-allowed": "マイクの使用が許可されていません。ブラウザの設定でマイクを許可してください。",
+              "service-not-allowed": "このブラウザでは音声認識サービスを使えません。文字入力で続けてください。",
+              "no-speech": "声を聞き取れませんでした。もう一度、少しゆっくり話してください。",
+              "audio-capture": "マイクが見つかりません。接続とブラウザの設定を確認してください。",
+              "network": "音声認識に接続できませんでした。通信を確認して、もう一度試してください。"
+            };
+            voiceStatus.textContent = messages[event.error] || "音声入力を開始できませんでした。文字入力で続けることもできます。";
+          };
+
+          recognition.onend = () => {
+            if (activeVoiceRecognition !== recognition) return;
+            activeVoiceRecognition = null;
+            setIdle();
+            if (!receivedText) voiceStatus.textContent = "音声入力を終えました。文字が入らなかった場合は、もう一度試してください。";
+          };
+
+          voiceButton.addEventListener("click", () => {
+            if (activeVoiceRecognition === recognition) {
+              voiceStatus.textContent = "音声入力を終了します…";
+              recognition.stop();
+              return;
+            }
+            stopVoiceRecognition();
+            startingText = answerInput.value;
+            receivedText = false;
+            try {
+              recognition.start();
+            } catch (_) {
+              setIdle();
+              voiceStatus.textContent = "音声入力を開始できませんでした。少し待ってから、もう一度試してください。";
+            }
+          });
         };
 
         setupVoiceInput();
+
+        const setupUrlFetcher = () => {
+          if (question.id !== "business") return;
+          const urlInput = questionBody.querySelector("#websiteUrlInput");
+          const clearBtn = questionBody.querySelector("#clearUrlBtn");
+          const fetchBtn = questionBody.querySelector("#fetchWebsiteBtn");
+          const messageBox = questionBody.querySelector("#urlFetchMessage");
+          const previewSec = questionBody.querySelector("#urlPreviewSection");
+          const previewContent = questionBody.querySelector("#urlPreviewText");
+          const applyBtn = questionBody.querySelector("#applySummaryBtn");
+          const cancelBtn = questionBody.querySelector("#cancelSummaryBtn");
+          const undoWrap = questionBody.querySelector("#undoReflectWrap");
+          const undoBtn = questionBody.querySelector("#undoReflectBtn");
+          const answerArea = questionBody.querySelector("#answer");
+
+          if (!urlInput || !fetchBtn || !answerArea) return;
+
+          let previousAnswer = null;
+          let currentExtractedText = "";
+
+          const showMessage = (msg, type = "info") => {
+            if (!messageBox) return;
+            messageBox.style.display = "block";
+            messageBox.className = `url-fetch-message ${type}`;
+            messageBox.textContent = msg;
+          };
+
+          const hideMessage = () => {
+            if (messageBox) messageBox.style.display = "none";
+          };
+
+          const setLoading = (isLoading, label = "URLから反映する") => {
+            const spinner = fetchBtn.querySelector(".btn-spinner");
+            const btnText = fetchBtn.querySelector(".btn-text");
+            fetchBtn.disabled = isLoading;
+            urlInput.disabled = isLoading;
+            if (spinner) spinner.style.display = isLoading ? "inline-block" : "none";
+            if (btnText) btnText.textContent = label;
+          };
+
+          urlInput.addEventListener("input", () => {
+            if (clearBtn) clearBtn.style.display = urlInput.value ? "inline-block" : "none";
+            state.answers.companyWebsiteUrl = urlInput.value.trim();
+            saveState();
+          });
+
+          if (clearBtn) {
+            clearBtn.addEventListener("click", () => {
+              urlInput.value = "";
+              clearBtn.style.display = "none";
+              delete state.answers.companyWebsiteUrl;
+              saveState();
+              hideMessage();
+              if (previewSec) previewSec.style.display = "none";
+              urlInput.focus();
+            });
+          }
+
+          const executeFetch = async () => {
+            const rawUrl = urlInput.value.trim();
+            if (!rawUrl) {
+              showMessage("ホームページのURLを入力してください（例：https://example.com）", "error");
+              urlInput.focus();
+              return;
+            }
+
+            const normalized = normalizeUrl(rawUrl);
+            urlInput.value = normalized;
+            state.answers.companyWebsiteUrl = normalized;
+            saveState();
+
+            hideMessage();
+            if (previewSec) previewSec.style.display = "none";
+            setLoading(true, "アクセス中…");
+            showMessage("ホームページにアクセスして情報を読み込んでいます…", "info");
+
+            try {
+              const data = await fetchWebsiteData(normalized);
+              setLoading(true, "解析・要約中…");
+              showMessage("商品・サービス・特徴を解析・要約しています…", "info");
+
+              const parsed = parseCompanyDetails(data);
+              currentExtractedText = parsed.formattedText;
+
+              if (!currentExtractedText) {
+                throw new Error("十分なテキスト情報を取得できませんでした。");
+              }
+
+              // 直前の回答内容を保存（元に戻せるように）
+              previousAnswer = answerArea.value;
+
+              // 自動反映
+              answerArea.value = currentExtractedText;
+              persist();
+
+              // プレビューと元に戻すボタンの表示
+              if (previewContent) previewContent.textContent = currentExtractedText;
+              if (previewSec) previewSec.style.display = "block";
+              if (undoWrap && previousAnswer && previousAnswer.trim() !== currentExtractedText.trim()) {
+                undoWrap.style.display = "block";
+              }
+
+              setLoading(false, "URLから反映する");
+              showMessage("✅ ホームページから商品・サービス・特徴を読み込んで反映しました！内容をご確認・調整してください。", "success");
+              showToast("ホームページの情報を反映しました");
+            } catch (err) {
+              setLoading(false, "URLから反映する");
+              showMessage(`⚠️ 読み込みに失敗しました：${err.message || "URLを確認してください"}`, "error");
+            }
+          };
+
+          fetchBtn.addEventListener("click", executeFetch);
+
+          urlInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              executeFetch();
+            }
+          });
+
+          if (applyBtn) {
+            applyBtn.addEventListener("click", () => {
+              if (currentExtractedText) {
+                previousAnswer = answerArea.value;
+                answerArea.value = currentExtractedText;
+                persist();
+                if (undoWrap && previousAnswer && previousAnswer.trim() !== currentExtractedText.trim()) {
+                  undoWrap.style.display = "block";
+                }
+                showToast("入力欄に反映しました");
+              }
+            });
+          }
+
+          if (cancelBtn) {
+            cancelBtn.addEventListener("click", () => {
+              if (previewSec) previewSec.style.display = "none";
+            });
+          }
+
+          if (undoBtn) {
+            undoBtn.addEventListener("click", () => {
+              if (previousAnswer !== null) {
+                answerArea.value = previousAnswer;
+                persist();
+                if (undoWrap) undoWrap.style.display = "none";
+                showMessage("反映前の入力内容に戻しました。", "info");
+                showToast("反映前の内容に戻しました");
+              }
+            });
+          }
+        };
+
+        setupUrlFetcher();
 
         if (question.type === "targetMatrix") questionBody.querySelectorAll("[data-matrix-row]").forEach(inputElement => {
           inputElement.addEventListener("input", persist);
@@ -1453,23 +1817,13 @@
         else if (question.type === "choice" || question.type === "multiple") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
         else questionBody.querySelector("#answer").addEventListener("input", persist);
 
-        const finishStarter = () => {
-          state.starterComplete = true;
-          saveState();
-          render();
-          showToast("初回の設計図をつくりました。右の戦略ボードを確認してください。");
-        };
-
         document.getElementById("backButton").addEventListener("click", () => { if (state.current > 0) { state.current--; saveState(); render(); } });
-        document.getElementById("skipButton").addEventListener("click", () => {
-          if (isLastQuestion) finishStarter();
-          else { state.current++; saveState(); render(); }
-        });
+        document.getElementById("skipButton").addEventListener("click", () => { if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); } });
         document.getElementById("nextButton").addEventListener("click", () => {
           persist();
           if (question.required && !hasAnswer(question)) { showToast("この質問は設計の土台です。分かる範囲で入力するか、「あとで答える」を選んでください。"); return; }
-          if (!isLastQuestion) { state.current++; saveState(); render(); }
-          else finishStarter();
+          if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); }
+          else { render(); showToast("設計図を更新しました。右側の確認事項を解消して、公開前の確認へ進んでください。"); }
         });
       }
 
@@ -1505,7 +1859,7 @@
         const subject = target ? `AIに「${target}」と尋ねる人` : "優先顧客";
         const goal = outcome || desired || "望む成果";
         const obstacle = friction ? `「${friction}」を避けながら` : "自分に合う選択をするために";
-        const method = delivery || answer("business") || "提供の仕組み";
+        const method = delivery || "提供の仕組み";
         const proof = evidence || "未登録の根拠";
         return `${subject}が${obstacle}「${goal}」を得るために、${method}が役立つ可能性があります。根拠候補は「${proof}」です。これは検証・承認前の設計仮説です。`;
       }
@@ -1528,34 +1882,17 @@
         const question = answer("target");
         const essentials = answer("aiAnswerEssentials");
         const sources = answer("aiSourceInventory");
-        const evidence = answer("evidence");
-        const evidenceSource = answer("evidenceSource");
-        const profile = activeIndustryProfile();
         if (!question && !essentials && !sources) return "まずは「お客さんがAIや検索に何と聞くか」を一つ決めます。次に、その答えを公式サイトで確認できるようにします。";
-        return `最初に答えられるようにする質問: ${question || "未入力"}\n\n公式サイトに先に載せること: ${essentials || "この質問への答え／対象条件／できること・できないこと／料金・予約・問い合わせの方法"}\n\nお客さんが確認できる場所: ${sources || evidenceSource || "公式サイトに、質問への答えをまとめたFAQまたは案内ページを一つ作る"}\n\n答えを支える事実: ${evidence || "未入力。提供内容・条件・実績を確認してから書く"}\n\nこの業種での初期の見つけてもらい方: ${profile.mediaGuide}\n\n大切なこと: AIに紹介されること自体は約束できません。だからこそ、AIにも人にも正しく伝わる公式情報を先に整えます。`;
-      }
-
-      function buildSimpleMediaPlan() {
-        const channels = supportingChannels();
-        const profile = activeIndustryProfile();
-        const target = answer("target") || "お客さんがAIや検索にする質問";
-        if (channels.length) {
-          return `中心はAI検索と公式サイトです。補強する場所: ${channels.join("、")}\n\n各媒体でも、まず「${target}」への答え、得られること、確認できる条件を同じ順番で伝えます。媒体ごとの細かな表現は、初回の設計図を確認してから整えます。`;
-        }
-        return `中心はAI検索と公式サイトです。\n\nこの業種の最初の媒体仮説: ${profile.mediaGuide}\n\nお客さんが実際に使う場所は、予約・問い合わせ・検索語・口コミ・紹介元を確認してから追加します。最初から全媒体を使う必要はありません。`;
+        return `お客さんが聞きそうなこと: ${question || "未入力"}\n\nサイトに載せること: ${essentials || "未入力"}\n\nお客さんが確認できるページ: ${sources || "未入力"}\n\n大切なこと: AIに紹介されること自体は約束できません。だからこそ、AIにも人にも正しく伝わる公式情報を先に整えます。`;
       }
 
       function buildKnowledgeReference() {
         const allCards = knowledgeBase.cards || [];
-        const allPageCards = allKnowledgePageCards();
-        if (!allCards.length && !allPageCards.length) return "実務知識データを読み込んでいます。読み込み後、この質問に関係する考え方が表示されます。";
+        if (!allCards.length) return "実務知識データを読み込んでいます。読み込み後、この質問に関係する考え方が表示されます。";
         const relevantCards = currentKnowledgeCards();
-        const relevantPages = currentPageCards();
         const listed = relevantCards.slice(0, 5).map(card => `・${card.title}`).join("\n");
         const overflow = relevantCards.length > 5 ? `\nほか ${relevantCards.length - 5} 枚` : "";
-        const ingestion = knowledgeBase.source?.ingestionStatus ? `\n原本の知識化状況: ${knowledgeBase.source.ingestionStatus}` : "";
-        const pageSet = knowledgeBase.source?.sourcePages ? `p.${knowledgeBase.source.sourcePages}` : "登録済みページ";
-        return `保存済み: ${knowledgeSourceLabel()}\n\nページ別に整理済み: ${allPageCards.length} ページ（${pageSet}）\n今の回答で参照している考え方: ${relevantCards.length} 枚・ページ別知識: ${relevantPages.length} ページ\n${listed || "・次の質問に合わせて参照します。"}${overflow}${ingestion}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
+        return `保存済み: ${knowledgeSourceLabel()}\n\n今の回答で参照している考え方: ${relevantCards.length} 枚\n${listed || "・次の質問に合わせて参照します。"}${overflow}\n\n書籍の原文や画像を公開するのではなく、実務で使える独自の判断基準として保存しています。`;
       }
 
       function mediaGuidance(channel) {
@@ -1628,7 +1965,6 @@
           ${section("このAIが使っている実務知識", buildKnowledgeReference(), "")}
           ${section("今の『選ばれる理由』の下書き", buildReason(), "答えていくと、ここにお客さん・良いこと・理由がつながって表示されます。")}
           ${prioritySection("いちばん大切：AI・検索で見つけてもらう準備（ここに力の9割）", buildSimpleAISearchPlan())}
-          ${prioritySection("人の目の前にも出す：伝える場所の初期案", buildSimpleMediaPlan())}
           ${section("次にすること", buildNextMoves().map((move, index) => `${index + 1}. ${move}`).join("\n"), "")}
           ${section("お客さんの困りごと", answer("friction"), "まだ入力していません")}
           ${section("お客さんが叶えたいこと", answer("desired"), "まだ入力していません")}
@@ -1705,9 +2041,7 @@
             knowledge: {
               source: knowledgeBase.source || null,
               cardCount: (knowledgeBase.cards || []).length,
-              sourcePageCardCount: allKnowledgePageCards().length,
-              currentCards: currentKnowledgeCards().map(card => ({ id: card.id, title: card.title, principle: card.principle })),
-              currentPageCards: currentPageCards().map(card => ({ sourcePage: card.sourcePage, chapter: card.chapter, keyPoint: card.keyPoint, decisionCriteria: card.decisionCriteria }))
+              currentCards: currentKnowledgeCards().map(card => ({ id: card.id, title: card.title, principle: card.principle }))
             },
             industry: answer("industryFamily"),
             businessModel: answerList("businessModel"),
