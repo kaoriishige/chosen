@@ -235,6 +235,13 @@
     .quick-start-preview { padding: 15px 16px; border: 1px solid #c6dcf6; border-radius: 13px; background: var(--sky); }
     .quick-start-preview h3 { margin: 0 0 5px; color: #104475; font-size: .92rem; }
     .quick-start-preview p { margin: 0; color: #315675; font-size: .89rem; line-height: 1.65; white-space: pre-wrap; }
+    .quick-start-outcomes { padding: 16px; border: 1px solid #cde2d9; border-radius: 13px; background: #fbfffd; }
+    .quick-start-outcomes h3 { margin: 0 0 5px; color: #075c56; font-size: .95rem; }
+    .quick-start-outcomes > p { margin: 0 0 11px; color: #42635d; font-size: .84rem; line-height: 1.55; }
+    .quick-start-outcome-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .quick-start-outcome { padding: 11px 12px; border-radius: 10px; background: #effbf8; }
+    .quick-start-outcome strong { display: block; color: #075c56; font-size: .83rem; }
+    .quick-start-outcome span { display: block; margin-top: 3px; color: #42635d; font-size: .76rem; line-height: 1.45; }
     .quick-start-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 4px; }
     .conversation-assist { display: grid; gap: 10px; margin: 18px 0 4px; }
     .conversation-summary, .suggestion-card { padding: 14px 15px; border-radius: 12px; }
@@ -315,6 +322,7 @@
       .choice-set { grid-template-columns: 1fr; }
       .quick-start-grid { grid-template-columns: 1fr; }
       .quick-start-field.wide { grid-column: auto; }
+      .quick-start-outcome-list { grid-template-columns: 1fr; }
       .quick-start-actions { align-items: stretch; flex-direction: column; }
       .quick-start-actions .button { width: 100%; }
       .score-grid { grid-template-columns: 1fr; }
@@ -1150,13 +1158,16 @@
       }
 
       function renderQuickStart() {
+        progressText.textContent = "最初の準備";
+        progressCount.textContent = "3つ";
+        progressFill.style.width = "0%";
         const knownBusiness = answer("business").replace(/（主な地域・市場：.*?）$/, "");
         const knownAction = answer("action");
         const knownPlace = String(state.answers.quickStartPlace || "");
         questionBody.innerHTML = `
           <div class="stage-kicker">はじめに / 3つだけ</div>
           <h2 class="question-title">難しい質問から始めません。</h2>
-          <p class="quick-start-lead"><strong>まずは、ふだん人に話す言葉で3つだけ教えてください。</strong>ここで正解を決めません。入力後に、AIが「どんなお客さんに、何を伝えればよいか」の最初の下書きを作り、必要なことだけを順番に聞きます。</p>
+          <p class="quick-start-lead"><strong>まずは、ふだん人に話す言葉で3つだけ教えてください。</strong>ここで正解を決めません。入力後に、このAIが「どんなお客さんに、何を伝えればよいか」の最初の下書きを作り、必要なことだけを順番に聞きます。</p>
           <section class="quick-start" aria-label="はじめの3つの質問">
             <div class="quick-start-grid">
               <label class="quick-start-field wide">
@@ -1184,6 +1195,16 @@
               </label>
             </div>
             <section class="quick-start-preview" aria-live="polite"><h3>AIの最初の理解</h3><p id="quickStartPreview"></p></section>
+            <section class="quick-start-outcomes" aria-label="このAIで完成するもの">
+              <h3>このAIで、最後に作るもの</h3>
+              <p>質問に答えると、ただの宣伝文ではなく、AIにも人にも選ばれるための実行できる設計図にします。</p>
+              <ol class="quick-start-outcome-list">
+                <li class="quick-start-outcome"><strong>1. 見つけてもらう質問</strong><span>お客さんがAIやGoogleに何と聞くかを決めます。</span></li>
+                <li class="quick-start-outcome"><strong>2. 選ばれる理由と根拠</strong><span>お客さんに約束する価値と、それを証明する事実を整理します。</span></li>
+                <li class="quick-start-outcome"><strong>3. 伝える場所と最初の言葉</strong><span>AI検索、公式サイト、SNS、OTA、紹介など、相手に合う伝え方を決めます。</span></li>
+                <li class="quick-start-outcome"><strong>4. 今日からの実行リスト</strong><span>誰が、いつ、何を直すかまで決めます。</span></li>
+              </ol>
+            </section>
             <div class="quick-start-actions"><button id="beginConversation" type="button" class="button primary">この3つから、選ばれる理由を一緒につくる</button></div>
           </section>`;
 
