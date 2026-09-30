@@ -161,11 +161,16 @@ function decodeEntities(value) {
   });
 }
 
-function plainText(fragment) {
-  return decodeEntities(String(fragment || "")
+function cleanHtmlNoise(html) {
+  return String(html || "")
     .replace(/<!--[\s\S]*?-->/g, " ")
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<(script|style|noscript|nav|header|footer|dialog|svg|iframe)\b[^>]*>[\s\S]*?<\/\1>/gi, " ")
+    .replace(/<a\b[^>]*>[\s\S]*?<\/a>/gi, " ")
+    .replace(/<button\b[^>]*>[\s\S]*?<\/button>/gi, " ");
+}
+
+function plainText(fragment) {
+  return decodeEntities(cleanHtmlNoise(fragment)
     .replace(/<[^>]+>/g, " "))
     .replace(/\s+/g, " ")
     .trim();
@@ -184,7 +189,7 @@ function extractMetaDescription(html) {
     const property = extractAttribute(tag, "property").toLowerCase();
     if (name === "description" || property === "og:description") {
       const content = extractAttribute(tag, "content");
-      if (content) return content;
+      if (content && content.length >= 10) return content;
     }
   }
   return "";
@@ -192,29 +197,58 @@ function extractMetaDescription(html) {
 
 function firstTagText(html, tagName) {
   const match = new RegExp(`<${tagName}\\b[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "i").exec(html);
-  return plainText(match?.[1] || "");
+  return decodeEntities(String(match?.[1] || "").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+}
+
+function isNoiseLine(text) {
+  if (!text || text.length < 4) return true;
+  const lower = text.toLowerCase();
+  return /^(ご?予約|宿泊予約|空室検索|お問い合わせ|contact|reserve|tel[:：]|アクセス|メニュー|menu|top|ホーム)$/i.test(text)
+    || /cookie|クッキー|利用規約|プライバシー|copyright|rights reserved/i.test(lower);
 }
 
 function collectHeadings(html) {
   const headings = [];
-  for (const match of html.matchAll(/<h[1-2]\b[^>]*>([\s\S]*?)<\/h[1-2]>/gi)) {
-    const text = plainText(match[1]);
-    if (text && !headings.includes(text)) headings.push(text);
+  const cleaned = cleanHtmlNoise(html);
+  for (const match of cleaned.matchAll(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]>/gi)) {
+    const text = decodeEntities(match[1].replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+    if (text && !isNoiseLine(text) && !headings.includes(text)) {
+      headings.push(text);
+    }
     if (headings.length === 5) break;
   }
   return headings;
 }
 
 function makeImport(html, url) {
-  const title = firstTagText(html, "title");
+  const rawTitle = firstTagText(html, "title");
   const description = extractMetaDescription(html);
   const headings = collectHeadings(html);
   const bodyText = plainText(html).slice(0, 900);
-  const businessDraft = description || headings[0] || title || bodyText.slice(0, 360);
+
+  // タイトルを店舗名とキャッチコピーに分解
+  const titleClean = rawTitle.replace(/【(公式|公式サイト|公認)】|\[(公式|公式サイト)\]/gi, "").trim();
+  const titleParts = titleClean.split(/\s*[-|–—:：|]\s*/).filter(Boolean);
+  const companyName = (titleParts[0] || "").trim() || url.hostname;
+  const subTitle = titleParts.slice(1).join(" ").trim();
+
+  let businessDraft = description;
+  if (!businessDraft || isNoiseLine(businessDraft)) {
+    if (subTitle && subTitle.length >= 8) {
+      businessDraft = `${companyName}は、${subTitle}です。`;
+    } else if (headings.length > 0) {
+      businessDraft = headings[0];
+    } else {
+      businessDraft = bodyText.slice(0, 300);
+    }
+  }
+
   return {
     url: url.toString(),
     host: url.hostname,
-    title: title || url.hostname,
+    title: rawTitle || url.hostname,
+    companyName,
+    subTitle,
     description,
     headings,
     excerpt: bodyText,

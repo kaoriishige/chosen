@@ -1168,14 +1168,19 @@
       function isNoiseText(text) {
         if (!text || typeof text !== "string") return true;
         const cleaned = text.trim();
-        if (cleaned.length < 4) return true;
+        if (cleaned.length < 3) return true;
+        // Markdownリンク [テキスト](URL) のみで構成されているか、URL単体
+        if (/^!?\[.*?\]\(.*?\)$/.test(cleaned) || /^https?:\/\/\S+$/i.test(cleaned)) return true;
+        // 予約・ボタン・ナビゲーション・SNSなどの典型的な定型アクション
+        if (/^(ご?予約|予約する|宿泊予約|空室検索|空室状況|プラン一覧|予約照会|お問い合わせ|お問合せ|contact|reserve|booking|tel[:：]|電話番号|アクセス|交通案内|地図|map|facebook|instagram|twitter|x|line|ホーム|top|menu|メニュー)$/i.test(cleaned)) return true;
         const noiseKeywords = [
           "cookie", "クッキー", "必須cookie", "同意", "プライバシーポリシー",
           "個人情報保護", "利用規約", "all rights reserved", "copyright",
           "©", "javascript", "推奨環境", "ブラウザ", "ログイン", "サインイン",
           "カート", "ショッピングカート", "買い物かご", "ページトップ", "pagetop",
           "choose another country", "select your country", "global site",
-          "サイトマップ", "無断転載", "免責事項", "よくあるご質問へ", "閉じる"
+          "サイトマップ", "無断転載", "免責事項", "よくあるご質問へ", "閉じる",
+          "空室カレンダー", "宿泊約款", "予約確認", "キャンセルポリシー"
         ];
         const lower = cleaned.toLowerCase();
         return noiseKeywords.some(keyword => lower.includes(keyword));
@@ -1267,14 +1272,36 @@
         throw new Error("ホームページから情報を取得できませんでした。URLをご確認いただくか、手動で直接ご入力ください。");
       }
 
+      function cleanMarkdownLine(rawLine) {
+        return rawLine
+          // Markdownリンク [テキスト](url) をテキストのみに置換
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+          // Markdown画像 !... を除去
+          .replace(/!\[.*?\]\(.*?\)/g, "")
+          // リスト先頭記号や番号を除去
+          .replace(/^[-*•]\s*|\d+\.\s*/, "")
+          // 太字・斜体記号を除去
+          .replace(/[*_~`]/g, "")
+          .trim();
+      }
+
       function parseCompanyDetails(data) {
         // Netlify Functions からの取得の場合
         if (data.source === "netlify" && data.page) {
           const p = data.page;
-          const companyName = (p.title || "")
-            .replace(/\s*[-|–—:：|]\s*(公式|公式サイト|トップページ|ホーム|HOME|Official|オフィシャル).*$/i, "")
+          const rawTitle = p.title || "";
+          const titleParts = rawTitle.split(/\s*[-|–—:：|]\s*/).filter(Boolean);
+          const companyName = (titleParts[0] || "")
+            .replace(/【(公式|公式サイト|公認)】|\[(公式|公式サイト)\]/gi, "")
             .trim() || p.host || "";
-          const desc = p.description || p.businessDraft || p.excerpt || "";
+          const subTitle = titleParts.slice(1).join(" ")
+            .replace(/【(公式|公式サイト|公認)】|\[(公式|公式サイト)\]/gi, "")
+            .trim();
+
+          let desc = p.description || p.businessDraft || p.excerpt || "";
+          if (isNoiseText(desc) || desc.length < 15) {
+            desc = subTitle ? `${companyName}（${subTitle}）` : "";
+          }
           const headings = Array.isArray(p.headings) ? p.headings.filter(h => !isNoiseText(h)).slice(0, 3) : [];
 
           const lines = [];
@@ -1283,7 +1310,7 @@
           if (headings.length > 0) lines.push(`【主な特徴・見出し】\n${headings.map(h => `・${h}`).join("\n")}`);
 
           return {
-            title: p.title || companyName,
+            title: rawTitle,
             companyName,
             description: desc,
             services: headings,
@@ -1324,7 +1351,7 @@
             // メタ行を除外
             if (/^(url source:|markdown content:|published time:)/i.test(rawLine)) continue;
 
-            const cleanLine = rawLine.replace(/^[-*•]\s*|\d+\.\s*/, "").replace(/\*\*/g, "").trim();
+            const cleanLine = cleanMarkdownLine(rawLine);
             if (isNoiseText(cleanLine)) continue;
 
             const isList = rawLine.startsWith("- ") || rawLine.startsWith("* ") || /^\d+\.\s/.test(rawLine);
@@ -1335,15 +1362,18 @@
               if (cleanLine.length >= 4 && cleanLine.length <= 150) {
                 if (isFeatureSec) features.push(cleanLine);
                 else if (isServiceSec) services.push(cleanLine);
-                else if (/特徴|強み|こだわり|専任|品質|スピード|安心|実績|安全|保証|個室|対応/.test(cleanLine)) features.push(cleanLine);
-                else if (/サービス|開発|販売|提供|支援|サポート|製造|プラン|メニュー|業務/.test(cleanLine)) services.push(cleanLine);
+                else if (/特徴|強み|こだわり|専任|品質|スピード|安心|実績|安全|保証|個室|対応|かけ流し|自家源泉|露天/.test(cleanLine)) features.push(cleanLine);
+                else if (/サービス|開発|販売|提供|支援|サポート|製造|プラン|メニュー|業務|宿泊|温泉/.test(cleanLine)) services.push(cleanLine);
                 else generalParagraphs.push(cleanLine);
               }
             } else {
               if (cleanLine.length >= 15 && cleanLine.length <= 320) {
-                if (isServiceSec || /当社は|当店は|弊社は|私たちは|提供|行ってい|運営|販売|製造|宿泊/.test(cleanLine)) {
+                // 予約ボタンやリンクのテキストが紛れ込むのを防ぐ
+                if (/^(ご予約|予約|お問い合わせ|tel)/i.test(cleanLine)) continue;
+
+                if (isServiceSec || /当社は|当店は|弊社は|私たちは|提供|行ってい|運営|販売|製造|宿泊|湯治|くつろぎ/.test(cleanLine)) {
                   candidateDescriptions.push(cleanLine);
-                } else if (isFeatureSec || /特徴|強み|安心|こだわり/.test(cleanLine)) {
+                } else if (isFeatureSec || /特徴|強み|安心|こだわり|かけ流し|源泉|自慢|ぬる湯|看板猫/.test(cleanLine)) {
                   features.push(cleanLine);
                 } else {
                   generalParagraphs.push(cleanLine);
@@ -1367,7 +1397,7 @@
           }
 
           // 不要な要素を根こそぎ除去
-          doc.querySelectorAll("script, style, noscript, nav, footer, header, svg, iframe, form, dialog, .cookie, #cookie, [class*='cookie'], [id*='cookie'], [class*='banner'], [class*='modal'], [class*='popup'], [class*='consent']").forEach(el => el.remove());
+          doc.querySelectorAll("script, style, noscript, nav, footer, header, svg, iframe, form, dialog, a, button, .cookie, #cookie, [class*='cookie'], [id*='cookie'], [class*='banner'], [class*='modal'], [class*='popup'], [class*='consent']").forEach(el => el.remove());
 
           // 見出しと本文の抽出
           const headings = Array.from(doc.querySelectorAll("h1, h2, h3"));
@@ -1402,10 +1432,12 @@
           generalParagraphs.push(...pElements);
         }
 
-        // 会社名・店舗名の抽出と整理
-        let companyName = title
-          .replace(/\s*[-|–—:：|]\s*(公式|公式サイト|トップページ|ホーム|HOME|Official|オフィシャル).*$/i, "")
-          .trim();
+        // 会社名・店舗名とキャッチコピーの分離
+        const rawTitleClean = (title || "").replace(/【(公式|公式サイト|公認)】|\[(公式|公式サイト)\]/gi, "").trim();
+        const titleParts = rawTitleClean.split(/\s*[-|–—:：|]\s*/).filter(Boolean);
+        let companyName = (titleParts[0] || "").trim();
+        const subTitle = titleParts.slice(1).join(" ").trim();
+
         if (!companyName && title) {
           companyName = title.split(/[-|–—:：]/)[0].trim();
         }
@@ -1418,10 +1450,12 @@
 
         // 最適な概要文の決定
         let bestDescription = "";
-        if (metaDescription && !isNoiseText(metaDescription)) {
+        if (metaDescription && !isNoiseText(metaDescription) && metaDescription.length >= 15) {
           bestDescription = metaDescription;
         } else if (candidateDescriptions.length > 0) {
           bestDescription = candidateDescriptions[0];
+        } else if (subTitle && subTitle.length >= 10) {
+          bestDescription = `${companyName}は、${subTitle}です。`;
         } else if (generalParagraphs.length > 0) {
           bestDescription = generalParagraphs[0];
         }
@@ -1438,7 +1472,11 @@
           sections.push(`【主な取扱商品・サービス】\n${services.map(s => `・${s}`).join("\n")}`);
         }
         if (features.length > 0) {
-          sections.push(`【特徴・こだわり】\n${features.map(f => `・${f}`).join("\n")}`);
+          // 「次に〜」「まず〜」などのブログ調前置きを少しクリーンアップ
+          const cleanedFeatures = features.map(f => f.replace(/^(次に|まず|また|さらに|なお)、?\s*/, ""));
+          sections.push(`【特徴・こだわり】\n${cleanedFeatures.map(f => `・${f}`).join("\n")}`);
+        } else if (subTitle && !bestDescription.includes(subTitle)) {
+          sections.push(`【特徴・こだわり】\n・${subTitle}`);
         } else if (generalParagraphs.length > 1 && !features.length && !services.length) {
           sections.push(`【特徴・詳細】\n・${generalParagraphs.slice(1, 3).join("\n・")}`);
         }
