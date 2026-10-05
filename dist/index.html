@@ -2124,14 +2124,15 @@
           <p id="voiceStatus" class="voice-status" aria-live="polite">${supportsSpeech ? "マイクを押してから話してください。入力された文字は必ず見直してください。" : "このブラウザでは音声入力を使えません。Chrome または Edge、またはスマホのキーボードのマイクをお試しください。"}</p>
         </div>`;
 
-        const urlFetcherHtml = (question.id === "industryFamily" || question.id === "business") ? `
+        const isUrlFetchedForBusiness = question.id === "business" && Boolean(state.answers.companyWebsiteUrl) && Boolean(state.answers.business);
+
+        const urlFetcherHtml = question.id === "industryFamily" ? `
           <div class="url-fetcher-card" id="urlFetcherCard">
             <div class="url-fetcher-head">
               <span class="url-fetcher-badge">🌐 ホームページから自動反映</span>
               <p class="url-fetcher-desc">
-                ${question.id === "industryFamily"
-                  ? "ホームページをお持ちの方は、URLを入力すると<strong>業種の判定と会社情報</strong>を自動で読み取れます。<br><span style='color:var(--muted); font-size:0.83rem;'>※ホームページをお持ちでない方は、下の業種一覧から選んでそのまま進められます。</span>"
-                  : "企業のホームページURLを入力すると、<strong>商品、サービス、特徴</strong>を読み取って下の入力欄に反映します。"}
+                ホームページをお持ちの方は、URLを入力すると<strong>業種の判定と会社情報</strong>を一度に自動取得できます。<br>
+                <span style='color:var(--muted); font-size:0.83rem;'>※ホームページをお持ちでない方は、下の業種一覧から選んでそのまま進められます。</span>
               </p>
             </div>
             <div class="url-fetcher-input-row">
@@ -2146,22 +2147,34 @@
               </button>
             </div>
             <div id="urlFetchMessage" class="url-fetch-message" style="display:none;"></div>
-            ${question.id === "business" ? `
-            <div id="urlPreviewSection" class="url-preview-section" style="display:none;">
-              <div class="url-preview-head">
-                <span class="preview-tag">📄 抽出された内容（下の入力欄に自動反映されました）</span>
-                <div class="preview-actions">
-                  <button type="button" id="applySummaryBtn" class="button secondary small-btn">もう一度セット</button>
-                  <button type="button" id="cancelSummaryBtn" class="button ghost small-btn">閉じる</button>
-                </div>
-              </div>
-              <div id="urlPreviewText" class="url-preview-content"></div>
-              <small style="display:block; margin-top:6px; color:#3b6e66; font-size:.78rem;">※下の「お店・会社の説明」入力欄に直接セットされています。必要に応じて手動で自由に修正してください。</small>
+          </div>` : (question.id === "business" && !state.answers.companyWebsiteUrl ? `
+          <div class="url-fetcher-card" id="urlFetcherCard">
+            <div class="url-fetcher-head">
+              <span class="url-fetcher-badge">🌐 ホームページから自動反映</span>
+              <p class="url-fetcher-desc">
+                企業のホームページURLを入力すると、<strong>商品、サービス、特徴</strong>を読み取って下の入力欄に反映します。
+              </p>
             </div>
-            <div id="undoReflectWrap" class="undo-reflect-wrap" style="display:none;">
-              <button type="button" id="undoReflectBtn" class="undo-reflect-btn">↩ 反映前の内容に戻す</button>
-            </div>` : ""}
-          </div>` : "";
+            <div class="url-fetcher-input-row">
+              <div class="url-input-wrap">
+                <span class="url-icon">🔗</span>
+                <input type="url" id="websiteUrlInput" class="url-input" placeholder="https://example.com （企業のホームページURL）" value="${escapeHtml(state.answers.companyWebsiteUrl || "")}" />
+                <button type="button" id="clearUrlBtn" class="clear-url-btn" title="URLをクリア" style="${state.answers.companyWebsiteUrl ? "" : "display:none;"}">✕</button>
+              </div>
+              <button type="button" id="fetchWebsiteBtn" class="button primary fetch-website-btn">
+                <span class="btn-spinner" style="display:none;"></span>
+                <span class="btn-text">URLから反映する</span>
+              </button>
+            </div>
+            <div id="urlFetchMessage" class="url-fetch-message" style="display:none;"></div>
+          </div>` : "");
+
+        const activeTitle = isUrlFetchedForBusiness
+          ? "2. 取得したお店・会社情報の確認・修正"
+          : question.title;
+        const activeHelper = isUrlFetchedForBusiness
+          ? "💡 ホームページから自動反映された内容です。このままでよければ「保存して次へ」を押してください。修正したい箇所は直接編集できます。"
+          : question.helper;
 
         const activePlaceholder = (question.id === "business" && answer("industryFamily") && INDUSTRY_PLACEHOLDERS[answer("industryFamily")])
           ? INDUSTRY_PLACEHOLDERS[answer("industryFamily")]
@@ -2184,8 +2197,8 @@
 
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
           ${state.current === 0 ? `<div class="beginner-intro"><strong>💡 まずは一番来てほしい「本命のお客様（1組）」を思い浮かべてみましょう！</strong><br>基本の5つの質問に答えるだけで、右側にあなただけの「選ばれる理由」が自動で完成します。ホームページをお持ちの方は、上の入力欄にURLを入れるだけで事業内容などを自動取得できます。</div>` : ""}
-          <h2 class="question-title">${escapeHtml(question.title)}</h2>
-          <p class="question-helper">${escapeHtml(question.helper)}</p>
+          <h2 class="question-title">${escapeHtml(activeTitle)}</h2>
+          <p class="question-helper">${escapeHtml(activeHelper)}</p>
           ${input}
           <div id="conversationAssist"></div>
           <details class="help-details">
@@ -2545,6 +2558,19 @@
         document.getElementById("nextButton").addEventListener("click", () => {
           persist();
           if (question.required && !hasAnswer(question)) { showToast("この質問は設計の土台です。分かる範囲で入力するか、「あとで答える」を選んでください。"); return; }
+          
+          // 質問1でURLから会社概要がすでに取得できている場合、質問2をスキップして直接本命のお客様（質問3）へ進む
+          if (question.id === "industryFamily" && Boolean(state.answers.companyWebsiteUrl) && Boolean(state.answers.business)) {
+            const targetQIdx = allQuestions.findIndex(q => q.id === "target");
+            if (targetQIdx > 0) {
+              state.current = targetQIdx;
+              saveState();
+              render();
+              showToast("ホームページから会社情報を自動反映したため、次のお客さんの質問へ進みました！");
+              return;
+            }
+          }
+
           if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); }
           else { render(); showToast("設計図を更新しました。右側の確認事項を解消して、公開前の確認へ進んでください。"); }
         });
