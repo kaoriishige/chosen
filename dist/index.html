@@ -1150,14 +1150,20 @@
           label: "来てほしい本命のお客様（ターゲット）",
           placeholder: "例：愛猫と一緒に気兼ねなく温泉を楽しみたいご夫婦"
         },
+        friction: {
+          title: "4. そのお客様は、普段どんな悩みや困りごとを感じていますか？",
+          helper: "そのお客様が普段抱えている不安や、困っていることをそのまま書いてください。",
+          label: "お客様の悩み・困りごと",
+          placeholder: "例：猫と泊まれて、静かに過ごせる宿がなかなか見つからない。"
+        },
         outcome: {
-          title: "4. そのお客様は、あなたのお店・サービスでどんな嬉しい変化（成果）が得られますか？",
-          helper: "商品や設備そのものではなく、そのお客様にとっての「助かること」や「嬉しい変化」を書いてください。",
+          title: "5. そのお客様は、あなたのお店・サービスでどんな嬉しい変化（成果）が得られますか？",
+          helper: "上の悩みが解決して、どう喜んでもらえるか（嬉しい変化）を書いてください。",
           label: "お客様に起きる嬉しい変化（成果）",
           placeholder: "例：他の客に気をつかわず、愛猫と心からくつろげる贅沢な温泉旅行"
         },
         evidence: {
-          title: "5. なぜ、あなたならそれを叶えられるのですか？（理由・強み・設備・こだわり）",
+          title: "6. なぜ、あなたならそれを叶えられるのですか？（理由・強み・設備・こだわり）",
           helper: "そのお客様が「それならここに行こう！」と納得できる理由や証拠・こだわりを書いてください。",
           label: "選ばれる理由・強み（なぜなら）",
           placeholder: "例：全室ペット同伴対応の客室、看板猫がいる理解ある接客、お部屋での個室食があるから"
@@ -1167,12 +1173,6 @@
           helper: "例：予約してほしい、来店してほしい、問い合わせてほしい、買ってほしい。ひとつで大丈夫です。",
           label: "お客様にしてほしい行動",
           placeholder: "例：空室カレンダーを確認して、ネット予約してほしい。"
-        },
-        friction: {
-          title: "そのお客様は、普段どんな悩みや不安を感じていますか？",
-          helper: "お客様が普段口にしそうな困りごとをそのまま書いてください。",
-          label: "お客様の困りごと・不安",
-          placeholder: "例：猫と泊まれて、静かに過ごせる宿がなかなか見つからない。"
         },
         discoveryMoment: {
           title: "そのお客様は、どんなタイミングで探し始めますか？",
@@ -1220,30 +1220,23 @@
         {
           id: "core",
           index: "1",
-          name: "選ばれる理由をつくる（基本5問）",
-          guidance: "まずは一番来てほしい「本命のお客様（1組）」を思い浮かべて答えてください。これだけで右側にあなただけのコンセプトが完成します！",
-          questionIds: ["industryFamily", "business", "target", "outcome", "evidence"]
+          name: "選ばれる理由をつくる（基本質問）",
+          guidance: "「本命のお客様」→「その人の悩み」→「嬉しい変化（解決）」→「なぜできるか（理由）」の順に答えていくだけで、右側にあなただけのコンセプトが完成します！",
+          questionIds: ["industryFamily", "business", "target", "friction", "outcome", "evidence"]
         },
         {
-          id: "insight",
+          id: "action",
           index: "2",
-          name: "お客様をより深く知る",
-          guidance: "そのお客様の普段の困りごとや、探し始めるきっかけを整理します。",
-          questionIds: ["action", "friction", "discoveryMoment"]
-        },
-        {
-          id: "media",
-          index: "3",
-          name: "AI・ネットで見つけてもらう",
-          guidance: "AIや検索でそのお客様に見つけてもらえるよう、サイトに載せるべき情報を整理します。",
-          questionIds: ["aiQueryVariants", "evidenceSource", "aiAnswerEssentials"]
+          name: "見つけてもらい、動いてもらう",
+          guidance: "そのお客様がどんな行動をとり、どんなタイミングや言葉で探すかを整理します。",
+          questionIds: ["action", "discoveryMoment", "aiQueryVariants", "evidenceSource"]
         },
         {
           id: "execution",
-          index: "4",
+          index: "3",
           name: "最初の一歩を実行する",
           guidance: "誰がいつ何をするかを小さく決めて、実際に動かしてみましょう。",
-          questionIds: ["owner", "approval"]
+          questionIds: ["aiAnswerEssentials", "owner", "approval"]
         }
       ].map(stageDef => {
         const stageObj = {
