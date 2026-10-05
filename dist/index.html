@@ -138,35 +138,7 @@
       font-size: .9rem;
       font-weight: 900;
     }
-    .concept-hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .hero-action-label {
-      font-size: .82rem;
-      font-weight: 700;
-      color: #ccfbf1;
-    }
-    .btn-hero-sample {
-      background: #ffffff;
-      color: #0f766e;
-      border: none;
-      font-weight: 800;
-      font-size: .8rem;
-      padding: 7px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
-      transition: all .15s ease;
-    }
-    .btn-hero-sample:hover {
-      background: #f0fdf4;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
-    }
+
     .concept-framework-note {
       font-size: .75rem;
       color: #ccfbf1;
@@ -817,74 +789,7 @@
     }
 
     
-    .target-scope-banner {
-      background: #f0f7ff;
-      border: 2px solid #2563eb;
-      border-radius: 12px;
-      padding: 12px 15px;
-      margin-bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      box-shadow: 0 3px 10px rgba(37, 99, 235, .08);
-    }
-    .target-scope-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .target-scope-title {
-      font-size: .88rem;
-      font-weight: 800;
-      color: #1e3a8a;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .target-scope-badge {
-      display: inline-flex;
-      align-items: center;
-      background: #2563eb;
-      color: #fff;
-      font-size: .73rem;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-    .target-scope-tabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .target-scope-btn {
-      padding: 6px 14px;
-      font-size: .82rem;
-      font-weight: 700;
-      border: 1.5px solid #93c5fd;
-      background: #fff;
-      color: #1e3a8a;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all .15s ease;
-    }
-    .target-scope-btn:hover {
-      background: #dbeafe;
-      border-color: #3b82f6;
-    }
-    .target-scope-btn.active {
-      background: #2563eb;
-      color: #fff;
-      border-color: #1d4ed8;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, .3);
-    }
-    .target-scope-tip {
-      font-size: .75rem;
-      color: #1e40af;
-      margin: 0;
-      line-height: 1.45;
-    }
+
 
     .statement-tabs {
       display: flex;
@@ -1059,8 +964,8 @@
           <div class="concept-flow-step">
             <span class="flow-num">2</span>
             <div class="flow-text">
-              <strong>優しい質問に答える</strong>
-              <small>（お客さんの困りごと・叶えたいこと）</small>
+              <strong>本命のお客様を思い浮かべる</strong>
+              <small>（困りごと・嬉しい成果・強み）</small>
             </div>
           </div>
           <span class="flow-sep">➔</span>
@@ -1073,18 +978,8 @@
           </div>
         </div>
 
-        <div class="concept-hero-actions">
-          <span class="hero-action-label">💡 どんな風にできるかすぐ試したい方へ（ワンクリックでお手本反映）：</span>
-          <button type="button" class="btn-hero-sample" id="heroBtnGoenGirl">
-            🌟 「ご縁ガール（企業＆ファン）」の例を入れる
-          </button>
-          <button type="button" class="btn-hero-sample" id="heroBtnAkazawa">
-            ♨️ 「赤沢温泉旅館」の例を入れる
-          </button>
-        </div>
-
         <div class="concept-framework-note">
-          <span>🛡️ <strong>安心の理論設計:</strong> 表面は優しい質問に答えるだけですが、裏側では名著『顧客を買う気にさせる ビコーズ・フレームワーク』の方程式（誰に・成果・なぜなら）が厳密にあなたを誘導し、プロクオリティの「選ばれる理由（インフルエンスステートメント）」が完成します。</span>
+          <span>🛡️ <strong>安心の理論設計:</strong> 表面はやさしい質問に答えるだけですが、裏側では名著『顧客を買う気にさせる ビコーズ・フレームワーク』の方程式（誰に・成果・なぜなら）が厳密にあなたを誘導し、プロクオリティの「選ばれる理由（インフルエンスステートメント）」が完成します。</span>
         </div>
       </div>
     </section>
@@ -1094,8 +989,8 @@
       <aside class="panel" aria-label="対話の進行">
         <div class="panel-header">
           <p class="eyebrow">STEP BY STEP</p>
-          <h2>かんたん質問ステップ</h2>
-          <p>答えはいつでも修正できます。</p>
+          <h2>選ばれる理由をつくる</h2>
+          <p>まずは本命のお客様（1組）向けに答えていきます。</p>
         </div>
         <nav id="stageList" class="stage-list" aria-label="答える順番"></nav>
         <div class="stage-footer">
@@ -1236,171 +1131,140 @@
         }
       ];
 
-      const BEGINNER_QUESTION_IDS = [
-        "industryFamily",
-        "business", "action",
-        "friction", "desired", "target", "discoveryMoment",
-        "outcome",
-        "evidence", "evidenceSource",
-        "aiQueryVariants", "aiAnswerEssentials", "aiSourceInventory", "aiAnswerEvidence",
-        "owner", "followup", "approval"
-      ];
-
-      const BEGINNER_STAGE_OVERRIDES = {
-        customer: {
-          index: "1",
-          name: "まず教えてください",
-          guidance: "専門用語や数字は不要です。いつもお客さんに説明している言葉で、分かることだけ答えてください。"
-        },
-        insight: {
-          index: "2",
-          name: "お客さんのこと",
-          guidance: "難しく考えず、お客さんが困っていることと、喜ぶことを普段の言葉で書いてください。"
-        },
-        outcome: {
-          index: "3",
-          name: "選ばれる理由",
-          guidance: "商品名ではなく、お客さんにどんな良い変化があるかを一言で考えます。"
-        },
-        evidence: {
-          index: "4",
-          name: "本当だと言える理由",
-          guidance: "立派な実績でなくても大丈夫です。事実として確認できるものを一つずつ集めます。"
-        },
-        media: {
-          index: "5",
-          name: "AI・ネットで見つけてもらう",
-          guidance: "AIにも人にも分かるように、質問への答えと、その答えを確かめられる公式情報を用意します。"
-        },
-        execution: {
-          index: "6",
-          name: "まず動かす",
-          guidance: "完璧にしなくて大丈夫です。誰がいつ何をするかを、小さく決めます。"
-        }
-      };
-
       const BEGINNER_QUESTION_OVERRIDES = {
         industryFamily: {
           title: "1. あなたの事業の業種を選んでください",
-          helper: "ホームページがない場合でも、業種を選ぶと、その業種に合わせた文例やアドバイスが表示されスムーズに進められます。ホームページがある方は上のURL入力から自動で読み込むこともできます。",
+          helper: "ホームページをお持ちの方は、上の入力欄にURLを入れるだけで事業内容などを自動で読み込めます。",
           label: "業種",
           type: "choice"
         },
         business: {
-          title: "2. あなたのお店・会社は、何をしていますか？",
-          helper: "商品、サービス、特徴を、短くそのまま書いてください。ホームページURLを入力して自動反映することもできます。",
+          title: "2. あなたのお店・会社のお名前と、商品・サービスを教えてください",
+          helper: "商品、サービス、特徴を、短くそのまま書いてください。ホームページURLから自動入力もできます。",
           label: "お店・会社の説明（商品・サービス・特徴）",
-          placeholder: "例：塩原温泉で、猫と泊まれる小さな旅館です。全室ペット同伴対応の客室と、地元素材の個室食を提供しています。"
-        },
-        action: {
-          title: "お客さんに、次に何をしてほしいですか？",
-          helper: "例：予約してほしい、来店してほしい、問い合わせてほしい、買ってほしい。ひとつで大丈夫です。",
-          label: "お客さんにしてほしいこと",
-          placeholder: "例：空室を確認して、予約してほしい。"
-        },
-        friction: {
-          title: "お客さんは、何に困っていますか？",
-          helper: "お客さんが言いそうな言葉のままで大丈夫です。",
-          label: "お客さんの困りごと",
-          placeholder: "例：猫と泊まれて、静かに過ごせる宿が見つからない。"
-        },
-        desired: {
-          title: "どうなれたら、お客さんは喜びますか？",
-          helper: "商品や機能ではなく、利用した後の嬉しい状態を書いてください。",
-          label: "お客さんが叶えたいこと",
-          placeholder: "例：愛猫と一緒に、気をつかわず温泉旅行を楽しめる。"
+          placeholder: "例：赤沢温泉旅館。全室ペット同伴対応の客室と、地元素材の個室食を提供する小さな温泉宿です。"
         },
         target: {
-          title: "お客さんがAIや検索に、何と聞きそうですか？",
-          helper: "そのままの質問を書くだけで大丈夫です。これが、この仕組みでいう「ターゲット」です。",
-          label: "お客さんが聞きそうな質問",
-          placeholder: "例：塩原温泉で、猫と泊まれて静かな旅館は？"
-        },
-        discoveryMoment: {
-          title: "お客さんは、どんなときに探し始めますか？",
-          helper: "例：旅行を考え始めたとき、急に困ったとき、比較して決める直前。",
-          label: "探し始める場面",
-          placeholder: "例：連休の予定を決める1〜2か月前。"
+          title: "3. 一番来てほしい『本命のお客様（1組）』はどんな人ですか？",
+          helper: "💡 複数ある場合でも、まずは一番大切なお客様を1組だけ思い浮かべてください（別のお客様向けは、後から簡単に追加・作成できます）。",
+          label: "来てほしい本命のお客様（ターゲット）",
+          placeholder: "例：愛猫と一緒に気兼ねなく温泉を楽しみたいご夫婦"
         },
         outcome: {
-          title: "あなたを選ぶと、お客さんにどんな良いことがありますか？",
-          helper: "大きな言葉にしなくて大丈夫です。お客さんの生活や仕事がどう変わるかを書いてください。",
-          label: "お客さんに起きる良い変化",
-          placeholder: "例：猫と一緒に、静かで気楽な温泉旅行ができる。"
+          title: "4. そのお客様は、あなたのお店・サービスでどんな嬉しい変化（成果）が得られますか？",
+          helper: "商品や設備そのものではなく、そのお客様にとっての「助かること」や「嬉しい変化」を書いてください。",
+          label: "お客様に起きる嬉しい変化（成果）",
+          placeholder: "例：他の客に気をつかわず、愛猫と心からくつろげる贅沢な温泉旅行"
         },
         evidence: {
-          title: "それを言える理由は何ですか？",
-          helper: "設備、商品、仕組み、実際の記録など、事実として確認できるものを書いてください。",
-          label: "本当だと言える理由",
-          placeholder: "例：ペット同伴可の客室、利用規約、実際の宿泊記録。"
+          title: "5. なぜ、あなたならそれを叶えられるのですか？（理由・強み・設備・こだわり）",
+          helper: "そのお客様が「それならここに行こう！」と納得できる理由や証拠・こだわりを書いてください。",
+          label: "選ばれる理由・強み（なぜなら）",
+          placeholder: "例：全室ペット同伴対応の客室、看板猫がいる理解ある接客、お部屋での個室食があるから"
         },
-        evidenceSource: {
-          title: "その理由を、お客さんが確認できる場所はありますか？",
-          helper: "公式サイト、料金表、FAQ、写真、規約、店頭など。まだなければ「これから作る」と書いて大丈夫です。",
-          label: "確認できる場所",
-          placeholder: "例：公式サイトのペット同伴ページと利用規約。"
+        action: {
+          title: "そのお客様に、次にどんな行動をとってほしいですか？",
+          helper: "例：予約してほしい、来店してほしい、問い合わせてほしい、買ってほしい。ひとつで大丈夫です。",
+          label: "お客様にしてほしい行動",
+          placeholder: "例：空室カレンダーを確認して、ネット予約してほしい。"
+        },
+        friction: {
+          title: "そのお客様は、普段どんな悩みや不安を感じていますか？",
+          helper: "お客様が普段口にしそうな困りごとをそのまま書いてください。",
+          label: "お客様の困りごと・不安",
+          placeholder: "例：猫と泊まれて、静かに過ごせる宿がなかなか見つからない。"
+        },
+        discoveryMoment: {
+          title: "そのお客様は、どんなタイミングで探し始めますか？",
+          helper: "例：旅行の計画を立て始めたとき、困ったことが起きたとき、比較して決める直前など。",
+          label: "探し始めるタイミング",
+          placeholder: "例：連休の予定を決める1〜2か月前。"
         },
         aiQueryVariants: {
-          title: "同じお客さんは、ほかにどんな言い方で聞きそうですか？",
+          title: "そのお客様は、AIや検索にどんな言葉で聞きそうですか？",
           helper: "二つか三つ、思いつく言い方を書いてください。分からなければ飛ばしても大丈夫です。",
-          label: "ほかの聞き方",
-          placeholder: "例：ペット可の塩原温泉旅館は？／静かな温泉宿を教えて。"
+          label: "AIや検索で聞きそうな言葉",
+          placeholder: "例：猫と泊まれる静かな温泉旅館は？／ペット同伴できる源泉かけ流し宿"
+        },
+        evidenceSource: {
+          title: "その理由や強みを、お客様が確認できる場所はありますか？",
+          helper: "公式サイト、料金表、FAQ、写真、利用規約など。まだなければ「これから作る」で大丈夫です。",
+          label: "確認できる場所",
+          placeholder: "例：公式サイトのペット同伴案内ページと利用規約。"
         },
         aiAnswerEssentials: {
-          title: "その質問に答えるため、サイトに何を書けばよいですか？",
+          title: "そのお客様に正確に答えるため、サイトに何を書けばよいですか？",
           helper: "料金、条件、場所、営業時間、予約方法、できること・できないことなど、聞かれそうなことを挙げます。",
-          label: "お客さんが知りたいこと",
-          placeholder: "例：ペットの条件、客室、料金、食事、温泉、予約方法。"
-        },
-        aiSourceInventory: {
-          title: "その内容を載せるページはありますか？",
-          helper: "今あるページでも、これから作るページでも大丈夫です。お客さんが自分で確かめられる場所を考えます。",
-          label: "公式サイトにある・作るページ",
-          placeholder: "例：ペット同伴のFAQを新しく作る。料金表を更新する。"
-        },
-        aiAnswerEvidence: {
-          title: "その内容が正しいか、誰が確認しますか？",
-          helper: "一人の名前や役割だけで大丈夫です。更新が必要なときの担当も書けると安心です。",
-          label: "内容の確認担当",
-          placeholder: "例：女将が毎月、料金・空室・ペット条件を確認する。"
+          label: "サイトに載せるべき事実",
+          placeholder: "例：ペット同伴の条件、客室の様子、料金、食事スタイル、予約方法。"
         },
         owner: {
           title: "まず、誰がいつまでに何をしますか？",
-          helper: "一番小さな一歩で大丈夫です。例：今週中にFAQページを作る。",
-          label: "最初の行動",
-          placeholder: "例：私が今週金曜までに、ペット同伴FAQを作る。"
-        },
-        followup: {
-          title: "お客さんの反応を、どう聞きますか？",
-          helper: "予約後や来店後に、何で知ったか・何が分かりにくかったかを一つ聞くだけでも大丈夫です。",
-          label: "反応の聞き方",
-          placeholder: "例：予約時に「何で知りましたか？」を聞く。"
+          helper: "一番小さな一歩で大丈夫です。例：今週中にペット同伴ページの案内を見直す。",
+          label: "最初のアクション",
+          placeholder: "例：店長が今週金曜までに、ペット同伴のご案内ページを更新する。"
         },
         approval: {
-          title: "公開する前に、誰が内容を確認しますか？",
+          title: "対外公開する前に、誰が内容を確認しますか？",
           helper: "ひとりでも大丈夫です。料金や条件が実際と違わないかを確認する人を書いてください。",
           label: "公開前に確認する人",
-          placeholder: "例：女将と予約担当者。"
+          placeholder: "例：代表と予約担当者。"
         }
       };
 
-      const activeStages = stages
-        .filter(stage => Object.prototype.hasOwnProperty.call(BEGINNER_STAGE_OVERRIDES, stage.id))
-        .map(stage => ({
-          ...stage,
-          ...BEGINNER_STAGE_OVERRIDES[stage.id],
-          questions: stage.questions
-            .filter(question => BEGINNER_QUESTION_IDS.includes(question.id))
-            .map(question => ({ ...question, ...BEGINNER_QUESTION_OVERRIDES[question.id], required: question.id !== "aiQueryVariants" && question.required !== false }))
-        }))
-        .filter(stage => stage.questions.length);
+      const allBaseQuestions = stages.flatMap(s => s.questions);
+      const questionDefMap = {};
+      allBaseQuestions.forEach(q => { questionDefMap[q.id] = q; });
 
-      const customerStage = activeStages.find(stage => stage.id === "customer");
-      const customerQuestion = customerStage?.questions.find(question => question.id === "target");
-      if (customerStage && customerQuestion) {
-        customerStage.questions = customerStage.questions.filter(question => question.id !== "target");
-        activeStages.find(stage => stage.id === "insight")?.questions.push(customerQuestion);
-      }
+      const activeStages = [
+        {
+          id: "core",
+          index: "1",
+          name: "選ばれる理由をつくる（基本5問）",
+          guidance: "まずは一番来てほしい「本命のお客様（1組）」を思い浮かべて答えてください。これだけで右側にあなただけのコンセプトが完成します！",
+          questionIds: ["industryFamily", "business", "target", "outcome", "evidence"]
+        },
+        {
+          id: "insight",
+          index: "2",
+          name: "お客様をより深く知る",
+          guidance: "そのお客様の普段の困りごとや、探し始めるきっかけを整理します。",
+          questionIds: ["action", "friction", "discoveryMoment"]
+        },
+        {
+          id: "media",
+          index: "3",
+          name: "AI・ネットで見つけてもらう",
+          guidance: "AIや検索でそのお客様に見つけてもらえるよう、サイトに載せるべき情報を整理します。",
+          questionIds: ["aiQueryVariants", "evidenceSource", "aiAnswerEssentials"]
+        },
+        {
+          id: "execution",
+          index: "4",
+          name: "最初の一歩を実行する",
+          guidance: "誰がいつ何をするかを小さく決めて、実際に動かしてみましょう。",
+          questionIds: ["owner", "approval"]
+        }
+      ].map(stageDef => {
+        const stageObj = {
+          id: stageDef.id,
+          index: stageDef.index,
+          name: stageDef.name,
+          guidance: stageDef.guidance,
+          questions: []
+        };
+        stageObj.questions = stageDef.questionIds.map(qid => {
+          const baseQ = questionDefMap[qid] || { id: qid, title: qid, helper: "", label: qid, type: "text" };
+          const override = BEGINNER_QUESTION_OVERRIDES[qid] || {};
+          return {
+            ...baseQ,
+            ...override,
+            stage: stageObj,
+            required: qid !== "aiQueryVariants"
+          };
+        });
+        return stageObj;
+      });
 
       const CORE_TARGET_CRITERIA = [
         { key: "demand", label: "質問の実在性", helper: "予約・問合せ・検索語・AIとの会話・口コミなど、その質問をする実際の兆し" },
@@ -1558,7 +1422,7 @@
       ];
 
       const allQuestions = activeStages.flatMap(stage => stage.questions.map(question => ({ ...question, stage })));
-      const SCHEMA_VERSION = 2;
+      const SCHEMA_VERSION = 3;
       const initialState = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {} };
       let state = loadState();
       let toastTimer;
@@ -2317,31 +2181,9 @@
 
         const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
         questionBody.innerHTML = `
-          ${TARGET_SPECIFIC_QUESTIONS.includes(question.id) ? `
-            <div class="target-scope-banner" id="targetScopeBanner">
-              <div class="target-scope-header">
-                <span class="target-scope-title">
-                  <span>🎯</span> <strong>現在対話・検討中のターゲット:</strong>
-                  <span class="target-scope-badge">${escapeHtml(getInfluenceSlots()[activeTargetIndex]?.label || `ターゲット${activeTargetIndex + 1}`)}</span>
-                </span>
-                <span style="font-size:0.75rem; color:#1e40af; font-weight:700;">
-                  ターゲットごとに混ざらず個別に対話できます
-                </span>
-              </div>
-              <div class="target-scope-tabs">
-                ${getInfluenceSlots().map((s, idx) => `
-                  <button type="button" class="target-scope-btn ${activeTargetIndex === idx ? "active" : ""}" data-scope-target="${idx}">
-                    ${escapeHtml(s.label || `ターゲット${idx + 1}`)}
-                  </button>
-                `).join("")}
-              </div>
-              <p class="target-scope-tip">
-                ※現在【<strong>${escapeHtml(getInfluenceSlots()[activeTargetIndex]?.label || `ターゲット${activeTargetIndex + 1}`)}</strong>】について質問に回答しています。上のボタンで別ターゲットに切り替えると、回答欄も切り替わり個別に保存されます。
-              </p>
-            </div>
-          ` : ""}
+
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
-          ${state.current === 0 ? `<div class="beginner-intro"><strong>💡 質問にポンポン答えるだけで、右側にあなただけの「選ばれる理由」が自動で組み上がります！</strong><br>ホームページをお持ちの方は上の入力欄にURLを入れるだけで事業内容が自動反映されます。ホームページがない方も、下の業種を選ぶだけでスタートできます。分からない質問は「あとで答える」で飛ばしても大丈夫です。</div>` : ""}
+          ${state.current === 0 ? `<div class="beginner-intro"><strong>💡 まずは一番来てほしい「本命のお客様（1組）」を思い浮かべてみましょう！</strong><br>基本の5つの質問に答えるだけで、右側にあなただけの「選ばれる理由」が自動で完成します。ホームページをお持ちの方は、上の入力欄にURLを入れるだけで事業内容などを自動取得できます。</div>` : ""}
           <h2 class="question-title">${escapeHtml(question.title)}</h2>
           <p class="question-helper">${escapeHtml(question.helper)}</p>
           ${input}
@@ -3022,43 +2864,76 @@
         const slots = getInfluenceSlots();
         const slot = slots[index] || { label: `ターゲット${index + 1}`, customer: "", outcome: "", because: "" };
         const business = answer("business");
-        const company = extractCompanyName(business);
+        const company = extractCompanyName(business) || "当店・当社";
 
         let customer = (slot.customer || "").trim();
         let outcome = (slot.outcome || "").trim();
         let because = (slot.because || "").trim();
 
+        let customerIsSet = Boolean(customer);
+        let outcomeIsSet = Boolean(outcome);
+        let becauseIsSet = Boolean(because);
+
         if (!customer) {
           const target = answer("target", index);
           const friction = answer("friction", index);
-          if (target) customer = target.endsWith("？") || target.endsWith("?") ? `AIに「${target}」と尋ねるお客様` : target;
-          else if (friction) customer = `${friction}と感じているお客様`;
-          else if (index === 0) customer = "第1の顧客ターゲット（主軸）";
-          else if (index === 1) customer = "第2の顧客ターゲット（別の興味・顧客層）";
-          else customer = "第3の顧客ターゲット";
+          if (target) {
+            customer = target;
+            customerIsSet = true;
+          } else if (friction) {
+            customer = `${friction}と感じているお客様`;
+            customerIsSet = true;
+          } else if (index === 0) {
+            customer = "（質問3で本命のお客様を入力）";
+          } else if (index === 1) {
+            customer = "（2人目のお客さんを追加可能）";
+          } else {
+            customer = "（3人目のお客さんを追加可能）";
+          }
         }
 
         if (!outcome) {
           const out = answer("outcome", index);
           const des = answer("desired", index);
-          if (out) outcome = out;
-          else if (des) outcome = des;
-          else outcome = "確かな満足と問題解決";
+          if (out) {
+            outcome = out;
+            outcomeIsSet = true;
+          } else if (des) {
+            outcome = des;
+            outcomeIsSet = true;
+          } else {
+            outcome = "（質問4で嬉しい変化を入力）";
+          }
         }
 
         if (!because) {
           const ev = answer("evidence", index);
-          if (ev) because = ev.endsWith("から") || ev.endsWith("からです") ? ev : `${ev}から`;
-          else because = "独自の専門性と丁寧なサポート体制が整っているから";
+          if (ev) {
+            because = ev.endsWith("から") || ev.endsWith("からです") ? ev : `${ev}から`;
+            becauseIsSet = true;
+          } else {
+            because = "（質問5で選ばれる理由を入力）";
+          }
         }
 
+        const categoryVal = slot.category || answer("industryFamily");
+        const categoryIsSet = Boolean(categoryVal);
+        const companyIsSet = Boolean(extractCompanyName(business));
+
+        const defaultLabel = index === 0 ? "ターゲット①（本命）" : (customerIsSet ? `ターゲット${index + 1}` : `＋ ターゲット${index + 1}を追加`);
+
         return {
-          label: slot.label || `ターゲット${index + 1}`,
-          category: slot.category || answer("industryFamily") || "選ばれるサービス",
+          label: slot.label || defaultLabel,
+          category: categoryVal || "（業種を選択）",
+          categoryIsSet,
           company: slot.company || company,
+          companyIsSet,
           customer,
+          customerIsSet,
           outcome,
-          because
+          outcomeIsSet,
+          because,
+          becauseIsSet
         };
       }
 
@@ -3174,13 +3049,19 @@
 
         const tabsHtml = `
           <div class="statement-tabs" role="tablist">
-            ${slots.map((slot, index) => `
-              <button type="button" class="statement-tab-btn ${activeStatementTab === index ? "active" : ""}" data-statement-tab="${index}">
-                ${escapeHtml(slot.label || `ターゲット${index + 1}`)}
-              </button>
-            `).join("")}
+            ${[0, 1, 2].map(index => {
+              const slotInfo = getEffectiveSlot(index);
+              const label = index === 0
+                ? (slots[0]?.label || "ターゲット①（本命）")
+                : (slots[index]?.customer ? (slots[index]?.label || `ターゲット${index + 1}`) : `＋ ターゲット${index + 1}を追加`);
+              return `
+                <button type="button" class="statement-tab-btn ${activeStatementTab === index ? "active" : ""}" data-statement-tab="${index}">
+                  ${escapeHtml(label)}
+                </button>
+              `;
+            }).join("")}
             <button type="button" class="statement-tab-btn ${isMatrix ? "active" : ""}" data-statement-tab="matrix">
-              📊 3つのビコーズマトリクス一覧
+              📊 顧客比較マトリクス
             </button>
           </div>
         `;
@@ -3190,20 +3071,20 @@
           return `
             <div class="influence-statement-card">
               <div class="influence-card-header">
-                <span class="influence-badge">🏆 ビコーズマトリクス（3種類の顧客比較）</span>
+                <span class="influence-badge">🏆 顧客比較マトリクス</span>
                 <span class="influence-page-ref">書籍 p.229 準拠</span>
               </div>
-              <h3 class="influence-card-title">顧客タイプ別の選ばれる理由一覧</h3>
-              <p class="influence-card-desc">顧客の興味（ペット、ぬる湯、料理など）ごとに、約束する成果とビコーズを整理した対応表です。</p>
+              <h3 class="influence-card-title">お客様タイプ別の選ばれる理由一覧</h3>
+              <p class="influence-card-desc">お客様の興味（ペット、ぬる湯、料理など）ごとに、約束する成果と理由（なぜなら）を整理した対応表です。</p>
               ${tabsHtml}
               <div class="because-matrix-wrap">
                 <table class="because-matrix-table">
                   <thead>
                     <tr>
                       <th>顧客タイプ</th>
-                      <th>顧客（興味・AI質問）</th>
-                      <th>約束する成果</th>
-                      <th>ビコーズ（根拠・仕組み）</th>
+                      <th>来てほしいお客様</th>
+                      <th>約束する嬉しい変化（成果）</th>
+                      <th>なぜなら（選ばれる理由・強み）</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -3219,8 +3100,8 @@
                 </table>
               </div>
               <div class="influence-actions">
-                <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn">💡 赤沢温泉旅館の3文例を入れる</button>
-                <button type="button" id="copyAllInfluenceBtn" class="button secondary small-btn">📋 3つのステートメントを一括コピー</button>
+                <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn">💡 赤沢温泉旅館の3つの客層例を入れる</button>
+                <button type="button" id="copyAllInfluenceBtn" class="button secondary small-btn">📋 3つを一括コピー</button>
               </div>
             </div>
           `;
@@ -3228,16 +3109,16 @@
 
         const editFormHtml = isEditingStatement ? `
           <div class="statement-edit-form">
-            <label>ターゲットの呼び名（例：① 猫・ペット同伴客）
+            <label>ターゲットの呼び名（例：① 愛猫と泊まりたいご夫婦）
               <input type="text" id="slotLabelInput" value="${escapeHtml(slots[activeIndex]?.label || "")}" placeholder="例：① ペット同伴客" />
             </label>
-            <label>③ 顧客（どんな人か / AIへの質問）
+            <label>③ 来てほしいお客様（どんな人か）
               <input type="text" id="slotCustomerInput" value="${escapeHtml(slots[activeIndex]?.customer || (activeIndex === 0 ? currentSlot.customer : ""))}" placeholder="例：愛猫と一緒に気兼ねなく温泉を楽しみたいご夫婦" />
             </label>
-            <label>④ 成果（約束する良い変化）
+            <label>④ 嬉しい変化（約束する成果）
               <input type="text" id="slotOutcomeInput" value="${escapeHtml(slots[activeIndex]?.outcome || (activeIndex === 0 ? currentSlot.outcome : ""))}" placeholder="例：他の客に気をつかわず、愛猫と心からくつろげる滞在" />
             </label>
-            <label>⑤ ビコーズ（根拠・設備・仕組み）
+            <label>⑤ なぜなら（理由・設備・こだわり）
               <textarea id="slotBecauseInput" placeholder="例：全室ペット同伴対応の客室、看板猫がいる理解ある接客、個室食があるから">${escapeHtml(slots[activeIndex]?.because || (activeIndex === 0 ? currentSlot.because : ""))}</textarea>
             </label>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
@@ -3250,26 +3131,26 @@
         return `
           <div class="influence-statement-card">
             <div class="influence-card-header">
-              <span class="influence-badge">🏆 ビコーズ・フレームワーク公式成果物</span>
+              <span class="influence-badge">🏆 選ばれる理由（コンセプト文）</span>
               <span class="influence-page-ref">書籍 p.224 書式準拠</span>
             </div>
-            <h3 class="influence-card-title">インフルエンスステートメント（3種類のターゲット別）</h3>
-            <p class="influence-card-desc">興味の異なる顧客ごとに最大3種類のステートメントを作成・管理できます。</p>
+            <h3 class="influence-card-title">インフルエンスステートメント</h3>
+            <p class="influence-card-desc">まずは本命のお客様（1組）向けに自動生成されます。上のタブから別のお客様向け（2組目・3組目）も個別に追加できます。</p>
             ${tabsHtml}
             <div class="influence-statement-body">
               <p class="influence-line"><span class="influence-tag">[業種・分野]</span> <strong class="influence-val ${currentSlot.categoryIsSet ? "" : "empty"}">${escapeHtml(currentSlot.category)}</strong> の</p>
               <p class="influence-line"><span class="influence-tag">[会社名・屋号]</span> <strong class="influence-val ${currentSlot.companyIsSet ? "" : "empty"}">${escapeHtml(currentSlot.company)}</strong> は、</p>
-              <p class="influence-line"><span class="influence-tag">[誰に（お客さん）]</span> <strong class="influence-val ${currentSlot.customerIsSet ? "" : "empty"}">${escapeHtml(currentSlot.customer)}</strong> に</p>
-              <p class="influence-line"><span class="influence-tag">[どんな良い変化（成果）]</span> <strong class="influence-val ${currentSlot.outcomeIsSet ? "" : "empty"}">${escapeHtml(currentSlot.outcome)}</strong> を提供します。</p>
-              <p class="influence-line because-line"><span class="influence-tag">[なぜなら（理由・証拠）]</span> なぜなら、<strong class="influence-val ${currentSlot.becauseIsSet ? "" : "empty"}">${escapeHtml(currentSlot.because)}</strong> です。</p>
+              <p class="influence-line"><span class="influence-tag">[誰に（お客様）]</span> <strong class="influence-val ${currentSlot.customerIsSet ? "" : "empty"}">${escapeHtml(currentSlot.customer)}</strong> に</p>
+              <p class="influence-line"><span class="influence-tag">[嬉しい変化（成果）]</span> <strong class="influence-val ${currentSlot.outcomeIsSet ? "" : "empty"}">${escapeHtml(currentSlot.outcome)}</strong> を提供します。</p>
+              <p class="influence-line because-line"><span class="influence-tag">[なぜなら（理由・強み）]</span> なぜなら、<strong class="influence-val ${currentSlot.becauseIsSet ? "" : "empty"}">${escapeHtml(currentSlot.because)}</strong> です。</p>
             </div>
             ${editFormHtml}
             <div class="influence-actions">
               <div style="display:flex; gap:6px; align-items:center;">
-                <button type="button" id="toggleEditSlotBtn" class="slot-edit-toggle-btn">${isEditingStatement ? "✕ 編集を閉じる" : "✏️ このターゲットを編集"}</button>
-                <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn" title="赤沢温泉旅館の3文例（猫・ぬる湯・料理）を試せます">💡 赤沢温泉の例</button>
+                <button type="button" id="toggleEditSlotBtn" class="slot-edit-toggle-btn">${isEditingStatement ? "✕ 編集を閉じる" : "✏️ この文面を直接編集"}</button>
+                <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn" title="赤沢温泉旅館の3つの客層例（猫・ぬる湯・料理）を試せます">💡 赤沢温泉の例</button>
               </div>
-              <button id="copyInfluenceBtn" type="button" class="button secondary small-btn">📋 このステートメントをコピー</button>
+              <button id="copyInfluenceBtn" type="button" class="button secondary small-btn">📋 この文面をコピー</button>
             </div>
           </div>
         `;
@@ -3416,9 +3297,16 @@
             activeStatementTab = val === "matrix" ? "matrix" : Number(val);
             if (typeof activeStatementTab === "number") {
               activeTargetIndex = activeStatementTab;
-              renderQuestionBody();
+              const slots = getInfluenceSlots();
+              // 未設定の2人目・3人目をクリックした場合は自動で編集フォームを開く
+              if (activeStatementTab > 0 && !slots[activeStatementTab]?.customer) {
+                isEditingStatement = true;
+              } else {
+                isEditingStatement = false;
+              }
+            } else {
+              isEditingStatement = false;
             }
-            isEditingStatement = false;
             renderStrategy();
           });
         });
