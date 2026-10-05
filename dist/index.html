@@ -687,6 +687,76 @@
       line-height: 1.5;
     }
 
+    
+    .target-scope-banner {
+      background: #f0f7ff;
+      border: 2px solid #2563eb;
+      border-radius: 12px;
+      padding: 12px 15px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(37, 99, 235, .08);
+    }
+    .target-scope-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .target-scope-title {
+      font-size: .88rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .target-scope-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #2563eb;
+      color: #fff;
+      font-size: .73rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .target-scope-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .target-scope-btn {
+      padding: 6px 14px;
+      font-size: .82rem;
+      font-weight: 700;
+      border: 1.5px solid #93c5fd;
+      background: #fff;
+      color: #1e3a8a;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+    .target-scope-btn:hover {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    .target-scope-btn.active {
+      background: #2563eb;
+      color: #fff;
+      border-color: #1d4ed8;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, .3);
+    }
+    .target-scope-tip {
+      font-size: .75rem;
+      color: #1e40af;
+      margin: 0;
+      line-height: 1.45;
+    }
+
     .statement-tabs {
       display: flex;
       gap: 4px;
@@ -1336,16 +1406,34 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       }
 
-      function answerList(id) {
-        const value = state.answers[id];
+      function answerList(id, targetIdx = activeTargetIndex) {
+        if (TARGET_SPECIFIC_QUESTIONS.includes(id)) {
+          const slots = state.answers && state.answers.targetSlotsAnswers;
+          if (slots && Array.isArray(slots) && slots[targetIdx] && slots[targetIdx][id]) {
+            const val = slots[targetIdx][id];
+            if (Array.isArray(val)) return val.map(item => String(item).trim()).filter(Boolean);
+            const text = String(val || "").trim();
+            return text ? [text] : [];
+          }
+          if (targetIdx === 0) {
+            const value = state.answers ? state.answers[id] : null;
+            if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
+            if (value && typeof value === "object") return [];
+            const text = String(value || "").trim();
+            return text ? [text] : [];
+          }
+          return [];
+        }
+
+        const value = state.answers ? state.answers[id] : null;
         if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
         if (value && typeof value === "object") return [];
         const text = String(value || "").trim();
         return text ? [text] : [];
       }
 
-      function answer(id) {
-        return answerList(id).join("、");
+      function answer(id, targetIdx = activeTargetIndex) {
+        return answerList(id, targetIdx).join("、");
       }
 
       function supportingChannels() {
@@ -2045,6 +2133,29 @@
 
         const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
         questionBody.innerHTML = `
+          ${TARGET_SPECIFIC_QUESTIONS.includes(question.id) ? `
+            <div class="target-scope-banner" id="targetScopeBanner">
+              <div class="target-scope-header">
+                <span class="target-scope-title">
+                  <span>🎯</span> <strong>現在対話・検討中のターゲット:</strong>
+                  <span class="target-scope-badge">${escapeHtml(getInfluenceSlots()[activeTargetIndex]?.label || `ターゲット${activeTargetIndex + 1}`)}</span>
+                </span>
+                <span style="font-size:0.75rem; color:#1e40af; font-weight:700;">
+                  ターゲットごとに混ざらず個別に対話できます
+                </span>
+              </div>
+              <div class="target-scope-tabs">
+                ${getInfluenceSlots().map((s, idx) => `
+                  <button type="button" class="target-scope-btn ${activeTargetIndex === idx ? "active" : ""}" data-scope-target="${idx}">
+                    ${escapeHtml(s.label || `ターゲット${idx + 1}`)}
+                  </button>
+                `).join("")}
+              </div>
+              <p class="target-scope-tip">
+                ※現在【<strong>${escapeHtml(getInfluenceSlots()[activeTargetIndex]?.label || `ターゲット${activeTargetIndex + 1}`)}</strong>】について質問に回答しています。上のボタンで別ターゲットに切り替えると、回答欄も切り替わり個別に保存されます。
+              </p>
+            </div>
+          ` : ""}
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
           ${state.current === 0 ? `<div class="beginner-intro"><strong>ホームページをお持ちの方は、URLを入力すると業種と事業内容を自動で取得できます。</strong><br>ホームページがない方も、下の業種を選ぶだけでスタートできます。分からない質問は「あとで答える」で飛ばせます。</div>` : ""}
           <h2 class="question-title">${escapeHtml(question.title)}</h2>
@@ -2084,8 +2195,27 @@
           const rawValue = getInput();
           const value = Array.isArray(rawValue) ? rawValue : rawValue.trim();
           const isFilled = question.type === "targetMatrix" ? hasNamedTargetCandidate(value) : (Array.isArray(value) ? value.length : value);
-          if (isFilled) state.answers[question.id] = value;
-          else delete state.answers[question.id];
+
+          if (TARGET_SPECIFIC_QUESTIONS.includes(question.id)) {
+            if (!Array.isArray(state.answers.targetSlotsAnswers)) {
+              state.answers.targetSlotsAnswers = [{}, {}, {}];
+            }
+            while (state.answers.targetSlotsAnswers.length < 3) {
+              state.answers.targetSlotsAnswers.push({});
+            }
+            if (isFilled) {
+              state.answers.targetSlotsAnswers[activeTargetIndex][question.id] = value;
+            } else {
+              delete state.answers.targetSlotsAnswers[activeTargetIndex][question.id];
+            }
+            if (activeTargetIndex === 0) {
+              if (isFilled) state.answers[question.id] = value;
+              else delete state.answers[question.id];
+            }
+          } else {
+            if (isFilled) state.answers[question.id] = value;
+            else delete state.answers[question.id];
+          }
           saveState(); renderStages(); renderStrategy(); refreshConversationAssist();
         };
 
@@ -2682,6 +2812,14 @@
         `;
       }
 
+      
+      const TARGET_SPECIFIC_QUESTIONS = [
+        "action", "friction", "desired", "target", "discoveryMoment",
+        "outcome", "evidence", "evidenceSource",
+        "aiQueryVariants", "aiAnswerEssentials", "aiSourceInventory", "aiAnswerEvidence"
+      ];
+      let activeTargetIndex = 0; // 0, 1, 2
+
       let activeStatementTab = 0; // 0, 1, 2, or 'matrix'
       let isEditingStatement = false;
 
@@ -2699,7 +2837,6 @@
       function getEffectiveSlot(index) {
         const slots = getInfluenceSlots();
         const slot = slots[index] || { label: `ターゲット${index + 1}`, customer: "", outcome: "", because: "" };
-        const category = answer("industryFamily");
         const business = answer("business");
         const company = extractCompanyName(business);
 
@@ -2707,37 +2844,37 @@
         let outcome = (slot.outcome || "").trim();
         let because = (slot.because || "").trim();
 
-        if (index === 0) {
-          if (!customer) {
-            const target = answer("target");
-            const friction = answer("friction");
-            if (target) customer = target.endsWith("？") || target.endsWith("?") ? `AIに「${target}」と尋ねるお客様` : target;
-            else if (friction) customer = `「${friction}」に悩むお客様`;
-          }
-          if (!outcome) {
-            outcome = answer("outcome") || answer("desired") || "";
-          }
-          if (!because) {
-            const ev = answer("evidence");
-            if (ev) {
-              because = ev.endsWith("から") || ev.endsWith("からです") || ev.endsWith("ため") ? ev : `${ev}があるから`;
-            }
-          }
+        if (!customer) {
+          const target = answer("target", index);
+          const friction = answer("friction", index);
+          if (target) customer = target.endsWith("？") || target.endsWith("?") ? `AIに「${target}」と尋ねるお客様` : target;
+          else if (friction) customer = `${friction}と感じているお客様`;
+          else if (index === 0) customer = "第1の顧客ターゲット（主軸）";
+          else if (index === 1) customer = "第2の顧客ターゲット（別の興味・顧客層）";
+          else customer = "第3の顧客ターゲット";
+        }
+
+        if (!outcome) {
+          const out = answer("outcome", index);
+          const des = answer("desired", index);
+          if (out) outcome = out;
+          else if (des) outcome = des;
+          else outcome = "確かな満足と問題解決";
+        }
+
+        if (!because) {
+          const ev = answer("evidence", index);
+          if (ev) because = ev.endsWith("から") || ev.endsWith("からです") ? ev : `${ev}から`;
+          else because = "独自の専門性と丁寧なサポート体制が整っているから";
         }
 
         return {
-          index,
           label: slot.label || `ターゲット${index + 1}`,
-          category: category || "未選択の業種",
-          categoryIsSet: Boolean(category),
-          company: company || "貴社・店舗名",
-          companyIsSet: Boolean(company),
-          customer: customer || `顧客タイプ${index + 1}の関心・質問`,
-          customerIsSet: Boolean(customer),
-          outcome: outcome || `顧客${index + 1}が望む成果`,
-          outcomeIsSet: Boolean(outcome),
-          because: because || `選ばれる独自の根拠・仕組みがあるから`,
-          becauseIsSet: Boolean(because)
+          category: slot.category || answer("industryFamily") || "選ばれるサービス",
+          company: slot.company || company,
+          customer,
+          outcome,
+          because
         };
       }
 
@@ -2754,6 +2891,68 @@
         const slots = [0, 1, 2].map(i => getEffectiveSlot(i));
         const rows = slots.map(s => `| ${s.label} | ${s.customer} | ${s.outcome} | ${s.because} |`).join("\n");
         return `| 顧客タイプ（興味軸） | 顧客（どんな人か / AI質問） | 約束する成果 | なぜなら（ビコーズ・根拠） |\n| :--- | :--- | :--- | :--- |\n${rows}`;
+      }
+
+      
+      function applyGoenGirlSampleSlots() {
+        state.answers.industryFamily = "専門サービス";
+        state.answers.business = "ご縁ガールプロジェクト（那須地域の飲食店・観光施設とファンを結ぶ地域密着型プロモーション・コミュニティ事業）";
+        
+        const slots = getInfluenceSlots();
+        slots[0] = {
+          label: "ターゲット①【提携する企業・店舗】",
+          customer: "若年層・観光客の来店を増やし、SNSでの認知を広げたい那須地域の飲食店・店舗",
+          outcome: "熱量の高いファンコミュニティを巻き込んだ店舗送客とSNS口コミによる売上向上",
+          because: "濃いファン層を持つご縁ガールが実際に店舗を訪れて発信し、スタンプラリーや限定特典で店舗送客する仕組みがあるから"
+        };
+        slots[1] = {
+          label: "ターゲット②【ご縁ガールファン】",
+          customer: "ご縁ガールを応援しながら、那須の美味しい店や名所を楽しく巡りたいファン",
+          outcome: "推し活を通じて那須の新しい魅力を発見し、限定体験と温かいご縁を楽しめる特別な旅時間",
+          because: "本人が心から惚れ込んだ信頼できる地元店だけと提携し、ファン限定の巡礼マップや交流企画が整っているから"
+        };
+        slots[2] = {
+          label: "ターゲット③【地域自治体・商工会】",
+          customer: "地域の魅力発信と若者の関係人口創出を推進したい行政・観光協会・商工会",
+          outcome: "若者目線での持続的な地域PRと、地域事業者への波及効果の高い観光誘客",
+          because: "行政主導では難しいファンとの双方向コミュニケーションと、現場密着型の企画実行力があるから"
+        };
+
+        state.answers.targetSlotsAnswers = [
+          {
+            friction: "高額な広告費を出しても効果が見えず、若い観光客や新しい客層が自店を知らない",
+            desired: "熱量の高いファンが実際に店舗に来店し、SNSで自然に好意的な口コミを広げてほしい",
+            target: "那須で若い観光客やファンが集まる注目のタイアップ店舗や話題の店はどこ？",
+            outcome: "熱量の高いファンコミュニティを巻き込んだ店舗送客とSNS口コミによる売上向上",
+            evidence: "ご縁ガールが実際に店舗を訪れて発信し、スタンプラリーや限定特典で店舗送客する仕組みがあるから"
+          },
+          {
+            friction: "ガイドブックに載っていない地元の本当に良い店が分からない、一人で巡るきっかけがない",
+            desired: "推し活を通じて那須の新しい魅力を発見し、限定体験や店主さんとの温かいご縁を楽しみたい",
+            target: "ご縁ガールがおすすめする那須の巡礼スポットや限定特典がある店舗は？",
+            outcome: "推し活を通じて那須の新しい魅力を発見し、限定体験と温かいご縁を楽しめる特別な旅時間",
+            evidence: "本人が心から惚れ込んだ信頼できる地元店だけと提携し、ファン限定の巡礼マップや交流企画が整っているから"
+          },
+          {
+            friction: "従来の観光パンフレットやPRでは若年層に響かず、関係人口の継続的な訪問に繋がらない",
+            desired: "地域の隠れた名店を若者に知ってもらい、リピート訪問するファン層を定着させたい",
+            target: "那須地域を舞台にした話題の地域共創プロジェクトや推し活ツーリズムの取組は？",
+            outcome: "若者目線での持続的な地域PRと、地域事業者への波及効果の高い観光誘客",
+            evidence: "行政主導では難しいファンとの双方向コミュニケーションと、現場密着型の企画実行力があるから"
+          }
+        ];
+
+        state.answers.friction = state.answers.targetSlotsAnswers[0].friction;
+        state.answers.desired = state.answers.targetSlotsAnswers[0].desired;
+        state.answers.target = state.answers.targetSlotsAnswers[0].target;
+        state.answers.outcome = state.answers.targetSlotsAnswers[0].outcome;
+        state.answers.evidence = state.answers.targetSlotsAnswers[0].evidence;
+
+        activeTargetIndex = 0;
+        activeStatementTab = 0;
+        saveState();
+        render();
+        showToast("「ご縁ガールプロジェクト（企業・店舗 ＆ ファン）」の2面モデル文例を反映しました！");
       }
 
       function applyAkazawaSampleSlots() {
@@ -3031,6 +3230,10 @@
           tabBtn.addEventListener("click", () => {
             const val = tabBtn.dataset.statementTab;
             activeStatementTab = val === "matrix" ? "matrix" : Number(val);
+            if (typeof activeStatementTab === "number") {
+              activeTargetIndex = activeStatementTab;
+              renderQuestionBody();
+            }
             isEditingStatement = false;
             renderStrategy();
           });
