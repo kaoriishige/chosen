@@ -47,6 +47,135 @@
 
     .app-shell { min-height: 100vh; }
 
+    
+    .concept-hero-banner {
+      background: linear-gradient(135deg, #042f2e 0%, #0f766e 55%, #115e59 100%);
+      color: #fff;
+      padding: 24px 28px;
+      border-radius: 16px;
+      margin: 16px 24px 0;
+      box-shadow: 0 10px 30px rgba(15, 118, 110, .2);
+      border: 1px solid rgba(255, 255, 255, .15);
+    }
+    .concept-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, .2);
+      backdrop-filter: blur(8px);
+      color: #ccfbf1;
+      font-size: .8rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: .03em;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, .25);
+    }
+    .concept-hero-main-title {
+      font-size: 1.55rem;
+      font-weight: 900;
+      line-height: 1.35;
+      margin: 0 0 8px;
+      letter-spacing: -.01em;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+    }
+    .concept-hero-subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #99f6e4;
+      margin: 0 0 16px;
+    }
+    .concept-hero-flow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(0, 0, 0, .22);
+      padding: 12px 18px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, .1);
+    }
+    .concept-flow-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .concept-flow-step.highlight .flow-num {
+      background: #f59e0b;
+      color: #fff;
+    }
+    .concept-flow-step.highlight strong {
+      color: #fde68a;
+    }
+    .flow-num {
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      background: #14b8a6;
+      color: #042f2e;
+      font-weight: 900;
+      border-radius: 50%;
+      font-size: .8rem;
+      flex-shrink: 0;
+    }
+    .flow-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .flow-text strong {
+      font-size: .85rem;
+      color: #ffffff;
+    }
+    .flow-text small {
+      font-size: .72rem;
+      color: #a7f3d0;
+    }
+    .flow-sep {
+      color: #5eead4;
+      font-size: .9rem;
+      font-weight: 900;
+    }
+    .concept-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .hero-action-label {
+      font-size: .82rem;
+      font-weight: 700;
+      color: #ccfbf1;
+    }
+    .btn-hero-sample {
+      background: #ffffff;
+      color: #0f766e;
+      border: none;
+      font-weight: 800;
+      font-size: .8rem;
+      padding: 7px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+      transition: all .15s ease;
+    }
+    .btn-hero-sample:hover {
+      background: #f0fdf4;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+    }
+    .concept-framework-note {
+      font-size: .75rem;
+      color: #ccfbf1;
+      background: rgba(255, 255, 255, .1);
+      padding: 8px 12px;
+      border-radius: 8px;
+      line-height: 1.45;
+    }
+
     .topbar {
       display: flex;
       align-items: center;
@@ -906,11 +1035,66 @@
       <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
     </header>
 
+    <!-- メイン導入・ヒーローバナー -->
+    <section class="concept-hero-banner" aria-label="選ばれる理由をつくる簡単システム">
+      <div class="concept-hero-content">
+        <div class="concept-hero-badge">✨ 質問に答えるだけ！コンセプト・選ばれる理由自動生成</div>
+        <h2 class="concept-hero-main-title">
+          あなたの商品・サービスがどうしても欲しいと思わせる、<br>
+          「選ばれる理由（コンセプト）」を作る。
+        </h2>
+        <p class="concept-hero-subtitle">
+          質問に答えるだけで、AIから回答が得られる簡単システム
+        </p>
+
+        <div class="concept-hero-flow">
+          <div class="concept-flow-step">
+            <span class="flow-num">1</span>
+            <div class="flow-text">
+              <strong>業種・会社名を入力</strong>
+              <small>（HPのURLを入れるだけでもOK）</small>
+            </div>
+          </div>
+          <span class="flow-sep">➔</span>
+          <div class="concept-flow-step">
+            <span class="flow-num">2</span>
+            <div class="flow-text">
+              <strong>優しい質問に答える</strong>
+              <small>（お客さんの困りごと・叶えたいこと）</small>
+            </div>
+          </div>
+          <span class="flow-sep">➔</span>
+          <div class="concept-flow-step highlight">
+            <span class="flow-num">3</span>
+            <div class="flow-text">
+              <strong>「選ばれる理由」が自動完成！</strong>
+              <small>（右側の画面にリアルタイム生成）</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-hero-actions">
+          <span class="hero-action-label">💡 どんな風にできるかすぐ試したい方へ（ワンクリックでお手本反映）：</span>
+          <button type="button" class="btn-hero-sample" id="heroBtnGoenGirl">
+            🌟 「ご縁ガール（企業＆ファン）」の例を入れる
+          </button>
+          <button type="button" class="btn-hero-sample" id="heroBtnAkazawa">
+            ♨️ 「赤沢温泉旅館」の例を入れる
+          </button>
+        </div>
+
+        <div class="concept-framework-note">
+          <span>🛡️ <strong>安心の理論設計:</strong> 表面は優しい質問に答えるだけですが、裏側では名著『顧客を買う気にさせる ビコーズ・フレームワーク』の方程式（誰に・成果・なぜなら）が厳密にあなたを誘導し、プロクオリティの「選ばれる理由（インフルエンスステートメント）」が完成します。</span>
+        </div>
+      </div>
+    </section>
+
+
     <section class="workspace" aria-label="選ばれる理由をつくるワークスペース">
       <aside class="panel" aria-label="対話の進行">
         <div class="panel-header">
-          <p class="eyebrow">Conversation flow</p>
-          <h2>8つの設計ステップ</h2>
+          <p class="eyebrow">STEP BY STEP</p>
+          <h2>かんたん質問ステップ</h2>
           <p>答えはいつでも修正できます。</p>
         </div>
         <nav id="stageList" class="stage-list" aria-label="答える順番"></nav>
@@ -930,8 +1114,8 @@
       <aside class="panel strategy-panel" aria-label="戦略ボード">
         <div class="panel-header">
           <p class="eyebrow">あなたの答え</p>
-          <h2>いま、できていること</h2>
-          <p>途中でも大丈夫。答えるたびに、下書きが育ちます。</p>
+          <h2>完成した「選ばれる理由」</h2>
+          <p>質問に答えると、ここにあなただけの強力なコンセプトが自動で組み上がります。</p>
         </div>
         <div id="strategyBoard" class="strategy-content"></div>
       </aside>
@@ -2157,7 +2341,7 @@
             </div>
           ` : ""}
           <div class="stage-kicker">STEP ${question.stage.index} / ${escapeHtml(question.stage.name)}</div>
-          ${state.current === 0 ? `<div class="beginner-intro"><strong>ホームページをお持ちの方は、URLを入力すると業種と事業内容を自動で取得できます。</strong><br>ホームページがない方も、下の業種を選ぶだけでスタートできます。分からない質問は「あとで答える」で飛ばせます。</div>` : ""}
+          ${state.current === 0 ? `<div class="beginner-intro"><strong>💡 質問にポンポン答えるだけで、右側にあなただけの「選ばれる理由」が自動で組み上がります！</strong><br>ホームページをお持ちの方は上の入力欄にURLを入れるだけで事業内容が自動反映されます。ホームページがない方も、下の業種を選ぶだけでスタートできます。分からない質問は「あとで答える」で飛ばしても大丈夫です。</div>` : ""}
           <h2 class="question-title">${escapeHtml(question.title)}</h2>
           <p class="question-helper">${escapeHtml(question.helper)}</p>
           ${input}
@@ -3073,11 +3257,11 @@
             <p class="influence-card-desc">興味の異なる顧客ごとに最大3種類のステートメントを作成・管理できます。</p>
             ${tabsHtml}
             <div class="influence-statement-body">
-              <p class="influence-line"><span class="influence-tag">[①カテゴリー]</span> <strong class="influence-val ${currentSlot.categoryIsSet ? "" : "empty"}">${escapeHtml(currentSlot.category)}</strong> の</p>
-              <p class="influence-line"><span class="influence-tag">[②会社・ブランド名]</span> <strong class="influence-val ${currentSlot.companyIsSet ? "" : "empty"}">${escapeHtml(currentSlot.company)}</strong> は、</p>
-              <p class="influence-line"><span class="influence-tag">[③顧客]</span> <strong class="influence-val ${currentSlot.customerIsSet ? "" : "empty"}">${escapeHtml(currentSlot.customer)}</strong> に</p>
-              <p class="influence-line"><span class="influence-tag">[④成果]</span> <strong class="influence-val ${currentSlot.outcomeIsSet ? "" : "empty"}">${escapeHtml(currentSlot.outcome)}</strong> を提供します。</p>
-              <p class="influence-line because-line"><span class="influence-tag">[⑤ビコーズ]</span> なぜなら、<strong class="influence-val ${currentSlot.becauseIsSet ? "" : "empty"}">${escapeHtml(currentSlot.because)}</strong> です。</p>
+              <p class="influence-line"><span class="influence-tag">[業種・分野]</span> <strong class="influence-val ${currentSlot.categoryIsSet ? "" : "empty"}">${escapeHtml(currentSlot.category)}</strong> の</p>
+              <p class="influence-line"><span class="influence-tag">[会社名・屋号]</span> <strong class="influence-val ${currentSlot.companyIsSet ? "" : "empty"}">${escapeHtml(currentSlot.company)}</strong> は、</p>
+              <p class="influence-line"><span class="influence-tag">[誰に（お客さん）]</span> <strong class="influence-val ${currentSlot.customerIsSet ? "" : "empty"}">${escapeHtml(currentSlot.customer)}</strong> に</p>
+              <p class="influence-line"><span class="influence-tag">[どんな良い変化（成果）]</span> <strong class="influence-val ${currentSlot.outcomeIsSet ? "" : "empty"}">${escapeHtml(currentSlot.outcome)}</strong> を提供します。</p>
+              <p class="influence-line because-line"><span class="influence-tag">[なぜなら（理由・証拠）]</span> なぜなら、<strong class="influence-val ${currentSlot.becauseIsSet ? "" : "empty"}">${escapeHtml(currentSlot.because)}</strong> です。</p>
             </div>
             ${editFormHtml}
             <div class="influence-actions">
