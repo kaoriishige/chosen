@@ -937,7 +937,10 @@
           <p>AIに正確に理解され、人にも選ばれるための戦略AI</p>
         </div>
       </div>
-      <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
+      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end;">
+        <button id="headerResetBtn" type="button" class="button secondary small-btn" style="color:#e11d48; border-color:#fecaca; background:#fff1f2; font-weight:800; cursor:pointer;" title="すべての質問の回答をクリアして最初からやり直します">🗑 全ての回答をリセット</button>
+        <p class="privacy-note">入力内容はこのブラウザ内に保存されます。外部へ送信せず、実証前の情報を対外表現に変換しません。</p>
+      </div>
     </header>
 
     <!-- メイン導入・ヒーローバナー -->
@@ -2173,17 +2176,40 @@
           ? INDUSTRY_PLACEHOLDERS[answer("industryFamily")]
           : (question.placeholder || "思いつくことを、そのまま書いてください");
 
+        const currentHasAnswer = hasAnswer(question);
+
+        const choiceClearHtml = answer(question.id) ? `
+          <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+            <button type="button" id="clearChoiceBtn" class="slot-edit-toggle-btn" style="color:var(--rose); border-color:#fecaca;" title="選択を解除">✕ 選択を解除する</button>
+          </div>` : "";
+
+        const multipleClearHtml = answerList(question.id).length > 0 ? `
+          <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+            <button type="button" id="clearMultipleBtn" class="slot-edit-toggle-btn" style="color:var(--rose); border-color:#fecaca;" title="すべての選択を解除">✕ すべての選択を解除する</button>
+          </div>` : "";
+
+        const matrixClearHtml = currentHasAnswer ? `
+          <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+            <button type="button" id="clearMatrixBtn" class="slot-edit-toggle-btn" style="color:var(--rose); border-color:#fecaca;" title="AI質問候補マトリクスをクリア">✕ この質問の入力をクリア</button>
+          </div>` : "";
+
+        const textareaHeaderHtml = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:26px; margin-bottom:8px; gap:8px;">
+            <label for="answer" style="margin:0;">${escapeHtml(question.label)}</label>
+            ${answer(question.id) ? `<button type="button" id="clearTextareaBtn" class="slot-edit-toggle-btn" style="color:var(--rose); border-color:#fecaca;" title="入力した文字をすべて消去">✕ 入力をクリア</button>` : ""}
+          </div>`;
+
         const input = question.type === "targetMatrix"
-          ? renderTargetMatrix(question)
+          ? `${renderTargetMatrix(question)}${matrixClearHtml}`
           : question.type === "choice"
           ? `${urlFetcherHtml}<div class="choice-set" role="radiogroup" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="radio" name="answer" value="${escapeHtml(option)}" ${answer(question.id) === option ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
-            </div>`
+            </div>${choiceClearHtml}`
           : question.type === "multiple"
           ? `${urlFetcherHtml}<div class="choice-set multiple" aria-label="${escapeHtml(question.label)}">${question.options.map(option => `
               <label class="choice"><input type="checkbox" name="answer" value="${escapeHtml(option)}" ${answerList(question.id).includes(option) ? "checked" : ""} />${escapeHtml(option)}</label>`).join("")}
-            </div>`
-          : `${urlFetcherHtml}<label for="answer">${escapeHtml(question.label)}</label><textarea id="answer" placeholder="${escapeHtml(activePlaceholder)}">${escapeHtml(answer(question.id))}</textarea>${voiceControls}`;
+            </div>${multipleClearHtml}`
+          : `${urlFetcherHtml}${textareaHeaderHtml}<textarea id="answer" placeholder="${escapeHtml(activePlaceholder)}">${escapeHtml(answer(question.id))}</textarea>${voiceControls}`;
 
         const nextLabel = state.current === allQuestions.length - 1 ? "保存して設計図を完成" : "保存して次へ";
         questionBody.innerHTML = `
@@ -2204,6 +2230,7 @@
             <div class="action-group">
               <button id="backButton" type="button" class="button secondary" ${state.current === 0 ? "disabled" : ""}>戻る</button>
               <button id="skipButton" type="button" class="button ghost">あとで答える</button>
+              ${currentHasAnswer ? `<button id="clearAnswerActionBtn" type="button" class="button ghost" style="color:var(--rose);" title="この質問の回答を消去して未回答に戻す">✕ この回答を削除</button>` : ""}
             </div>
             <button id="nextButton" type="button" class="button primary">${nextLabel}</button>
           </div>`;
@@ -2539,12 +2566,81 @@
 
         setupUrlFetcher();
 
-        if (question.type === "targetMatrix") questionBody.querySelectorAll("[data-matrix-row]").forEach(inputElement => {
-          inputElement.addEventListener("input", persist);
-          inputElement.addEventListener("change", persist);
-        });
-        else if (question.type === "choice" || question.type === "multiple") questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => inputElement.addEventListener("change", persist));
-        else questionBody.querySelector("#answer").addEventListener("input", persist);
+        const clearCurrentQuestionAnswer = () => {
+          if (question.type === "targetMatrix") {
+            delete state.answers[question.id];
+          } else if (TARGET_SPECIFIC_QUESTIONS.includes(question.id)) {
+            if (state.answers.targetSlotsAnswers && state.answers.targetSlotsAnswers[activeTargetIndex]) {
+              delete state.answers.targetSlotsAnswers[activeTargetIndex][question.id];
+            }
+            if (activeTargetIndex === 0) {
+              delete state.answers[question.id];
+              const slots = getInfluenceSlots();
+              if (question.id === "target") delete slots[0].customer;
+              if (question.id === "outcome") delete slots[0].outcome;
+              if (question.id === "evidence") delete slots[0].because;
+            } else {
+              const slots = getInfluenceSlots();
+              if (slots[activeTargetIndex]) {
+                if (question.id === "target") delete slots[activeTargetIndex].customer;
+                if (question.id === "outcome") delete slots[activeTargetIndex].outcome;
+                if (question.id === "evidence") delete slots[activeTargetIndex].because;
+              }
+            }
+          } else {
+            delete state.answers[question.id];
+            if (question.id === "industryFamily") {
+              const slots = getInfluenceSlots();
+              slots.forEach(s => delete s.category);
+            }
+          }
+          saveState();
+          render();
+          showToast("この質問の回答を削除しました");
+        };
+
+        const clearAnswerActionBtn = document.getElementById("clearAnswerActionBtn");
+        if (clearAnswerActionBtn) clearAnswerActionBtn.addEventListener("click", clearCurrentQuestionAnswer);
+
+        const clearTextareaBtn = document.getElementById("clearTextareaBtn");
+        if (clearTextareaBtn) clearTextareaBtn.addEventListener("click", clearCurrentQuestionAnswer);
+
+        const clearChoiceBtn = document.getElementById("clearChoiceBtn");
+        if (clearChoiceBtn) clearChoiceBtn.addEventListener("click", clearCurrentQuestionAnswer);
+
+        const clearMultipleBtn = document.getElementById("clearMultipleBtn");
+        if (clearMultipleBtn) clearMultipleBtn.addEventListener("click", clearCurrentQuestionAnswer);
+
+        const clearMatrixBtn = document.getElementById("clearMatrixBtn");
+        if (clearMatrixBtn) clearMatrixBtn.addEventListener("click", clearCurrentQuestionAnswer);
+
+        if (question.type === "targetMatrix") {
+          questionBody.querySelectorAll("[data-matrix-row]").forEach(inputElement => {
+            inputElement.addEventListener("input", persist);
+            inputElement.addEventListener("change", persist);
+          });
+        } else if (question.type === "choice") {
+          questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => {
+            let wasChecked = inputElement.checked;
+            inputElement.addEventListener("mousedown", () => {
+              wasChecked = inputElement.checked;
+            });
+            inputElement.addEventListener("click", () => {
+              if (wasChecked) {
+                inputElement.checked = false;
+                persist();
+              }
+            });
+            inputElement.addEventListener("change", persist);
+          });
+        } else if (question.type === "multiple") {
+          questionBody.querySelectorAll('input[name="answer"]').forEach(inputElement => {
+            inputElement.addEventListener("change", persist);
+          });
+        } else {
+          const answerArea = questionBody.querySelector("#answer");
+          if (answerArea) answerArea.addEventListener("input", persist);
+        }
 
         document.getElementById("backButton").addEventListener("click", () => { if (state.current > 0) { state.current--; saveState(); render(); } });
         document.getElementById("skipButton").addEventListener("click", () => { if (state.current < allQuestions.length - 1) { state.current++; saveState(); render(); } });
@@ -3119,7 +3215,12 @@
                 </table>
               </div>
               <div class="influence-actions">
-                <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn">💡 赤沢温泉旅館の3つの客層例を入れる</button>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                  <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn">💡 赤沢温泉旅館の3つの客層例を入れる</button>
+                  ${(slots[1]?.customer || slots[2]?.customer) ? `
+                    <button type="button" id="clearExtraSlotsBtn" class="slot-edit-toggle-btn" style="color:#e11d48; border-color:#fecaca; background:#fff1f2;" title="ターゲット②・③を削除して本命ターゲット（①）のみに戻す">🗑 ターゲット②・③を削除</button>
+                  ` : ""}
+                </div>
                 <button type="button" id="copyAllInfluenceBtn" class="button secondary small-btn">📋 3つを一括コピー</button>
               </div>
             </div>
@@ -3140,9 +3241,18 @@
             <label>⑤ なぜなら（理由・設備・こだわり）
               <textarea id="slotBecauseInput" placeholder="例：全室ペット同伴対応の客室、看板猫がいる理解ある接客、個室食があるから">${escapeHtml(slots[activeIndex]?.because || (activeIndex === 0 ? currentSlot.because : ""))}</textarea>
             </label>
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
-              <button type="button" id="saveSlotBtn" class="button primary small-btn">保存</button>
-              <button type="button" id="cancelSlotBtn" class="button ghost small-btn">閉じる</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:12px; flex-wrap:wrap;">
+              <div>
+                ${activeIndex > 0 ? `
+                  <button type="button" id="deleteSlotBtn" class="button danger small-btn" style="border:1px solid #fecaca; background:#fff1f2; color:#e11d48;" title="このターゲットを削除して未設定に戻す">🗑 このターゲットを削除</button>
+                ` : `
+                  <button type="button" id="resetSlotToQuestionsBtn" class="button secondary small-btn" style="font-size:.75rem;" title="質問への回答から自動生成される状態に戻します">🔄 質問の最新回答に連動（直接編集を解除）</button>
+                `}
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" id="saveSlotBtn" class="button primary small-btn">保存</button>
+                <button type="button" id="cancelSlotBtn" class="button ghost small-btn">閉じる</button>
+              </div>
             </div>
           </div>
         ` : "";
@@ -3165,9 +3275,18 @@
             </div>
             ${editFormHtml}
             <div class="influence-actions">
-              <div style="display:flex; gap:6px; align-items:center;">
+              <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
                 <button type="button" id="toggleEditSlotBtn" class="slot-edit-toggle-btn">${isEditingStatement ? "✕ 編集を閉じる" : "✏️ この文面を直接編集"}</button>
+                ${activeIndex > 0 && (slots[activeIndex]?.customer || slots[activeIndex]?.outcome || slots[activeIndex]?.because) ? `
+                  <button type="button" id="deleteCurrentSlotQuickBtn" class="slot-edit-toggle-btn" style="color:#e11d48; border-color:#fecaca; background:#fff1f2;" title="このターゲットを削除して未設定に戻す">🗑 ターゲット${activeIndex + 1}を削除</button>
+                ` : ""}
+                ${activeIndex === 0 && (slots[0]?.customer || slots[0]?.outcome || slots[0]?.because) ? `
+                  <button type="button" id="quickResetSlot1Btn" class="slot-edit-toggle-btn" title="質問の回答から自動生成される状態に戻す">🔄 質問の回答に連動</button>
+                ` : ""}
                 <button type="button" id="applyAkazawaBtn" class="slot-edit-toggle-btn" title="赤沢温泉旅館の3つの客層例（猫・ぬる湯・料理）を試せます">💡 赤沢温泉の例</button>
+                ${(slots[1]?.customer || slots[2]?.customer) ? `
+                  <button type="button" id="clearExtraSlotsBtn" class="slot-edit-toggle-btn" style="color:#e11d48; border-color:#fecaca; background:#fff1f2;" title="ターゲット②・③を削除して本命ターゲット（①）のみに戻す">🗑 ターゲット②・③を削除</button>
+                ` : ""}
               </div>
               <button id="copyInfluenceBtn" type="button" class="button secondary small-btn">📋 この文面をコピー</button>
             </div>
@@ -3371,6 +3490,56 @@
           });
         }
 
+        // 編集フォーム内：このターゲットを削除（②・③用）
+        const deleteSlotBtn = document.getElementById("deleteSlotBtn");
+        if (deleteSlotBtn) {
+          deleteSlotBtn.addEventListener("click", () => {
+            const activeIndex = typeof activeStatementTab === "number" ? activeStatementTab : 0;
+            if (window.confirm(`ターゲット${activeIndex + 1}の入力内容を削除して未設定に戻しますか？`)) {
+              deleteTargetSlot(activeIndex);
+            }
+          });
+        }
+
+        // 編集フォーム内：質問の回答に連動（①用直接編集解除）
+        const resetSlotToQuestionsBtn = document.getElementById("resetSlotToQuestionsBtn");
+        if (resetSlotToQuestionsBtn) {
+          resetSlotToQuestionsBtn.addEventListener("click", () => {
+            resetSlotToQuestions(0);
+          });
+        }
+
+        // クイック削除（カード下部）
+        const deleteCurrentSlotQuickBtn = document.getElementById("deleteCurrentSlotQuickBtn");
+        if (deleteCurrentSlotQuickBtn) {
+          deleteCurrentSlotQuickBtn.addEventListener("click", () => {
+            const activeIndex = typeof activeStatementTab === "number" ? activeStatementTab : 0;
+            if (window.confirm(`ターゲット${activeIndex + 1}の入力内容を削除して未設定に戻しますか？`)) {
+              deleteTargetSlot(activeIndex);
+            }
+          });
+        }
+
+        // クイック質問連動（カード下部）
+        const quickResetSlot1Btn = document.getElementById("quickResetSlot1Btn");
+        if (quickResetSlot1Btn) {
+          quickResetSlot1Btn.addEventListener("click", () => {
+            resetSlotToQuestions(0);
+          });
+        }
+
+        // ターゲット②・③一括削除
+        const clearExtraSlotsBtn = document.getElementById("clearExtraSlotsBtn");
+        if (clearExtraSlotsBtn) {
+          clearExtraSlotsBtn.addEventListener("click", clearExtraSlots);
+        }
+
+        // トップバーのリセットボタン
+        const headerResetBtn = document.getElementById("headerResetBtn");
+        if (headerResetBtn) {
+          headerResetBtn.onclick = resetData;
+        }
+
         // 赤沢温泉サンプルの適用
         const applyAkazawaBtn = document.getElementById("applyAkazawaBtn");
         if (applyAkazawaBtn) {
@@ -3409,6 +3578,57 @@
         }
       }
 
+      function deleteTargetSlot(index) {
+        const slots = getInfluenceSlots();
+        if (slots[index]) {
+          slots[index] = {
+            label: `ターゲット${index + 1}`,
+            customer: "",
+            outcome: "",
+            because: ""
+          };
+        }
+        if (Array.isArray(state.answers.targetSlotsAnswers) && state.answers.targetSlotsAnswers[index]) {
+          state.answers.targetSlotsAnswers[index] = {};
+        }
+        isEditingStatement = false;
+        saveState();
+        renderStrategy();
+        showToast(`ターゲット${index + 1}を削除しました。`);
+      }
+
+      function resetSlotToQuestions(index = 0) {
+        const slots = getInfluenceSlots();
+        if (slots[index]) {
+          delete slots[index].customer;
+          delete slots[index].outcome;
+          delete slots[index].because;
+        }
+        isEditingStatement = false;
+        saveState();
+        renderStrategy();
+        showToast("質問欄の最新回答と自動連動する状態に戻しました！");
+      }
+
+      function clearExtraSlots() {
+        if (!window.confirm("ターゲット②と③の登録内容を削除して、本命ターゲット（①）のみに戻しますか？")) return;
+        const slots = getInfluenceSlots();
+        slots[1] = { label: "ターゲット②（2つ目の興味軸）", customer: "", outcome: "", because: "" };
+        slots[2] = { label: "ターゲット③（3つ目の興味軸）", customer: "", outcome: "", because: "" };
+        if (Array.isArray(state.answers.targetSlotsAnswers)) {
+          state.answers.targetSlotsAnswers[1] = {};
+          state.answers.targetSlotsAnswers[2] = {};
+        }
+        if (activeStatementTab > 0 && activeStatementTab !== "matrix") {
+          activeStatementTab = 0;
+          activeTargetIndex = 0;
+        }
+        isEditingStatement = false;
+        saveState();
+        renderStrategy();
+        showToast("ターゲット②と③を削除しました。");
+      }
+
       function generateBrief() {
         const rows = allQuestions.map(question => {
           const response = question.type === "targetMatrix" ? targetComparisonReport() : answer(question.id);
@@ -3444,10 +3664,15 @@
       }
 
       function resetData() {
-        if (!window.confirm("この端末に保存された回答を削除します。元に戻せません。")) return;
+        if (!window.confirm("これまでに保存されたすべての回答と設定を削除し、初期状態に戻しますか？（元に戻せません）")) return;
         localStorage.removeItem(STORAGE_KEY);
-        state = { ...initialState, answers: {} };
-        render(); showToast("この端末の回答を削除しました。");
+        state = { schemaVersion: SCHEMA_VERSION, current: 0, answers: {} };
+        activeTargetIndex = 0;
+        activeStatementTab = 0;
+        isEditingStatement = false;
+        saveState();
+        render();
+        showToast("すべての回答を削除し、初期状態に戻しました。");
       }
 
       function showToast(message) {
