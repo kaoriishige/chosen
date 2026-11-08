@@ -1636,7 +1636,7 @@
       };
 
 
-      // 業種ごとのデフォルト5つの切り口データベース
+      // 業種ごとのデフォルト5つの切り口データベース（実在しない架空の特殊設備・年齢制限等は一切含めない）
       const DEFAULT_SLOTS_DATABASE = {
         "宿泊・観光・温泉旅館": [
           {
@@ -1646,9 +1646,9 @@
             marketingRole: "公式サイトTOP・メイン看板・主力広告",
             friction: "ペット可と書いてあってもケージ必須や他のお客さんの冷たい視線が気になり、心からくつろげない。",
             desired: "誰にも気兼ねせず、愛するペットと同じ部屋で本物の源泉かけ流し温泉と美味しい料理を心ゆくまで堪能したい。",
-            target: "他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と美味しい個室料理を堪能したいご夫婦・パートナー",
-            outcome: "他のお客様に一切気をつかうことなく、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と旬の個室料理を心から堪能し、最高の癒やしと一生の思い出を持ち帰ることができる。",
-            evidence: "全客室が完全防音・滑りにくい特殊床材を採用したペット専用設計で、お食事も完全お部屋食のため他のお客様と接触がなく、加水加温一切なしの100%源泉かけ流し天然温泉を完備しているから。"
+            target: "他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と温かい手料理を堪能したいご夫婦・パートナー",
+            outcome: "他のお客様に気をつかうことなく、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と心のこもった料理を堪能し、最高の癒やしと一生の思い出を持ち帰ることができる。",
+            evidence: "ペットと一緒に同じお部屋で気兼ねなく過ごせる客室と、加水加温なしの100%源泉かけ流し天然温泉、ペット連れを温かく迎える受け入れ体制を整えているから。"
           },
           {
             id: "slot_2",
@@ -1656,21 +1656,21 @@
             title: "源泉ぬる湯・本格湯治軸",
             marketingRole: "「ぬる湯・湯治」専用LP・Google検索対策",
             friction: "熱い温泉はのぼせて長く入れず、疲れが取れない。本当に効能のある名湯でじっくり体を癒やしたい。",
-            desired: "体温に近いぬる湯に何時間も浸かり、日頃の慢性疲労や冷えを根本から解きほぐしたい。",
+            desired: "体温に近いぬる湯にゆっくり浸かり、日頃の慢性疲労や冷えを根本から解きほぐしたい。",
             target: "熱い湯が苦手で、本物のぬる湯にゆっくり浸かって心身の疲労や不調をじっくり癒やしたい健康志向の大人世代",
-            outcome: "何時間でものぼせずに浸かれる極上のぬる湯によって、副交感神経が優位になり、翌朝驚くほど体が軽くなる深い休息を得られる。",
-            evidence: "自社源泉から湧出する38度の奇跡のぬる湯をそのままかけ流し、温泉ソムリエが体質に合わせた入浴法をご案内しているから。"
+            outcome: "のぼせずにじっくり浸かれる心地よいぬる湯によって、副交感神経が優位になり、翌朝驚くほど体が軽くなる深い休息を得られる。",
+            evidence: "無理な加温や循環を行わない、体温に近い自家源泉100%のかけ流しぬる湯をそのまま湯船に注いでいるから。"
           },
           {
             id: "slot_3",
             priority: 3,
-            title: "静寂・完全プライベート軸",
-            marketingRole: "一人旅・大人の隠れ宿専用プラン・平日稼働",
-            friction: "騒がしい団体客や子どもの声でせっかくの休日を台無しにされたくない。誰にも邪魔されたくない。",
-            desired: "外界の喧騒を完全に遮断し、静かな山あいで読書や仕事、瞑想に没頭する贅沢な時間を過ごしたい。",
-            target: "仕事や日常のストレスから離れ、誰にも邪魔されない静寂の中で深い休息や思索に耽りたいエグゼクティブ・一人旅の方",
-            outcome: "一切の騒音や他人の干渉から解放され、鳥のさえずりと川のせせらぎに包まれながら、完全な心の平穏と集中を取り戻せる。",
-            evidence: "12歳未満の宿泊を制限した大人の隠れ宿で、全室離れ構造・完全プライベート露天風呂と書斎デスクを完備しているから。"
+            title: "静寂・自然リフレッシュ軸",
+            marketingRole: "一人旅・静養プラン・平日稼働対策",
+            friction: "都会の騒がしさや人混みに疲れ果てており、休日は静かな自然の中で誰にも邪魔されずに心を休めたい。",
+            desired: "川のせせらぎや鳥の声を聞きながら、静かな環境で何もしない贅沢な時間を過ごしたい。",
+            target: "仕事や日常のストレスから離れ、豊かな自然の静けさの中で深い休息を取りたい大人世代・一人旅の方",
+            outcome: "日常の騒音や慌ただしさから完全に解放され、鳥のさえずりと川のせせらぎに包まれながら、心の平穏と深い安らぎを取り戻せる。",
+            evidence: "温泉街の喧騒から離れた自然豊かな清流沿いに佇み、客室数を抑えた静かで落ち着いた空間でゆったり過ごせる環境があるから。"
           },
           {
             id: "slot_4",
@@ -1689,10 +1689,10 @@
             title: "長期滞在・リフレッシュ軸",
             marketingRole: "連泊プラン・ワーケーション・オフシーズン対策",
             friction: "1泊2日では移動だけで疲れてしまい、本当にリフレッシュした感覚が得られない。",
-            desired: "暮らすように連泊滞在し、自然の中で健康的な食事と温泉を楽しみながら英気を養いたい。",
-            target: "都会を離れ、自然豊かな温泉地で3泊以上のんびり連泊し、心身を完全にリセットしたいシニア・フリーランス",
-            outcome: "まるで第二の我が家のようにリラックスしながら、毎日の温泉と体に優しい食事で、滞在するほど健康になる喜びを実感できる。",
-            evidence: "連泊者専用のミニキッチン・ランドリー付き客室と、毎日日替わりの薬膳健康和食を提供する専任サポートがあるから。"
+            desired: "気取らない宿で連泊滞在し、自然の中で温かい食事と温泉を楽しみながら英気を養いたい。",
+            target: "都会を離れ、自然豊かな温泉地でのんびり連泊し、心身を完全にリセットしたい方",
+            outcome: "まるで実家に帰ってきたかのようにリラックスしながら、毎日の源泉かけ流し温泉と体に優しい手作りの食事で、心身ともに元気になる喜びを実感できる。",
+            evidence: "連泊でも飽きない手作りの温かい家庭料理と、自分のペースで気兼ねなく滞在できるアットホームで心地よいおもてなしがあるから。"
           }
         ],
 
@@ -3078,52 +3078,93 @@
         ];
       }
 
+      // ユーザーの自然言語指示（否定・訂正・置換・追加要望）を正確に解析する共通パーサー
+      function parseUserInstruction(rawReq) {
+        const text = (rawReq || "").trim();
+        // 1. 末尾の「〜から変えて」「〜ので変えて」「〜から直して」「〜だから変えて」等を除去して本題を取り出す
+        const strippedCmd = text
+          .replace(/(?:だから|から|ので|ため|し)[、,\s]*(?:変えて|直して|修正して|変更して|消して|削除して|書き換えて|直してね|変えてね|ください|お願い).*$/i, "")
+          .trim();
+
+        // 2. 否定・削除指示（「〜してない」「〜していない」「〜sitenai」「〜はない」「〜ではない」「〜じゃない」「〜は無し」「〜を消して」）
+        const negMatch = strippedCmd.match(/^(.+?)(?:は|を|とか|など|なんて)?(?:制限してない|制限していない|制限sitenai|してない|していない|sitenai|shitenai|やってない|やっていない|はない|は無い|ではない|じゃない|ありません|ちがう|違う|無し|なし|消して|削除して|やめて|外して)$/i)
+          || text.match(/^(.+?)(?:してない|していない|sitenai|shitenai|やってない|はない|ではない|じゃない)(?:から|ので|ため|し|よ|ね)?/i);
+
+        // ただし「AではなくB」の形式は置換なので除外
+        const repMatch = strippedCmd.match(/^(.+?)(?:ではなくて|ではなく|じゃなくて|じゃなく)[、,\s]*(.+?)(?:に変えて|にして|へ変えて|へ変更|に修正|だよ|です|に|へ|を|$)/);
+        if (repMatch) {
+          const oldWord = repMatch[1].replace(/^(?:うちは|当店は|実は|当宿は)/, "").trim();
+          const newWord = repMatch[2].replace(/(?:に変えて|にして|を入れ|を追加|だよ|です|だから).*$/, "").trim();
+          if (oldWord && newWord) {
+            return { type: "replace", oldWord, newWord };
+          }
+        }
+
+        if (negMatch) {
+          const negTarget = negMatch[1]
+            .replace(/^(?:うちは|当店は|当宿は|宿は|旅館は|会社は|特に|別に)/, "")
+            .replace(/(?:の宿泊を|の宿泊|を制限|制限|とか|など|なんて|を|は|が)$/g, "")
+            .trim();
+          return { type: "negation", targetWord: negTarget || strippedCmd };
+        }
+
+        const coreTopic = strippedCmd
+          .replace(/^(?:うちは|当店は|当宿は|もっと|さらに|少し|ちょっと)/g, "")
+          .replace(/(?:にしてください|してください|にして|に変えて|へ変えて|を入れて|を追加して|を強調して|をアピールして|を根拠にして|な感じに|な表現に|な文章に|っぽく|でお願いします|にお願い|を作って|だよ|です)$/g, "")
+          .trim();
+
+        return { type: "general", coreTopic: coreTopic || strippedCmd };
+      }
+
+      // 文中から指定ワードを含む節（句点・読点区切り）を安全に取り除くヘルパー
+      function removeClausesContaining(sentence, targetWord) {
+        if (!sentence || !targetWord) return sentence;
+        const keywords = [targetWord];
+        if (targetWord.includes("12歳") || targetWord.includes("制限") || targetWord.includes("子供") || targetWord.includes("子ども")) {
+          keywords.push("12歳", "制限", "大人の隠れ宿", "全室離れ", "書斎デスク");
+        }
+        if (targetWord.includes("個室") || targetWord.includes("部屋食")) {
+          keywords.push("個室料理", "お部屋食", "個室会席");
+        }
+        const parts = sentence.split("、");
+        const filtered = parts.filter(p => !keywords.some(k => k && p.includes(k)));
+        const joined = filtered.join("、").trim();
+        return joined.length >= 15 ? joined : "";
+      }
+
       // ユーザーの自然言語要望を解析して3つの成果案とAI返答を生成
       function buildOutcomesFromUserRequest(slot, reqText) {
         const rawReq = (reqText || "").trim();
+        const parsed = parseUserInstruction(rawReq);
         let currentBase = slot.outcome || "";
         let aiReply = "";
-
-        // 1. 「AではなくB」「AじゃなくB」の置換指示を検出
-        const replaceMatch = rawReq.match(/([^、。！？\s]+?)(?:ではなくて|ではなく|じゃなくて|じゃなく|ではなく、|じゃなく、|から)([^、。！？\s]+?)(?:に変えて|にして|へ変えて|へ変更|に修正|に|へ|を|$)/);
-        // 2. 「Aはない」「Aではない」「Aを消して」の否定・削除指示を検出
-        const removeMatch = !replaceMatch && rawReq.match(/([^、。！？\s]+?)(?:ではない|じゃない|はない|は無い|はやっていない|を消して|は削除|を除いて|は無し)/);
-
-        // 核となる要望フレーズの抽出
-        let coreTopic = rawReq
-          .replace(/(?:もっと|さらに|少し|ちょっと)/g, "")
-          .replace(/(?:にしてください|してください|にして|に変えて|へ変えて|を入れて|を追加して|を強調して|をアピールして|な感じに|な表現に|な文章に|っぽく|でお願いします|にお願い|を作って)$/g, "")
-          .trim();
 
         let cand1 = currentBase;
         let cand2 = "";
         let cand3 = "";
 
-        if (replaceMatch) {
-          const oldWord = replaceMatch[1].trim();
-          const newWord = replaceMatch[2].replace(/(?:に変えて|にして|を入れ|を追加).*$/, "").trim();
+        if (parsed.type === "replace") {
+          const { oldWord, newWord } = parsed;
           if (currentBase.includes(oldWord)) {
             cand1 = currentBase.split(oldWord).join(newWord);
           } else {
-            // 類似語（個室料理・お部屋食・懐石など）の置換補助
             cand1 = currentBase
               .replace(/個室料理|お部屋食|個室会席|懐石料理/g, newWord)
               .replace(/全室離れ|完全防音/g, newWord);
             if (cand1 === currentBase) {
-              cand1 = `${newWord}を通じて、${currentBase}`;
+              cand1 = `気兼ねのない空間で${newWord}を楽しみながら、心身の疲れを芯から癒やすことができる。`;
             }
           }
-          cand2 = `気兼ねのない温かな空間で、${newWord}を心ゆくまで味わいながら、日頃の疲れがじんわりほどける最高の時間を過ごせる。`;
-          cand3 = `${newWord}と心のこもったおもてなしにより、心身ともにリラックスして深い満足を得られる。`;
-          aiReply = `「${oldWord}」を「${newWord}」に変更した3パターンの成果案を作成し、入力欄に反映しました！`;
-        } else if (removeMatch) {
-          const badWord = removeMatch[1].trim();
-          cand1 = currentBase
-            .replace(new RegExp(badWord + "[とや、の・]*", "g"), "")
-            .replace(/個室料理[とや、の・]*|お部屋食[とや、の・]*/g, "");
-          cand2 = `${ (slot.desired || "心からくつろぎたい").replace(/したい。?$/, "") }という願いが叶い、日常のストレスから解放される心地よい時間を過ごせる。`;
-          cand3 = `事前の不安や気兼ねがすべて解消され、自分のペースでゆったりと心身を癒やすことができる。`;
-          aiReply = `「${badWord}」に関する表現を取り除き、実態に即した自然な成果案に書き換えました！`;
+          cand2 = `温かなおもてなしの中で${newWord}を心ゆくまで味わい、日頃の疲れがじんわりほどける最高の時間を過ごせる。`;
+          cand3 = `${newWord}と心地よい環境により、心身ともにリラックスして深い満足を得られる。`;
+          aiReply = `「${oldWord}」の表現を外し、「${newWord}」の魅力が伝わる3パターンの成果案に書き換えました！`;
+        } else if (parsed.type === "negation") {
+          const badWord = parsed.targetWord;
+          const cleaned = removeClausesContaining(currentBase, badWord);
+          cand1 = cleaned || `日常の騒音や慌ただしさから解放され、豊かな自然と心地よい温泉に包まれながら、自分のペースで心身の平穏を取り戻せる。`;
+          cand2 = `${ (slot.desired || "心からくつろぎたい").replace(/したい。?$/, "") }という願いが叶い、日常のストレスから解放される穏やかな時間を過ごせる。`;
+          cand3 = `事前の不安や気兼ねがすべて解消され、肩肘張らずにゆったりと心身を癒やすことができる。`;
+          aiReply = `ご指摘ありがとうございます！「${badWord}」に関する表現を削除し、実態に合った自然な成果文に修正しました。`;
         } else if (rawReq.includes("短く") || rawReq.includes("シンプル") || rawReq.includes("簡潔") || rawReq.includes("一言")) {
           const shortDesire = (slot.desired || "心からくつろぎたい").replace(/したい。?$/, "");
           cand1 = `${shortDesire}という願いが叶い、心身の疲れを芯からリセットできる。`;
@@ -3151,11 +3192,11 @@
           cand3 = `${currentBase.replace(/。$/, "")}ことで、翌朝の目覚めの良さと深いリフレッシュ効果を体験できる。`;
           aiReply = `体験前と体験後（翌朝の目覚めや心身の変化）が具体的にイメージできる成果案にアップデートしました！`;
         } else {
-          // 自由記述のキーワードや文章（「〇〇を入れて」「〇〇」など）を自然に組み込む
-          cand1 = `${coreTopic}によって、日頃の不安や疲れから解放され、心から満足できる特別な時間と深い癒やしを手に入れられる。`;
-          cand2 = `${currentBase.replace(/。$/, "")}とともに、${coreTopic}という他にはない喜びを心ゆくまで堪能できる。`;
-          cand3 = `誰にも気兼ねすることなく、${coreTopic}を満喫し、「ここを選んで本当によかった」と心底思える体験ができる。`;
-          aiReply = `ご要望の「${coreTopic}」を盛り込んだ3パターンの成果案を新しく作成し、入力欄に反映しました！`;
+          const coreTopic = parsed.coreTopic;
+          cand1 = `${coreTopic}を楽しみながら、日頃の不安や疲れから解放され、心から満足できる穏やかな時間と深い癒やしを手に入れられる。`;
+          cand2 = `気兼ねのない環境で${coreTopic}を満喫し、「ここを選んで本当によかった」と心底思える体験ができる。`;
+          cand3 = `${coreTopic}を通じて、心身ともにリフレッシュし最高の思い出を持ち帰ることができる。`;
+          aiReply = `ご要望の「${coreTopic}」を取り入れた3パターンの成果案を作成し、入力欄に反映しました！`;
         }
 
         const newCandidates = [
@@ -3171,105 +3212,46 @@
       // 本物の大規模言語モデル（LLM）による文脈理解・書き換え通信
       // ==========================================
       async function callRealAiChat(mode, slot, reqText, chatHistory) {
-        const payload = {
-          mode,
-          companyName: state.answers.companyName,
-          industryFamily: state.answers.industryFamily,
-          business: state.answers.business,
-          slot: {
-            title: slot.title,
-            friction: slot.friction,
-            desired: slot.desired,
-            target: slot.target,
-            outcome: slot.outcome,
-            evidence: slot.evidence
-          },
-          chatHistory: chatHistory || [],
-          userRequest: reqText
-        };
-
-        // 1. Netlify Function (/.netlify/functions/ai-chat) を優先試行
-        if (window.location.protocol.startsWith("http")) {
-          try {
-            const ctrl = new AbortController();
-            const tid = setTimeout(() => ctrl.abort(), 9500);
-            const res = await fetch("/.netlify/functions/ai-chat", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-              signal: ctrl.signal
-            });
-            clearTimeout(tid);
-            if (res.ok) {
-              const data = await res.json();
-              if (data && Array.isArray(data.candidates) && data.candidates.length > 0) {
-                return data;
-              }
-            }
-          } catch (_) {}
-        }
-
-        // 2. ブラウザから直接OpenAI互換LLMエンドポイントを呼び出し（ローカル環境やタイムアウト時の確実な実行）
         const isEvidence = mode === "evidence";
         const systemPrompt = isEvidence
-          ? `あなたは書籍『顧客を買う気にさせる ビコーズ・フレームワーク』の専属AIコンサルタント兼プロのコピーライターです。
-店舗オーナーや経営者であるユーザーの指示・要望の意味と文脈を深く理解し、「顧客がその成果を信じるに足るビコーズ（根拠・なぜなら〜だからです）」を書き換えてください。
-【厳守】
-・入力文を機械的につなげるのではなく、自然で説得力のあるプロの日本語にすること。
-・ユーザーが否定した内容（個室料理ではない、高級ではない等）は完全に削除すること。
-・各候補の body は文末を「〜ているから。」「〜があるから。」の形にすること。
-・reply はユーザーに直接語りかける丁寧な返答（1〜2文）にすること（「ユーザーのご要望を〜」という三人称は禁止）。
-・必ず以下のJSON形式のみを出力すること:
-{"reply":"丁寧な返答","candidates":[{"category":"systematic","tag":"★ AI最新提案①（要望直球反映・メイン案）","title":"見出し","body":"根拠の文章"},{"category":"perceived","tag":"AI最新提案②（安心感・実感重視）","title":"見出し","body":"根拠の文章"},{"category":"created","tag":"AI最新提案③（シンプル・簡潔版）","title":"見出し","body":"短い根拠の文章"}]}`
-          : `あなたは書籍『顧客を買う気にさせる ビコーズ・フレームワーク』の専属AIコンサルタント兼プロのコピーライターです。
-店舗オーナーや経営者であるユーザーの指示・要望・ダメ出しの意味と文脈を深く理解し、「顧客に対して約束できる具体的な成果（顧客が手に入れる嬉しい変化・ベネフィット）」を書き換えてください。
-【厳守】
-・入力文を機械的にコピペして繋げるのではなく、文脈を理解して自然で魅力的なプロの日本語コピーに書き換えること。
-・ユーザーが否定した要素（個室料理ではない、豪華ではない等）は完全に削除し、一切残さないこと。
-・事業内容やユーザーの発言にない架空の要素（プロポーズ等）を捏造しないこと。
-・各候補の body は文末を「〜できる。」「〜を得られる。」「〜を過ごせる。」などの形にすること。
-・reply はユーザーに直接語りかける丁寧な返答（1〜2文）にすること（「ユーザーのご要望を〜」という三人称は禁止）。
-・必ず以下のJSON形式のみを出力すること:
-{"reply":"丁寧な返答","candidates":[{"tag":"★ AI最新提案①（要望直球反映・メイン案）","title":"見出し","body":"成果の文章"},{"tag":"AI最新提案②（感情・体験シーン重視）","title":"見出し","body":"成果の文章"},{"tag":"AI最新提案③（シンプル・簡潔版）","title":"見出し","body":"短い成果の文章"}]}`;
+          ? `あなたは『ビコーズ・フレームワーク』の専門コピーライターです。
+オーナーの要望通りに「信頼のビコーズ（なぜなら〜だからです）」を書き換えてください。
+・オーナーが否定した内容（12歳未満制限、個室料理、離れ等）は完全に削除すること。
+・架空の設備を捏造しないこと。文末は「〜ているから。」「〜があるから。」にすること。
+・replyはオーナーへの丁寧な返答（1文）にすること。
+以下のJSONのみ出力してください:
+{"reply":"返答","candidates":[{"category":"systematic","tag":"★ AI最新提案①（要望反映）","title":"見出し","body":"文章"},{"category":"perceived","tag":"AI最新提案②（安心・実績）","title":"見出し","body":"文章"},{"category":"created","tag":"AI最新提案③（簡潔版）","title":"見出し","body":"短い文章"}]}`
+          : `あなたは『ビコーズ・フレームワーク』の専門コピーライターです。
+オーナーの要望通りに「顧客に対して約束できる成果（ベネフィット）」を書き換えてください。
+・オーナーが否定した内容（個室料理、豪華等）は完全に削除すること。
+・架空の要素を捏造しないこと。文末は「〜できる。」「〜を得られる。」「〜を過ごせる。」にすること。
+・replyはオーナーへの丁寧な返答（1文）にすること。
+以下のJSONのみ出力してください:
+{"reply":"返答","candidates":[{"tag":"★ AI最新提案①（要望反映）","title":"見出し","body":"文章"},{"tag":"AI最新提案②（感情重視）","title":"見出し","body":"文章"},{"tag":"AI最新提案③（簡潔版）","title":"見出し","body":"短い文章"}]}`;
 
-        const historyText = Array.isArray(chatHistory) && chatHistory.length > 0
-          ? chatHistory.slice(-5).map(h => `オーナーの指示: ${h.user}\nAIの返答: ${h.ai}`).join("\n")
-          : "（今回が最初の指示）";
+        const userPrompt = `【事業内容】${state.answers.companyName || ""}（${state.answers.business || ""}）
+【切り口】${slot.title || ""}（対象：${slot.target || ""}）
+【現在の文章】${isEvidence ? slot.evidence : slot.outcome}
+【オーナーの修正指示】「${reqText}」
+上記の指示の意味を正確に理解し、書き換えたJSONのみを出力してください。`;
 
-        const userPrompt = `【企業・店舗情報】
-・業種：${payload.industryFamily || "未設定"}
-・屋号/企業名：${payload.companyName || "未設定"}
-・事業内容・特徴：${payload.business || "未設定"}
-
-【現在編集中の切り口】
-・切り口テーマ：${slot.title || ""}
-・顧客の悩み（洞察）：${slot.friction || ""}
-・顧客の望み：${slot.desired || ""}
-・対象顧客（誰に）：${slot.target || ""}
-・現在の「約束できる成果」：${slot.outcome || ""}
-・現在の「信頼のビコーズ（根拠）」：${slot.evidence || ""}
-
-【これまでの会話履歴】
-${historyText}
-
-【オーナーからの今回の要望・指示】
-「${reqText}」
-
-上記の要望・指示の意味を正確に理解し、現在の文章をプロ品質で書き換えたJSONを出力してください。`;
-
+        const ctrl = new AbortController();
+        const tid = setTimeout(() => ctrl.abort(), 16000);
         const llmRes = await fetch("https://text.pollinations.ai/openai", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: ctrl.signal,
           body: JSON.stringify({
             model: "openai-fast",
-            response_format: { type: "json_object" },
+            max_tokens: 2048,
+            reasoning_effort: "low",
             messages: [
               { role: "system", content: systemPrompt },
               { role: "user", content: userPrompt }
-            ],
-            temperature: 0.7
+            ]
           })
         });
+        clearTimeout(tid);
 
         if (!llmRes.ok) throw new Error("AIサーバー通信エラー");
         const llmData = await llmRes.json();
@@ -3286,47 +3268,42 @@ ${historyText}
           return;
         }
 
-        // ローディング表示
+        // 入力欄の文字はすぐ空にしてクリアする（入力欄の中にステータスメッセージを入れない！）
         const inputEl = document.getElementById("aiOutcomeChatInput");
-        if (inputEl) {
-          inputEl.disabled = true;
-          inputEl.value = "🤖 AIが要望の文脈を理解して文章を作成しています（数秒お待ちください）…";
-        }
-        showToast("🤖 AIがあなたの要望を分析して書き換えています…");
+        if (inputEl) inputEl.value = "";
 
         slot.previousOutcome = slot.outcome;
 
-        try {
-          const aiData = await callRealAiChat("outcome", slot, cleanReq, slot.outcomeChatHistory || []);
-          if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length > 0) {
-            slot.outcome = aiData.candidates[0].body;
-            slot.outcomeCandidates = aiData.candidates;
-            if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
-            slot.outcomeChatHistory.push({
-              user: cleanReq,
-              ai: aiData.reply || "ご要望を踏まえて、約束できる成果を新しく書き換えました！"
-            });
-          } else {
-            throw new Error("Invalid AI response");
-          }
-        } catch (err) {
-          // 万一オフライン等の場合のみローカルフォールバック
-          const { newCandidates, bestOutcome, aiReply } = buildOutcomesFromUserRequest(slot, cleanReq);
-          slot.outcome = bestOutcome;
-          slot.outcomeCandidates = newCandidates;
-          if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
-          slot.outcomeChatHistory.push({ user: cleanReq, ai: aiReply });
-        }
+        // 1. まず即座にNLUエンジンで要望（否定の削除・置換等）を即時反映して待たせない
+        const instantResult = buildOutcomesFromUserRequest(slot, cleanReq);
+        slot.outcome = instantResult.bestOutcome;
+        slot.outcomeCandidates = instantResult.newCandidates;
+        if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
+        const chatEntry = { user: cleanReq, ai: instantResult.aiReply };
+        slot.outcomeChatHistory.push(chatEntry);
 
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("✨ AIがご要望に合わせて「約束できる成果」を書き換えました！");
+        showToast("✨ ご要望を反映して「約束できる成果」を書き換えました！");
+
+        // 2. バックグラウンドでLLMからも高度な別案を取得できれば追加更新
+        try {
+          const aiData = await callRealAiChat("outcome", slot, cleanReq, slot.outcomeChatHistory);
+          if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length === 3 && aiData.candidates[0].body) {
+            slot.outcome = aiData.candidates[0].body;
+            slot.outcomeCandidates = aiData.candidates;
+            if (aiData.reply) chatEntry.ai = aiData.reply;
+            saveState();
+            renderQuestionPanel();
+            renderStrategyBoard();
+          }
+        } catch (_) {}
       };
 
       window.submitOutcomeChatInput = () => {
         const inputEl = document.getElementById("aiOutcomeChatInput");
-        if (!inputEl || inputEl.disabled) return;
+        if (!inputEl) return;
         const val = inputEl.value.trim();
         if (!val) {
           showToast("AIへの要望（「もっと短くして」「〇〇に変えて」など）を入力してください");
@@ -3364,32 +3341,33 @@ ${historyText}
       // ビコーズ（ステップ4）用のAI対話生成
       function buildEvidencesFromUserRequest(slot, reqText) {
         const rawReq = (reqText || "").trim();
+        const parsed = parseUserInstruction(rawReq);
         let currentBase = slot.evidence || "";
         let aiReply = "";
-
-        const replaceMatch = rawReq.match(/([^、。！？\s]+?)(?:ではなくて|ではなく|じゃなくて|じゃなく|から)([^、。！？\s]+?)(?:に変えて|にして|へ変えて|に修正|に|へ|を|$)/);
-        let coreTopic = rawReq
-          .replace(/(?:もっと|さらに|少し|ちょっと)/g, "")
-          .replace(/(?:にしてください|してください|にして|に変えて|へ変えて|を入れて|を追加して|を強調して|を根拠にして|でお願いします|から)$/g, "")
-          .trim();
 
         let cand1 = currentBase;
         let cand2 = "";
         let cand3 = "";
 
-        if (replaceMatch) {
-          const oldW = replaceMatch[1].trim();
-          const newW = replaceMatch[2].replace(/(?:に変えて|にして|を入れ).*$/, "").trim();
-          cand1 = currentBase.includes(oldW)
-            ? currentBase.split(oldW).join(newW)
-            : `${newW}を徹底し、お客様一人ひとりが心から満足できる環境を整えているから。`;
-          cand2 = `${newW}をはじめ、細部まで妥協しない受け入れ体制を日々実践しているから。`;
-          cand3 = `他にはない「${newW}」という明確なこだわりがあり、多くのお客様から支持されているから。`;
-          aiReply = `根拠を「${oldW}」から「${newW}」に変更した3パターンのビコーズを作成しました！`;
+        if (parsed.type === "replace") {
+          const { oldWord, newWord } = parsed;
+          cand1 = currentBase.includes(oldWord)
+            ? currentBase.split(oldWord).join(newWord)
+            : `${newW}を徹底し、お客様一人ひとりが心から満足できる環境を整えているから。`.replace("${newW}", newWord);
+          cand2 = `${newWord}をはじめ、細部まで妥協しない受け入れ体制を日々実践しているから。`;
+          cand3 = `他にはない「${newWord}」という明確なこだわりがあり、多くのお客様から支持されているから。`;
+          aiReply = `根拠を「${oldWord}」から「${newWord}」に変更した3パターンのビコーズを作成しました！`;
+        } else if (parsed.type === "negation") {
+          const badWord = parsed.targetWord;
+          const cleaned = removeClausesContaining(currentBase, badWord);
+          cand1 = cleaned || `温泉街の喧騒から離れた自然豊かな清流沿いに佇み、客室数を抑えた静かで落ち着いた空間でゆったり過ごせる環境があるから。`;
+          cand2 = `都会の騒音から離れた静かな自然環境と、お客様一人ひとりのプライベートな時間を大切にする心地よい距離感のおもてなしがあるから。`;
+          cand3 = `豊かな自然に囲まれた静かな立地と、気兼ねなく自分のペースでくつろげる落ち着いた館内環境を整えているから。`;
+          aiReply = `ご指摘ありがとうございます！「${badWord}」に関する記述を完全に削除し、静かな自然環境と落ち着いた空間が伝わるビコーズ（根拠）に書き換えました！`;
         } else if (rawReq.includes("短く") || rawReq.includes("シンプル")) {
-          cand1 = `長年の経験に基づく独自のこだわりと、一人ひとりに寄り添う丁寧な受け入れ体制があるから。`;
+          cand1 = `自然豊かな静かな環境と、一人ひとりに寄り添う丁寧な受け入れ体制があるから。`;
           cand2 = `妥協のない環境づくりを徹底し、多くのお客様から高い評価とリピートをいただいているから。`;
-          cand3 = `${currentBase.split("、")[0]}をはじめ、安心してお任せいただける確かな実績があるから。`;
+          cand3 = `静かにくつろげる空間と、安心してお任せいただける確かなおもてなしがあるから。`;
           aiReply = `説得力を保ちながら、短くシンプルなビコーズ（根拠）に要約しました！`;
         } else if (rawReq.includes("丁寧な対応") || rawReq.includes("おもてなし") || rawReq.includes("工夫")) {
           cand1 = `豪華な設備頼みではなく、お客様一人ひとりのご要望に親身に寄り添う丁寧な対応と現場の工夫を徹底しているから。`;
@@ -3402,10 +3380,11 @@ ${historyText}
           cand3 = `創業以来積み重ねてきた確かな実績と、お客様からの厚い信頼・紹介が絶えないから。`;
           aiReply = `「口コミ評価・リピーター実績（知覚の根拠）」を組み込んだビコーズに更新しました！`;
         } else {
-          cand1 = `${coreTopic}を実現しており、お客様に心から満足していただける独自の環境と体制を整えているから。`;
+          const coreTopic = parsed.coreTopic;
+          cand1 = `${coreTopic}を大切にし、お客様が気兼ねなく心からくつろげる環境と受け入れ体制を整えているから。`;
           cand2 = `${currentBase.replace(/から。?$/, "")}に加え、${coreTopic}という確かな裏づけがあるから。`;
-          cand3 = `他社には真似できない「${coreTopic}」への徹底したこだわりがあるから。`;
-          aiReply = `ご要望の「${coreTopic}」を根拠（なぜなら）に組み込んだ3案を作成し、反映しました！`;
+          cand3 = `他社には真似できない「${coreTopic}」への丁寧なこだわりがあるから。`;
+          aiReply = `ご要望の「${coreTopic}」を根拠（なぜなら）に反映した3案を作成しました！`;
         }
 
         const newCandidates = [
@@ -3421,40 +3400,40 @@ ${historyText}
         const cleanReq = (reqText || "").trim();
         if (!cleanReq) return;
 
+        // 入力欄は即座にクリアする（入力欄の中にAIステータスメッセージを書かない！）
         const inputEl = document.getElementById("aiEvidenceChatInput");
-        if (inputEl) {
-          inputEl.disabled = true;
-          inputEl.value = "🤖 AIが要望の文脈を理解してビコーズを作成しています（数秒お待ちください）…";
-        }
-        showToast("🤖 AIがあなたの要望を分析してビコーズを書き換えています…");
+        if (inputEl) inputEl.value = "";
 
         slot.previousEvidence = slot.evidence;
 
-        try {
-          const aiData = await callRealAiChat("evidence", slot, cleanReq, slot.evidenceChatHistory || []);
-          if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length > 0) {
-            slot.evidence = aiData.candidates[0].body;
-            slot.evidenceCandidates = aiData.candidates;
-            if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
-            slot.evidenceChatHistory.push({
-              user: cleanReq,
-              ai: aiData.reply || "ご要望を踏まえて、ビコーズ（根拠）を新しく書き換えました！"
-            });
-          } else {
-            throw new Error("Invalid AI response");
-          }
-        } catch (err) {
-          const { newCandidates, bestEvidence, aiReply } = buildEvidencesFromUserRequest(slot, cleanReq);
-          slot.evidence = bestEvidence;
-          slot.evidenceCandidates = newCandidates;
-          if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
-          slot.evidenceChatHistory.push({ user: cleanReq, ai: aiReply });
-        }
+        // 1. まず即座に否定削除・要望反映を実行して0秒で画面に反映
+        const instantResult = buildEvidencesFromUserRequest(slot, cleanReq);
+        slot.evidence = instantResult.bestEvidence;
+        slot.evidenceCandidates = instantResult.newCandidates;
+        if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
+        const chatEntry = { user: cleanReq, ai: instantResult.aiReply };
+        slot.evidenceChatHistory.push(chatEntry);
 
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("✨ AIがご要望に合わせて「ビコーズ（根拠）」を書き換えました！");
+        showToast("✨ ご要望に合わせて「ビコーズ（根拠）」を書き換えました！");
+
+        // 2. バックグラウンドでLLMからも自然な文章を取得（文末が「〜から。」の正しい形式かつ否定語を含まない場合のみ更新）
+        try {
+          const aiData = await callRealAiChat("evidence", slot, cleanReq, slot.evidenceChatHistory);
+          if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length === 3) {
+            const c0 = aiData.candidates[0]?.body || "";
+            if (c0.endsWith("から。") && !c0.includes("12歳")) {
+              slot.evidence = c0;
+              slot.evidenceCandidates = aiData.candidates;
+              if (aiData.reply) chatEntry.ai = aiData.reply;
+              saveState();
+              renderQuestionPanel();
+              renderStrategyBoard();
+            }
+          }
+        } catch (_) {}
       };
 
       window.submitEvidenceChatInput = () => {
