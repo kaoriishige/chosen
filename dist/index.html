@@ -1759,6 +1759,7 @@
       let state = {
         currentStep: 0,
         selectedSlotIndex: 0, // 現在右側プレビューや個別編集にフォーカスしているスロット（0〜4）
+        editingSlotIndex: null, // カード内インライン編集が開いているスロット（nullなら全て閉じた状態）
         answers: {
           industryFamily: "宿泊・観光・温泉旅館",
           companyWebsiteUrl: "",
@@ -1816,6 +1817,7 @@
             }
           }
           state.answers.slots = sanitizeSlots(state.answers.slots);
+          state.editingSlotIndex = null;
         } catch (e) {
           console.warn("Storage load error:", e);
         }
@@ -2028,11 +2030,12 @@
               </div>
             </div>
 
-            <!-- 5つの切り口カード一覧（各カードで順位変更可能） -->
+            <!-- 5つの切り口カード一覧（各カードで順位変更・その場で手直し可能） -->
             <div class="cut-cards-container">
               ${state.answers.slots.map((s, idx) => {
                 const isP1 = s.priority === 1;
                 const isSelected = idx === state.selectedSlotIndex;
+                const isEditing = idx === state.editingSlotIndex;
                 const roleInfo = PRIORITY_MARKETING_ROLES[s.priority] || { label: `第${s.priority}優先`, role: s.marketingRole, desc: "" };
 
                 return `
@@ -2089,56 +2092,66 @@
                       </div>
                     </div>
 
+                    ${isEditing ? `
+                      <!-- カード内インライン編集フォーム（ボタンを押した時だけその場に開く） -->
+                      <div style="margin-top:8px; background:var(--surface-alt); border:1.5px solid var(--teal); border-radius:10px; padding:14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                          <h4 style="margin:0; font-size:0.88rem; color:var(--teal-dark);">
+                            ✏️ この切り口の文章を手直し（入力すると自動保存されます）
+                          </h4>
+                          <button type="button" class="ai-adopt-btn" style="flex:none; padding:4px 12px;" onclick="window.toggleEditSlot(${idx})">
+                            ✓ 編集を閉じる
+                          </button>
+                        </div>
+                        <div class="form-group" style="margin-bottom:8px;">
+                          <label class="form-label" style="font-size:0.78rem;">切り口のテーマ名</label>
+                          <input type="text" id="slotTitleInput" class="form-input" value="${escapeHtml(s.title)}" />
+                        </div>
+                        <div class="form-group" style="margin-bottom:8px;">
+                          <label class="form-label" style="font-size:0.78rem;">この切り口の使い道（マーケティング用途）</label>
+                          <input type="text" id="slotRoleInput" class="form-input" value="${escapeHtml(s.marketingRole)}" />
+                        </div>
+                        <div class="form-group" style="margin-bottom:8px;">
+                          <label class="form-label" style="font-size:0.78rem;">🔍 顧客の洞察（普段の悩み・避けたい不安）</label>
+                          <textarea id="slotFrictionInput" class="form-textarea" style="min-height:60px;">${escapeHtml(s.friction)}</textarea>
+                        </div>
+                        <div class="form-group" style="margin-bottom:8px;">
+                          <label class="form-label" style="font-size:0.78rem;">✨ 顧客が望む理想状態</label>
+                          <textarea id="slotDesiredInput" class="form-textarea" style="min-height:60px;">${escapeHtml(s.desired)}</textarea>
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label" style="font-size:0.78rem;">🎯 だから選ぶべき「理想の顧客（誰に）」</label>
+                          <textarea id="slotTargetInput" class="form-textarea" style="min-height:60px;">${escapeHtml(s.target)}</textarea>
+                        </div>
+                      </div>
+                    ` : ''}
+
                     <!-- アクションバー -->
                     <div class="cut-card-actions">
                       <div style="font-size:0.75rem; color:var(--muted);">
-                        ${isP1 ? '👑 公式サイトTOP・名刺のメインコンセプトとして反映中' : '専用LP・特定ニーズ向けとして保持'}
+                        ${isP1 ? '👑 公式サイトTOP・名刺のメイン看板として反映中' : `第${s.priority}優先の切り口として保持`}
                       </div>
-                      <div style="display:flex; gap:8px;">
+                      <div style="display:flex; gap:8px; flex-wrap:wrap;">
                         ${!isP1 ? `
                           <button type="button" class="set-p1-btn" onclick="window.changeSlotPriority(${idx}, 1)">
-                            ★ この切り口を第1優先にする
+                            ★ 第1優先（メイン看板）にする
                           </button>
                         ` : `
                           <span style="font-size:0.78rem; font-weight:800; color:#b45309; background:#fef3c7; padding:5px 12px; border-radius:6px; border:1px solid #d97706;">
                             👑 メイン看板に設定中
                           </span>
                         `}
-                        <button type="button" class="ai-adopt-btn" style="flex:none; padding:6px 12px;" onclick="window.focusSlot(${idx})">
-                          ✏️ この切り口の内容を編集
+                        <button type="button" class="ai-append-btn" style="padding:6px 12px; font-weight:700; ${isEditing ? 'background:var(--teal); color:#fff; border-color:var(--teal);' : ''}" onclick="window.toggleEditSlot(${idx})">
+                          ${isEditing ? '✓ 手直しを閉じる' : '✏️ 文章を手直しする'}
+                        </button>
+                        <button type="button" class="ai-adopt-btn" style="flex:none; padding:6px 12px;" onclick="window.goToStepAndSlot(2, ${idx})">
+                          👉 この切り口の成果・根拠を確認 →
                         </button>
                       </div>
                     </div>
                   </div>
                 `;
               }).join("")}
-            </div>
-
-            <!-- 選択中切り口の直接編集エリア -->
-            <div class="form-group" style="margin-top:20px; background:var(--surface-alt); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <h4 style="margin:0 0 10px; font-size:0.92rem; color:var(--ink);">
-                ✏️ 選択中切り口（${escapeHtml(slot.title)}）の詳細微調整
-              </h4>
-              <div class="form-group">
-                <label class="form-label">切り口のテーマ名</label>
-                <input type="text" id="slotTitleInput" class="form-input" value="${escapeHtml(slot.title)}" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">この切り口のマーケティング用途（使い道）</label>
-                <input type="text" id="slotRoleInput" class="form-input" value="${escapeHtml(slot.marketingRole)}" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">顧客の悩み・避けたい不安（摩擦）</label>
-                <textarea id="slotFrictionInput" class="form-textarea">${escapeHtml(slot.friction)}</textarea>
-              </div>
-              <div class="form-group">
-                <label class="form-label">顧客が本当に望む理想状態</label>
-                <textarea id="slotDesiredInput" class="form-textarea">${escapeHtml(slot.desired)}</textarea>
-              </div>
-              <div class="form-group">
-                <label class="form-label">理想の顧客像（誰に）</label>
-                <textarea id="slotTargetInput" class="form-textarea">${escapeHtml(slot.target)}</textarea>
-              </div>
             </div>
           `;
         }
@@ -2802,6 +2815,23 @@
         renderQuestionPanel();
         renderStrategyBoard();
         showToast(`切り口${slotIdx + 1}: ${state.answers.slots[slotIdx].title} に切り替えました`);
+      };
+
+      // 各カード内で「文章を手直しする」を開閉する
+      window.toggleEditSlot = (slotIdx) => {
+        if (state.editingSlotIndex === slotIdx) {
+          state.editingSlotIndex = null;
+          saveState();
+          renderQuestionPanel();
+          renderStrategyBoard();
+          showToast("✓ 手直し内容を保存して閉じました");
+        } else {
+          state.selectedSlotIndex = slotIdx;
+          state.editingSlotIndex = slotIdx;
+          saveState();
+          renderQuestionPanel();
+          renderStrategyBoard();
+        }
       };
 
       window.goToStepAndSlot = (stepIdx, slotIdx) => {
