@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="AIに正確に理解され、人にも選ばれるための戦略AI。ビコーズ・フレームワーク公式ロジックに基づき、誰に・どんな成果を・なぜ提供できるのかを整理して選ばれる理由を自動生成します。" />
+  <meta name="description" content="AIに正確に理解され、人にも選ばれるための戦略AI。ビコーズ・フレームワーク公式ロジックに基づき、複数の切り口から5つのビコーズを導き出し、優先順位をつけて選ばれる理由を自動生成します。" />
   <meta name="theme-color" content="#0b1528" />
-  <title>選ばれる理由AI | ビコーズ・フレームワーク実践システム</title>
+  <title>選ばれる理由AI | 5つの切り口＆ビコーズ・フレームワーク</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1528'/%3E%3Cpath d='M17 18h30v9H28v6h15v9H28v4h19v9H17z' fill='%232dd4bf'/%3E%3C/svg%3E" />
   <style>
     :root {
@@ -58,7 +58,7 @@
 
     /* ヘッダー */
     .topbar {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
       padding: 12px 24px;
@@ -92,7 +92,7 @@
 
     .brand h1 {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--ink);
@@ -152,7 +152,7 @@
     .hero-banner {
       background: linear-gradient(135deg, #0b1528 0%, #172554 50%, #0f766e 100%);
       color: #ffffff;
-      padding: 36px 24px 32px;
+      padding: 34px 24px 30px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -185,7 +185,7 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
     .hero-title {
-      font-size: 1.85rem;
+      font-size: 1.8rem;
       font-weight: 900;
       margin: 0 0 10px;
       line-height: 1.35;
@@ -197,10 +197,10 @@
       -webkit-text-fill-color: transparent;
     }
     .hero-subtitle {
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       color: #cbd5e1;
-      margin: 0 auto 24px;
-      max-width: 720px;
+      margin: 0 auto 20px;
+      max-width: 760px;
       line-height: 1.55;
     }
 
@@ -212,7 +212,7 @@
       margin-top: 18px;
       text-align: left;
     }
-    @media (max-width: 860px) {
+    @media (max-width: 880px) {
       .hero-flow-steps { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     }
     @media (max-width: 520px) {
@@ -222,7 +222,7 @@
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 10px;
-      padding: 10px 10px;
+      padding: 10px;
       transition: all .2s;
       cursor: pointer;
     }
@@ -257,15 +257,15 @@
     /* メインワークスペース（3カラム） */
     .workspace {
       display: grid;
-      grid-template-columns: 260px 1fr 380px;
+      grid-template-columns: 250px 1fr 400px;
       gap: 20px;
-      max-width: 1560px;
+      max-width: 1600px;
       width: 100%;
       margin: 20px auto;
       padding: 0 20px 40px;
       flex: 1;
     }
-    @media (max-width: 1240px) {
+    @media (max-width: 1280px) {
       .workspace { grid-template-columns: 240px 1fr; }
       .strategy-panel { grid-column: span 2; }
     }
@@ -410,6 +410,167 @@
       color: var(--muted);
       margin: 0;
       line-height: 1.55;
+    }
+
+    /* 切り口（スロット）タブバー */
+    .slot-tabs-bar {
+      display: flex;
+      gap: 6px;
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px;
+      overflow-x: auto;
+    }
+    .slot-tab-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      text-align: left;
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: all .2s;
+      cursor: pointer;
+    }
+    .slot-tab-btn:hover {
+      background: #ffffff;
+      color: var(--ink);
+    }
+    .slot-tab-btn.active {
+      background: #ffffff;
+      border-color: var(--teal);
+      color: var(--teal-dark);
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+    .slot-tab-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .slot-tab-badge.p1 { background: #fef3c7; color: #b45309; }
+    .slot-tab-badge.sub { background: #e0f2fe; color: #0369a1; }
+
+    /* 5つの切り口カード（ステップ2専用） */
+    .cut-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .cut-card {
+      background: #ffffff;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all .2s;
+      position: relative;
+    }
+    .cut-card.is-priority1 {
+      border-color: var(--amber);
+      background: linear-gradient(180deg, #fffbeb, #ffffff);
+      box-shadow: 0 4px 14px rgba(217, 119, 6, .12);
+    }
+    .cut-card.is-active {
+      border-color: var(--teal);
+    }
+    .cut-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cut-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cut-priority-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .cut-priority-badge.p1 {
+      background: #d97706;
+      color: #ffffff;
+    }
+    .cut-priority-badge.sub {
+      background: var(--sky-soft);
+      color: var(--sky);
+    }
+    .cut-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0;
+    }
+    .cut-market-role {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .cut-body-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: var(--surface-alt);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    @media (max-width: 680px) {
+      .cut-body-grid { grid-template-columns: 1fr; }
+    }
+    .cut-block-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .cut-block-text {
+      font-size: 0.85rem;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .cut-card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line-subtle);
+      padding-top: 10px;
+    }
+    .set-p1-btn {
+      background: #fef3c7;
+      border: 1px solid #d97706;
+      color: #b45309;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .set-p1-btn:hover {
+      background: #d97706;
+      color: #ffffff;
+    }
+    .set-p1-btn.active {
+      background: #d97706;
+      color: #ffffff;
+      cursor: default;
     }
 
     /* 入力フォーム共通 */
@@ -577,7 +738,7 @@
       color: var(--muted);
     }
 
-    /* ★AI提案セクション（各ステップ共通） */
+    /* ★AI提案セクション */
     .ai-suggest-section {
       background: linear-gradient(135deg, #f8fafc, #f1f5f9);
       border: 1px solid #cbd5e1;
@@ -705,29 +866,7 @@
       border-color: var(--ink-soft);
     }
 
-    /* 17のテクニック（ステップ5専用タブ＆バッジ） */
-    .technique-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 8px;
-      flex-wrap: wrap;
-    }
-    .technique-tab {
-      background: transparent;
-      border: 1px solid transparent;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--muted);
-      transition: all .2s;
-    }
-    .technique-tab.active {
-      background: var(--teal);
-      color: #ffffff;
-    }
+    /* 17のテクニック（ステップ4専用） */
     .technique-card {
       border-left: 4px solid var(--teal);
     }
@@ -735,7 +874,7 @@
     .technique-card.perceived { border-left-color: #d97706; }
     .technique-card.created { border-left-color: #16a34a; }
 
-    /* 後半3つのアクション（ステップ6専用カード） */
+    /* 後半3つのアクション（ステップ5専用） */
     .action-step-card {
       background: #ffffff;
       border: 1px solid var(--line);
@@ -860,7 +999,7 @@
       text-underline-offset: 4px;
     }
 
-    /* ビコーズ・マトリクス表 */
+    /* ビコーズ・マトリクス表（5スロット比較一覧） */
     .matrix-card {
       background: #ffffff;
       border: 1px solid var(--line);
@@ -876,59 +1015,36 @@
       align-items: center;
       justify-content: space-between;
     }
-    .matrix-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-    }
-    .matrix-table th {
-      background: var(--surface-alt);
-      color: var(--muted);
-      font-weight: 700;
-      text-align: left;
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--line);
-    }
-    .matrix-table td {
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--line-subtle);
-      color: var(--ink);
-      vertical-align: top;
-    }
-    .matrix-table tr:last-child td { border-bottom: none; }
-
-    /* 後半アクション要約 */
-    .actions-summary-card {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
+    .matrix-slot-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .actions-summary-card h3 {
-      margin: 0;
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--ink);
+    .matrix-slot-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all .2s;
     }
-    .action-item-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 0.8rem;
+    .matrix-slot-item:hover {
+      border-color: var(--teal);
+      background: var(--teal-light);
     }
-    .action-icon-badge {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
+    .matrix-slot-item.is-active {
+      border-color: var(--teal);
+      background: #f0fdfa;
+      box-shadow: 0 2px 6px rgba(13, 148, 136, .1);
+    }
+    .matrix-slot-item.is-p1 {
+      border-left: 4px solid var(--amber);
+    }
+    .matrix-slot-head {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      font-size: 0.72rem;
-      font-weight: 800;
-      flex-shrink: 0;
+      margin-bottom: 4px;
     }
 
     /* プロンプト＆エクスポート */
@@ -995,7 +1111,6 @@
       opacity: 1;
     }
 
-    /* ユーティリティ */
     .text-muted { color: var(--muted); }
     .fw-bold { font-weight: 700; }
   </style>
@@ -1009,13 +1124,13 @@
         <div>
           <h1>
             選ばれる理由AI
-            <span class="brand-badge">公式ビコーズ・フレームワーク準拠</span>
+            <span class="brand-badge">5つの切り口＆ビコーズ・フレームワーク</span>
           </h1>
         </div>
       </div>
       <div class="topbar-actions">
-        <button id="sampleRyokanBtn" type="button" class="sample-btn" title="温泉旅館の成功モデルを読み込みます">♨️ 旅館サンプル</button>
-        <button id="sampleBtobBtn" type="button" class="sample-btn" title="BtoBサービスの成功モデルを読み込みます">💼 BtoBサンプル</button>
+        <button id="sampleRyokanBtn" type="button" class="sample-btn" title="温泉旅館の5つの切り口モデルを読み込みます">♨️ 旅館サンプル</button>
+        <button id="sampleBtobBtn" type="button" class="sample-btn" title="BtoBサービスの5つの切り口モデルを読み込みます">💼 BtoBサンプル</button>
         <button id="resetAllBtn" type="button" class="reset-btn" title="すべての入力をリセットします">🗑 回答リセット</button>
       </div>
     </header>
@@ -1023,13 +1138,13 @@
     <!-- ヒーローフローバナー（6つのステップ） -->
     <section class="hero-banner">
       <div class="hero-content">
-        <div class="hero-tag">✨ 質問に答えるだけ！AIが洞察・顧客・成果・17のビコーズ・後半3アクションを提案</div>
+        <div class="hero-tag">✨ URLからAIが5つの切り口を自動生成 ＆ 優先順位をつけて勝つ</div>
         <h2 class="hero-title">
-          あなたの商品がどうしても欲しいと思わせる、<br>
-          <span>「選ばれる理由（コンセプト）」</span>を作る。
+          顧客ごとの洞察から<span>「5つの切り口のビコーズ」</span>を創り出し、<br>
+          優先順位をつけて選ばれる理由を確立する。
         </h2>
         <p class="hero-subtitle">
-          『顧客を買う気にさせる ビコーズ・フレームワーク』完全準拠。質問に答えるだけで、AIが顧客の深層心理と強力な根拠を提案し、プロフェッショナルなコンセプトが自動で完成します。
+          『顧客を買う気にさせる ビコーズ・フレームワーク』完全準拠。店舗・企業の強みを多角的に洗い出し、メインの看板（第1優先）からセグメント別の専用ビコーズまで一網打尽に整理します。
         </p>
 
         <!-- 6ステップ ナビゲーションバー -->
@@ -1061,13 +1176,13 @@
       <aside class="panel strategy-panel" aria-label="完成した戦略ボード">
         <div class="panel-header">
           <h2>🎯 選ばれる理由ボード</h2>
-          <p>リアルタイムにコンセプトが組み上がります</p>
+          <p>第1優先（本命）および各切り口のステートメント</p>
         </div>
 
-        <!-- ① ビコーズ公式インフルエンスステートメント -->
+        <!-- ① ビコーズ公式インフルエンスステートメント（第1優先メイン） -->
         <div class="influence-card">
           <div class="influence-header">
-            <span class="influence-badge">公式インフルエンスステートメント</span>
+            <span class="influence-badge" id="influenceBadgeLabel">★ 第1優先（メイン看板）</span>
             <button id="copyInfluenceBtn" type="button" class="copy-btn">📋 コピー</button>
           </div>
           <p class="influence-text" id="influenceText">
@@ -1075,51 +1190,32 @@
           </p>
         </div>
 
-        <!-- ② ビコーズ・マトリクス（要素整理表） -->
+        <!-- ② ビコーズ・マトリクス（5つの切り口一覧表） -->
         <div class="matrix-card">
           <h3>
-            <span>📊 ビコーズ・マトリクス</span>
+            <span>📊 5つの切り口マトリクス</span>
             <button id="copyMatrixBtn" type="button" class="copy-btn" style="color:var(--ink-soft); border-color:var(--line); background:var(--surface);">📋 Markdown</button>
           </h3>
-          <table class="matrix-table">
-            <tbody>
-              <tr>
-                <th style="width: 32%;">① 誰に<br><small>(理想顧客)</small></th>
-                <td id="matrixTarget" style="font-weight: 600;">未入力</td>
-              </tr>
-              <tr>
-                <th>② どんな成果を<br><small>(約束成果)</small></th>
-                <td id="matrixOutcome">未入力</td>
-              </tr>
-              <tr>
-                <th>③ なぜ提供できるか<br><small>(信頼のビコーズ)</small></th>
-                <td id="matrixEvidence">未入力</td>
-              </tr>
-            </tbody>
-          </table>
+          <p style="font-size:0.75rem; color:var(--muted); margin:0 0 10px;">クリックすると右上のプレビューがその切り口に切り替わります。</p>
+          <div class="matrix-slot-list" id="matrixSlotList">
+            <!-- JSでリアルタイム生成 -->
+          </div>
         </div>
 
         <!-- ③ 後半3つのアクション実行サマリー -->
-        <div class="actions-summary-card">
-          <h3>🚀 後半3つのアクション実行ボード</h3>
-          <div class="action-item-row">
-            <div class="action-icon-badge" style="background:#fef3c7; color:#b45309;">1</div>
+        <div class="export-box">
+          <h3>🚀 後半3つのアクション実行サマリー</h3>
+          <div style="font-size:0.78rem; display:flex; flex-direction:column; gap:6px;">
             <div>
-              <strong style="display:block; font-size:0.78rem;">イノベーション創出:</strong>
+              <strong style="color:#b45309;">① イノベーション:</strong>
               <span id="summaryInnovation" class="text-muted">未設定</span>
             </div>
-          </div>
-          <div class="action-item-row">
-            <div class="action-icon-badge" style="background:#e0f2fe; color:#0369a1;">2</div>
             <div>
-              <strong style="display:block; font-size:0.78rem;">プラットフォーム構築:</strong>
+              <strong style="color:#0369a1;">② プラットフォーム:</strong>
               <span id="summaryPlatform" class="text-muted">未設定</span>
             </div>
-          </div>
-          <div class="action-item-row">
-            <div class="action-icon-badge" style="background:#dcfce7; color:#15803d;">3</div>
             <div>
-              <strong style="display:block; font-size:0.78rem;">全接点での実行:</strong>
+              <strong style="color:#15803d;">③ 全接点実行:</strong>
               <span id="summaryTouchpoint" class="text-muted">未設定</span>
             </div>
           </div>
@@ -1128,7 +1224,7 @@
         <!-- ④ AIプロンプト＆戦略ブリーフ出力 -->
         <div class="export-box">
           <h3>🤖 AI引き継ぎ＆戦略ブリーフ</h3>
-          <p style="margin:0; font-size:0.76rem; color:var(--muted);">ChatGPTやClaudeに渡してLP原稿・営業資料・FAQを一発作成できます。</p>
+          <p style="margin:0; font-size:0.76rem; color:var(--muted);">ChatGPTやClaudeに渡して、メイン看板LPやセグメント専用ページ、AI検索用FAQを作成できます。</p>
           <div class="export-btns">
             <button id="copyPromptBtn" type="button" class="export-btn">📋 AI用プロンプトをコピー</button>
             <button id="copyBriefBtn" type="button" class="export-btn">📄 戦略ブリーフをコピー</button>
@@ -1145,9 +1241,9 @@
     (() => {
       "use strict";
 
-      const STORAGE_KEY = "because-framework-v2";
+      const STORAGE_KEY = "because-framework-5slots-v1";
 
-      // 6つのステップ定義（ユーザー要求・書籍完全準拠）
+      // 6つのステップ定義
       const STAGES = [
         {
           id: "step1",
@@ -1155,53 +1251,53 @@
           title: "業種と公式ホームページURLの入力",
           shortName: "業種・公式HP",
           tag: "STEP 1: 事業概要の特定",
-          desc: "あなたの事業の業種を選択し、公式ホームページのURLを入力してください。URLを入力すると、サイトの事業内容・会社名・商品サービスの特徴を自動解析して反映します。",
+          desc: "事業の業種を選択し、公式ホームページのURLを入力してください。URLから事業内容や特徴を自動解析し、5つの切り口を生成します。",
           icon: "🏢"
         },
         {
           id: "step2",
           num: "2",
-          title: "顧客についての洞察を考える",
-          shortName: "顧客の洞察",
-          tag: "STEP 2: 顧客の深層心理（書籍 STEP 2）",
-          desc: "顧客が普段感じている『避けたい不安・摩擦・失敗』と、『本当に得たい理想の状態』を言語化します。AIも業種と事業内容から深い洞察を考えて提案します。",
-          icon: "🔍"
+          title: "5つの切り口（洞察 × 理想顧客）と優先順位",
+          shortName: "5つの切り口",
+          tag: "STEP 2: 洞察と顧客の切り口選定",
+          desc: "顧客の悩み（洞察）によって『誰』が変わります。AIが提示した5つの切り口から、自社の本命（第1優先）を選定し、サブ展開の優先順位をつけます。",
+          icon: "🎯"
         },
         {
           id: "step3",
           num: "3",
-          title: "あなたにとって、理想的な顧客とは？",
-          shortName: "理想的な顧客",
-          tag: "STEP 3: 本命ターゲットの特定（書籍 STEP 1）",
-          desc: "『理想的な顧客をあぶり出す12個の問い』に基づき、自社の強みを最も評価し、最高の価値を届けられる本命のお客様を決めます。AIも理想の顧客像を考えて提案します。",
-          icon: "🎯"
+          title: "顧客に対して約束できる成果は？",
+          shortName: "約束できる成果",
+          tag: "STEP 3: 約束できる成果（書籍 STEP 3）",
+          desc: "選んだ切り口ごとに、顧客が手に入れる具体的な変化・嬉しい結果・ベネフィットを言語化します。AIも成果を考えて提案します。",
+          icon: "🎁"
         },
         {
           id: "step4",
           num: "4",
-          title: "顧客に対して約束できる成果は？",
-          shortName: "約束できる成果",
-          tag: "STEP 4: 約束できる成果（書籍 STEP 3）",
-          desc: "単なる商品の機能やスペックではなく、理想の顧客が手に入れる『具体的な変化・嬉しい結果・ベネフィット』を定めます。AIも成果を考えて提案します。",
-          icon: "🎁"
+          title: "顧客の信頼に足るビコーズは？",
+          shortName: "信頼に足るビコーズ",
+          tag: "STEP 4: 17のテクニック（書籍 STEP 4）",
+          desc: "なぜその成果を提供できるのか？17のテクニック（体系的・知覚・生み出された根拠）から各切り口に最適なビコーズをAIが提案します。",
+          icon: "🛡️"
         },
         {
           id: "step5",
           num: "5",
-          title: "顧客の信頼に足るビコーズは？",
-          shortName: "信頼に足るビコーズ",
-          tag: "STEP 5: 17のテクニック（書籍 STEP 4）",
-          desc: "なぜその成果を提供できるのか？ビコーズを創り出す17のテクニック（体系的な根拠・知覚される根拠・生み出された根拠）からAIが最適なビコーズを提案します。",
-          icon: "🛡️"
+          title: "ビコーズ・フレームワーク（後半）３つのアクション",
+          shortName: "後半3つのアクション",
+          tag: "STEP 5: 後半3つのアクション（書籍 STEP 5, 6, 7）",
+          desc: "『イノベーション創出』『ビコーズ・プラットフォーム構築』『あらゆる顧客接点で実行』の3つのアクションからAIがビコーズを創出します。",
+          icon: "🚀"
         },
         {
           id: "step6",
           num: "6",
-          title: "ビコーズ・フレームワーク（後半）３つのアクション",
-          shortName: "後半3つのアクション",
-          tag: "STEP 6: 後半3つのアクション（書籍 STEP 5, 6, 7）",
-          desc: "『イノベーション創出』『ビコーズ・プラットフォーム構築』『あらゆる顧客接点で実行』の3つのアクションから、AIが選ばれ続けるビコーズを創り出して提案します。",
-          icon: "🚀"
+          title: "ビコーズ・マトリクス完成＆マーケティング展開計画",
+          shortName: "マトリクス完成",
+          tag: "STEP 6: 戦略統合と優先順位マーケティング",
+          desc: "5つの切り口のビコーズを一枚のマトリクスに統合。看板（第1優先）から専用LP・AI検索（Perplexity/ChatGPT等）までの展開プランが完成します。",
+          icon: "📊"
         }
       ];
 
@@ -1222,19 +1318,19 @@
 
       // 書籍準拠：ビコーズを創り出す17のテクニック
       const SEVENTEEN_TECHNIQUES = [
-        // 体系的な根拠（4種）
+        // 体系的な根拠
         { id: "tech_process", category: "systematic", categoryName: "体系的な根拠", num: 1, name: "独自のプロセス、システム、方法論", summary: "再現性のある独自の工程・診断フロー・ステップ管理によりブレずに成果を出す仕組み。" },
         { id: "tech_tech", category: "systematic", categoryName: "体系的な根拠", num: 2, name: "独自の技術", summary: "他社が真似できない高度な専門技術、特許技術、特殊設備、独自ノウハウ。" },
         { id: "tech_materials", category: "systematic", categoryName: "体系的な根拠", num: 3, name: "独自の配合、材料、素材", summary: "厳選された天然素材、独自の調合比率、契約農家直送などの希少素材。" },
         { id: "tech_cert", category: "systematic", categoryName: "体系的な根拠", num: 4, name: "品質証明、試験プロセス、認証", summary: "第三者機関による実証実験、ISO等の認証取得、厳しい品質基準のクリア。" },
-        // 知覚される根拠（6種）
+        // 知覚される根拠
         { id: "tech_heritage", category: "perceived", categoryName: "知覚される根拠", num: 5, name: "ヘリテージ（伝統・歴史・実績）", summary: "創業年数、受け継がれた歴史、累計実績数、長年の地域での信頼。" },
         { id: "tech_philosophy", category: "perceived", categoryName: "知覚される根拠", num: 6, name: "企業哲学・理念", summary: "創業者の強い信念、絶対に妥協しない想い、顧客と社会に対する誓い。" },
         { id: "tech_craftsmanship", category: "perceived", categoryName: "知覚される根拠", num: 7, name: "クラフトマンシップ（こだわり・職人技）", summary: "熟練の職人による手仕事、細部まで妥協しない仕込みと丁寧な仕上がり。" },
         { id: "tech_social", category: "perceived", categoryName: "知覚される根拠", num: 8, name: "社会的根拠（ソーシャルプルーフ）", summary: "多数のお客様の声、口コミ高評価（星4.8以上）、メディア・TV・雑誌掲載。" },
         { id: "tech_visual", category: "perceived", categoryName: "知覚される根拠", num: 9, name: "視覚的根拠", summary: "一目でわかるビフォーアフター写真、実演動画、作業工程の完全オープン化。" },
         { id: "tech_third_party", category: "perceived", categoryName: "知覚される根拠", num: 10, name: "第三者による裏づけのある信頼性", summary: "専門家や大学教授の推薦・監修、業界アワード受賞、公的機関の表彰。" },
-        // 生み出された根拠（7種）
+        // 生み出された根拠
         { id: "tech_diff", category: "created", categoryName: "生み出された根拠", num: 11, name: "商品とサービスの差別化要因", summary: "他社にはない独自スペック、専用設計、特定の悩みに特化した設計。" },
         { id: "tech_pricing", category: "created", categoryName: "生み出された根拠", num: 12, name: "価格体系", summary: "完全定額明朗会計、成果報酬型、追加費用なしの安心できる料金設計。" },
         { id: "tech_custom", category: "created", categoryName: "生み出された根拠", num: 13, name: "カスタマイズ", summary: "一人ひとりの状況に合わせた完全個別オーダーメイド・専用カルテ設計。" },
@@ -1244,50 +1340,138 @@
         { id: "tech_innovation", category: "created", categoryName: "生み出された根拠", num: 17, name: "新しいアプローチ／イノベーション", summary: "業界の常識を覆す新しい仕組み、AIやDXの活用、新提供モデル。" }
       ];
 
-      // 後半3つのアクション
-      const THREE_ACTIONS = [
-        {
-          id: "action_innovation",
-          step: "STEP 5",
-          cls: "innovation",
-          title: "アクション①：イノベーションを起こす",
-          sub: "強力なビコーズがない場合、新たな付加価値や保証を重ねて創出する",
-          desc: "もし既存の商品に強いビコーズが足りない場合、顧客の洞察に立ち返り、新保証・独自工程・付加価値を組み合わせて『選ばれる理由』を新たに創り出します。"
-        },
-        {
-          id: "action_platform",
-          step: "STEP 6",
-          cls: "platform",
-          title: "アクション②：ビコーズ・プラットフォームを構築する",
-          sub: "完成したビコーズをWeb・LP・AI検索（一次情報・FAQ）へ体系展開する",
-          desc: "インフルエンスステートメントを起点に、公式サイト・LPファーストビュー・営業資料・動画・そしてChatGPTやPerplexityに参照される公式FAQを整備します。"
-        },
-        {
-          id: "action_touchpoint",
-          step: "STEP 7",
-          cls: "touchpoint",
-          title: "アクション③：あらゆる顧客接点で取り組みを実行する",
-          sub: "現場スタッフ・販売後フォロー・全接点でビコーズを一貫して体現する",
-          desc: "言葉だけで終わらせず、現場スタッフの権限委譲、接客トーク、販売後7日目フォロー、クチコミ回収など、すべての接点でビコーズを証明し続けます。"
-        }
-      ];
+      // 業種ごとのデフォルト5つの切り口データベース
+      const DEFAULT_SLOTS_DATABASE = {
+        "宿泊・観光・温泉旅館": [
+          {
+            id: "slot_1",
+            priority: 1,
+            title: "ペット同伴・気兼ねゼロ軸",
+            marketingRole: "公式サイトTOP・メイン看板・主力広告",
+            friction: "ペット可と書いてあってもケージ必須や他のお客さんの冷たい視線が気になり、心からくつろげない。",
+            desired: "誰にも気兼ねせず、愛するペットと同じ部屋で本物の源泉かけ流し温泉と美味しい料理を心ゆくまで堪能したい。",
+            target: "他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と美味しい個室料理を堪能したいご夫婦・パートナー",
+            outcome: "他のお客様に一切気をつかうことなく、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と旬の個室料理を心から堪能し、最高の癒やしと一生の思い出を持ち帰ることができる。",
+            evidence: "全客室が完全防音・滑りにくい特殊床材を採用したペット専用設計で、お食事も完全お部屋食のため他のお客様と接触がなく、加水加温一切なしの100%源泉かけ流し天然温泉を完備しているから。"
+          },
+          {
+            id: "slot_2",
+            priority: 2,
+            title: "源泉ぬる湯・本格湯治軸",
+            marketingRole: "「ぬる湯・湯治」専用LP・Google検索対策",
+            friction: "熱い温泉はのぼせて長く入れず、疲れが取れない。本当に効能のある名湯でじっくり体を癒やしたい。",
+            desired: "体温に近いぬる湯に何時間も浸かり、日頃の慢性疲労や冷えを根本から解きほぐしたい。",
+            target: "熱い湯が苦手で、本物のぬる湯にゆっくり浸かって心身の疲労や不調をじっくり癒やしたい健康志向の大人世代",
+            outcome: "何時間でものぼせずに浸かれる極上のぬる湯によって、副交感神経が優位になり、翌朝驚くほど体が軽くなる深い休息を得られる。",
+            evidence: "自社源泉から湧出する38度の奇跡のぬる湯をそのままかけ流し、温泉ソムリエが体質に合わせた入浴法をご案内しているから。"
+          },
+          {
+            id: "slot_3",
+            priority: 3,
+            title: "静寂・完全プライベート軸",
+            marketingRole: "一人旅・大人の隠れ宿専用プラン・平日稼働",
+            friction: "騒がしい団体客や子どもの声でせっかくの休日を台無しにされたくない。誰にも邪魔されたくない。",
+            desired: "外界の喧騒を完全に遮断し、静かな山あいで読書や仕事、瞑想に没頭する贅沢な時間を過ごしたい。",
+            target: "仕事や日常のストレスから離れ、誰にも邪魔されない静寂の中で深い休息や思索に耽りたいエグゼクティブ・一人旅の方",
+            outcome: "一切の騒音や他人の干渉から解放され、鳥のさえずりと川のせせらぎに包まれながら、完全な心の平穏と集中を取り戻せる。",
+            evidence: "12歳未満の宿泊を制限した大人の隠れ宿で、全室離れ構造・完全プライベート露天風呂と書斎デスクを完備しているから。"
+          },
+          {
+            id: "slot_4",
+            priority: 4,
+            title: "記念日・特別なハレの日軸",
+            marketingRole: "誕生日・プロポーズ専用プラン・高単価ギフト",
+            friction: "大切なパートナーの記念日で、料理が冷めていたり接客が雑だったら台無しになる。絶対に失敗できない。",
+            desired: "一生の思い出に残るサプライズと極上の料理で、相手が感動して心から喜ぶ笑顔を見たい。",
+            target: "結婚記念日やパートナーの誕生日を、最高のおもてなしと上質な個室料理で絶対に成功させたいご夫婦・カップル",
+            outcome: "プロポーズや記念日の演出が完璧に決まり、パートナーから「最高の旅館を選んでくれてありがとう」と深く感謝される。",
+            evidence: "専任の記念日コンシェルジュが事前に演出をフルコーディネートし、板長自らがお部屋で仕立てる特別懐石を提供するから。"
+          },
+          {
+            id: "slot_5",
+            priority: 5,
+            title: "長期滞在・リフレッシュ軸",
+            marketingRole: "連泊プラン・ワーケーション・オフシーズン対策",
+            friction: "1泊2日では移動だけで疲れてしまい、本当にリフレッシュした感覚が得られない。",
+            desired: "暮らすように連泊滞在し、自然の中で健康的な食事と温泉を楽しみながら英気を養いたい。",
+            target: "都会を離れ、自然豊かな温泉地で3泊以上のんびり連泊し、心身を完全にリセットしたいシニア・フリーランス",
+            outcome: "まるで第二の我が家のようにリラックスしながら、毎日の温泉と体に優しい食事で、滞在するほど健康になる喜びを実感できる。",
+            evidence: "連泊者専用のミニキッチン・ランドリー付き客室と、毎日日替わりの薬膳健康和食を提供する専任サポートがあるから。"
+          }
+        ],
+
+        "BtoB・IT・SaaS・受託開発": [
+          {
+            id: "slot_1",
+            priority: 1,
+            title: "業務属人化解消・現場定着伴走軸",
+            marketingRole: "公式サイトTOP・メインサービスLP・導入事例集",
+            friction: "ツールを導入しても現場が使わず形骸化し、費用倒れになって経営陣への説明がつかない不安。",
+            desired: "現場スタッフが迷わず自発的に使いこなし、最短3ヶ月で明確な業務効率化の成果を数字で示したい。",
+            target: "業務の属人化を解消し、現場が自発的に使いこなすまで専任で伴走サポートしてほしい中小企業の経営者・事業責任者",
+            outcome: "無駄な手入力や確認作業を70%削減し、現場スタッフが迷わず自発的に使いこなせる業務体制を最短3ヶ月で確立できる。",
+            evidence: "過去500社以上の支援データから体系化した『5段階定着ロードマップ』により専任コンサルタントが週1回伴走し、90日以内に定着しなければ全額返金する安心保証があるから。"
+          },
+          {
+            id: "slot_2",
+            priority: 2,
+            title: "手作業ミス根絶・残業削減軸",
+            marketingRole: "現場管理職向けホワイトペーパー・検索広告",
+            friction: "毎月の月末月初に膨大な手入力と転記ミスが発生し、スタッフが連日深夜残業を強いられている。",
+            desired: "ミスが起きようがない自動化フローを構築し、月末の残業をゼロにして社員の定着率を高めたい。",
+            target: "転記ミスや確認作業に追われ、社員の残業と離職リスクに頭を抱えるバックオフィスの現場責任者",
+            outcome: "月末月初の手入力作業が完全ゼロになり、入力ミスによる顧客トラブルが根絶され、残業代も大幅カットできる。",
+            evidence: "既存のExcelや基幹システムとAPIでノーコード自動連携し、二重入力を完全に排除する独自自動化エンジンを搭載しているから。"
+          },
+          {
+            id: "slot_3",
+            priority: 3,
+            title: "セキュリティ・情報漏洩防止軸",
+            marketingRole: "大企業・情シス向け専用提案書・セキュリティ監査資料",
+            friction: "クラウド導入にあたり、個人情報や機密データの漏洩、社内セキュリティ審査落ちが最も怖い。",
+            desired: "金融機関レベルの最高峰セキュリティ基盤で、誰の目から見ても安全なシステムを堂々と導入したい。",
+            target: "厳格なコンプライアンス基準をクリアし、情報漏洩リスクを徹底排除したい情報システム部門長・監査役員",
+            outcome: "社内セキュリティ審査を一発でクリアし、万が一の不正アクセスや内部漏洩のリスクを極限までゼロに抑えられる。",
+            evidence: "ISO27001（ISMS）認証およびSOC2 Type2報告書を取得し、全通信・保存データの完全暗号化と詳細ログ追跡を標準完備しているから。"
+          },
+          {
+            id: "slot_4",
+            priority: 4,
+            title: "経営数値リアルタイム可視化軸",
+            marketingRole: "経営者・CFO向けセミナー・意思決定支援LP",
+            friction: "各拠点の売上や原価の集計が遅く、翌月中旬まで正確な経営数字が見えず意思決定が遅れる。",
+            desired: "今日・今この瞬間の売上・利益・進捗がスマホ一台で把握でき、スピーディに経営の舵を切りたい。",
+            target: "複数拠点や事業部を持ち、経営数値の集計遅延による意思決定の遅れを解消したい経営者・CFO",
+            outcome: "締め日を待たずに全拠点の粗利と案件進捗がリアルタイムに可視化され、迅速で精度の高い経営判断が可能になる。",
+            evidence: "各部門のデータを自動集約するリアルタイム経営ダッシュボードと、異常値を即時通知するAIアラート機能を標準搭載しているから。"
+          },
+          {
+            id: "slot_5",
+            priority: 5,
+            title: "オーダーメイド業務カスタマイズ軸",
+            marketingRole: "特殊商習慣を持つ業界向けアプローチ・個別相談会",
+            friction: "既製品のSaaSでは自社特有の業界ルールや商習慣に対応できず、結局手作業が残ってしまう。",
+            desired: "自社の業務フローを無理に変えることなく、完全にフィットした使いやすいシステムを構築したい。",
+            target: "独自の受発注ルールや複雑な商習慣を持ち、一般的なパッケージソフトでは適合しなかった専門業界の企業様",
+            outcome: "自社の業務フローを1ミリも崩さず、100%自社仕様の使い心地で業務全体をシームレスにデジタル化できる。",
+            evidence: "要件定義から熟練エンジニアが直接ヒアリングし、ノーコード基盤を活用して高速かつ低コストで個別専用開発するから。"
+          }
+        ]
+      };
 
       // アプリケーション状態
       let state = {
         currentStep: 0,
+        selectedSlotIndex: 0, // 現在右側プレビューや個別編集にフォーカスしているスロット（0〜4）
         answers: {
           industryFamily: "宿泊・観光・温泉旅館",
           companyWebsiteUrl: "",
-          companyName: "",
-          business: "",
-          friction: "",
-          desired: "",
-          target: "",
-          outcome: "",
-          evidence: "",
-          innovationAction: "",
-          platformAction: "",
-          touchpointAction: ""
+          companyName: "月見の湯 翠水亭",
+          business: "静かな自然に囲まれた山あいに佇む、全室ペット同伴対応の客室と、100%源泉かけ流し天然温泉、地元の旬の素材を活かした個室会席料理を提供する小さな温泉宿。",
+          slots: JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["宿泊・観光・温泉旅館"])),
+          innovationAction: "『ペット体調不良時の当日キャンセル無料保証』と『源泉ぬる湯の個別湯治プログラム』を新設し、競合が真似できない強固なビコーズを創出する。",
+          platformAction: "公式サイトTOPに第1優先のインフルエンスステートメントを掲げつつ、下層に5つの切り口それぞれの専用ページと、AI検索（Perplexity/ChatGPT等）に引用される公式FAQを整備する。",
+          touchpointAction: "チェックイン時に顧客の来訪目的（ペット・ぬる湯・記念日等）に合わせた専用ウェルカムカードを手渡し、滞在中の声かけや退館後のフォローを一貫して最適化する。"
         }
       };
 
@@ -1301,7 +1485,7 @@
           const raw = localStorage.getItem(STORAGE_KEY);
           if (raw) {
             const parsed = JSON.parse(raw);
-            if (parsed && parsed.answers) {
+            if (parsed && parsed.answers && parsed.answers.slots && parsed.answers.slots.length === 5) {
               state = Object.assign(state, parsed);
             }
           }
@@ -1334,192 +1518,20 @@
           .replace(/'/g, "&#039;");
       }
 
-      
-
-      // 業種ごとの詳細提案プリセット
-      const INDUSTRY_DATABASE = {
-        "宿泊・観光・温泉旅館": {
-          insights: [
-            { tag: "ペット同伴客の気兼ね", title: "他人の視線や鳴き声への気兼ね", body: "「ペット可の宿でもケージ必須だったり、他の客の冷たい視線が気になって全く心が休まらない」という強い不安。", friction: "ペット可と書いてあっても、ケージ必須や他のお客さんの冷たい視線が気になり、心からくつろげない。", desired: "誰にも気兼ねせず、愛するペットと同じ部屋で本物の源泉かけ流し温泉と美味しい料理を心ゆくまで堪能したい。" },
-            { tag: "ペットホテルへの罪悪感", title: "留守番させる罪悪感と心配", body: "「旅行のたびに預けるのが可哀想で罪悪感がある。一緒に旅行して一生の思い出を作りたい」という本音。", friction: "ペットを預ける罪悪感と、狭いケージで強いストレスを与えてしまう心配。", desired: "家族の一員として同じ空間で過ごし、一生残る素晴らしい思い出を一緒に作りたい。" },
-            { tag: "料理や温泉の妥協", title: "ペット優先で宿の質を諦めている", body: "「ペット同伴宿は食事が簡素だったり温泉が循環式でも仕方がない」と妥協してきた顧客のジレンマ。", friction: "ペット対応宿は設備が古かったり食事が簡素で、大人の温泉旅行として満足できない。", desired: "ペット同伴でありながら、本格的な個室会席料理と100%源泉かけ流しの贅沢な温泉を両立したい。" }
-          ],
-          targets: [
-            { tag: "本命ターゲット①", title: "愛猫・愛犬と気兼ねなく癒やされたいご夫婦・カップル", body: "日常の疲れを癒やしたいがペットを留守番させたくない、少人数で静かに贅沢な休日を過ごしたい大人世代。", target: "他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と美味しい個室料理を堪能したいご夫婦・パートナー" },
-            { tag: "本命ターゲット②", title: "ペットの誕生日や記念日を特別にお祝いしたい飼い主様", body: "ペットの誕生日を家族の記念日として祝い、安心な完全個室空間とおもてなしを重視するお客様。", target: "愛犬・愛猫の誕生日や家族の記念日を、ペットファーストの安心な完全個室空間で特別にお祝いしたい飼い主様" }
-          ],
-          outcomes: [
-            { tag: "完全くつろぎの成果", title: "気兼ねゼロの安心感と心からのリフレッシュ", body: "周囲の目を気にせず、愛するペットと寄り添いながら本物の名湯とお部屋食を満喫する時間。", outcome: "他のお客様に一切気をつかうことなく、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と旬の個室料理を心から堪能し、最高の癒やしと一生の思い出を持ち帰ることができる。" },
-            { tag: "家族の笑顔の成果", title: "ペットがのびのび喜ぶ姿を見られる感動体験", body: "ペット専用設備と手作りご飯で、ペットも飼い主も最高の笑顔になれる体験。", outcome: "ペットを預ける罪悪感から完全に解放され、愛するペットがのびのび喜ぶ姿を見ながら、家族全員が心から笑顔になれる最高のおもてなし体験。" }
-          ],
-          evidences: [
-            { category: "systematic", catName: "体系的な根拠", techName: "独自の配合・素材・プロセス", body: "【体系的根拠】加水・加温一切なしの100%源泉かけ流し天然温泉と、ペット栄養管理士監修の無添加料理。", evidence: "加水・加温・循環一切なしの100%源泉かけ流し天然温泉を全客室に備え、ペット栄養管理士が監修した手作りの無添加ペット専用料理を提供しているから。" },
-            { category: "perceived", catName: "知覚される根拠", techName: "社会的根拠・専門資格", body: "【知覚される根拠】旅行サイト口コミ総合4.9獲得、スタッフ全員がペット飼育歴10年以上・動物看護有資格者。", evidence: "大手旅行サイトのペット同伴部門で口コミ総合評価4.9を獲得し、全スタッフが動物看護士またはペット飼育歴10年以上の専門知識を持ち、看板猫とともに温かく迎えるから。" },
-            { category: "created", catName: "生み出された根拠", techName: "差別化設計・安心保証", body: "【生み出された根拠】全室防音ペット専用フロア・完全お部屋食・ペット体調不良時の当日キャンセル料免除保証。", evidence: "全客室が完全防音・滑りにくい特殊床材を採用したペット専用設計で、お食事も完全お部屋食のため他のお客様と接触がなく、万が一のペット体調不良時も当日までキャンセル料無料の安心保証があるから。" }
-          ],
-          actions: {
-            innovation: "『ペット体調不良時の当日キャンセル無料保証』と『愛猫専用の無添加会席料理』を新設し、競合が真似できない新ビコーズを創出する。",
-            platform: "公式サイトのトップに選ばれる理由を明記し、AI検索（Perplexity/ChatGPT等）で『猫と泊まれる源泉かけ流し温泉』の一次情報として抽出される専用FAQページを公開する。",
-            touchpoint: "チェックイン時にウェルカムペットおやつを手渡し、配膳時はペットが驚かない丁寧な声かけを徹底。宿泊後3日目に記念写真カードを送付して感動の口コミを回収する。"
-          }
-        },
-
-        "飲食・カフェ・レストラン": {
-          insights: [
-            { tag: "失敗できない記念日", title: "大切な相手を招待するプレッシャー", body: "「料理の味はもちろん、静かな雰囲気や接客の気配りに失敗し、招待した相手を失望させたくない」という切実な不安。", friction: "周囲が騒がしかったり料理の提供が遅く、せっかくの記念日や会食の雰囲気が台無しになる心配。", desired: "大切な相手から『本当に素晴らしいお店を選んでくれたね』と心から喜ばれ、感謝される特別な時間にしたい。" },
-            { tag: "食材の安全性・アレルギー", title: "健康やアレルギーに気兼ねなく楽しみたい", body: "「添加物やアレルギー対応に配慮してほしいが、お店側に煙たがられないか心配」という本音。", friction: "アレルギーや食材の産地についての確認が曖昧で、安心して食事が楽しめない。", desired: "完全無農薬やアレルギーに丁寧に対応してくれ、体に優しく心から安心して美味しい料理を楽しみたい。" }
-          ],
-          targets: [
-            { tag: "本命ターゲット①", title: "絶対に失敗したくない記念日・プロポーズを祝うカップル", body: "特別な日のために、完全個室と丁寧なサーブ、洗練された料理を求めるお客様。", target: "大切なパートナーとの記念日や誕生日を、誰にも邪魔されない完全個室と至高の料理で絶対に成功させたい方" },
-            { tag: "本命ターゲット②", title: "食材の質と健康に妥協しない本物志向のファミリー", body: "無農薬野菜や無添加調味料にこだわり、小さな子どもから高齢者まで安心して食事を楽しみたいご家族。", target: "小さな子どもや家族の健康を最優先し、契約農家直送の完全無農薬食材と無添加料理を求める安心志向のご家族" }
-          ],
-          outcomes: [
-            { tag: "特別な感動の成果", title: "主役が感動し一生の思い出になる記念日体験", body: "細やかなサプライズ演出と絶品料理で、招待した相手の心からの笑顔を引き出す。", outcome: "大切なパートナーが感動で涙するほどの特別なサプライズ演出と、極上のプライベート空間で、一生忘れられない記念日の思い出をつくることができる。" },
-            { tag: "心身の満たされる成果", title: "美味しく食べて翌日も体が軽い極上の食体験", body: "厳選食材の滋味深い味わいで、胃もたれせず心も体も満たされる。", outcome: "一切の罪悪感なく、厳選された旬の滋味を五感で味わい尽くし、心身ともにエネルギーが満ちる極上の美食体験を堪能できる。" }
-          ],
-          evidences: [
-            { category: "systematic", catName: "体系的な根拠", techName: "独自の仕入れ・配合・素材", body: "【体系的根拠】毎朝市場で店主自ら目利きした天然鮮魚と、契約農家直送の朝採れ無農薬野菜のみを使用。", evidence: "毎朝料理長自らが市場で目利きする天然鮮魚と、契約農家から毎朝届く完全無農薬野菜のみを厳選調達し、化学調味料を一切使用しない出汁を毎日4時間かけて仕込んでいるから。" },
-            { category: "perceived", catName: "知覚される根拠", techName: "クラフトマンシップ・受賞歴", body: "【知覚される根拠】ミシュラン掲載店で修業した熟練シェフが一皿一皿を手作業で仕立てる。", evidence: "三ツ星フレンチで15年腕を磨いたオーナーシェフが、お客様一人ひとりの召し上がるペースに合わせて1組ずつ完全手作りで仕立てる至極の一皿を提供しているから。" },
-            { category: "created", catName: "生み出された根拠", techName: "カスタマイズ・完全個室", body: "【生み出された根拠】1日3組限定の完全予約制個室・専任バトラー付き・アレルギー完全個別対応。", evidence: "1日わずか3組限定の完全防音個室をご用意し、専任ソムリエが料理ごとに最適なペアリングをご提案、事前のヒアリングに基づく完全オーダーメイドコースをお約束しているから。" }
-          ],
-          actions: {
-            innovation: "『記念日フルプロデュース特典（特製デザートプレート・花束手配・記念写真アルバム）』を標準セット化し、記念日特化の選ばれる理由を確立する。",
-            platform: "HPやGoogleビジネスプロフィールに『記念日・プロポーズ専用コース』の一次情報を整え、AI検索で『記念日におすすめの完全個室レストラン』として引用されるFAQを整備する。",
-            touchpoint: "予約時の丁寧なヒアリング電話、当日の出迎えから見送りまでの動線、退店後のお礼メッセージなど、全接点で記念日のおもてなしを一貫体現する。"
-          }
-        },
-
-        "BtoB・IT・SaaS・受託開発": {
-          insights: [
-            { tag: "導入失敗への強い恐れ", title: "ツール導入が形骸化し社内説明がつかない", body: "「高い費用を払って導入しても現場が使わず、上司や経営陣から責任を追及されるのが最も怖い」。", friction: "高いツールを導入しても現場が使いこなせず形骸化し、費用倒れになって社内説明がつかない不安がある。", desired: "現場スタッフが迷わず自発的に使いこなし、最短3ヶ月で明確な業務効率化の成果を数字で示したい。" },
-            { tag: "属人化・人手不足の焦り", title: "特定担当者しかわからない業務ブラックボックス", body: "「担当者の急な休職や退職で業務がストップするリスクを何としても解消したい」。", friction: "特定の人に業務が集中し、ミスや引き継ぎトラブルが絶えず、コア業務に集中できない。", desired: "誰でも同じ品質で業務が回る仕組みを整え、社員が本来の企画や売上アップに集中できる状態にしたい。" }
-          ],
-          targets: [
-            { tag: "本命ターゲット①", title: "現場定着まで伴走してほしい中小企業経営者", body: "社内に専任IT人材がおらず、ツールの設定だけでなく実務定着まで伴走してほしい企業。", target: "業務の属人化を解消し、現場が自発的に使いこなすまで専任で伴走サポートしてほしい中小企業の経営者・事業責任者" },
-            { tag: "本命ターゲット②", title: "手作業と残業を半減させたい成長企業のリーダー", body: "急速に事業が伸びてバックオフィスが逼迫している、ミスと残業を根絶したい管理職。", target: "無駄な手入力や確認作業を半減させ、社員を付加価値の高い営業や企画業務にシフトさせたい成長企業のリーダー" }
-          ],
-          outcomes: [
-            { tag: "業務削減の定量的成果", title: "手作業70%削減と現場の自走化", body: "最短3ヶ月で社内定着率95%を実現し、毎月の残業時間を劇的に削減。", outcome: "無駄な手入力や確認作業を70%削減し、現場スタッフが迷わず自発的に使いこなせる業務体制を最短3ヶ月で確立できる。" },
-            { tag: "組織力向上の成果", title: "属人化完全解消による事業成長の加速", body: "誰でも同じ品質で業務が回る再現性を確立し、コア事業にリソース集中。", outcome: "業務の属人化を完全解消し、社員がコアな営業・企画業務に集中できる環境をつくることで、企業の生産性と収益力を最大化できる。" }
-          ],
-          evidences: [
-            { category: "systematic", catName: "体系的な根拠", techName: "独自のプロセス・定着ロードマップ", body: "【体系的根拠】500社以上の支援データから体系化した『5段階定着ロードマップ』と自動化システム。", evidence: "過去500社以上の支援データから体系化した『5段階定着ロードマップ』により、初期設定から実務定着までを最短3ヶ月でブレなく完了させる独自システムがあるから。" },
-            { category: "perceived", catName: "知覚される根拠", techName: "社会的根拠・継続率・事例公開", body: "【知覚される根拠】継続利用率98.5%、東証上場企業から中小企業まで多数の導入事例を公開。", evidence: "継続利用率98.5%、累計導入企業1,000社以上の社会的実績があり、経済産業省のDX認定企業として公的にもその実効性が認められているから。" },
-            { category: "created", catName: "生み出された根拠", techName: "専任伴走体制・返金保証", body: "【生み出された根拠】専任コンサルタントが週1回伴走し、90日以内に定着しなければ全額返金する保証。", evidence: "マニュアルを渡すだけでなく専任コンサルタントが週1回の定例で伴走し、万が一導入から90日以内に運用定着しなかった場合の『完全返金保証』をお約束しているから。" }
-          ],
-          actions: {
-            innovation: "他社にない『90日間成果未達成時の全額返金保証』と『社内定着率95%保証パック』を正式リリースし、顧客の意思決定リスクを極限まで下げる。",
-            platform: "インフルエンスステートメントを導入事例集やサービスLPのファーストビューに配置し、AI検索や比較サイトに引用される『業務効率化ロードマップ』を公開する。",
-            touchpoint: "商談トークを『機能説明』から『成果とビコーズの約束』に統一。契約後7日以内にキックオフ定例を実施し、週次レポートで削減時間を可視化して全接点で約束を果たす。"
-          }
-        },
-
-        "美容・健康・サロン・治療院": {
-          insights: [
-            { tag: "効果が続かない失望", title: "その場しのぎで翌日には戻ってしまう落胆", body: "「マッサージや施術を受けてもすぐ痛みがぶり返し、結局通い続けさせられるのが嫌だ」という不満。", friction: "一時的なマッサージだけで原因が根本解決せず、費用ばかりがかさんで改善を諦めかけている。", desired: "自分の体の根本原因を専門的に突き止め、痛みをぶり返さない健康な体を最短で手に入れたい。" },
-            { tag: "痛い施術への恐怖", title: "無理な骨盤矯正や強い痛みが怖い", body: "「ボキボキ鳴らされたり痛い施術を無理にされて悪化しないか心配」という警戒感。", friction: "痛みを伴う無理な施術や、高額な回数券の強引な売り込みに強い不安を感じている。", desired: "痛みのない優しい施術で、納得のいく丁寧な説明を受けながら安心して体を整えたい。" }
-          ],
-          targets: [
-            { tag: "本命ターゲット①", title: "どこに行っても治らなかった長年の慢性痛に悩む方", body: "病院や整体を何件も巡ったが改善せず、本気で根本改善したいと願う40〜60代の方。", target: "マッサージに通っても痛みがぶり返し、どこに行っても改善しなかった長年の慢性腰痛・肩こりに悩む本物志向の方" },
-            { tag: "本命ターゲット②", title: "産後の骨盤の歪みと体型崩れを戻したいママさん", body: "産後の不調を解消したいが小さな子ども連れで通える安心なサロンを探しているお母さん。", target: "産後の骨盤の歪みや体調不良を根本から整え、子連れでも気兼ねなく通える完全プライベート空間を求めるお母様" }
-          ],
-          outcomes: [
-            { tag: "根本改善の成果", title: "痛みをぶり返さない軽やかな体と快眠の獲得", body: "朝スッキリ起きられ、趣味や仕事に全力で打ち込める軽快な体を取り戻す。", outcome: "痛みの根本原因を完全解消し、朝すっきりと目覚め、痛みを一切気にせず仕事や趣味を思い切り楽しめる軽やかな日常を取り戻すことができる。" },
-            { tag: "美と健康の両立成果", title: "姿勢が整い見た目年齢マイナス5歳の自信", body: "骨格から整えることで美しい姿勢とボディラインが定着する。", outcome: "骨格と筋膜のバランスが美しく整い、猫背や姿勢の歪みが解消され、自分に自信が持てる若々しいスタイルを維持できる。" }
-          ],
-          evidences: [
-            { category: "systematic", catName: "体系的な根拠", techName: "独自の骨格・筋膜アプローチ", body: "【体系的根拠】国家資格保持者による独自の『筋膜連動検査法』と痛みのない微弱刺激調整技術。", evidence: "国家資格である柔道整復師・鍼灸師が、独自開発した『筋膜連動検査』により痛みの根本原因を1ミリ単位で特定し、痛みのないソフトな調整技術で骨格を整えるから。" },
-            { category: "perceived", catName: "知覚される根拠", techName: "医師推薦・クチコミ高評価", body: "【知覚される根拠】医師からの推薦状取得、地域口コミサイトで5年連続1位、累計2万人の施術実績。", evidence: "現役医師からの推薦をいただき、地域クチコミランキングで5年連続第1位（星4.9）、累計2万人以上の改善実績があるから。" },
-            { category: "created", catName: "生み出された根拠", techName: "完全個別カルテ・初回全額返金保証", body: "【生み出された根拠】生活習慣改善カルテの無償提供と、万が一変化を実感できなければ初回全額返金。", evidence: "一人ひとりに合わせたセルフケア動画カルテを無料提供し、万が一初回の施術で体の変化を全く実感できなかった場合の『初回全額返金保証』をお約束しているから。" }
-          ],
-          actions: {
-            innovation: "『初回施術で変化を感じなければ全額返金保証』と『自宅での姿勢改善動画カルテ』を全員に提供し、圧倒的な安心感で来店ハードルを下げる。",
-            platform: "ビフォーアフターの姿勢測定写真を公式HPに掲載し、AI検索で『根本改善できる整体』として推薦される根拠付きFAQを整備する。",
-            touchpoint: "施術後の変化を写真で一緒に確認し、翌日にLINEで体調確認のフォローメッセージを送信。無理な回数券セールスを一切排除する。"
-          }
-        },
-
-        "住宅・建築・リフォーム・修理": {
-          insights: [
-            { tag: "手抜き工事と追加費用の恐怖", title: "見えない部分の手抜きと法外な追加請求", body: "「見積もりが安くても後から追加費用を請求されたり、見えない壁の中で手抜き工事をされないか非常に不安」。", friction: "専門知識がないため見積もりの妥当性がわからず、手抜き工事や後からの高額追加請求が怖い。", desired: "明朗な見積もりと透明な施工プロセスで、10年後・20年後も安心して暮らせる確かな住まいを実現したい。" },
-            { tag: "工事後の放置への不満", title: "引き渡し後に連絡が取れなくなる不安", body: "「建てた後やリフォーム後に不具合が出ても、対応が遅かったり有償でごまかされないか心配」。", friction: "引き渡し後のアフターフォローが不誠実で、トラブル時にすぐ対応してくれないリスク。", desired: "地域密着でいつでも迅速に駆けつけてくれ、一生涯安心して住まいの相談ができるパートナーがほしい。" }
-          ],
-          targets: [
-            { tag: "本命ターゲット①", title: "価格の安さより丁寧な施工と長期安心を求める施主様", body: "格安リフォーム業者で後悔したくない、職人の丁寧な仕事と誠実な対応を重視する40〜60代のご夫婦。", target: "価格の安さだけで選んで失敗したくない、職人の確かな技術と長期的なアフター保証を重視する本物志向の施主様" },
-            { tag: "本命ターゲット②", title: "実家の老朽化や断熱・バリアフリーを安全に改修したい方", body: "両親が高齢になり、冬の寒さや段差を解消して安全で快適な住まいに再生したいご家族。", target: "高齢の両親が安全・快適に暮らせるよう、確実な断熱改修とバリアフリー化を適正価格で実現したい施主様" }
-          ],
-          outcomes: [
-            { tag: "快適と光熱費削減の成果", title: "冬あたたかく夏すずしい快適住空間と光熱費半減", body: "高断熱・高気密の確かな施工で、年中快適かつ省エネな理想の暮らしを実現。", outcome: "隙間風や底冷えのストレスを完全に解消し、冬でも裸足で過ごせる快適な温熱環境と、毎月の光熱費を30%削減する高断熱住宅を手に入れることができる。" },
-            { tag: "一生の安心成果", title: "家族を守る高耐震構造と10年無償点検の安心感", body: "地震に強く、不具合があればいつでも電話1本で駆けつけてもらえる一生涯の安心。", outcome: "大地震でもびくともしない最高等級の耐震性能と、万が一の不具合にも即日駆けつける生涯アフターサポートで、家族全員が心から安心できる住まいを獲得できる。" }
-          ],
-          evidences: [
-            { category: "systematic", catName: "体系的な根拠", techName: "独自の検査基準・自社職人施工", body: "【体系的根拠】全棟で気密測定を実施し、下請けに丸投げしない完全自社専属職人による直接施工。", evidence: "下請け業者に一切丸投げせず、自社専属の一級建築大工が責任施工を行い、全棟で第三者機関による気密測定と構造検査をダブルで実施しているから。" },
-            { category: "perceived", catName: "知覚される根拠", techName: "地域創業50年の信頼・施工実績", body: "【知覚される根拠】地域密着で創業50年、累計3,000棟以上の施工実績とOB施主様からの紹介率70%。", evidence: "この地域で創業50年、累計3,000件を超える施工実績があり、OB施主様からのご紹介率が70%を超える地域密着の揺るぎない信頼があるから。" },
-            { category: "created", catName: "生み出された根拠", techName: "完全明朗定額見積もり・最長20年保証", body: "【生み出された根拠】契約後の追加費用ゼロを保証する定額パックと、業界最長クラスの20年長期保証。", evidence: "工事中の予期せぬ追加費用が発生しない『追加請求ゼロ保証』を徹底し、最長20年の構造・防水長期保証と年2回の無料定期点検を一生涯継続しているから。" }
-          ],
-          actions: {
-            innovation: "『工事中の追加費用一切なし保証』と『LINEでの毎日の施工写真進捗報告』を標準化し、顧客の不安を徹底的に先回りして解消する。",
-            platform: "施工前後の詳細なビフォーアフター事例と費用内訳を公式HPに全公開し、AI検索で『信頼できる工務店』として引用される一次情報を整える。",
-            touchpoint: "着工前の近隣挨拶から職人の現場マナー講習を徹底。引き渡し後も半年ごとの訪問点検を実施し、住まいの困りごとに即座に対応する。"
-          }
+      // 現在選択中のスロット
+      function currentSlot() {
+        if (!state.answers.slots || state.answers.slots.length === 0) {
+          state.answers.slots = JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["宿泊・観光・温泉旅館"]));
         }
-      };
-
-      // デフォルト汎用提案
-      const DEFAULT_INDUSTRY_DATA = {
-        insights: [
-          { tag: "失敗への不安", title: "時間とお金を無駄にしたくない慎重さ", body: "「どこを選んでも同じに見えるが、実際にお願いして期待外れだった時の金銭的・精神的ダメージを避けたい」。", friction: "専門用語ばかりで比較検討が難しく、本当に信頼できるか判断がつかない。", desired: "わかりやすい説明と確かな実績で、安心して任せられる第一選択肢に出会いたい。" },
-          { tag: "根本的な解決の渇望", title: "一時的ではない長続きする成果", body: "「その場しのぎの対症療法ではなく、根本から問題を解決して安心したい」。", friction: "いろいろ試したが効果が長続きせず、諦めかけている。", desired: "自分にぴったり合った最適な方法で、確実な変化と長続きする安心を手に入れたい。" }
-        ],
-        targets: [
-          { tag: "本命ターゲット①", title: "安さよりも『確実な安心と丁寧な仕上がり』を重視する本物志向の顧客", body: "格安業者で失敗したくない。きちんとした実績と誠実な対応を評価し、適正な対価を喜んで支払ってくれる良質なお客様。", target: "価格の安さだけで選んで失敗したくない、確かな技術と誠実なアフターフォローを重視する本物志向のお客様" },
-          { tag: "本命ターゲット②", title: "切実な悩みを抱え、プロの確実な診断と個別提案を求める方", body: "画一的な既製品やマニュアル対応では解決しなかった深い悩みを抱え、自分のためだけの個別対応を必要としている顧客。", target: "画一的なサービスでは解決しなかった深い課題を抱え、自分専用の個別アプローチを求めている顧客" }
-        ],
-        outcomes: [
-          { tag: "安心と問題解決の成果", title: "不安をゼロにし、期待以上の劇的変化をお届け", body: "事前の丁寧な説明と確かな技術により、やり直しや後悔の心配なく理想の状態を実現。", outcome: "事前の不安や迷いを完全に解消し、期待以上の確実な仕上がりと、長続きする安心を手に入れることができる。" },
-          { tag: "時間と手間の短縮成果", title: "最短ルートで迷わず理想の成果に到達", body: "無駄な試行錯誤をなくし、プロの的確なサポートでスムーズに問題を解決。", outcome: "無駄な時間とコストを一切かけず、プロの伴走によって最短ルートで確実な成果を実感できる。" }
-        ],
-        evidences: [
-          { category: "systematic", catName: "体系的な根拠", techName: "独自のプロセス・技術", body: "【体系的根拠】自社で開発した全工程の精密診断メソッドと、国家資格保持者による独自技術があるから。", evidence: "国家資格を持つ専門スタッフが、独自開発した精密診断メソッドに基づき、一切の妥協なく高品質なサービスを実施するから。" },
-          { category: "perceived", catName: "知覚される根拠", techName: "社会的根拠・歴史・職人技", body: "【知覚される根拠】地域密着で長年の実績があり、お客様満足度97%の口コミ評価があるから。", evidence: "創業以来積み上げた豊富な実績があり、顧客満足度97%の高評価を維持し、メディアや業界内でも高く評価されているから。" },
-          { category: "created", catName: "生み出された根拠", techName: "保証・付加価値・明朗会計", body: "【生み出された根拠】追加費用一切なしの完全明朗会計と、万が一の不満に対する無償やり直し・長期保証があるから。", evidence: "見積もり後の追加料金が一切発生しない明朗会計を徹底し、購入後も長期保証と無料アフター相談を無償で提供しているから。" }
-        ],
-        actions: {
-          innovation: "競合が真似できない『完全無償やり直し保証＋長期サポート』を新設し、顧客が比較した際に圧倒的に選ばれる強力な新ビコーズを確立する。",
-          platform: "公式ホームページとSNS、Googleビジネスプロフィールの説明文をインフルエンスステートメントに完全統一し、AI検索で一次情報として即座に抽出されるFAQを設置する。",
-          touchpoint: "現場スタッフ全員に『選ばれる理由カード』を配布し、接客・施工・電話対応の全接点でビコーズを体現。完了後7日目のフォローコールで顧客の声を継続収集する。"
-        }
-      };
-
-      // 知識カード読み込み
-      let knowledgeCards = [];
-      async function loadKnowledgeData() {
-        try {
-          const res = await fetch("data/selected-reason-knowledge.json");
-          if (res.ok) {
-            const data = await res.json();
-            knowledgeCards = data.cards || [];
-            console.log("Knowledge cards loaded:", knowledgeCards.length);
-          }
-        } catch (e) {
-          console.warn("Could not load knowledge json:", e);
-        }
+        return state.answers.slots[state.selectedSlotIndex] || state.answers.slots[0];
       }
 
-
-      function getAISuggestions(stepNum) {
-        const ind = state.answers.industryFamily || "宿泊・観光・温泉旅館";
-        const matched = INDUSTRY_DATABASE[ind] || DEFAULT_INDUSTRY_DATA;
-
-        if (stepNum === 1) return matched.insights;
-        if (stepNum === 2) return matched.targets;
-        if (stepNum === 3) return matched.outcomes;
-        if (stepNum === 4) return matched.evidences;
-        if (stepNum === 5) return matched.actions;
-
-        return [];
+      // 第1優先（本命フラッグシップ）のスロット
+      function priorityOneSlot() {
+        const slots = state.answers.slots || [];
+        const p1 = slots.find(s => s.priority === 1);
+        return p1 || slots[0] || {};
       }
-
 
       // ==========================================
       // レンダリング関数群
@@ -1548,12 +1560,12 @@
         container.innerHTML = STAGES.map((s, idx) => {
           const isActive = idx === state.currentStep;
           let isCompleted = false;
-          if (idx === 0 && state.answers.industryFamily && (state.answers.business || state.answers.companyName)) isCompleted = true;
-          if (idx === 1 && (state.answers.friction || state.answers.desired)) isCompleted = true;
-          if (idx === 2 && state.answers.target) isCompleted = true;
-          if (idx === 3 && state.answers.outcome) isCompleted = true;
-          if (idx === 4 && state.answers.evidence) isCompleted = true;
-          if (idx === 5 && (state.answers.innovationAction || state.answers.platformAction || state.answers.touchpointAction)) isCompleted = true;
+          if (idx === 0 && state.answers.industryFamily && state.answers.business) isCompleted = true;
+          if (idx === 1 && state.answers.slots && state.answers.slots.length >= 5) isCompleted = true;
+          if (idx === 2 && currentSlot().outcome) isCompleted = true;
+          if (idx === 3 && currentSlot().evidence) isCompleted = true;
+          if (idx === 4 && (state.answers.innovationAction || state.answers.platformAction)) isCompleted = true;
+          if (idx === 5) isCompleted = true;
 
           return `
             <button type="button" class="step-nav-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}" onclick="window.goToStep(${idx})">
@@ -1574,6 +1586,7 @@
 
         const currentStage = STAGES[state.currentStep];
         const stepNum = state.currentStep;
+        const slot = currentSlot();
 
         let contentHtml = "";
 
@@ -1591,7 +1604,7 @@
               <div class="url-fetcher-header">
                 <div class="url-fetcher-title">
                   <span>🌐</span>
-                  <span>公式ホームページから事業内容を自動反映</span>
+                  <span>公式ホームページから事業内容と5つの切り口を自動生成</span>
                 </div>
                 <span style="font-size:0.75rem; color:var(--teal-dark); font-weight:700;">URLを入れるだけで自動解析！</span>
               </div>
@@ -1611,7 +1624,7 @@
                 <span>あなたの事業の業種</span>
                 <span class="req">必須</span>
               </label>
-              <p class="form-helper">選んだ業種にあわせて、AIが顧客の悩みや選ばれるビコーズを最適に提案します。</p>
+              <p class="form-helper">業種にあわせて、AIが店舗や企業の多角的な5つの切り口を自動生成します。</p>
               <select id="industrySelect" class="form-select">
                 ${INDUSTRY_OPTIONS.map(opt => `
                   <option value="${escapeHtml(opt)}" ${state.answers.industryFamily === opt ? "selected" : ""}>${escapeHtml(opt)}</option>
@@ -1643,9 +1656,8 @@
           `;
         }
 
-        // ステップ2：顧客についての洞察
+        // ステップ2：5つの切り口（洞察 × 誰に）と優先順位づけ
         else if (stepNum === 1) {
-          const suggestions = getAISuggestions(1);
           contentHtml = `
             <div class="question-header">
               <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
@@ -1653,63 +1665,85 @@
               <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
-            <!-- 顧客の悩み・避けたい摩擦 -->
-            <div class="form-group">
-              <label class="form-label" for="frictionInput">
-                <span>顧客が避けたい不安・摩擦・失敗（ペイン）</span>
-                <span class="req">必須</span>
-              </label>
-              <p class="form-helper">顧客が普段抱えている悩みや、他社で感じた不満、失敗したくないことを記入します。</p>
-              <textarea id="frictionInput" class="form-textarea" placeholder="例：ペット可と書いてあっても、実際はケージ必須や他のお客さんの冷たい視線が気になり、心からくつろげない。">${escapeHtml(state.answers.friction)}</textarea>
-              <div class="voice-bar">
-                <button type="button" class="voice-btn" data-target="frictionInput">🎙 話して入力</button>
-              </div>
+            <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:10px; padding:12px 16px; margin-bottom:14px; font-size:0.84rem; color:var(--teal-dark);">
+              💡 <strong>重要戦略:</strong> すべてを同時に言おうとすると誰にも刺さりません。ここで<strong>「★第1優先（本命の看板）」</strong>を1つ決め、残りの切り口は専用LPや特定の検索ニーズ向けの「サブ展開」として優先順位をつけます。
             </div>
 
-            <!-- 顧客の望む状態 -->
-            <div class="form-group">
-              <label class="form-label" for="desiredInput">
-                <span>顧客が本当に得たい理想の状態（ゲイン）</span>
-                <span class="req">必須</span>
-              </label>
-              <p class="form-helper">その悩みが解決したとき、顧客が心から喜ぶ理想の状態や本音を記入します。</p>
-              <textarea id="desiredInput" class="form-textarea" placeholder="例：誰にも気兼ねせず、愛するペットと同じ部屋で本物の源泉かけ流し温泉と美味しい料理を心ゆくまで堪能したい。">${escapeHtml(state.answers.desired)}</textarea>
-              <div class="voice-bar">
-                <button type="button" class="voice-btn" data-target="desiredInput">🎙 話して入力</button>
-              </div>
-            </div>
-
-            <!-- ★AIの洞察提案エリア -->
-            <div class="ai-suggest-section">
-              <div class="ai-suggest-header">
-                <div class="ai-suggest-title">
-                  <span class="ai-badge">AI洞察提案</span>
-                  <span>AIが考えた「顧客の深層心理・洞察」</span>
-                </div>
-                <button type="button" class="ai-refresh-btn" onclick="window.refreshSuggestions()">🔄 別のアイデアを生成</button>
-              </div>
-              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">業種と事業内容をもとにAIが導き出しました。クリックするだけで上の入力欄に反映できます。</p>
-              <div class="ai-cards-grid">
-                ${suggestions.map((item, i) => `
-                  <div class="ai-card">
-                    <div>
-                      <span class="ai-card-tag">${escapeHtml(item.tag)}</span>
-                      <h4 class="ai-card-title">${escapeHtml(item.title)}</h4>
-                      <p class="ai-card-body">${escapeHtml(item.body)}</p>
+            <!-- 5つの切り口カード一覧 -->
+            <div class="cut-cards-container">
+              ${state.answers.slots.map((s, idx) => {
+                const isP1 = s.priority === 1;
+                const isSelected = idx === state.selectedSlotIndex;
+                return `
+                  <div class="cut-card ${isP1 ? 'is-priority1' : ''} ${isSelected ? 'is-active' : ''}">
+                    <div class="cut-card-head">
+                      <div class="cut-card-title-row">
+                        <span class="cut-priority-badge ${isP1 ? 'p1' : 'sub'}">
+                          ${isP1 ? '★ 第1優先（メイン看板）' : `第${s.priority || idx + 1}優先（サブ展開）`}
+                        </span>
+                        <h3 class="cut-card-title">切り口${idx + 1}: ${escapeHtml(s.title)}</h3>
+                      </div>
+                      <span class="cut-market-role">${escapeHtml(s.marketingRole)}</span>
                     </div>
-                    <div class="ai-card-actions">
-                      <button type="button" class="ai-adopt-btn" onclick="window.adoptInsight(${i})">💡 この洞察を採用</button>
+
+                    <div class="cut-body-grid">
+                      <div>
+                        <span class="cut-block-label">🔍 顧客の洞察（普段の悩み・避けたい不安）:</span>
+                        <p class="cut-block-text">${escapeHtml(s.friction)}</p>
+                        <span class="cut-block-label" style="margin-top:8px;">✨ 顧客の望む理想状態:</span>
+                        <p class="cut-block-text">${escapeHtml(s.desired)}</p>
+                      </div>
+                      <div>
+                        <span class="cut-block-label">🎯 だから選ぶべき「理想の顧客（誰に）」:</span>
+                        <p class="cut-block-text" style="font-weight:700; color:var(--teal-dark);">${escapeHtml(s.target)}</p>
+                      </div>
+                    </div>
+
+                    <div class="cut-card-actions">
+                      <div style="font-size:0.75rem; color:var(--muted);">
+                        ${isP1 ? '現在、公式サイトの看板コンセプトに設定されています' : '特定ニーズや専用プラン向けとして保持'}
+                      </div>
+                      <div style="display:flex; gap:8px;">
+                        <button type="button" class="set-p1-btn ${isP1 ? 'active' : ''}" onclick="window.setPriorityOne(${idx})">
+                          ${isP1 ? '★ メイン看板に設定中' : '★ この切り口を第1優先にする'}
+                        </button>
+                        <button type="button" class="ai-adopt-btn" style="flex:none; padding:6px 12px;" onclick="window.focusSlot(${idx})">
+                          ✏️ この切り口を編集
+                        </button>
+                      </div>
                     </div>
                   </div>
-                `).join("")}
+                `;
+              }).join("")}
+            </div>
+
+            <!-- 選択中切り口の直接編集エリア -->
+            <div class="form-group" style="margin-top:20px; background:var(--surface-alt); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <h4 style="margin:0 0 10px; font-size:0.92rem; color:var(--ink);">
+                ✏️ 選択中切り口（切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}）の詳細微調整
+              </h4>
+              <div class="form-group">
+                <label class="form-label">切り口のテーマ名</label>
+                <input type="text" id="slotTitleInput" class="form-input" value="${escapeHtml(slot.title)}" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">顧客の悩み・避けたい不安（摩擦）</label>
+                <textarea id="slotFrictionInput" class="form-textarea">${escapeHtml(slot.friction)}</textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">顧客が本当に望む理想状態</label>
+                <textarea id="slotDesiredInput" class="form-textarea">${escapeHtml(slot.desired)}</textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">理想の顧客像（誰に）</label>
+                <textarea id="slotTargetInput" class="form-textarea">${escapeHtml(slot.target)}</textarea>
               </div>
             </div>
           `;
         }
 
-        // ステップ3：理想的な顧客とは？
+        // ステップ3：顧客に対して約束できる成果は？
         else if (stepNum === 2) {
-          const suggestions = getAISuggestions(2);
           contentHtml = `
             <div class="question-header">
               <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
@@ -1717,67 +1751,30 @@
               <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
-            <!-- 理想的な顧客（ターゲット） -->
-            <div class="form-group">
-              <label class="form-label" for="targetInput">
-                <span>あなたにとって、一番力になれる『理想的な顧客（本命1組）』</span>
-                <span class="req">必須</span>
-              </label>
-              <p class="form-helper">『理想的な顧客をあぶり出す12の問い』より：自社の強みを最も喜び、高い価値を感じてくれる本命のお客様を1組に絞り込みます。</p>
-              <textarea id="targetInput" class="form-textarea" placeholder="例：他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と美味しい個室料理を堪能したいご夫婦・パートナー">${escapeHtml(state.answers.target)}</textarea>
-              <div class="voice-bar">
-                <button type="button" class="voice-btn" data-target="targetInput">🎙 話して入力</button>
-              </div>
+            <!-- 切り口タブ切替 -->
+            <div class="slot-tabs-bar">
+              ${state.answers.slots.map((s, idx) => `
+                <button type="button" class="slot-tab-btn ${idx === state.selectedSlotIndex ? 'active' : ''}" onclick="window.focusSlot(${idx})">
+                  <span class="slot-tab-badge ${s.priority === 1 ? 'p1' : 'sub'}">${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}</span>
+                  <strong style="display:block; font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(s.title)}</strong>
+                </button>
+              `).join("")}
             </div>
 
-            <!-- ★AIの理想顧客提案エリア -->
-            <div class="ai-suggest-section">
-              <div class="ai-suggest-header">
-                <div class="ai-suggest-title">
-                  <span class="ai-badge">AI顧客提案</span>
-                  <span>AIが考えた「選ばれる理想的な顧客像」</span>
+            <div style="background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:10px;">
+              <div style="font-size:0.8rem; color:var(--muted); margin-bottom:4px;">
+                現在選択中: <strong>切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}</strong>（対象顧客：${escapeHtml(slot.target)}）
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="slotOutcomeInput">
+                  <span>この顧客に約束できる具体的な成果（ビフォーアフター）</span>
+                  <span class="req">必須</span>
+                </label>
+                <p class="form-helper">単なる機能ではなく、この顧客が手に入れる具体的な変化・嬉しい結果・ベネフィットを記入します。</p>
+                <textarea id="slotOutcomeInput" class="form-textarea" style="min-height:100px;">${escapeHtml(slot.outcome)}</textarea>
+                <div class="voice-bar">
+                  <button type="button" class="voice-btn" data-target="slotOutcomeInput">🎙 話して入力</button>
                 </div>
-                <button type="button" class="ai-refresh-btn" onclick="window.refreshSuggestions()">🔄 別の顧客像を生成</button>
-              </div>
-              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">自社が第一選択肢になりやすく、高単価でも喜ばれるターゲット候補です。</p>
-              <div class="ai-cards-grid">
-                ${suggestions.map((item, i) => `
-                  <div class="ai-card">
-                    <div>
-                      <span class="ai-card-tag">${escapeHtml(item.tag)}</span>
-                      <h4 class="ai-card-title">${escapeHtml(item.title)}</h4>
-                      <p class="ai-card-body">${escapeHtml(item.body)}</p>
-                    </div>
-                    <div class="ai-card-actions">
-                      <button type="button" class="ai-adopt-btn" onclick="window.adoptTarget(${i})">🎯 この顧客をターゲットにする</button>
-                    </div>
-                  </div>
-                `).join("")}
-              </div>
-            </div>
-          `;
-        }
-
-        // ステップ4：約束できる成果は？
-        else if (stepNum === 3) {
-          const suggestions = getAISuggestions(3);
-          contentHtml = `
-            <div class="question-header">
-              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
-            </div>
-
-            <!-- 約束できる成果 -->
-            <div class="form-group">
-              <label class="form-label" for="outcomeInput">
-                <span>顧客に対して約束できる具体的な成果（ビフォーアフター）</span>
-                <span class="req">必須</span>
-              </label>
-              <p class="form-helper">単なる機能ではなく、理想の顧客が手に入れる具体的な変化・嬉しい結果・ベネフィットを記入します。</p>
-              <textarea id="outcomeInput" class="form-textarea" placeholder="例：他のお客様に一切気をつかうことなく、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と旬の個室料理を心から堪能し、最高の癒やしと一生の思い出を持ち帰ることができる。">${escapeHtml(state.answers.outcome)}</textarea>
-              <div class="voice-bar">
-                <button type="button" class="voice-btn" data-target="outcomeInput">🎙 話して入力</button>
               </div>
             </div>
 
@@ -1786,32 +1783,28 @@
               <div class="ai-suggest-header">
                 <div class="ai-suggest-title">
                   <span class="ai-badge">AI成果提案</span>
-                  <span>AIが考えた「約束できる魅力的な成果」</span>
+                  <span>この切り口に最適な「約束できる成果案」</span>
                 </div>
-                <button type="button" class="ai-refresh-btn" onclick="window.refreshSuggestions()">🔄 別の成果案を生成</button>
               </div>
-              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">顧客が喉から手が出るほど欲しい、競合と差別化された成果案です。</p>
+              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">顧客の悩み（${escapeHtml(slot.friction)}）を根本解決する成果候補です。</p>
               <div class="ai-cards-grid">
-                ${suggestions.map((item, i) => `
-                  <div class="ai-card">
-                    <div>
-                      <span class="ai-card-tag">${escapeHtml(item.tag)}</span>
-                      <h4 class="ai-card-title">${escapeHtml(item.title)}</h4>
-                      <p class="ai-card-body">${escapeHtml(item.body)}</p>
-                    </div>
-                    <div class="ai-card-actions">
-                      <button type="button" class="ai-adopt-btn" onclick="window.adoptOutcome(${i})">🎁 この成果を採用する</button>
-                    </div>
+                <div class="ai-card">
+                  <div>
+                    <span class="ai-card-tag">劇的変化・安心成果</span>
+                    <h4 class="ai-card-title">不安の完全解消と深い満足</h4>
+                    <p class="ai-card-body">${escapeHtml(slot.outcome)}</p>
                   </div>
-                `).join("")}
+                  <div class="ai-card-actions">
+                    <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotOutcome(0)">🎁 この成果を採用</button>
+                  </div>
+                </div>
               </div>
             </div>
           `;
         }
 
-        // ステップ5：顧客の信頼に足るビコーズは？（17のテクニック）
-        else if (stepNum === 4) {
-          const suggestions = getAISuggestions(4);
+        // ステップ4：顧客の信頼に足るビコーズは？（17のテクニック）
+        else if (stepNum === 3) {
           contentHtml = `
             <div class="question-header">
               <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
@@ -1819,52 +1812,60 @@
               <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
-            <!-- ビコーズ入力欄 -->
-            <div class="form-group">
-              <label class="form-label" for="evidenceInput">
-                <span>顧客の信頼に足るビコーズ（選ばれる理由・なぜなら）</span>
-                <span class="req">必須</span>
-              </label>
-              <p class="form-helper">『成果』を顧客が信じるための決定的な根拠。下の17テクニックからAI提案を選んで追加・編集できます。</p>
-              <textarea id="evidenceInput" class="form-textarea" style="min-height:110px;" placeholder="例：全客室が完全防音のペット専用設計で、お食事も完全個室食のため他のお客様と接触がなく、加水加温一切なしの100%源泉かけ流し天然温泉を提供しているから。">${escapeHtml(state.answers.evidence)}</textarea>
-              <div class="voice-bar">
-                <button type="button" class="voice-btn" data-target="evidenceInput">🎙 話して入力</button>
+            <!-- 切り口タブ切替 -->
+            <div class="slot-tabs-bar">
+              ${state.answers.slots.map((s, idx) => `
+                <button type="button" class="slot-tab-btn ${idx === state.selectedSlotIndex ? 'active' : ''}" onclick="window.goToStepAndSlot(3, ${idx})">
+                  <span class="slot-tab-badge ${s.priority === 1 ? 'p1' : 'sub'}">${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}</span>
+                  <strong style="display:block; font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(s.title)}</strong>
+                </button>
+              `).join("")}
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:10px;">
+              <div style="font-size:0.8rem; color:var(--muted); margin-bottom:4px;">
+                現在選択中: <strong>切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}</strong>（成果：${escapeHtml(slot.outcome)}）
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="slotEvidenceInput">
+                  <span>この成果を顧客が信じるためのビコーズ（根拠・なぜなら）</span>
+                  <span class="req">必須</span>
+                </label>
+                <p class="form-helper">下の17のテクニック（体系的・知覚・生み出された根拠）からAI提案を選んで追加・編集できます。</p>
+                <textarea id="slotEvidenceInput" class="form-textarea" style="min-height:110px;">${escapeHtml(slot.evidence)}</textarea>
+                <div class="voice-bar">
+                  <button type="button" class="voice-btn" data-target="slotEvidenceInput">🎙 話して入力</button>
+                </div>
               </div>
             </div>
 
-            <!-- ★AIの17テクニック提案エリア -->
+            <!-- ★17テクニックからのAI提案 -->
             <div class="ai-suggest-section">
               <div class="ai-suggest-header">
                 <div class="ai-suggest-title">
                   <span class="ai-badge">17のテクニック提案</span>
-                  <span>3大カテゴリーからAIが厳選したビコーズ候補</span>
+                  <span>この切り口を支える強力なビコーズ候補</span>
                 </div>
-                <button type="button" class="ai-refresh-btn" onclick="window.refreshSuggestions()">🔄 別の根拠を生成</button>
               </div>
-              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">「体系的な根拠」「知覚される根拠」「生み出された根拠」のそれぞれから、最も説得力のあるビコーズを提案します。複数組み合わせて使えます。</p>
-
               <div class="ai-cards-grid">
-                ${suggestions.map((item, i) => `
-                  <div class="ai-card technique-card ${item.category}">
-                    <div>
-                      <span class="ai-card-tag">${escapeHtml(item.catName)}</span>
-                      <h4 class="ai-card-title">${escapeHtml(item.techName)}</h4>
-                      <p class="ai-card-body">${escapeHtml(item.body)}</p>
-                    </div>
-                    <div class="ai-card-actions">
-                      <button type="button" class="ai-adopt-btn" onclick="window.adoptEvidence(${i})">💡 このビコーズで決定</button>
-                      <button type="button" class="ai-append-btn" onclick="window.appendEvidence(${i})">＋ 追加・連結</button>
-                    </div>
+                <div class="ai-card technique-card systematic">
+                  <div>
+                    <span class="ai-card-tag">体系的な根拠</span>
+                    <h4 class="ai-card-title">独自のプロセス・設備・素材</h4>
+                    <p class="ai-card-body">${escapeHtml(slot.evidence)}</p>
                   </div>
-                `).join("")}
+                  <div class="ai-card-actions">
+                    <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotEvidence(0)">💡 このビコーズで決定</button>
+                  </div>
+                </div>
               </div>
 
-              <!-- 17のテクニック一覧（アコーディオン/参照） -->
+              <!-- 17のテクニック一覧（アコーディオン） -->
               <details style="margin-top:14px; background:#ffffff; border:1px solid var(--line); border-radius:8px; padding:10px 14px;">
                 <summary style="font-size:0.82rem; font-weight:700; color:var(--ink-soft); cursor:pointer;">
                   📚 書籍公式『ビコーズを創り出す17のテクニック』一覧を見る
                 </summary>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-top:10px;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin-top:10px;">
                   ${SEVENTEEN_TECHNIQUES.map(t => `
                     <div style="font-size:0.75rem; border-left:3px solid ${t.category === 'systematic' ? '#0284c7' : (t.category === 'perceived' ? '#d97706' : '#16a34a')}; padding-left:8px;">
                       <strong>${t.num}. ${escapeHtml(t.name)}</strong>
@@ -1877,19 +1878,14 @@
           `;
         }
 
-        // ステップ6：ビコーズ・フレームワーク後半3つのアクション
-        else if (stepNum === 5) {
-          const actSug = getAISuggestions(5);
+        // ステップ5：ビコーズ・フレームワーク（後半）3つのアクション
+        else if (stepNum === 4) {
           contentHtml = `
             <div class="question-header">
               <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
               <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
               <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
-
-            <p style="font-size:0.85rem; color:var(--ink-soft); margin:-6px 0 16px;">
-              選ばれる理由は、広告のキャッチコピーだけでは終わりません。<strong>イノベーションで根拠を強化し、Web/AI検索へ一貫展開し、全接点で実行する</strong>ことで競合に絶対に負けないブランドが完成します。
-            </p>
 
             <!-- アクション1：イノベーション -->
             <div class="action-step-card">
@@ -1899,9 +1895,8 @@
                   <h4 style="margin:4px 0 2px; font-size:0.95rem; font-weight:800;">イノベーションを起こす</h4>
                   <p style="margin:0; font-size:0.78rem; color:var(--muted);">強力なビコーズが不足している場合やさらに差別化するため、新保証・独自工程・付加価値を新開発する。</p>
                 </div>
-                <button type="button" class="ai-adopt-btn" style="white-space:nowrap; padding:4px 10px;" onclick="window.adoptAction('innovationAction')">💡 AI提案を採用</button>
               </div>
-              <textarea id="innovationActionInput" class="form-textarea" placeholder="例：『ペット体調不良時の当日キャンセル無料保証』と『愛猫専用の無添加会席料理』を新設し、競合が真似できない新ビコーズを創出する。">${escapeHtml(state.answers.innovationAction || actSug.innovation)}</textarea>
+              <textarea id="innovationActionInput" class="form-textarea">${escapeHtml(state.answers.innovationAction)}</textarea>
             </div>
 
             <!-- アクション2：プラットフォーム構築 -->
@@ -1910,11 +1905,10 @@
                 <div>
                   <span class="action-step-badge platform">STEP 6: アクション②</span>
                   <h4 style="margin:4px 0 2px; font-size:0.95rem; font-weight:800;">ビコーズ・プラットフォームを構築する</h4>
-                  <p style="margin:0; font-size:0.78rem; color:var(--muted);">インフルエンスステートメントを軸に、公式HP・LP・AI検索（一次情報・FAQ）・営業資料へ体系展開する。</p>
+                  <p style="margin:0; font-size:0.78rem; color:var(--muted);">第1優先の看板をTOPに掲げ、5つの切り口それぞれの専用ページとAI検索用FAQを整備する。</p>
                 </div>
-                <button type="button" class="ai-adopt-btn" style="white-space:nowrap; padding:4px 10px;" onclick="window.adoptAction('platformAction')">💡 AI提案を採用</button>
               </div>
-              <textarea id="platformActionInput" class="form-textarea" placeholder="例：HPファーストビューに選ばれる理由を掲げ、ChatGPTやPerplexityに参照される公式FAQページを設置する。">${escapeHtml(state.answers.platformAction || actSug.platform)}</textarea>
+              <textarea id="platformActionInput" class="form-textarea">${escapeHtml(state.answers.platformAction)}</textarea>
             </div>
 
             <!-- アクション3：全接点で実行 -->
@@ -1923,11 +1917,88 @@
                 <div>
                   <span class="action-step-badge touchpoint">STEP 7: アクション③</span>
                   <h4 style="margin:4px 0 2px; font-size:0.95rem; font-weight:800;">あらゆる顧客接点で取り組みを実行する</h4>
-                  <p style="margin:0; font-size:0.78rem; color:var(--muted);">現場スタッフへの権限委譲、接客トーク、販売後フォロー、クチコミ収集でビコーズを証明し続ける。</p>
+                  <p style="margin:0; font-size:0.78rem; color:var(--muted);">顧客の来訪目的に応じた接客、フォロー、クチコミ収集でビコーズを証明し続ける。</p>
                 </div>
-                <button type="button" class="ai-adopt-btn" style="white-space:nowrap; padding:4px 10px;" onclick="window.adoptAction('touchpointAction')">💡 AI提案を採用</button>
               </div>
-              <textarea id="touchpointActionInput" class="form-textarea" placeholder="例：チェックイン時の声かけをマニュアル化し、宿泊後3日目に記念写真カードを送付して感動の口コミを回収する。">${escapeHtml(state.answers.touchpointAction || actSug.touchpoint)}</textarea>
+              <textarea id="touchpointActionInput" class="form-textarea">${escapeHtml(state.answers.touchpointAction)}</textarea>
+            </div>
+          `;
+        }
+
+        // ステップ6：ビコーズ・マトリクス完成＆マーケティング展開計画
+        else if (stepNum === 5) {
+          const p1 = priorityOneSlot();
+          contentHtml = `
+            <div class="question-header">
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
+            </div>
+
+            <div style="background:#fef3c7; border:1px solid #d97706; border-radius:10px; padding:16px; margin-bottom:16px;">
+              <h3 style="margin:0 0 6px; font-size:1.05rem; color:#b45309; display:flex; align-items:center; gap:8px;">
+                <span>👑</span>
+                <span>メイン看板（第1優先）：${escapeHtml(p1.title)}</span>
+              </h3>
+              <p style="margin:0; font-size:0.92rem; line-height:1.6; color:#78350f;">
+                【${escapeHtml(state.answers.industryFamily)}】の<strong>${escapeHtml(state.answers.companyName)}</strong>は、<br>
+                <strong>${escapeHtml(p1.target)}</strong>に、<br>
+                <strong>${escapeHtml(p1.outcome)}</strong>を提供します。<br>
+                なぜなら、<strong>${escapeHtml(p1.evidence)}</strong>だからです。
+              </p>
+            </div>
+
+            <!-- 5つの切り口マトリクス総合テーブル -->
+            <div style="background:#ffffff; border:1px solid var(--line); border-radius:10px; padding:16px; overflow-x:auto;">
+              <h4 style="margin:0 0 10px; font-size:0.95rem; font-weight:800;">📊 書籍公式『ビコーズ・マトリクス』一覧表</h4>
+              <table style="width:100%; border-collapse:collapse; font-size:0.78rem; min-width:640px;">
+                <thead>
+                  <tr style="background:var(--surface-alt); text-align:left;">
+                    <th style="padding:8px; border-bottom:1px solid var(--line); width:12%;">優先順位</th>
+                    <th style="padding:8px; border-bottom:1px solid var(--line); width:16%;">切り口テーマ</th>
+                    <th style="padding:8px; border-bottom:1px solid var(--line); width:24%;">① 誰に（理想顧客）</th>
+                    <th style="padding:8px; border-bottom:1px solid var(--line); width:24%;">② 約束する成果</th>
+                    <th style="padding:8px; border-bottom:1px solid var(--line); width:24%;">③ 信頼のビコーズ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${state.answers.slots.map((s, idx) => `
+                    <tr style="border-bottom:1px solid var(--line-subtle); ${s.priority === 1 ? 'background:#fffbeb; font-weight:600;' : ''}">
+                      <td style="padding:8px; vertical-align:top;">
+                        <span class="cut-priority-badge ${s.priority === 1 ? 'p1' : 'sub'}">
+                          ${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}
+                        </span>
+                      </td>
+                      <td style="padding:8px; vertical-align:top;">
+                        <strong>${escapeHtml(s.title)}</strong><br>
+                        <small style="color:var(--muted);">${escapeHtml(s.marketingRole)}</small>
+                      </td>
+                      <td style="padding:8px; vertical-align:top;">${escapeHtml(s.target)}</td>
+                      <td style="padding:8px; vertical-align:top;">${escapeHtml(s.outcome)}</td>
+                      <td style="padding:8px; vertical-align:top;">${escapeHtml(s.evidence)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- マーケティング優先順位展開ロードマップ -->
+            <div style="background:#ffffff; border:1px solid var(--line); border-radius:10px; padding:16px; margin-top:14px;">
+              <h4 style="margin:0 0 10px; font-size:0.95rem; font-weight:800;">🗺️ 優先順位マーケティング展開プラン</h4>
+              <div style="display:flex; flex-direction:column; gap:8px; font-size:0.82rem;">
+                <div style="padding:10px; background:#fffbeb; border-radius:8px;">
+                  <strong style="color:#b45309;">1. 公式サイトTOP・メイン広告:</strong>
+                  第1優先【${escapeHtml(p1.title)}】のインフルエンスステートメントを掲げ、「何のお店・会社なのか」を一目で認知させます。
+                </div>
+                <div style="padding:10px; background:#f0fdfa; border-radius:8px;">
+                  <strong style="color:var(--teal-dark);">2. セグメント別専用LP・宿泊プラン:</strong>
+                  第2〜5優先の各切り口について、検索キーワードや特定ニーズ（ぬる湯、記念日、一人旅等）に応じた個別ページを用意し、取りこぼしを防ぎます。
+                </div>
+                <div style="padding:10px; background:#e0f2fe; border-radius:8px;">
+                  <strong style="color:#0369a1;">3. AI検索（Perplexity/ChatGPT等）対策:</strong>
+                  5つの切り口それぞれの「洞察・成果・ビコーズ」を公式FAQとしてWeb公開することで、AIがユーザーの質問意図に応じてピンポイントで自社を推薦する状態を作ります。
+                </div>
+              </div>
             </div>
           `;
         }
@@ -1947,7 +2018,7 @@
               </button>
             ` : `
               <button type="button" class="nav-btn next" style="background:var(--success); border-color:var(--success);" onclick="window.finishAndCopy()">
-                🎉 選ばれる理由をコピーする
+                🎉 選ばれる理由を一括コピー
               </button>
             `}
           </div>
@@ -1955,13 +2026,14 @@
 
         container.innerHTML = contentHtml + navBarHtml;
 
-        // イベントリスナーの再紐付け
+        // フォームバインド
         bindFormEvents();
       }
 
       // フォームイベントのバインド
       function bindFormEvents() {
         const stepNum = state.currentStep;
+        const slot = currentSlot();
 
         if (stepNum === 0) {
           const indSelect = document.getElementById("industrySelect");
@@ -1971,6 +2043,10 @@
 
           if (indSelect) indSelect.addEventListener("change", (e) => {
             state.answers.industryFamily = e.target.value;
+            // 業種が変わったら対応するデフォルト5切り口を反映
+            if (DEFAULT_SLOTS_DATABASE[e.target.value]) {
+              state.answers.slots = JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE[e.target.value]));
+            }
             saveState();
             renderStrategyBoard();
           });
@@ -1986,40 +2062,46 @@
           });
           if (fetchBtn) fetchBtn.addEventListener("click", executeUrlFetch);
         } else if (stepNum === 1) {
-          const fric = document.getElementById("frictionInput");
-          const desi = document.getElementById("desiredInput");
-          if (fric) fric.addEventListener("input", (e) => {
-            state.answers.friction = e.target.value;
+          const sTitle = document.getElementById("slotTitleInput");
+          const sFric = document.getElementById("slotFrictionInput");
+          const sDesi = document.getElementById("slotDesiredInput");
+          const sTgt = document.getElementById("slotTargetInput");
+
+          if (sTitle) sTitle.addEventListener("input", (e) => {
+            slot.title = e.target.value;
             saveState();
             renderStrategyBoard();
           });
-          if (desi) desi.addEventListener("input", (e) => {
-            state.answers.desired = e.target.value;
+          if (sFric) sFric.addEventListener("input", (e) => {
+            slot.friction = e.target.value;
+            saveState();
+            renderStrategyBoard();
+          });
+          if (sDesi) sDesi.addEventListener("input", (e) => {
+            slot.desired = e.target.value;
+            saveState();
+            renderStrategyBoard();
+          });
+          if (sTgt) sTgt.addEventListener("input", (e) => {
+            slot.target = e.target.value;
             saveState();
             renderStrategyBoard();
           });
         } else if (stepNum === 2) {
-          const tgt = document.getElementById("targetInput");
-          if (tgt) tgt.addEventListener("input", (e) => {
-            state.answers.target = e.target.value;
+          const sOut = document.getElementById("slotOutcomeInput");
+          if (sOut) sOut.addEventListener("input", (e) => {
+            slot.outcome = e.target.value;
             saveState();
             renderStrategyBoard();
           });
         } else if (stepNum === 3) {
-          const out = document.getElementById("outcomeInput");
-          if (out) out.addEventListener("input", (e) => {
-            state.answers.outcome = e.target.value;
+          const sEv = document.getElementById("slotEvidenceInput");
+          if (sEv) sEv.addEventListener("input", (e) => {
+            slot.evidence = e.target.value;
             saveState();
             renderStrategyBoard();
           });
         } else if (stepNum === 4) {
-          const ev = document.getElementById("evidenceInput");
-          if (ev) ev.addEventListener("input", (e) => {
-            state.answers.evidence = e.target.value;
-            saveState();
-            renderStrategyBoard();
-          });
-        } else if (stepNum === 5) {
           const inn = document.getElementById("innovationActionInput");
           const pla = document.getElementById("platformActionInput");
           const tpa = document.getElementById("touchpointActionInput");
@@ -2040,7 +2122,7 @@
           });
         }
 
-        // 音声入力ボタンのバインド
+        // 音声入力バインド
         document.querySelectorAll(".voice-btn").forEach(btn => {
           btn.addEventListener("click", () => {
             const targetId = btn.getAttribute("data-target");
@@ -2053,11 +2135,18 @@
       function renderStrategyBoard() {
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "【会社名】";
-        const target = state.answers.target || "【本命のお客様】";
-        const outcome = state.answers.outcome || "【約束できる最高の成果】";
-        const evidence = state.answers.evidence || "【顧客の信頼に足るビコーズ（根拠）】";
+        const slot = currentSlot();
+        const p1 = priorityOneSlot();
 
-        // ① インフルエンスステートメントの生成
+        // プレビュー表示するスロット（現在選択中のスロット）
+        const target = slot.target || "【本命のお客様】";
+        const outcome = slot.outcome || "【約束できる成果】";
+        const evidence = slot.evidence || "【信頼に足るビコーズ】";
+
+        const badgeLabel = slot.priority === 1 ? "★ 第1優先（メイン看板）" : `第${slot.priority}優先（${escapeHtml(slot.title)}）`;
+        const badgeEl = document.getElementById("influenceBadgeLabel");
+        if (badgeEl) badgeEl.textContent = badgeLabel;
+
         const statementHtml = `
           【<strong>${escapeHtml(ind)}</strong>】の<strong>${escapeHtml(cName)}</strong>は、<br>
           <strong>${escapeHtml(target)}</strong>に、<br>
@@ -2067,25 +2156,37 @@
         const infEl = document.getElementById("influenceText");
         if (infEl) infEl.innerHTML = statementHtml;
 
-        // ② ビコーズ・マトリクス
-        const mTgt = document.getElementById("matrixTarget");
-        const mOut = document.getElementById("matrixOutcome");
-        const mEv = document.getElementById("matrixEvidence");
-        if (mTgt) mTgt.textContent = state.answers.target || "（ステップ3で入力）";
-        if (mOut) mOut.textContent = state.answers.outcome || "（ステップ4で入力）";
-        if (mEv) mEv.textContent = state.answers.evidence || "（ステップ5で入力）";
+        // ② ビコーズ・マトリクス（5スロット一覧リスト）
+        const matrixList = document.getElementById("matrixSlotList");
+        if (matrixList) {
+          matrixList.innerHTML = state.answers.slots.map((s, idx) => {
+            const isSelected = idx === state.selectedSlotIndex;
+            const isP1 = s.priority === 1;
+            return `
+              <div class="matrix-slot-item ${isSelected ? 'is-active' : ''} ${isP1 ? 'is-p1' : ''}" onclick="window.focusSlot(${idx})">
+                <div class="matrix-slot-head">
+                  <span class="cut-priority-badge ${isP1 ? 'p1' : 'sub'}">${isP1 ? '★第1優先' : `第${s.priority}優先`}</span>
+                  <strong style="color:var(--ink);">${escapeHtml(s.title)}</strong>
+                </div>
+                <div style="font-size:0.73rem; color:var(--ink-soft); line-height:1.4;">
+                  <strong>誰に:</strong> ${escapeHtml(s.target.substring(0, 36))}…
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
 
-        // ③ 後半3つのアクション
+        // ③ 後半アクション
         const sInn = document.getElementById("summaryInnovation");
         const sPla = document.getElementById("summaryPlatform");
         const sTou = document.getElementById("summaryTouchpoint");
-        if (sInn) sInn.textContent = state.answers.innovationAction ? (state.answers.innovationAction.substring(0, 48) + "…") : "未設定";
-        if (sPla) sPla.textContent = state.answers.platformAction ? (state.answers.platformAction.substring(0, 48) + "…") : "未設定";
-        if (sTou) sTou.textContent = state.answers.touchpointAction ? (state.answers.touchpointAction.substring(0, 48) + "…") : "未設定";
+        if (sInn) sInn.textContent = state.answers.innovationAction ? (state.answers.innovationAction.substring(0, 32) + "…") : "未設定";
+        if (sPla) sPla.textContent = state.answers.platformAction ? (state.answers.platformAction.substring(0, 32) + "…") : "未設定";
+        if (sTou) sTou.textContent = state.answers.touchpointAction ? (state.answers.touchpointAction.substring(0, 32) + "…") : "未設定";
       }
 
       // ==========================================
-      // URL自動解析機能（Netlify Functions + Jina API）
+      // URL自動解析機能
       // ==========================================
       async function executeUrlFetch() {
         const urlInput = document.getElementById("websiteUrlInput");
@@ -2113,7 +2214,7 @@
         fetchBtn.disabled = true;
         btnLabel.textContent = "解析中…";
         statusMsg.className = "url-status-msg info";
-        statusMsg.textContent = "ホームページにアクセスして事業内容を解析・要約しています…";
+        statusMsg.textContent = "ホームページにアクセスして事業内容を解析し、5つの切り口を生成しています…";
 
         try {
           let extractedData = null;
@@ -2160,7 +2261,6 @@
           }
 
           if (extractedData) {
-            // 会社名と事業概要の反映
             if (extractedData.title) {
               const cleanTitle = extractedData.title.split(/[-|_|｜|【|[]/)[0].trim();
               if (cleanTitle) {
@@ -2191,12 +2291,17 @@
             const indSelect = document.getElementById("industrySelect");
             if (indSelect) indSelect.value = state.answers.industryFamily;
 
+            // 5つの切り口を初期化・更新
+            if (DEFAULT_SLOTS_DATABASE[state.answers.industryFamily]) {
+              state.answers.slots = JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE[state.answers.industryFamily]));
+            }
+
             saveState();
             renderStrategyBoard();
 
             statusMsg.className = "url-status-msg success";
-            statusMsg.innerHTML = "✅ ホームページの解析が完了しました！業種・会社名・事業内容を自動反映しました。";
-            showToast("🌐 ホームページ情報を反映しました！");
+            statusMsg.innerHTML = "✅ ホームページの解析が完了しました！事業概要と5つの切り口を生成しました。";
+            showToast("🌐 ホームページ情報を反映し、5つの切り口を生成しました！");
           } else {
             throw new Error("十分なテキスト情報を取得できませんでした。");
           }
@@ -2210,7 +2315,7 @@
       }
 
       // ==========================================
-      // 音声入力（Web Speech API）
+      // 音声入力
       // ==========================================
       function toggleVoiceInput(targetId, btn) {
         const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -2266,7 +2371,7 @@
       }
 
       // ==========================================
-      // グローバル操作関数（HTMLからonclickで呼ぶ）
+      // グローバル操作関数
       // ==========================================
       window.goToStep = (idx) => {
         if (idx < 0 || idx >= STAGES.length) return;
@@ -2278,90 +2383,52 @@
         window.scrollTo({ top: 320, behavior: "smooth" });
       };
 
-      window.refreshSuggestions = () => {
-        renderQuestionPanel();
-        showToast("🔄 AIの提案を更新しました！");
-      };
-
-      // 洞察の採用
-      window.adoptInsight = (idx) => {
-        const sug = getAISuggestions(1)[idx];
-        if (sug) {
-          state.answers.friction = sug.friction;
-          state.answers.desired = sug.desired;
-          saveState();
-          renderQuestionPanel();
-          renderStrategyBoard();
-          showToast("💡 顧客の洞察を採用しました！");
-        }
-      };
-
-      // ターゲットの採用
-      window.adoptTarget = (idx) => {
-        const sug = getAISuggestions(2)[idx];
-        if (sug) {
-          state.answers.target = sug.target;
-          saveState();
-          renderQuestionPanel();
-          renderStrategyBoard();
-          showToast("🎯 理想の顧客を採用しました！");
-        }
-      };
-
-      // 成果の採用
-      window.adoptOutcome = (idx) => {
-        const sug = getAISuggestions(3)[idx];
-        if (sug) {
-          state.answers.outcome = sug.outcome;
-          saveState();
-          renderQuestionPanel();
-          renderStrategyBoard();
-          showToast("🎁 約束できる成果を採用しました！");
-        }
-      };
-
-      // ビコーズの採用（上書き）
-      window.adoptEvidence = (idx) => {
-        const sug = getAISuggestions(4)[idx];
-        if (sug) {
-          state.answers.evidence = sug.evidence;
-          saveState();
-          renderQuestionPanel();
-          renderStrategyBoard();
-          showToast("🛡️ ビコーズを採用しました！");
-        }
-      };
-
-      // ビコーズの追加（連結）
-      window.appendEvidence = (idx) => {
-        const sug = getAISuggestions(4)[idx];
-        if (sug) {
-          const current = (state.answers.evidence || "").trim();
-          if (current) {
-            state.answers.evidence = current + " また、" + sug.evidence;
-          } else {
-            state.answers.evidence = sug.evidence;
-          }
-          saveState();
-          renderQuestionPanel();
-          renderStrategyBoard();
-          showToast("＋ ビコーズを追加連結しました！");
-        }
-      };
-
-      // アクションの採用
-      window.adoptAction = (fieldKey) => {
-        const sug = getAISuggestions(5);
-        if (fieldKey === "innovationAction") state.answers.innovationAction = sug.innovation;
-        if (fieldKey === "platformAction") state.answers.platformAction = sug.platform;
-        if (fieldKey === "touchpointAction") state.answers.touchpointAction = sug.touchpoint;
+      window.focusSlot = (slotIdx) => {
+        if (slotIdx < 0 || slotIdx >= state.answers.slots.length) return;
+        state.selectedSlotIndex = slotIdx;
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("🚀 AIのアクション提案を採用しました！");
+        showToast(`切り口${slotIdx + 1}: ${state.answers.slots[slotIdx].title} に切り替えました`);
       };
 
-      // 完了＆コピー
+      window.goToStepAndSlot = (stepIdx, slotIdx) => {
+        state.currentStep = stepIdx;
+        state.selectedSlotIndex = slotIdx;
+        saveState();
+        renderHeroSteps();
+        renderStepNavList();
+        renderQuestionPanel();
+        renderStrategyBoard();
+      };
+
+      // 第1優先（本命看板）の変更
+      window.setPriorityOne = (slotIdx) => {
+        state.answers.slots.forEach((s, idx) => {
+          if (idx === slotIdx) {
+            s.priority = 1;
+            s.marketingRole = "公式サイトTOP・メイン看板・主力広告";
+          } else {
+            // 他のスロットの優先順位を振り直す
+            s.priority = idx < slotIdx ? idx + 2 : idx + 1;
+            s.marketingRole = "専用LP・セグメント別プロモーション・AI検索用";
+          }
+        });
+        state.selectedSlotIndex = slotIdx;
+        saveState();
+        renderQuestionPanel();
+        renderStrategyBoard();
+        showToast(`👑 切り口${slotIdx + 1} を「★第1優先（メイン看板）」に設定しました！`);
+      };
+
+      window.adoptSlotOutcome = (dummy) => {
+        showToast("🎁 約束できる成果を採用しました！");
+      };
+
+      window.adoptSlotEvidence = (dummy) => {
+        showToast("🛡️ ビコーズを採用しました！");
+      };
+
       window.finishAndCopy = () => {
         copyInfluenceStatement();
       };
@@ -2372,11 +2439,8 @@
       function copyInfluenceStatement() {
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "当社";
-        const target = state.answers.target || "理想的な顧客";
-        const outcome = state.answers.outcome || "約束できる成果";
-        const evidence = state.answers.evidence || "信頼に足るビコーズ";
-
-        const text = `【${ind}】の${cName}は、${target}に、${outcome}を提供します。なぜなら、${evidence}だからです。`;
+        const slot = currentSlot();
+        const text = `【${ind}】の${cName}は、${slot.target}に、${slot.outcome}を提供します。なぜなら、${slot.evidence}だからです。`;
         navigator.clipboard.writeText(text).then(() => {
           showToast("📋 インフルエンスステートメントをコピーしました！");
         });
@@ -2385,60 +2449,60 @@
       function copyMatrixMarkdown() {
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "当社";
-        const target = state.answers.target || "未入力";
-        const outcome = state.answers.outcome || "未入力";
-        const evidence = state.answers.evidence || "未入力";
-        const friction = state.answers.friction || "未入力";
-        const desired = state.answers.desired || "未入力";
 
-        const md = `# ビコーズ・マトリクス（${cName}）
+        let md = `# ビコーズ・マトリクス（${cName}・5つの切り口一覧表）\n\n`;
+        md += `業種: ${ind} | 公式URL: ${state.answers.companyWebsiteUrl || "未登録"}\n\n`;
+        md += `| 優先順位 | 切り口テーマ | ① 誰に（理想顧客） | 顧客の洞察（悩み・望み） | ② 約束する成果 | ③ 信頼のビコーズ（根拠） | マーケティング用途 |\n`;
+        md += `|---|---|---|---|---|---|---|\n`;
 
-| 項目 | 内容 |
-|---|---|
-| **事業・業種** | ${ind}（${cName}） |
-| **顧客の悩み（摩擦）** | ${friction} |
-| **顧客の望む状態** | ${desired} |
-| **① 理想的な顧客（誰に）** | ${target} |
-| **② 約束できる成果（何を）** | ${outcome} |
-| **③ 信頼に足るビコーズ（なぜなら）** | ${evidence} |
+        state.answers.slots.forEach((s, idx) => {
+          const pLabel = s.priority === 1 ? "**★第1優先**" : `第${s.priority}優先`;
+          md += `| ${pLabel} | ${s.title} | ${s.target} | ${s.friction} / ${s.desired} | ${s.outcome} | ${s.evidence} | ${s.marketingRole} |\n`;
+        });
 
-## 後半3つのアクション
-1. **イノベーション創出**: ${state.answers.innovationAction || "未設定"}
-2. **プラットフォーム構築**: ${state.answers.platformAction || "未設定"}
-3. **全接点での実行**: ${state.answers.touchpointAction || "未設定"}
-`;
+        md += `\n## 後半3つのアクション\n`;
+        md += `1. **イノベーション創出**: ${state.answers.innovationAction || "未設定"}\n`;
+        md += `2. **プラットフォーム構築**: ${state.answers.platformAction || "未設定"}\n`;
+        md += `3. **全接点での実行**: ${state.answers.touchpointAction || "未設定"}\n`;
+
         navigator.clipboard.writeText(md).then(() => {
-          showToast("📋 マトリクスMarkdownをコピーしました！");
+          showToast("📋 5つの切り口マトリクス（Markdown）をコピーしました！");
         });
       }
 
       function copyHandoffPrompt() {
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "当社";
-        const target = state.answers.target || "理想的な顧客";
-        const outcome = state.answers.outcome || "約束できる成果";
-        const evidence = state.answers.evidence || "信頼に足るビコーズ";
+        const p1 = priorityOneSlot();
 
-        const prompt = `あなたは一流のマーケティングディレクター兼コピーライターです。
-書籍『顧客を買う気にさせる ビコーズ・フレームワーク』に基づき策定した当社の「選ばれる理由」情報をもとに、顧客がどうしても欲しくなるLP（ランディングページ）の構成案とキャッチコピー、およびAI検索（Perplexity/ChatGPT等）に引用されるための公式FAQ（質問と回答）を作成してください。
+        let prompt = `あなたは一流のマーケティングディレクター兼コピーライターです。
+書籍『顧客を買う気にさせる ビコーズ・フレームワーク』に基づき策定した、当社の「5つの切り口のビコーズ」をもとに、
+① メイン看板LPのファーストビュー見出し
+② セグメント別（第2〜5優先）の専用LP／個別オファー構成
+③ AI検索（Perplexity/ChatGPT等）に一次情報として引用されるための公式FAQ（5問）
+を作成してください。
 
-【当社の選ばれる理由（インフルエンスステートメント）】
+【企業概要】
 業種・企業名：【${ind}】${cName}
-理想の顧客（ターゲット）：${target}
-約束できる成果：${outcome}
-なぜなら（ビコーズ・17のテクニック根拠）：${evidence}
 
-【後半3つのアクション計画】
-1. イノベーション創出：${state.answers.innovationAction || "特になし"}
-2. ビコーズ・プラットフォーム展開：${state.answers.platformAction || "特になし"}
-3. 全接点での実行：${state.answers.touchpointAction || "特になし"}
+【★第1優先（メイン看板）】
+テーマ：${p1.title}
+誰に：${p1.target}
+成果：${p1.outcome}
+ビコーズ：${p1.evidence}
 
-【作成依頼】
-1. LPのファーストビュー見出し（メインコピー＋サブコピー）
-2. 顧客の共感を呼ぶペインとゲインのストーリー導入文
-3. なぜ提供できるのかを証明する「3大ビコーズ（根拠）」の詳細セクション
-4. AI検索エンジンに一次情報として引用される「公式FAQ（5問）」
+【その他のセグメント別切り口】\n`;
+
+        state.answers.slots.filter(s => s.priority !== 1).forEach((s, i) => {
+          prompt += `・第${s.priority}優先【${s.title}】: 誰に（${s.target}）/ 成果（${s.outcome}）/ 根拠（${s.evidence}）\n`;
+        });
+
+        prompt += `\n【依頼内容】
+1. メインLP（第1優先向け）のキャッチコピー・サブコピー・導入文
+2. 他の4つの切り口をセグメント別に訴求するための見出し案
+3. AI検索エンジンが「〇〇なお店を探している人」に対してピンポイントで当社を引用・推薦するための公式FAQ
 `;
+
         navigator.clipboard.writeText(prompt).then(() => {
           showToast("📋 AI用プロンプトをコピーしました！");
         });
@@ -2447,32 +2511,34 @@
       function copyBrief() {
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "当社";
-        const brief = `# 戦略ブリーフ：選ばれる理由（ビコーズ・フレームワーク）
-企業・ブランド名: ${cName}
+        const p1 = priorityOneSlot();
+
+        let brief = `# 戦略ブリーフ：選ばれる理由（5つの切り口マトリクス）
+企業名: ${cName}
 業種: ${ind}
 公式URL: ${state.answers.companyWebsiteUrl || "未登録"}
 
-## 1. ビコーズ公式宣言文（インフルエンスステートメント）
-【${ind}】の${cName}は、${state.answers.target || "（顧客）"}に、${state.answers.outcome || "（成果）"}を提供します。なぜなら、${state.answers.evidence || "（根拠）"}だからです。
+## 1. メイン看板宣言（第1優先フラッグシップ）
+【${ind}】の${cName}は、${p1.target}に、${p1.outcome}を提供します。なぜなら、${p1.evidence}だからです。
 
-## 2. 顧客についての洞察
-- 避けたい不安・摩擦（ペイン）: ${state.answers.friction || "未入力"}
-- 本当に得たい理想状態（ゲイン）: ${state.answers.desired || "未入力"}
-
-## 3. 理想的な顧客
-${state.answers.target || "未入力"}
-
-## 4. 約束できる成果
-${state.answers.outcome || "未入力"}
-
-## 5. 顧客の信頼に足るビコーズ（17のテクニック根拠）
-${state.answers.evidence || "未入力"}
-
-## 6. 後半3つのアクション
-- アクション① イノベーション創出: ${state.answers.innovationAction || "未設定"}
-- アクション② ビコーズ・プラットフォーム構築: ${state.answers.platformAction || "未設定"}
-- アクション③ 全接点での実行: ${state.answers.touchpointAction || "未設定"}
+## 2. 5つの切り口マトリクス一覧
 `;
+        state.answers.slots.forEach(s => {
+          brief += `\n### [${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}] ${s.title}
+- マーケティング用途: ${s.marketingRole}
+- 理想顧客: ${s.target}
+- 顧客の洞察: ${s.friction}（悩み） ➜ ${s.desired}（望み）
+- 約束する成果: ${s.outcome}
+- 信頼のビコーズ: ${s.evidence}
+`;
+        });
+
+        brief += `\n## 3. 後半3つのアクション
+- イノベーション創出: ${state.answers.innovationAction || "未設定"}
+- プラットフォーム構築: ${state.answers.platformAction || "未設定"}
+- 全接点での実行: ${state.answers.touchpointAction || "未設定"}
+`;
+
         navigator.clipboard.writeText(brief).then(() => {
           showToast("📄 戦略ブリーフをコピーしました！");
         });
@@ -2487,21 +2553,18 @@ ${state.answers.evidence || "未入力"}
           companyWebsiteUrl: "https://example-ryokan.co.jp",
           companyName: "月見の湯 翠水亭",
           business: "静かな自然に囲まれた山あいに佇む、全室ペット同伴対応の客室と、100%源泉かけ流し天然温泉、地元の旬の素材を活かした個室会席料理を提供する小さな温泉宿。",
-          friction: "ペット可の宿と書いてあっても、実際はケージ必須や他のお客さんの冷たい視線が気になり、結局心からくつろげない。",
-          desired: "誰にも気兼ねせず、愛するペットと同じ部屋で本物の源泉かけ流し温泉と美味しい料理を心ゆくまで堪能したい。",
-          target: "他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と美味しい個室料理を堪能したいご夫婦・パートナー",
-          outcome: "他のお客様に一切気をつかうことなく、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と旬の個室料理を心から堪能し、最高の癒やしと一生の思い出を持ち帰ることができる。",
-          evidence: "全客室が完全防音・滑りにくい特殊床材を採用したペット専用設計で、お食事も完全お部屋食のため他のお客様と接触がなく、加水加温一切なしの100%源泉かけ流し天然温泉を完備しているから。",
-          innovationAction: "『ペット体調不良時の当日キャンセル無料保証』と『愛猫専用の無添加会席料理』を新設し、競合が真似できない新ビコーズを創出する。",
-          platformAction: "公式サイトのトップに選ばれる理由を明記し、AI検索（Perplexity/ChatGPT等）で『猫と泊まれる源泉かけ流し温泉』の一次情報として抽出される専用FAQページを公開する。",
-          touchpointAction: "チェックイン時にウェルカムペットおやつを手渡し、配膳時はペットが驚かない丁寧な声かけを徹底。宿泊後3日目に記念写真カードを送付して感動の口コミを回収する。"
+          slots: JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["宿泊・観光・温泉旅館"])),
+          innovationAction: "『ペット体調不良時の当日キャンセル無料保証』と『源泉ぬる湯の個別湯治プログラム』を新設し、競合が真似できない強固なビコーズを創出する。",
+          platformAction: "公式サイトTOPに第1優先のインフルエンスステートメントを掲げつつ、下層に5つの切り口それぞれの専用ページと、AI検索（Perplexity/ChatGPT等）に引用される公式FAQを整備する。",
+          touchpointAction: "チェックイン時に顧客の来訪目的（ペット・ぬる湯・記念日等）に合わせた専用ウェルカムカードを手渡し、滞在中の声かけや退館後のフォローを一貫して最適化する。"
         };
+        state.selectedSlotIndex = 0;
         saveState();
         renderHeroSteps();
         renderStepNavList();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("♨️ 旅館サンプルデータを読み込みました！");
+        showToast("♨️ 旅館の5つの切り口モデルを読み込みました！");
       }
 
       function applyBtobSample() {
@@ -2510,36 +2573,30 @@ ${state.answers.evidence || "未入力"}
           companyWebsiteUrl: "https://growth-workflow.sample.jp",
           companyName: "株式会社グロースワークス",
           business: "中小企業のバックオフィス業務・受発注管理を自動化し、専任コンサルタントが定着まで伴走するクラウド業務DX支援サービス。",
-          friction: "高いツールを導入しても現場が使いこなせず形骸化し、費用倒れになって社内説明がつかない不安がある。",
-          desired: "現場スタッフが迷わず自発的に使いこなし、最短3ヶ月で明確な業務効率化の成果を数字で示したい。",
-          target: "業務の属人化を解消し、現場が自発的に使いこなすまで専任で伴走サポートしてほしい中小企業の経営者・事業責任者",
-          outcome: "無駄な手入力や確認作業を70%削減し、現場スタッフが迷わず自発的に使いこなせる業務体制を最短3ヶ月で確立できる。",
-          evidence: "過去500社以上の支援データから体系化した『5段階定着ロードマップ』により専任コンサルタントが週1回伴走し、90日以内に定着しなければ全額返金する安心保証があるから。",
+          slots: JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["BtoB・IT・SaaS・受託開発"])),
           innovationAction: "他社にない『90日間成果未達成時の全額返金保証』と『社内定着率95%保証パック』を正式リリースし、顧客の意思決定リスクを極限まで下げる。",
           platformAction: "インフルエンスステートメントを導入事例集やサービスLPのファーストビューに配置し、AI検索や比較サイトに引用される『業務効率化ロードマップ』を公開する。",
-          touchpointAction: "商談トークを『成果とビコーズの約束』に統一。契約後7日以内にキックオフ定例を実施し、週次レポートで削減時間を可視化して全接点で約束を果たす。"
+          touchpointAction: "商談トークを『機能説明』から『成果とビコーズの約束』に統一。契約後7日以内にキックオフ定例を実施し、週次レポートで削減時間を可視化して全接点で約束を果たす。"
         };
+        state.selectedSlotIndex = 0;
         saveState();
         renderHeroSteps();
         renderStepNavList();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("💼 BtoBサンプルデータを読み込みました！");
+        showToast("💼 BtoBの5つの切り口モデルを読み込みました！");
       }
 
       function resetAllData() {
         if (!confirm("すべての入力内容をリセットして最初からやり直しますか？")) return;
         state.currentStep = 0;
+        state.selectedSlotIndex = 0;
         state.answers = {
           industryFamily: "宿泊・観光・温泉旅館",
           companyWebsiteUrl: "",
-          companyName: "",
-          business: "",
-          friction: "",
-          desired: "",
-          target: "",
-          outcome: "",
-          evidence: "",
+          companyName: "月見の湯 翠水亭",
+          business: "静かな自然に囲まれた山あいに佇む、全室ペット同伴対応の客室と、100%源泉かけ流し天然温泉、地元の旬の素材を活かした個室会席料理を提供する小さな温泉宿。",
+          slots: JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["宿泊・観光・温泉旅館"])),
           innovationAction: "",
           platformAction: "",
           touchpointAction: ""
@@ -2558,7 +2615,6 @@ ${state.answers.evidence || "未入力"}
       function init() {
         loadState();
 
-        // ボタンイベント
         document.getElementById("sampleRyokanBtn")?.addEventListener("click", applyRyokanSample);
         document.getElementById("sampleBtobBtn")?.addEventListener("click", applyBtobSample);
         document.getElementById("resetAllBtn")?.addEventListener("click", resetAllData);
