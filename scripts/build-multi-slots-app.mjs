@@ -1,6 +1,4 @@
-import fs from 'node:fs';
-
-const htmlContent = `<!doctype html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
@@ -1243,7 +1241,7 @@ const htmlContent = `<!doctype html>
     (() => {
       "use strict";
 
-      const STORAGE_KEY = "because-framework-5slots-v1";
+      const STORAGE_KEY = "because-framework-5slots-v2";
 
       // 6つのステップ定義
       const STAGES = [
@@ -1342,6 +1340,214 @@ const htmlContent = `<!doctype html>
         { id: "tech_innovation", category: "created", categoryName: "生み出された根拠", num: 17, name: "新しいアプローチ／イノベーション", summary: "業界の常識を覆す新しい仕組み、AIやDXの活用、新提供モデル。" }
       ];
 
+      
+      // ==========================================
+      // URLやテキストから実在する強みだけを抽出して動的に5つの切り口を生成するエンジン
+      // （※サイトに書かれていない記念日プロポーズなどの架空サービスは絶対に出さない）
+      // ==========================================
+      function generateDynamicSlotsFromText(text, title, industry) {
+        const full = ((text || "") + " " + (title || "")).toLowerCase();
+        const detected = [];
+
+        // --- 宿泊・温泉旅館向けキーワード検出 ---
+        if (industry.includes("宿泊") || full.includes("旅館") || full.includes("ホテル") || full.includes("温泉")) {
+          // 1. ペット・猫・犬
+          if (full.includes("猫") || full.includes("ペット") || full.includes("犬") || full.includes("愛猫") || full.includes("愛犬") || full.includes("わんちゃん")) {
+            detected.push({
+              title: "ペット・愛猫愛犬同伴宿泊軸",
+              marketingRole: "ペット同伴専用プラン・愛犬家愛猫家向けプロモーション",
+              friction: "ペット可と書いてあってもケージ必須や他のお客さんの視線が気になり、心からくつろげない。",
+              desired: "誰にも気兼ねせず、愛するペットと同じ部屋で本物の温泉と自然を心ゆくまで満喫したい。",
+              target: "他の客に気をつかわず、愛猫や愛犬と一緒にゆったり温泉旅行を楽しみたいペット愛好家のご夫婦・パートナー",
+              outcome: "ペットを預ける罪悪感ゼロで、愛するペットの嬉しそうな姿を見守りながら、心からくつろげる最高の休日を過ごせる。",
+              evidence: "ペットと一緒に同じお部屋で過ごせる客室と、ペットに理解のある温かい受け入れ体制を整えているから。"
+            });
+          }
+
+          // 2. 看板猫・動物ふれあい
+          if (full.includes("看板猫") || (full.includes("猫") && (full.includes("宿") || full.includes("癒し") || full.includes("ふれあい")))) {
+            detected.push({
+              title: "人懐っこい看板猫とのふれあい癒やし軸",
+              marketingRole: "猫好き向けSNS・猫旅専門メディア・口コミ展開",
+              friction: "ペットは飼えないけれど猫が大好きで、アットホームな宿で本物の猫と心ゆくまで触れ合って癒やされたい。",
+              desired: "人懐っこい看板猫にお出迎えされ、のんびり日向ぼっこする姿を眺めながら日常の疲れを完全に癒やしたい。",
+              target: "日常の仕事に疲れ、人懐っこい看板猫に温かく出迎えられて心から癒やされたい猫好きの旅人・一人客",
+              outcome: "看板猫の愛らしい仕草や温もりに触れることで、日頃のストレスや孤独感が消え去り、心がじんわり温まる深い癒やしを得られる。",
+              evidence: "宿の看板猫たちが自然体で館内でお出迎えし、猫好きのお客様を家族のように温かく迎えるアットホームな雰囲気があるから。"
+            });
+          }
+
+          // 3. ぬる湯・長湯・源泉
+          if (full.includes("ぬる湯") || full.includes("ぬるめ") || full.includes("長湯") || full.includes("38") || full.includes("39") || full.includes("40度") || full.includes("温め")) {
+            detected.push({
+              title: "体に優しい源泉ぬる湯・長湯湯治軸",
+              marketingRole: "「ぬる湯・長湯」専用LP・健康志向検索対策",
+              friction: "熱い温泉はのぼせてしまい長く入れず、湯疲れしてしまう。体に負担をかけずに芯から温まりたい。",
+              desired: "体温に近いぬるめの源泉にじっくり1時間でも浸かり、副交感神経を優位にして体の深部から疲労をほぐしたい。",
+              target: "熱いお湯が苦手で、体に負担をかけずにじっくり長湯して日頃の疲れや冷えを解消したい健康志向の方",
+              outcome: "何十分入ってものぼせない極上のぬる湯によって、心身の緊張が完全に解け、夜もぐっすり熟睡できる本物の休息を実感できる。",
+              evidence: "無理な加温や循環を行わない、約38〜40℃の体に最も優しい自家源泉100%のかけ流し温泉を提供しているから。"
+            });
+          } else if (full.includes("温泉") || full.includes("源泉") || full.includes("かけ流し") || full.includes("露天風呂")) {
+            detected.push({
+              title: "本物の源泉かけ流し天然温泉軸",
+              marketingRole: "温泉ファン向け専用ページ・温泉クチコミサイト",
+              friction: "循環ろ過や塩素消毒された温泉では満足できず、本物の湧きたて天然温泉で肌や体を癒やしたい。",
+              desired: "生まれたての豊かな源泉100%に浸かり、温泉本来の贅沢な効能と湯上がりのポカポカ感を味わいたい。",
+              target: "塩素の匂いや循環湯を避け、成分がそのまま生きた本物の源泉かけ流しをじっくり堪能したい温泉通の方",
+              outcome: "肌になめらかに染み渡る新鮮な温泉成分により、湯上がり後も湯冷めせず、肌がすべすべになり体の芯まで軽くなる。",
+              evidence: "湯量を贅沢に生かした加水・循環なしの天然温泉をそのまま浴槽に注ぎ込んでいるから。"
+            });
+          }
+
+          // 4. 川・渓流・箒川・自然・静けさ・隠れ家
+          if (full.includes("川") || full.includes("箒川") || full.includes("渓流") || full.includes("自然") || full.includes("山") || full.includes("静か") || full.includes("隠れ家") || full.includes("塩原")) {
+            detected.push({
+              title: "清流のせせらぎと大自然に包まれる静寂軸",
+              marketingRole: "静養・リトリートプラン・日常離脱向け",
+              friction: "都会の喧騒や人混み、人工的な騒音に疲れ果て、自然の音だけが聞こえる静かな場所で心を休めたい。",
+              desired: "川のせせらぎや鳥の声を聞きながら、何もしない贅沢な時間を過ごし、本来の自分を取り戻したい。",
+              target: "都会の喧騒や人間関係のストレスから完全に離れ、美しい自然の中で静かに心身をリセットしたい大人世代",
+              outcome: "人工的なノイズが一切ない澄んだ空気と清流の音に包まれることで、頭の疲れがすっきりと抜け、深い安らぎを得られる。",
+              evidence: "温泉街の喧騒から離れた清流沿いの立地にあり、目の前に広がる大自然の景色とせせらぎを独り占めできる環境があるから。"
+            });
+          }
+
+          // 5. 小さな宿・ペンション・アットホーム・家庭的
+          if (full.includes("小さな") || full.includes("ペンション") || full.includes("アットホーム") || full.includes("家庭") || full.includes("素朴") || full.includes("おもてなし")) {
+            detected.push({
+              title: "気取らず落ち着けるアットホームな隠れ宿軸",
+              marketingRole: "リピーター獲得・アットホーム旅ファン向け",
+              friction: "大型ホテルのマニュアル的な接客や画一的な施設では落ち着かず、肩肘張らずにくつろげない。",
+              desired: "親戚の家に遊びに来たような温かいもてなしを受け、飾らない温もりのある空間でゆったり過ごしたい。",
+              target: "大規模旅館の形式ばったサービスが苦手で、宿の人と温かい交流ができる素朴で居心地の良い宿を求める方",
+              outcome: "過度な気配りや緊張感とは無縁の、心温まる丁寧なおもてなしによって、自分の家のように心底くつろぐことができる。",
+              evidence: "客室数を限定した小さな宿だからこそできる、一人ひとりのお客様の顔が見える親身で温かな接客を徹底しているから。"
+            });
+          }
+
+          // 6. 料理・地酒・旬の味覚
+          if (full.includes("料理") || full.includes("食事") || full.includes("手作り") || full.includes("野菜") || full.includes("地産")) {
+            detected.push({
+              title: "地元の旬を活かした心温まる家庭料理軸",
+              marketingRole: "手作り料理プラン・素朴な美食向け",
+              friction: "大量生産された冷たい料理ではなく、出来立ての手作りの温かいご飯を美味しく味わいたい。",
+              desired: "地元の新鮮な野菜や食材を使った、胃に優しく滋味深い手作り料理をゆっくり楽しみたい。",
+              target: "派手な高級懐石よりも、素材の良さが伝わる体に優しい手作り料理を味わいたい健康志向のお客様",
+              outcome: "土地の恵みが詰まった出来立ての温かい料理によって、胃もたれせず体が内側から喜ぶ満足感を得られる。",
+              evidence: "地元食材を中心に、一つひとつ丁寧に手作りした出来立ての料理をご提供しているから。"
+            });
+          }
+
+
+        }
+
+        // --- BtoB・IT向けキーワード検出 ---
+        else if (industry.includes("BtoB") || full.includes("システム") || full.includes("it") || full.includes("コンサル") || full.includes("ソフト") || full.includes("開発")) {
+          detected.push({
+            title: "業務属人化解消・現場定着伴走軸",
+            marketingRole: "公式サイトTOP・メインサービスLP・導入事例集",
+            friction: "ツールを導入しても現場が使わず形骸化し、費用倒れになって経営陣への説明がつかない不安。",
+            desired: "現場スタッフが迷わず自発的に使いこなし、最短3ヶ月で明確な業務効率化の成果を数字で示したい。",
+            target: "業務の属人化を解消し、現場が自発的に使いこなすまで専任で伴走サポートしてほしい中小企業の経営者・事業責任者",
+            outcome: "無駄な手入力や確認作業を70%削減し、現場スタッフが迷わず自発的に使いこなせる業務体制を最短3ヶ月で確立できる。",
+            evidence: "過去の支援実績から体系化した定着プログラムにより専任担当が伴走し、運用定着まで責任を持って支援するから。"
+          });
+          detected.push({
+            title: "手作業ミス根絶・残業削減軸",
+            marketingRole: "現場管理職向け・検索広告・業務改善セミナー",
+            friction: "毎月の月末月初に膨大な手入力と転記ミスが発生し、スタッフが連日深夜残業を強いられている。",
+            desired: "ミスが起きようがない自動化フローを構築し、月末の残業をゼロにして社員の定着率を高めたい。",
+            target: "転記ミスや確認作業に追われ、社員の残業と離職リスクに頭を抱えるバックオフィスの現場責任者",
+            outcome: "月末月初の手入力作業が大幅に削減され、入力ミスによるトラブルが根絶され、残業代も大幅カットできる。",
+            evidence: "二重入力を完全に排除する自動連携エンジンと、直感的に操作できるシンプルな画面設計を採用しているから。"
+          });
+          detected.push({
+            title: "セキュリティ・情報漏洩防止軸",
+            marketingRole: "情シス・監査部門向け専用資料",
+            friction: "クラウド導入にあたり、個人情報や機密データの漏洩、社内セキュリティ審査落ちが最も怖い。",
+            desired: "金融機関レベルの最高峰セキュリティ基盤で、誰の目から見ても安全なシステムを堂々と導入したい。",
+            target: "厳格なコンプライアンス基準をクリアし、情報漏洩リスクを徹底排除したい情報システム部門長・役員",
+            outcome: "社内セキュリティ審査を一発でクリアし、万が一の不正アクセスや内部漏洩のリスクを極限までゼロに抑えられる。",
+            evidence: "全通信・保存データの完全暗号化と詳細ログ追跡、厳格な権限管理体制を標準完備しているから。"
+          });
+          detected.push({
+            title: "経営数値リアルタイム可視化軸",
+            marketingRole: "経営者・CFO向け意思決定支援",
+            friction: "各拠点の売上や原価の集計が遅く、翌月中旬まで正確な経営数字が見えず意思決定が遅れる。",
+            desired: "今日・今この瞬間の売上・利益・進捗がスマホ一台で把握でき、スピーディに経営の舵を切りたい。",
+            target: "複数拠点や事業部を持ち、経営数値の集計遅延による意思決定の遅れを解消したい経営者・CFO",
+            outcome: "締め日を待たずに粗利と案件進捗がリアルタイムに可視化され、迅速で精度の高い経営判断が可能になる。",
+            evidence: "各部門のデータを自動集約するリアルタイム経営ダッシュボード機能を標準搭載しているから。"
+          });
+          detected.push({
+            title: "オーダーメイド業務カスタマイズ軸",
+            marketingRole: "特殊商習慣を持つ業界向け個別相談",
+            friction: "既製品のSaaSでは自社特有の業界ルールや商習慣に対応できず、結局手作業が残ってしまう。",
+            desired: "自社の業務フローを無理に変えることなく、完全にフィットした使いやすいシステムを構築したい。",
+            target: "独自の受発注ルールや複雑な商習慣を持ち、一般的なパッケージソフトでは適合しなかった専門業界の企業様",
+            outcome: "自社の業務フローを崩さず、100%自社仕様の使い心地で業務全体をシームレスにデジタル化できる。",
+            evidence: "要件定義から熟練エンジニアが直接ヒアリングし、自社仕様に合わせて柔軟に個別調整するから。"
+          });
+        }
+
+        // --- 汎用フォールバック ---
+        if (detected.length < 5) {
+          const generic = [
+            {
+              title: "安心と信頼の基本提供軸",
+              marketingRole: "基本サービス・主力商品紹介",
+              friction: "他社で期待外れだった経験があり、本当に信頼して任せられるか慎重になっている。",
+              desired: "事前の丁寧な説明と確かな品質で、後悔のない確実な満足を手に入れたい。",
+              target: "安さだけで選んで失敗したくない、確かな品質と誠実な対応を重視する本物志向のお客様",
+              outcome: "事前の不安が完全に解消され、期待以上の丁寧な対応と確実な成果を実感できる。",
+              evidence: "創業以来積み上げた実績と、お客様一人ひとりに向き合う誠実な対応を徹底しているから。"
+            },
+            {
+              title: "個別最適・柔軟対応軸",
+              marketingRole: "個別相談・オーダーメイド提案",
+              friction: "画一的なマニュアル対応では自分の細かな希望や事情に対応してもらえない。",
+              desired: "こちらの要望や事情に親身に寄り添い、柔軟に融通を利かせてほしい。",
+              target: "画一的なサービスでは満足できず、自分の事情に合わせたきめ細かな対応を求める方",
+              outcome: "細かな要望までストレスなくスムーズに叶えられ、深い安心感を得られる。",
+              evidence: "お客様のご要望をじっくり伺った上で、最適なプランを個別にご提案するから。"
+            },
+            {
+              title: "ゆったり休息・リフレッシュ軸",
+              marketingRole: "オフピーク・平日プラン・静養向け",
+              friction: "忙しい日々に追われて心身が疲弊し、落ち着いてリセットできる場所がない。",
+              desired: "余計な刺激のない静かな環境で、自分のペースでゆったりと休息を取りたい。",
+              target: "日常の喧騒から離れ、静かな空間でゆっくりと英気を養いたい方",
+              outcome: "心身の緊張が自然とほぐれ、翌朝すっきりと軽やかな気分を取り戻せる。",
+              evidence: "落ち着いて過ごせる快適な空間づくりと、心地よい距離感のおもてなしを心掛けているから。"
+            }
+          ];
+
+          for (const g of generic) {
+            if (detected.length >= 5) break;
+            if (!detected.some(d => d.title === g.title)) {
+              detected.push(g);
+            }
+          }
+        }
+
+        // ちょうど5個に整形し、優先順位とIDを付与
+        const slots = detected.slice(0, 5).map((d, idx) => ({
+          id: `slot_${idx + 1}`,
+          priority: idx + 1,
+          title: d.title,
+          marketingRole: d.marketingRole,
+          friction: d.friction,
+          desired: d.desired,
+          target: d.target,
+          outcome: d.outcome,
+          evidence: d.evidence
+        }));
+
+        return slots;
+      }
+
+
       // 業種ごとのデフォルト5つの切り口データベース
       const DEFAULT_SLOTS_DATABASE = {
         "宿泊・観光・温泉旅館": [
@@ -1381,13 +1587,13 @@ const htmlContent = `<!doctype html>
           {
             id: "slot_4",
             priority: 4,
-            title: "記念日・特別なハレの日軸",
-            marketingRole: "誕生日・プロポーズ専用プラン・高単価ギフト",
-            friction: "大切なパートナーの記念日で、料理が冷めていたり接客が雑だったら台無しになる。絶対に失敗できない。",
-            desired: "一生の思い出に残るサプライズと極上の料理で、相手が感動して心から喜ぶ笑顔を見たい。",
-            target: "結婚記念日やパートナーの誕生日を、最高のおもてなしと上質な個室料理で絶対に成功させたいご夫婦・カップル",
-            outcome: "プロポーズや記念日の演出が完璧に決まり、パートナーから「最高の旅館を選んでくれてありがとう」と深く感謝される。",
-            evidence: "専任の記念日コンシェルジュが事前に演出をフルコーディネートし、板長自らがお部屋で仕立てる特別懐石を提供するから。"
+            title: "人懐っこい看板猫とのふれあい癒やし軸",
+            marketingRole: "猫好き向けSNS・猫旅専門メディア・口コミ展開",
+            friction: "ペットは飼えないけれど猫が大好きで、アットホームな宿で本物の猫と心ゆくまで触れ合って癒やされたい。",
+            desired: "人懐っこい看板猫にお出迎えされ、のんびり日向ぼっこする姿を眺めながら日常の疲れを完全に癒やしたい。",
+            target: "日常の仕事に疲れ、人懐っこい看板猫に温かく出迎えられて心から癒やされたい猫好きの旅人・一人客",
+            outcome: "看板猫の愛らしい仕草や温もりに触れることで、日頃のストレスや孤独感が消え去り、心がじんわり温まる深い癒やしを得られる。",
+            evidence: "宿の看板猫たちが自然体で館内でお出迎えし、猫好きのお客様を家族のように温かく迎えるアットホームな雰囲気があるから。"
           },
           {
             id: "slot_5",
@@ -1473,7 +1679,7 @@ const htmlContent = `<!doctype html>
           slots: JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["宿泊・観光・温泉旅館"])),
           innovationAction: "『ペット体調不良時の当日キャンセル無料保証』と『源泉ぬる湯の個別湯治プログラム』を新設し、競合が真似できない強固なビコーズを創出する。",
           platformAction: "公式サイトTOPに第1優先のインフルエンスステートメントを掲げつつ、下層に5つの切り口それぞれの専用ページと、AI検索（Perplexity/ChatGPT等）に引用される公式FAQを整備する。",
-          touchpointAction: "チェックイン時に顧客の来訪目的（ペット・ぬる湯・記念日等）に合わせた専用ウェルカムカードを手渡し、滞在中の声かけや退館後のフォローを一貫して最適化する。"
+          touchpointAction: "チェックイン時に顧客の来訪目的（ペット・ぬる湯・静寂等）に合わせた専用ウェルカムカードを手渡し、滞在中の声かけや退館後のフォローを一貫して最適化する。"
         }
       };
 
@@ -1482,15 +1688,46 @@ const htmlContent = `<!doctype html>
       let isRecording = false;
 
       // ローカルストレージ復元
+      // 古いキャッシュや不適切な記念日スロットを強制的に自動浄化する関数
+      function sanitizeSlots(slots) {
+        if (!slots || !Array.isArray(slots)) return slots;
+        return slots.map((s, idx) => {
+          const t = s.title || "";
+          const f = s.friction || "";
+          const tgt = s.target || "";
+          if (t.includes("記念日") || t.includes("ハレの日") || f.includes("記念日") || tgt.includes("プロポーズ")) {
+            return {
+              id: s.id || `slot_${idx + 1}`,
+              priority: s.priority || (idx + 1),
+              title: "人懐っこい看板猫とのふれあい癒やし軸",
+              marketingRole: "猫好き向けSNS・猫旅専門メディア・口コミ展開",
+              friction: "ペットは飼えないけれど猫が大好きで、アットホームな宿で本物の猫と心ゆくまで触れ合って癒やされたい。",
+              desired: "人懐っこい看板猫にお出迎えされ、のんびり日向ぼっこする姿を眺めながら日常の疲れを完全に癒やしたい。",
+              target: "日常の仕事に疲れ、人懐っこい看板猫に温かく出迎えられて心から癒やされたい猫好きの旅人・一人客",
+              outcome: "看板猫の愛らしい仕草や温もりに触れることで、日頃のストレスや孤独感が消え去り、心がじんわり温まる深い癒やしを得られる。",
+              evidence: "宿の看板猫たちが自然体で館内でお出迎えし、猫好きのお客様を家族のように温かく迎えるアットホームな雰囲気があるから。"
+            };
+          }
+          return s;
+        });
+      }
+
       function loadState() {
         try {
+          // ブラウザに残った古いキャッシュを強制破棄
+          localStorage.removeItem("because-framework-5slots-v1");
+          localStorage.removeItem("because-framework-v2");
+          localStorage.removeItem("because-ai-expert-v1");
+
           const raw = localStorage.getItem(STORAGE_KEY);
           if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed && parsed.answers && parsed.answers.slots && parsed.answers.slots.length === 5) {
+              parsed.answers.slots = sanitizeSlots(parsed.answers.slots);
               state = Object.assign(state, parsed);
             }
           }
+          state.answers.slots = sanitizeSlots(state.answers.slots);
         } catch (e) {
           console.warn("Storage load error:", e);
         }
@@ -1545,12 +1782,12 @@ const htmlContent = `<!doctype html>
         if (!container) return;
         container.innerHTML = STAGES.map((s, idx) => {
           const isActive = idx === state.currentStep;
-          return \`
-            <div class="hero-step-pill \${isActive ? 'active' : ''}" onclick="window.goToStep(\${idx})">
-              <span class="hero-step-num">\${s.num}</span>
-              <span class="hero-step-name">\${escapeHtml(s.shortName)}</span>
+          return `
+            <div class="hero-step-pill ${isActive ? 'active' : ''}" onclick="window.goToStep(${idx})">
+              <span class="hero-step-num">${s.num}</span>
+              <span class="hero-step-name">${escapeHtml(s.shortName)}</span>
             </div>
-          \`;
+          `;
         }).join("");
       }
 
@@ -1569,15 +1806,15 @@ const htmlContent = `<!doctype html>
           if (idx === 4 && (state.answers.innovationAction || state.answers.platformAction)) isCompleted = true;
           if (idx === 5) isCompleted = true;
 
-          return \`
-            <button type="button" class="step-nav-item \${isActive ? 'active' : ''} \${isCompleted ? 'completed' : ''}" onclick="window.goToStep(\${idx})">
-              <div class="step-badge">\${isCompleted ? '✓' : s.num}</div>
+          return `
+            <button type="button" class="step-nav-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}" onclick="window.goToStep(${idx})">
+              <div class="step-badge">${isCompleted ? '✓' : s.num}</div>
               <div class="step-text">
-                <span class="step-title">\${escapeHtml(s.title)}</span>
-                <span class="step-sub">\${escapeHtml(s.desc)}</span>
+                <span class="step-title">${escapeHtml(s.title)}</span>
+                <span class="step-sub">${escapeHtml(s.desc)}</span>
               </div>
             </button>
-          \`;
+          `;
         }).join("");
       }
 
@@ -1594,11 +1831,11 @@ const htmlContent = `<!doctype html>
 
         // ステップ1：業種・HP・会社情報
         if (stepNum === 0) {
-          contentHtml = \`
+          contentHtml = `
             <div class="question-header">
-              <span class="question-stage-tag">\${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">\${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">\${escapeHtml(currentStage.desc)}</p>
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
             <!-- 公式HP自動解析ボックス -->
@@ -1611,7 +1848,7 @@ const htmlContent = `<!doctype html>
                 <span style="font-size:0.75rem; color:var(--teal-dark); font-weight:700;">URLを入れるだけで自動解析！</span>
               </div>
               <div class="url-input-row">
-                <input type="url" id="websiteUrlInput" class="form-input" placeholder="https://example.com （公式ホームページURL）" value="\${escapeHtml(state.answers.companyWebsiteUrl)}" />
+                <input type="url" id="websiteUrlInput" class="form-input" placeholder="https://example.com （公式ホームページURL）" value="${escapeHtml(state.answers.companyWebsiteUrl)}" />
                 <button type="button" id="fetchUrlBtn" class="url-fetch-btn">
                   <span>⚡</span>
                   <span id="fetchBtnLabel">自動解析して反映</span>
@@ -1628,9 +1865,9 @@ const htmlContent = `<!doctype html>
               </label>
               <p class="form-helper">業種にあわせて、AIが店舗や企業の多角的な5つの切り口を自動生成します。</p>
               <select id="industrySelect" class="form-select">
-                \${INDUSTRY_OPTIONS.map(opt => \`
-                  <option value="\${escapeHtml(opt)}" \${state.answers.industryFamily === opt ? "selected" : ""}>\${escapeHtml(opt)}</option>
-                \`).join("")}
+                ${INDUSTRY_OPTIONS.map(opt => `
+                  <option value="${escapeHtml(opt)}" ${state.answers.industryFamily === opt ? "selected" : ""}>${escapeHtml(opt)}</option>
+                `).join("")}
               </select>
             </div>
 
@@ -1639,7 +1876,7 @@ const htmlContent = `<!doctype html>
               <label class="form-label" for="companyNameInput">
                 <span>会社名・屋号・ブランド名</span>
               </label>
-              <input type="text" id="companyNameInput" class="form-input" placeholder="例：月見の湯 翠水亭、株式会社グロースIT" value="\${escapeHtml(state.answers.companyName)}" />
+              <input type="text" id="companyNameInput" class="form-input" placeholder="例：月見の湯 翠水亭、株式会社グロースIT" value="${escapeHtml(state.answers.companyName)}" />
             </div>
 
             <!-- 事業概要・商品サービスの特徴 -->
@@ -1649,123 +1886,128 @@ const htmlContent = `<!doctype html>
                 <span class="req">必須</span>
               </label>
               <p class="form-helper">どんな商品やサービスを提供しているか、特徴やこだわりを簡単に書いてください（HPから自動反映も可能）。</p>
-              <textarea id="businessInput" class="form-textarea" style="min-height:100px;" placeholder="例：静かな自然に囲まれた山あいで、全室ペット同伴対応の客室と、加水加温なしの100%源泉かけ流し温泉、個室会席料理を提供する小さな温泉宿です。">\${escapeHtml(state.answers.business)}</textarea>
+              <textarea id="businessInput" class="form-textarea" style="min-height:100px;" placeholder="例：静かな自然に囲まれた山あいで、全室ペット同伴対応の客室と、加水加温なしの100%源泉かけ流し温泉、個室会席料理を提供する小さな温泉宿です。">${escapeHtml(state.answers.business)}</textarea>
               <div class="voice-bar">
                 <button type="button" class="voice-btn" data-target="businessInput">🎙 話して入力</button>
                 <span class="voice-hint">マイクを押して話すと文字入力できます</span>
               </div>
             </div>
-          \`;
+          `;
         }
 
         // ステップ2：5つの切り口（洞察 × 誰に）と優先順位づけ
         else if (stepNum === 1) {
-          contentHtml = \`
+          contentHtml = `
             <div class="question-header">
-              <span class="question-stage-tag">\${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">\${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">\${escapeHtml(currentStage.desc)}</p>
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
-            <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:10px; padding:12px 16px; margin-bottom:14px; font-size:0.84rem; color:var(--teal-dark);">
-              💡 <strong>重要戦略:</strong> すべてを同時に言おうとすると誰にも刺さりません。ここで<strong>「★第1優先（本命の看板）」</strong>を1つ決め、残りの切り口は専用LPや特定の検索ニーズ向けの「サブ展開」として優先順位をつけます。
+            <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:10px; padding:12px 16px; margin-bottom:14px; font-size:0.84rem; color:var(--teal-dark); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div>
+                💡 <strong>重要戦略:</strong> すべてを同時に言おうとすると誰にも刺さりません。ここで<strong>「★第1優先（本命の看板）」</strong>を1つ決め、残りの切り口は専用LPや特定の検索ニーズ向けの「サブ展開」として優先順位をつけます。
+              </div>
+              <button type="button" class="ai-adopt-btn" style="flex:none; padding:6px 14px; white-space:nowrap;" onclick="window.regenerateSlotsFromCurrentBusiness()">
+                🔄 サイト情報・事業内容から切り口を再生成
+              </button>
             </div>
 
             <!-- 5つの切り口カード一覧 -->
             <div class="cut-cards-container">
-              \${state.answers.slots.map((s, idx) => {
+              ${state.answers.slots.map((s, idx) => {
                 const isP1 = s.priority === 1;
                 const isSelected = idx === state.selectedSlotIndex;
-                return \`
-                  <div class="cut-card \${isP1 ? 'is-priority1' : ''} \${isSelected ? 'is-active' : ''}">
+                return `
+                  <div class="cut-card ${isP1 ? 'is-priority1' : ''} ${isSelected ? 'is-active' : ''}">
                     <div class="cut-card-head">
                       <div class="cut-card-title-row">
-                        <span class="cut-priority-badge \${isP1 ? 'p1' : 'sub'}">
-                          \${isP1 ? '★ 第1優先（メイン看板）' : \`第\${s.priority || idx + 1}優先（サブ展開）\`}
+                        <span class="cut-priority-badge ${isP1 ? 'p1' : 'sub'}">
+                          ${isP1 ? '★ 第1優先（メイン看板）' : `第${s.priority || idx + 1}優先（サブ展開）`}
                         </span>
-                        <h3 class="cut-card-title">切り口\${idx + 1}: \${escapeHtml(s.title)}</h3>
+                        <h3 class="cut-card-title">切り口${idx + 1}: ${escapeHtml(s.title)}</h3>
                       </div>
-                      <span class="cut-market-role">\${escapeHtml(s.marketingRole)}</span>
+                      <span class="cut-market-role">${escapeHtml(s.marketingRole)}</span>
                     </div>
 
                     <div class="cut-body-grid">
                       <div>
                         <span class="cut-block-label">🔍 顧客の洞察（普段の悩み・避けたい不安）:</span>
-                        <p class="cut-block-text">\${escapeHtml(s.friction)}</p>
+                        <p class="cut-block-text">${escapeHtml(s.friction)}</p>
                         <span class="cut-block-label" style="margin-top:8px;">✨ 顧客の望む理想状態:</span>
-                        <p class="cut-block-text">\${escapeHtml(s.desired)}</p>
+                        <p class="cut-block-text">${escapeHtml(s.desired)}</p>
                       </div>
                       <div>
                         <span class="cut-block-label">🎯 だから選ぶべき「理想の顧客（誰に）」:</span>
-                        <p class="cut-block-text" style="font-weight:700; color:var(--teal-dark);">\${escapeHtml(s.target)}</p>
+                        <p class="cut-block-text" style="font-weight:700; color:var(--teal-dark);">${escapeHtml(s.target)}</p>
                       </div>
                     </div>
 
                     <div class="cut-card-actions">
                       <div style="font-size:0.75rem; color:var(--muted);">
-                        \${isP1 ? '現在、公式サイトの看板コンセプトに設定されています' : '特定ニーズや専用プラン向けとして保持'}
+                        ${isP1 ? '現在、公式サイトの看板コンセプトに設定されています' : '特定ニーズや専用プラン向けとして保持'}
                       </div>
                       <div style="display:flex; gap:8px;">
-                        <button type="button" class="set-p1-btn \${isP1 ? 'active' : ''}" onclick="window.setPriorityOne(\${idx})">
-                          \${isP1 ? '★ メイン看板に設定中' : '★ この切り口を第1優先にする'}
+                        <button type="button" class="set-p1-btn ${isP1 ? 'active' : ''}" onclick="window.setPriorityOne(${idx})">
+                          ${isP1 ? '★ メイン看板に設定中' : '★ この切り口を第1優先にする'}
                         </button>
-                        <button type="button" class="ai-adopt-btn" style="flex:none; padding:6px 12px;" onclick="window.focusSlot(\${idx})">
+                        <button type="button" class="ai-adopt-btn" style="flex:none; padding:6px 12px;" onclick="window.focusSlot(${idx})">
                           ✏️ この切り口を編集
                         </button>
                       </div>
                     </div>
                   </div>
-                \`;
+                `;
               }).join("")}
             </div>
 
             <!-- 選択中切り口の直接編集エリア -->
             <div class="form-group" style="margin-top:20px; background:var(--surface-alt); border:1px solid var(--line); border-radius:10px; padding:16px;">
               <h4 style="margin:0 0 10px; font-size:0.92rem; color:var(--ink);">
-                ✏️ 選択中切り口（切り口\${state.selectedSlotIndex + 1}: \${escapeHtml(slot.title)}）の詳細微調整
+                ✏️ 選択中切り口（切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}）の詳細微調整
               </h4>
               <div class="form-group">
                 <label class="form-label">切り口のテーマ名</label>
-                <input type="text" id="slotTitleInput" class="form-input" value="\${escapeHtml(slot.title)}" />
+                <input type="text" id="slotTitleInput" class="form-input" value="${escapeHtml(slot.title)}" />
               </div>
               <div class="form-group">
                 <label class="form-label">顧客の悩み・避けたい不安（摩擦）</label>
-                <textarea id="slotFrictionInput" class="form-textarea">\${escapeHtml(slot.friction)}</textarea>
+                <textarea id="slotFrictionInput" class="form-textarea">${escapeHtml(slot.friction)}</textarea>
               </div>
               <div class="form-group">
                 <label class="form-label">顧客が本当に望む理想状態</label>
-                <textarea id="slotDesiredInput" class="form-textarea">\${escapeHtml(slot.desired)}</textarea>
+                <textarea id="slotDesiredInput" class="form-textarea">${escapeHtml(slot.desired)}</textarea>
               </div>
               <div class="form-group">
                 <label class="form-label">理想の顧客像（誰に）</label>
-                <textarea id="slotTargetInput" class="form-textarea">\${escapeHtml(slot.target)}</textarea>
+                <textarea id="slotTargetInput" class="form-textarea">${escapeHtml(slot.target)}</textarea>
               </div>
             </div>
-          \`;
+          `;
         }
 
         // ステップ3：顧客に対して約束できる成果は？
         else if (stepNum === 2) {
-          contentHtml = \`
+          contentHtml = `
             <div class="question-header">
-              <span class="question-stage-tag">\${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">\${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">\${escapeHtml(currentStage.desc)}</p>
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
             <!-- 切り口タブ切替 -->
             <div class="slot-tabs-bar">
-              \${state.answers.slots.map((s, idx) => \`
-                <button type="button" class="slot-tab-btn \${idx === state.selectedSlotIndex ? 'active' : ''}" onclick="window.focusSlot(\${idx})">
-                  <span class="slot-tab-badge \${s.priority === 1 ? 'p1' : 'sub'}">\${s.priority === 1 ? '★第1優先' : \`第\${s.priority}優先\`}</span>
-                  <strong style="display:block; font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">\${escapeHtml(s.title)}</strong>
+              ${state.answers.slots.map((s, idx) => `
+                <button type="button" class="slot-tab-btn ${idx === state.selectedSlotIndex ? 'active' : ''}" onclick="window.focusSlot(${idx})">
+                  <span class="slot-tab-badge ${s.priority === 1 ? 'p1' : 'sub'}">${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}</span>
+                  <strong style="display:block; font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(s.title)}</strong>
                 </button>
-              \`).join("")}
+              `).join("")}
             </div>
 
             <div style="background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:10px;">
               <div style="font-size:0.8rem; color:var(--muted); margin-bottom:4px;">
-                現在選択中: <strong>切り口\${state.selectedSlotIndex + 1}: \${escapeHtml(slot.title)}</strong>（対象顧客：\${escapeHtml(slot.target)}）
+                現在選択中: <strong>切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}</strong>（対象顧客：${escapeHtml(slot.target)}）
               </div>
               <div class="form-group">
                 <label class="form-label" for="slotOutcomeInput">
@@ -1773,7 +2015,7 @@ const htmlContent = `<!doctype html>
                   <span class="req">必須</span>
                 </label>
                 <p class="form-helper">単なる機能ではなく、この顧客が手に入れる具体的な変化・嬉しい結果・ベネフィットを記入します。</p>
-                <textarea id="slotOutcomeInput" class="form-textarea" style="min-height:100px;">\${escapeHtml(slot.outcome)}</textarea>
+                <textarea id="slotOutcomeInput" class="form-textarea" style="min-height:100px;">${escapeHtml(slot.outcome)}</textarea>
                 <div class="voice-bar">
                   <button type="button" class="voice-btn" data-target="slotOutcomeInput">🎙 話して入力</button>
                 </div>
@@ -1788,13 +2030,13 @@ const htmlContent = `<!doctype html>
                   <span>この切り口に最適な「約束できる成果案」</span>
                 </div>
               </div>
-              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">顧客の悩み（\${escapeHtml(slot.friction)}）を根本解決する成果候補です。</p>
+              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">顧客の悩み（${escapeHtml(slot.friction)}）を根本解決する成果候補です。</p>
               <div class="ai-cards-grid">
                 <div class="ai-card">
                   <div>
                     <span class="ai-card-tag">劇的変化・安心成果</span>
                     <h4 class="ai-card-title">不安の完全解消と深い満足</h4>
-                    <p class="ai-card-body">\${escapeHtml(slot.outcome)}</p>
+                    <p class="ai-card-body">${escapeHtml(slot.outcome)}</p>
                   </div>
                   <div class="ai-card-actions">
                     <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotOutcome(0)">🎁 この成果を採用</button>
@@ -1802,31 +2044,31 @@ const htmlContent = `<!doctype html>
                 </div>
               </div>
             </div>
-          \`;
+          `;
         }
 
         // ステップ4：顧客の信頼に足るビコーズは？（17のテクニック）
         else if (stepNum === 3) {
-          contentHtml = \`
+          contentHtml = `
             <div class="question-header">
-              <span class="question-stage-tag">\${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">\${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">\${escapeHtml(currentStage.desc)}</p>
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
             <!-- 切り口タブ切替 -->
             <div class="slot-tabs-bar">
-              \${state.answers.slots.map((s, idx) => \`
-                <button type="button" class="slot-tab-btn \${idx === state.selectedSlotIndex ? 'active' : ''}" onclick="window.goToStepAndSlot(3, \${idx})">
-                  <span class="slot-tab-badge \${s.priority === 1 ? 'p1' : 'sub'}">\${s.priority === 1 ? '★第1優先' : \`第\${s.priority}優先\`}</span>
-                  <strong style="display:block; font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">\${escapeHtml(s.title)}</strong>
+              ${state.answers.slots.map((s, idx) => `
+                <button type="button" class="slot-tab-btn ${idx === state.selectedSlotIndex ? 'active' : ''}" onclick="window.goToStepAndSlot(3, ${idx})">
+                  <span class="slot-tab-badge ${s.priority === 1 ? 'p1' : 'sub'}">${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}</span>
+                  <strong style="display:block; font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(s.title)}</strong>
                 </button>
-              \`).join("")}
+              `).join("")}
             </div>
 
             <div style="background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:10px;">
               <div style="font-size:0.8rem; color:var(--muted); margin-bottom:4px;">
-                現在選択中: <strong>切り口\${state.selectedSlotIndex + 1}: \${escapeHtml(slot.title)}</strong>（成果：\${escapeHtml(slot.outcome)}）
+                現在選択中: <strong>切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}</strong>（成果：${escapeHtml(slot.outcome)}）
               </div>
               <div class="form-group">
                 <label class="form-label" for="slotEvidenceInput">
@@ -1834,7 +2076,7 @@ const htmlContent = `<!doctype html>
                   <span class="req">必須</span>
                 </label>
                 <p class="form-helper">下の17のテクニック（体系的・知覚・生み出された根拠）からAI提案を選んで追加・編集できます。</p>
-                <textarea id="slotEvidenceInput" class="form-textarea" style="min-height:110px;">\${escapeHtml(slot.evidence)}</textarea>
+                <textarea id="slotEvidenceInput" class="form-textarea" style="min-height:110px;">${escapeHtml(slot.evidence)}</textarea>
                 <div class="voice-bar">
                   <button type="button" class="voice-btn" data-target="slotEvidenceInput">🎙 話して入力</button>
                 </div>
@@ -1854,7 +2096,7 @@ const htmlContent = `<!doctype html>
                   <div>
                     <span class="ai-card-tag">体系的な根拠</span>
                     <h4 class="ai-card-title">独自のプロセス・設備・素材</h4>
-                    <p class="ai-card-body">\${escapeHtml(slot.evidence)}</p>
+                    <p class="ai-card-body">${escapeHtml(slot.evidence)}</p>
                   </div>
                   <div class="ai-card-actions">
                     <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotEvidence(0)">💡 このビコーズで決定</button>
@@ -1868,25 +2110,25 @@ const htmlContent = `<!doctype html>
                   📚 書籍公式『ビコーズを創り出す17のテクニック』一覧を見る
                 </summary>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin-top:10px;">
-                  \${SEVENTEEN_TECHNIQUES.map(t => \`
-                    <div style="font-size:0.75rem; border-left:3px solid \${t.category === 'systematic' ? '#0284c7' : (t.category === 'perceived' ? '#d97706' : '#16a34a')}; padding-left:8px;">
-                      <strong>\${t.num}. \${escapeHtml(t.name)}</strong>
-                      <span style="color:var(--muted); display:block;">\${escapeHtml(t.summary)}</span>
+                  ${SEVENTEEN_TECHNIQUES.map(t => `
+                    <div style="font-size:0.75rem; border-left:3px solid ${t.category === 'systematic' ? '#0284c7' : (t.category === 'perceived' ? '#d97706' : '#16a34a')}; padding-left:8px;">
+                      <strong>${t.num}. ${escapeHtml(t.name)}</strong>
+                      <span style="color:var(--muted); display:block;">${escapeHtml(t.summary)}</span>
                     </div>
-                  \`).join("")}
+                  `).join("")}
                 </div>
               </details>
             </div>
-          \`;
+          `;
         }
 
         // ステップ5：ビコーズ・フレームワーク（後半）3つのアクション
         else if (stepNum === 4) {
-          contentHtml = \`
+          contentHtml = `
             <div class="question-header">
-              <span class="question-stage-tag">\${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">\${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">\${escapeHtml(currentStage.desc)}</p>
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
             <!-- アクション1：イノベーション -->
@@ -1898,7 +2140,7 @@ const htmlContent = `<!doctype html>
                   <p style="margin:0; font-size:0.78rem; color:var(--muted);">強力なビコーズが不足している場合やさらに差別化するため、新保証・独自工程・付加価値を新開発する。</p>
                 </div>
               </div>
-              <textarea id="innovationActionInput" class="form-textarea">\${escapeHtml(state.answers.innovationAction)}</textarea>
+              <textarea id="innovationActionInput" class="form-textarea">${escapeHtml(state.answers.innovationAction)}</textarea>
             </div>
 
             <!-- アクション2：プラットフォーム構築 -->
@@ -1910,7 +2152,7 @@ const htmlContent = `<!doctype html>
                   <p style="margin:0; font-size:0.78rem; color:var(--muted);">第1優先の看板をTOPに掲げ、5つの切り口それぞれの専用ページとAI検索用FAQを整備する。</p>
                 </div>
               </div>
-              <textarea id="platformActionInput" class="form-textarea">\${escapeHtml(state.answers.platformAction)}</textarea>
+              <textarea id="platformActionInput" class="form-textarea">${escapeHtml(state.answers.platformAction)}</textarea>
             </div>
 
             <!-- アクション3：全接点で実行 -->
@@ -1922,31 +2164,31 @@ const htmlContent = `<!doctype html>
                   <p style="margin:0; font-size:0.78rem; color:var(--muted);">顧客の来訪目的に応じた接客、フォロー、クチコミ収集でビコーズを証明し続ける。</p>
                 </div>
               </div>
-              <textarea id="touchpointActionInput" class="form-textarea">\${escapeHtml(state.answers.touchpointAction)}</textarea>
+              <textarea id="touchpointActionInput" class="form-textarea">${escapeHtml(state.answers.touchpointAction)}</textarea>
             </div>
-          \`;
+          `;
         }
 
         // ステップ6：ビコーズ・マトリクス完成＆マーケティング展開計画
         else if (stepNum === 5) {
           const p1 = priorityOneSlot();
-          contentHtml = \`
+          contentHtml = `
             <div class="question-header">
-              <span class="question-stage-tag">\${escapeHtml(currentStage.tag)}</span>
-              <h2 class="question-title">\${escapeHtml(currentStage.title)}</h2>
-              <p class="question-desc">\${escapeHtml(currentStage.desc)}</p>
+              <span class="question-stage-tag">${escapeHtml(currentStage.tag)}</span>
+              <h2 class="question-title">${escapeHtml(currentStage.title)}</h2>
+              <p class="question-desc">${escapeHtml(currentStage.desc)}</p>
             </div>
 
             <div style="background:#fef3c7; border:1px solid #d97706; border-radius:10px; padding:16px; margin-bottom:16px;">
               <h3 style="margin:0 0 6px; font-size:1.05rem; color:#b45309; display:flex; align-items:center; gap:8px;">
                 <span>👑</span>
-                <span>メイン看板（第1優先）：\${escapeHtml(p1.title)}</span>
+                <span>メイン看板（第1優先）：${escapeHtml(p1.title)}</span>
               </h3>
               <p style="margin:0; font-size:0.92rem; line-height:1.6; color:#78350f;">
-                【\${escapeHtml(state.answers.industryFamily)}】の<strong>\${escapeHtml(state.answers.companyName)}</strong>は、<br>
-                <strong>\${escapeHtml(p1.target)}</strong>に、<br>
-                <strong>\${escapeHtml(p1.outcome)}</strong>を提供します。<br>
-                なぜなら、<strong>\${escapeHtml(p1.evidence)}</strong>だからです。
+                【${escapeHtml(state.answers.industryFamily)}】の<strong>${escapeHtml(state.answers.companyName)}</strong>は、<br>
+                <strong>${escapeHtml(p1.target)}</strong>に、<br>
+                <strong>${escapeHtml(p1.outcome)}</strong>を提供します。<br>
+                なぜなら、<strong>${escapeHtml(p1.evidence)}</strong>だからです。
               </p>
             </div>
 
@@ -1964,22 +2206,22 @@ const htmlContent = `<!doctype html>
                   </tr>
                 </thead>
                 <tbody>
-                  \${state.answers.slots.map((s, idx) => \`
-                    <tr style="border-bottom:1px solid var(--line-subtle); \${s.priority === 1 ? 'background:#fffbeb; font-weight:600;' : ''}">
+                  ${state.answers.slots.map((s, idx) => `
+                    <tr style="border-bottom:1px solid var(--line-subtle); ${s.priority === 1 ? 'background:#fffbeb; font-weight:600;' : ''}">
                       <td style="padding:8px; vertical-align:top;">
-                        <span class="cut-priority-badge \${s.priority === 1 ? 'p1' : 'sub'}">
-                          \${s.priority === 1 ? '★第1優先' : \`第\${s.priority}優先\`}
+                        <span class="cut-priority-badge ${s.priority === 1 ? 'p1' : 'sub'}">
+                          ${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}
                         </span>
                       </td>
                       <td style="padding:8px; vertical-align:top;">
-                        <strong>\${escapeHtml(s.title)}</strong><br>
-                        <small style="color:var(--muted);">\${escapeHtml(s.marketingRole)}</small>
+                        <strong>${escapeHtml(s.title)}</strong><br>
+                        <small style="color:var(--muted);">${escapeHtml(s.marketingRole)}</small>
                       </td>
-                      <td style="padding:8px; vertical-align:top;">\${escapeHtml(s.target)}</td>
-                      <td style="padding:8px; vertical-align:top;">\${escapeHtml(s.outcome)}</td>
-                      <td style="padding:8px; vertical-align:top;">\${escapeHtml(s.evidence)}</td>
+                      <td style="padding:8px; vertical-align:top;">${escapeHtml(s.target)}</td>
+                      <td style="padding:8px; vertical-align:top;">${escapeHtml(s.outcome)}</td>
+                      <td style="padding:8px; vertical-align:top;">${escapeHtml(s.evidence)}</td>
                     </tr>
-                  \`).join("")}
+                  `).join("")}
                 </tbody>
               </table>
             </div>
@@ -1990,11 +2232,11 @@ const htmlContent = `<!doctype html>
               <div style="display:flex; flex-direction:column; gap:8px; font-size:0.82rem;">
                 <div style="padding:10px; background:#fffbeb; border-radius:8px;">
                   <strong style="color:#b45309;">1. 公式サイトTOP・メイン広告:</strong>
-                  第1優先【\${escapeHtml(p1.title)}】のインフルエンスステートメントを掲げ、「何のお店・会社なのか」を一目で認知させます。
+                  第1優先【${escapeHtml(p1.title)}】のインフルエンスステートメントを掲げ、「何のお店・会社なのか」を一目で認知させます。
                 </div>
                 <div style="padding:10px; background:#f0fdfa; border-radius:8px;">
                   <strong style="color:var(--teal-dark);">2. セグメント別専用LP・宿泊プラン:</strong>
-                  第2〜5優先の各切り口について、検索キーワードや特定ニーズ（ぬる湯、記念日、一人旅等）に応じた個別ページを用意し、取りこぼしを防ぎます。
+                  第2〜5優先の各切り口について、検索キーワードや特定ニーズ（ぬる湯、看板猫、一人旅等）に応じた個別ページを用意し、取りこぼしを防ぎます。
                 </div>
                 <div style="padding:10px; background:#e0f2fe; border-radius:8px;">
                   <strong style="color:#0369a1;">3. AI検索（Perplexity/ChatGPT等）対策:</strong>
@@ -2002,29 +2244,29 @@ const htmlContent = `<!doctype html>
                 </div>
               </div>
             </div>
-          \`;
+          `;
         }
 
         // 下部ナビゲーションバー（前へ・次へ）
-        const navBarHtml = \`
+        const navBarHtml = `
           <div class="step-actions">
-            <button type="button" class="nav-btn prev" \${stepNum === 0 ? "disabled style='opacity:0.4; cursor:not-allowed;'" : ""} onclick="window.goToStep(\${stepNum - 1})">
+            <button type="button" class="nav-btn prev" ${stepNum === 0 ? "disabled style='opacity:0.4; cursor:not-allowed;'" : ""} onclick="window.goToStep(${stepNum - 1})">
               ← 前のステップへ
             </button>
             <div style="font-size:0.85rem; font-weight:700; color:var(--muted);">
-              ステップ \${stepNum + 1} / \${STAGES.length}
+              ステップ ${stepNum + 1} / ${STAGES.length}
             </div>
-            \${stepNum < STAGES.length - 1 ? \`
-              <button type="button" class="nav-btn next" onclick="window.goToStep(\${stepNum + 1})">
+            ${stepNum < STAGES.length - 1 ? `
+              <button type="button" class="nav-btn next" onclick="window.goToStep(${stepNum + 1})">
                 次のステップへ →
               </button>
-            \` : \`
+            ` : `
               <button type="button" class="nav-btn next" style="background:var(--success); border-color:var(--success);" onclick="window.finishAndCopy()">
                 🎉 選ばれる理由を一括コピー
               </button>
-            \`}
+            `}
           </div>
-        \`;
+        `;
 
         container.innerHTML = contentHtml + navBarHtml;
 
@@ -2145,16 +2387,16 @@ const htmlContent = `<!doctype html>
         const outcome = slot.outcome || "【約束できる成果】";
         const evidence = slot.evidence || "【信頼に足るビコーズ】";
 
-        const badgeLabel = slot.priority === 1 ? "★ 第1優先（メイン看板）" : \`第\${slot.priority}優先（\${escapeHtml(slot.title)}）\`;
+        const badgeLabel = slot.priority === 1 ? "★ 第1優先（メイン看板）" : `第${slot.priority}優先（${escapeHtml(slot.title)}）`;
         const badgeEl = document.getElementById("influenceBadgeLabel");
         if (badgeEl) badgeEl.textContent = badgeLabel;
 
-        const statementHtml = \`
-          【<strong>\${escapeHtml(ind)}</strong>】の<strong>\${escapeHtml(cName)}</strong>は、<br>
-          <strong>\${escapeHtml(target)}</strong>に、<br>
-          <strong>\${escapeHtml(outcome)}</strong>を提供します。<br>
-          なぜなら、<strong>\${escapeHtml(evidence)}</strong>だからです。
-        \`;
+        const statementHtml = `
+          【<strong>${escapeHtml(ind)}</strong>】の<strong>${escapeHtml(cName)}</strong>は、<br>
+          <strong>${escapeHtml(target)}</strong>に、<br>
+          <strong>${escapeHtml(outcome)}</strong>を提供します。<br>
+          なぜなら、<strong>${escapeHtml(evidence)}</strong>だからです。
+        `;
         const infEl = document.getElementById("influenceText");
         if (infEl) infEl.innerHTML = statementHtml;
 
@@ -2164,17 +2406,17 @@ const htmlContent = `<!doctype html>
           matrixList.innerHTML = state.answers.slots.map((s, idx) => {
             const isSelected = idx === state.selectedSlotIndex;
             const isP1 = s.priority === 1;
-            return \`
-              <div class="matrix-slot-item \${isSelected ? 'is-active' : ''} \${isP1 ? 'is-p1' : ''}" onclick="window.focusSlot(\${idx})">
+            return `
+              <div class="matrix-slot-item ${isSelected ? 'is-active' : ''} ${isP1 ? 'is-p1' : ''}" onclick="window.focusSlot(${idx})">
                 <div class="matrix-slot-head">
-                  <span class="cut-priority-badge \${isP1 ? 'p1' : 'sub'}">\${isP1 ? '★第1優先' : \`第\${s.priority}優先\`}</span>
-                  <strong style="color:var(--ink);">\${escapeHtml(s.title)}</strong>
+                  <span class="cut-priority-badge ${isP1 ? 'p1' : 'sub'}">${isP1 ? '★第1優先' : `第${s.priority}優先`}</span>
+                  <strong style="color:var(--ink);">${escapeHtml(s.title)}</strong>
                 </div>
                 <div style="font-size:0.73rem; color:var(--ink-soft); line-height:1.4;">
-                  <strong>誰に:</strong> \${escapeHtml(s.target.substring(0, 36))}…
+                  <strong>誰に:</strong> ${escapeHtml(s.target.substring(0, 36))}…
                 </div>
               </div>
-            \`;
+            `;
           }).join("");
         }
 
@@ -2226,7 +2468,7 @@ const htmlContent = `<!doctype html>
             try {
               const controller = new AbortController();
               const tid = setTimeout(() => controller.abort(), 7500);
-              const res = await fetch(\`/.netlify/functions/import-website?url=\${encodeURIComponent(rawUrl)}\`, {
+              const res = await fetch(`/.netlify/functions/import-website?url=${encodeURIComponent(rawUrl)}`, {
                 signal: controller.signal
               });
               clearTimeout(tid);
@@ -2243,7 +2485,7 @@ const htmlContent = `<!doctype html>
           if (!extractedData) {
             const controller = new AbortController();
             const tid = setTimeout(() => controller.abort(), 9000);
-            const jinaRes = await fetch(\`https://r.jina.ai/\${rawUrl}\`, {
+            const jinaRes = await fetch(`https://r.jina.ai/${rawUrl}`, {
               signal: controller.signal,
               headers: { Accept: "application/json" }
             });
@@ -2253,7 +2495,7 @@ const htmlContent = `<!doctype html>
               if (jinaData && jinaData.data) {
                 const title = jinaData.data.title || "";
                 const content = jinaData.data.content || "";
-                const cleanContent = content.replace(/\\n+/g, " ").substring(0, 320);
+                const cleanContent = content.replace(/\n+/g, " ").substring(0, 320);
                 extractedData = {
                   title: title,
                   businessDraft: cleanContent
@@ -2264,7 +2506,7 @@ const htmlContent = `<!doctype html>
 
           if (extractedData) {
             if (extractedData.title) {
-              const cleanTitle = extractedData.title.split(/[-|_|｜|【|\[]/)[0].trim();
+              const cleanTitle = extractedData.title.split(/[-|_|｜|【|[]/)[0].trim();
               if (cleanTitle) {
                 state.answers.companyName = cleanTitle;
                 const compInput = document.getElementById("companyNameInput");
@@ -2279,7 +2521,8 @@ const htmlContent = `<!doctype html>
             }
 
             // 業種自動判定
-            const fullTxt = (extractedData.title || "") + " " + (extractedData.businessDraft || "");
+            const currentExtractedFullText = (extractedData.title || "") + " " + (extractedData.businessDraft || "");
+            const fullTxt = currentExtractedFullText;
             if (fullTxt.includes("温泉") || fullTxt.includes("旅館") || fullTxt.includes("ホテル")) {
               state.answers.industryFamily = "宿泊・観光・温泉旅館";
             } else if (fullTxt.includes("IT") || fullTxt.includes("システム") || fullTxt.includes("ソフト") || fullTxt.includes("コンサル")) {
@@ -2293,8 +2536,12 @@ const htmlContent = `<!doctype html>
             const indSelect = document.getElementById("industrySelect");
             if (indSelect) indSelect.value = state.answers.industryFamily;
 
-            // 5つの切り口を初期化・更新
-            if (DEFAULT_SLOTS_DATABASE[state.answers.industryFamily]) {
+            // ★実際のサイト情報（テキスト・タイトル）から、実在する強みだけを動的に抽出して5つの切り口を生成！
+            // （架空のプロポーズ専用プラン等は絶対に出さない）
+            const dynamicSlots = generateDynamicSlotsFromText(currentExtractedFullText, extractedData.title, state.answers.industryFamily);
+            if (dynamicSlots && dynamicSlots.length === 5) {
+              state.answers.slots = dynamicSlots;
+            } else if (DEFAULT_SLOTS_DATABASE[state.answers.industryFamily]) {
               state.answers.slots = JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE[state.answers.industryFamily]));
             }
 
@@ -2391,7 +2638,7 @@ const htmlContent = `<!doctype html>
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast(\`切り口\${slotIdx + 1}: \${state.answers.slots[slotIdx].title} に切り替えました\`);
+        showToast(`切り口${slotIdx + 1}: ${state.answers.slots[slotIdx].title} に切り替えました`);
       };
 
       window.goToStepAndSlot = (stepIdx, slotIdx) => {
@@ -2402,6 +2649,22 @@ const htmlContent = `<!doctype html>
         renderStepNavList();
         renderQuestionPanel();
         renderStrategyBoard();
+      };
+
+      // 現在の事業内容やURLテキストから切り口を再生成
+      window.regenerateSlotsFromCurrentBusiness = () => {
+        const fullText = (state.answers.companyName || "") + " " + (state.answers.business || "");
+        const dynamicSlots = generateDynamicSlotsFromText(fullText, state.answers.companyName, state.answers.industryFamily);
+        if (dynamicSlots && dynamicSlots.length === 5) {
+          state.answers.slots = dynamicSlots;
+          state.selectedSlotIndex = 0;
+          saveState();
+          renderQuestionPanel();
+          renderStrategyBoard();
+          showToast("🔄 事業内容から5つの切り口を再生成しました！");
+        } else {
+          showToast("切り口の生成に必要な情報が不足しています");
+        }
       };
 
       // 第1優先（本命看板）の変更
@@ -2420,7 +2683,7 @@ const htmlContent = `<!doctype html>
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast(\`👑 切り口\${slotIdx + 1} を「★第1優先（メイン看板）」に設定しました！\`);
+        showToast(`👑 切り口${slotIdx + 1} を「★第1優先（メイン看板）」に設定しました！`);
       };
 
       window.adoptSlotOutcome = (dummy) => {
@@ -2442,7 +2705,7 @@ const htmlContent = `<!doctype html>
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "当社";
         const slot = currentSlot();
-        const text = \`【\${ind}】の\${cName}は、\${slot.target}に、\${slot.outcome}を提供します。なぜなら、\${slot.evidence}だからです。\`;
+        const text = `【${ind}】の${cName}は、${slot.target}に、${slot.outcome}を提供します。なぜなら、${slot.evidence}だからです。`;
         navigator.clipboard.writeText(text).then(() => {
           showToast("📋 インフルエンスステートメントをコピーしました！");
         });
@@ -2452,20 +2715,20 @@ const htmlContent = `<!doctype html>
         const ind = state.answers.industryFamily || "業種";
         const cName = state.answers.companyName || "当社";
 
-        let md = \`# ビコーズ・マトリクス（\${cName}・5つの切り口一覧表）\\n\\n\`;
-        md += \`業種: \${ind} | 公式URL: \${state.answers.companyWebsiteUrl || "未登録"}\\n\\n\`;
-        md += \`| 優先順位 | 切り口テーマ | ① 誰に（理想顧客） | 顧客の洞察（悩み・望み） | ② 約束する成果 | ③ 信頼のビコーズ（根拠） | マーケティング用途 |\\n\`;
-        md += \`|---|---|---|---|---|---|---|\\n\`;
+        let md = `# ビコーズ・マトリクス（${cName}・5つの切り口一覧表）\n\n`;
+        md += `業種: ${ind} | 公式URL: ${state.answers.companyWebsiteUrl || "未登録"}\n\n`;
+        md += `| 優先順位 | 切り口テーマ | ① 誰に（理想顧客） | 顧客の洞察（悩み・望み） | ② 約束する成果 | ③ 信頼のビコーズ（根拠） | マーケティング用途 |\n`;
+        md += `|---|---|---|---|---|---|---|\n`;
 
         state.answers.slots.forEach((s, idx) => {
-          const pLabel = s.priority === 1 ? "**★第1優先**" : \`第\${s.priority}優先\`;
-          md += \`| \${pLabel} | \${s.title} | \${s.target} | \${s.friction} / \${s.desired} | \${s.outcome} | \${s.evidence} | \${s.marketingRole} |\\n\`;
+          const pLabel = s.priority === 1 ? "**★第1優先**" : `第${s.priority}優先`;
+          md += `| ${pLabel} | ${s.title} | ${s.target} | ${s.friction} / ${s.desired} | ${s.outcome} | ${s.evidence} | ${s.marketingRole} |\n`;
         });
 
-        md += \`\\n## 後半3つのアクション\\n\`;
-        md += \`1. **イノベーション創出**: \${state.answers.innovationAction || "未設定"}\\n\`;
-        md += \`2. **プラットフォーム構築**: \${state.answers.platformAction || "未設定"}\\n\`;
-        md += \`3. **全接点での実行**: \${state.answers.touchpointAction || "未設定"}\\n\`;
+        md += `\n## 後半3つのアクション\n`;
+        md += `1. **イノベーション創出**: ${state.answers.innovationAction || "未設定"}\n`;
+        md += `2. **プラットフォーム構築**: ${state.answers.platformAction || "未設定"}\n`;
+        md += `3. **全接点での実行**: ${state.answers.touchpointAction || "未設定"}\n`;
 
         navigator.clipboard.writeText(md).then(() => {
           showToast("📋 5つの切り口マトリクス（Markdown）をコピーしました！");
@@ -2477,7 +2740,7 @@ const htmlContent = `<!doctype html>
         const cName = state.answers.companyName || "当社";
         const p1 = priorityOneSlot();
 
-        let prompt = \`あなたは一流のマーケティングディレクター兼コピーライターです。
+        let prompt = `あなたは一流のマーケティングディレクター兼コピーライターです。
 書籍『顧客を買う気にさせる ビコーズ・フレームワーク』に基づき策定した、当社の「5つの切り口のビコーズ」をもとに、
 ① メイン看板LPのファーストビュー見出し
 ② セグメント別（第2〜5優先）の専用LP／個別オファー構成
@@ -2485,25 +2748,25 @@ const htmlContent = `<!doctype html>
 を作成してください。
 
 【企業概要】
-業種・企業名：【\${ind}】\${cName}
+業種・企業名：【${ind}】${cName}
 
 【★第1優先（メイン看板）】
-テーマ：\${p1.title}
-誰に：\${p1.target}
-成果：\${p1.outcome}
-ビコーズ：\${p1.evidence}
+テーマ：${p1.title}
+誰に：${p1.target}
+成果：${p1.outcome}
+ビコーズ：${p1.evidence}
 
-【その他のセグメント別切り口】\\n\`;
+【その他のセグメント別切り口】\n`;
 
         state.answers.slots.filter(s => s.priority !== 1).forEach((s, i) => {
-          prompt += \`・第\${s.priority}優先【\${s.title}】: 誰に（\${s.target}）/ 成果（\${s.outcome}）/ 根拠（\${s.evidence}）\\n\`;
+          prompt += `・第${s.priority}優先【${s.title}】: 誰に（${s.target}）/ 成果（${s.outcome}）/ 根拠（${s.evidence}）\n`;
         });
 
-        prompt += \`\\n【依頼内容】
+        prompt += `\n【依頼内容】
 1. メインLP（第1優先向け）のキャッチコピー・サブコピー・導入文
 2. 他の4つの切り口をセグメント別に訴求するための見出し案
 3. AI検索エンジンが「〇〇なお店を探している人」に対してピンポイントで当社を引用・推薦するための公式FAQ
-\`;
+`;
 
         navigator.clipboard.writeText(prompt).then(() => {
           showToast("📋 AI用プロンプトをコピーしました！");
@@ -2515,31 +2778,31 @@ const htmlContent = `<!doctype html>
         const cName = state.answers.companyName || "当社";
         const p1 = priorityOneSlot();
 
-        let brief = \`# 戦略ブリーフ：選ばれる理由（5つの切り口マトリクス）
-企業名: \${cName}
-業種: \${ind}
-公式URL: \${state.answers.companyWebsiteUrl || "未登録"}
+        let brief = `# 戦略ブリーフ：選ばれる理由（5つの切り口マトリクス）
+企業名: ${cName}
+業種: ${ind}
+公式URL: ${state.answers.companyWebsiteUrl || "未登録"}
 
 ## 1. メイン看板宣言（第1優先フラッグシップ）
-【\${ind}】の\${cName}は、\${p1.target}に、\${p1.outcome}を提供します。なぜなら、\${p1.evidence}だからです。
+【${ind}】の${cName}は、${p1.target}に、${p1.outcome}を提供します。なぜなら、${p1.evidence}だからです。
 
 ## 2. 5つの切り口マトリクス一覧
-\`;
+`;
         state.answers.slots.forEach(s => {
-          brief += \`\\n### [\${s.priority === 1 ? '★第1優先' : \`第\${s.priority}優先\`}] \${s.title}
-- マーケティング用途: \${s.marketingRole}
-- 理想顧客: \${s.target}
-- 顧客の洞察: \${s.friction}（悩み） ➜ \${s.desired}（望み）
-- 約束する成果: \${s.outcome}
-- 信頼のビコーズ: \${s.evidence}
-\`;
+          brief += `\n### [${s.priority === 1 ? '★第1優先' : `第${s.priority}優先`}] ${s.title}
+- マーケティング用途: ${s.marketingRole}
+- 理想顧客: ${s.target}
+- 顧客の洞察: ${s.friction}（悩み） ➜ ${s.desired}（望み）
+- 約束する成果: ${s.outcome}
+- 信頼のビコーズ: ${s.evidence}
+`;
         });
 
-        brief += \`\\n## 3. 後半3つのアクション
-- イノベーション創出: \${state.answers.innovationAction || "未設定"}
-- プラットフォーム構築: \${state.answers.platformAction || "未設定"}
-- 全接点での実行: \${state.answers.touchpointAction || "未設定"}
-\`;
+        brief += `\n## 3. 後半3つのアクション
+- イノベーション創出: ${state.answers.innovationAction || "未設定"}
+- プラットフォーム構築: ${state.answers.platformAction || "未設定"}
+- 全接点での実行: ${state.answers.touchpointAction || "未設定"}
+`;
 
         navigator.clipboard.writeText(brief).then(() => {
           showToast("📄 戦略ブリーフをコピーしました！");
@@ -2558,7 +2821,7 @@ const htmlContent = `<!doctype html>
           slots: JSON.parse(JSON.stringify(DEFAULT_SLOTS_DATABASE["宿泊・観光・温泉旅館"])),
           innovationAction: "『ペット体調不良時の当日キャンセル無料保証』と『源泉ぬる湯の個別湯治プログラム』を新設し、競合が真似できない強固なビコーズを創出する。",
           platformAction: "公式サイトTOPに第1優先のインフルエンスステートメントを掲げつつ、下層に5つの切り口それぞれの専用ページと、AI検索（Perplexity/ChatGPT等）に引用される公式FAQを整備する。",
-          touchpointAction: "チェックイン時に顧客の来訪目的（ペット・ぬる湯・記念日等）に合わせた専用ウェルカムカードを手渡し、滞在中の声かけや退館後のフォローを一貫して最適化する。"
+          touchpointAction: "チェックイン時に顧客の来訪目的（ペット・ぬる湯・静寂等）に合わせた専用ウェルカムカードを手渡し、滞在中の声かけや退館後のフォローを一貫して最適化する。"
         };
         state.selectedSlotIndex = 0;
         saveState();
@@ -2636,8 +2899,3 @@ const htmlContent = `<!doctype html>
   </script>
 </body>
 </html>
-`;
-
-fs.writeFileSync('dist/index.html', htmlContent, 'utf8');
-console.log('Successfully generated dist/index.html with 5 slots framework! Length:', htmlContent.length);
-
