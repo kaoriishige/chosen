@@ -3167,7 +3167,118 @@
         return { newCandidates, bestOutcome: cand1, aiReply };
       }
 
-      window.sendOutcomeChat = (reqText) => {
+      // ==========================================
+      // 本物の大規模言語モデル（LLM）による文脈理解・書き換え通信
+      // ==========================================
+      async function callRealAiChat(mode, slot, reqText, chatHistory) {
+        const payload = {
+          mode,
+          companyName: state.answers.companyName,
+          industryFamily: state.answers.industryFamily,
+          business: state.answers.business,
+          slot: {
+            title: slot.title,
+            friction: slot.friction,
+            desired: slot.desired,
+            target: slot.target,
+            outcome: slot.outcome,
+            evidence: slot.evidence
+          },
+          chatHistory: chatHistory || [],
+          userRequest: reqText
+        };
+
+        // 1. Netlify Function (/.netlify/functions/ai-chat) を優先試行
+        if (window.location.protocol.startsWith("http")) {
+          try {
+            const ctrl = new AbortController();
+            const tid = setTimeout(() => ctrl.abort(), 9500);
+            const res = await fetch("/.netlify/functions/ai-chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+              signal: ctrl.signal
+            });
+            clearTimeout(tid);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && Array.isArray(data.candidates) && data.candidates.length > 0) {
+                return data;
+              }
+            }
+          } catch (_) {}
+        }
+
+        // 2. ブラウザから直接OpenAI互換LLMエンドポイントを呼び出し（ローカル環境やタイムアウト時の確実な実行）
+        const isEvidence = mode === "evidence";
+        const systemPrompt = isEvidence
+          ? `あなたは書籍『顧客を買う気にさせる ビコーズ・フレームワーク』の専属AIコンサルタント兼プロのコピーライターです。
+店舗オーナーや経営者であるユーザーの指示・要望の意味と文脈を深く理解し、「顧客がその成果を信じるに足るビコーズ（根拠・なぜなら〜だからです）」を書き換えてください。
+【厳守】
+・入力文を機械的につなげるのではなく、自然で説得力のあるプロの日本語にすること。
+・ユーザーが否定した内容（個室料理ではない、高級ではない等）は完全に削除すること。
+・各候補の body は文末を「〜ているから。」「〜があるから。」の形にすること。
+・reply はユーザーに直接語りかける丁寧な返答（1〜2文）にすること（「ユーザーのご要望を〜」という三人称は禁止）。
+・必ず以下のJSON形式のみを出力すること:
+{"reply":"丁寧な返答","candidates":[{"category":"systematic","tag":"★ AI最新提案①（要望直球反映・メイン案）","title":"見出し","body":"根拠の文章"},{"category":"perceived","tag":"AI最新提案②（安心感・実感重視）","title":"見出し","body":"根拠の文章"},{"category":"created","tag":"AI最新提案③（シンプル・簡潔版）","title":"見出し","body":"短い根拠の文章"}]}`
+          : `あなたは書籍『顧客を買う気にさせる ビコーズ・フレームワーク』の専属AIコンサルタント兼プロのコピーライターです。
+店舗オーナーや経営者であるユーザーの指示・要望・ダメ出しの意味と文脈を深く理解し、「顧客に対して約束できる具体的な成果（顧客が手に入れる嬉しい変化・ベネフィット）」を書き換えてください。
+【厳守】
+・入力文を機械的にコピペして繋げるのではなく、文脈を理解して自然で魅力的なプロの日本語コピーに書き換えること。
+・ユーザーが否定した要素（個室料理ではない、豪華ではない等）は完全に削除し、一切残さないこと。
+・事業内容やユーザーの発言にない架空の要素（プロポーズ等）を捏造しないこと。
+・各候補の body は文末を「〜できる。」「〜を得られる。」「〜を過ごせる。」などの形にすること。
+・reply はユーザーに直接語りかける丁寧な返答（1〜2文）にすること（「ユーザーのご要望を〜」という三人称は禁止）。
+・必ず以下のJSON形式のみを出力すること:
+{"reply":"丁寧な返答","candidates":[{"tag":"★ AI最新提案①（要望直球反映・メイン案）","title":"見出し","body":"成果の文章"},{"tag":"AI最新提案②（感情・体験シーン重視）","title":"見出し","body":"成果の文章"},{"tag":"AI最新提案③（シンプル・簡潔版）","title":"見出し","body":"短い成果の文章"}]}`;
+
+        const historyText = Array.isArray(chatHistory) && chatHistory.length > 0
+          ? chatHistory.slice(-5).map(h => `オーナーの指示: ${h.user}\nAIの返答: ${h.ai}`).join("\n")
+          : "（今回が最初の指示）";
+
+        const userPrompt = `【企業・店舗情報】
+・業種：${payload.industryFamily || "未設定"}
+・屋号/企業名：${payload.companyName || "未設定"}
+・事業内容・特徴：${payload.business || "未設定"}
+
+【現在編集中の切り口】
+・切り口テーマ：${slot.title || ""}
+・顧客の悩み（洞察）：${slot.friction || ""}
+・顧客の望み：${slot.desired || ""}
+・対象顧客（誰に）：${slot.target || ""}
+・現在の「約束できる成果」：${slot.outcome || ""}
+・現在の「信頼のビコーズ（根拠）」：${slot.evidence || ""}
+
+【これまでの会話履歴】
+${historyText}
+
+【オーナーからの今回の要望・指示】
+「${reqText}」
+
+上記の要望・指示の意味を正確に理解し、現在の文章をプロ品質で書き換えたJSONを出力してください。`;
+
+        const llmRes = await fetch("https://text.pollinations.ai/openai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "openai-fast",
+            response_format: { type: "json_object" },
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7
+          })
+        });
+
+        if (!llmRes.ok) throw new Error("AIサーバー通信エラー");
+        const llmData = await llmRes.json();
+        let rawContent = llmData.choices?.[0]?.message?.content || "";
+        rawContent = rawContent.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/\s*```$/, "").trim();
+        return JSON.parse(rawContent);
+      }
+
+      window.sendOutcomeChat = async (reqText) => {
         const slot = currentSlot();
         const cleanReq = (reqText || "").trim();
         if (!cleanReq) {
@@ -3175,26 +3286,50 @@
           return;
         }
 
-        slot.previousOutcome = slot.outcome;
-        const { newCandidates, bestOutcome, aiReply } = buildOutcomesFromUserRequest(slot, cleanReq);
+        // ローディング表示
+        const inputEl = document.getElementById("aiOutcomeChatInput");
+        if (inputEl) {
+          inputEl.disabled = true;
+          inputEl.value = "🤖 AIが要望の文脈を理解して文章を作成しています（数秒お待ちください）…";
+        }
+        showToast("🤖 AIがあなたの要望を分析して書き換えています…");
 
-        slot.outcome = bestOutcome;
-        slot.outcomeCandidates = newCandidates;
-        if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
-        slot.outcomeChatHistory.push({ user: cleanReq, ai: aiReply });
+        slot.previousOutcome = slot.outcome;
+
+        try {
+          const aiData = await callRealAiChat("outcome", slot, cleanReq, slot.outcomeChatHistory || []);
+          if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length > 0) {
+            slot.outcome = aiData.candidates[0].body;
+            slot.outcomeCandidates = aiData.candidates;
+            if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
+            slot.outcomeChatHistory.push({
+              user: cleanReq,
+              ai: aiData.reply || "ご要望を踏まえて、約束できる成果を新しく書き換えました！"
+            });
+          } else {
+            throw new Error("Invalid AI response");
+          }
+        } catch (err) {
+          // 万一オフライン等の場合のみローカルフォールバック
+          const { newCandidates, bestOutcome, aiReply } = buildOutcomesFromUserRequest(slot, cleanReq);
+          slot.outcome = bestOutcome;
+          slot.outcomeCandidates = newCandidates;
+          if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
+          slot.outcomeChatHistory.push({ user: cleanReq, ai: aiReply });
+        }
 
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("🤖 AIがご要望に合わせて「約束できる成果」を書き換えました！");
+        showToast("✨ AIがご要望に合わせて「約束できる成果」を書き換えました！");
       };
 
       window.submitOutcomeChatInput = () => {
         const inputEl = document.getElementById("aiOutcomeChatInput");
-        if (!inputEl) return;
+        if (!inputEl || inputEl.disabled) return;
         const val = inputEl.value.trim();
         if (!val) {
-          showToast("AIへの要望（「もっと短くして」「〇〇を入れて」など）を入力してください");
+          showToast("AIへの要望（「もっと短くして」「〇〇に変えて」など）を入力してください");
           inputEl.focus();
           return;
         }
@@ -3281,28 +3416,50 @@
         return { newCandidates, bestEvidence: cand1, aiReply };
       }
 
-      window.sendEvidenceChat = (reqText) => {
+      window.sendEvidenceChat = async (reqText) => {
         const slot = currentSlot();
         const cleanReq = (reqText || "").trim();
         if (!cleanReq) return;
 
-        slot.previousEvidence = slot.evidence;
-        const { newCandidates, bestEvidence, aiReply } = buildEvidencesFromUserRequest(slot, cleanReq);
+        const inputEl = document.getElementById("aiEvidenceChatInput");
+        if (inputEl) {
+          inputEl.disabled = true;
+          inputEl.value = "🤖 AIが要望の文脈を理解してビコーズを作成しています（数秒お待ちください）…";
+        }
+        showToast("🤖 AIがあなたの要望を分析してビコーズを書き換えています…");
 
-        slot.evidence = bestEvidence;
-        slot.evidenceCandidates = newCandidates;
-        if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
-        slot.evidenceChatHistory.push({ user: cleanReq, ai: aiReply });
+        slot.previousEvidence = slot.evidence;
+
+        try {
+          const aiData = await callRealAiChat("evidence", slot, cleanReq, slot.evidenceChatHistory || []);
+          if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length > 0) {
+            slot.evidence = aiData.candidates[0].body;
+            slot.evidenceCandidates = aiData.candidates;
+            if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
+            slot.evidenceChatHistory.push({
+              user: cleanReq,
+              ai: aiData.reply || "ご要望を踏まえて、ビコーズ（根拠）を新しく書き換えました！"
+            });
+          } else {
+            throw new Error("Invalid AI response");
+          }
+        } catch (err) {
+          const { newCandidates, bestEvidence, aiReply } = buildEvidencesFromUserRequest(slot, cleanReq);
+          slot.evidence = bestEvidence;
+          slot.evidenceCandidates = newCandidates;
+          if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
+          slot.evidenceChatHistory.push({ user: cleanReq, ai: aiReply });
+        }
 
         saveState();
         renderQuestionPanel();
         renderStrategyBoard();
-        showToast("🤖 AIがご要望に合わせて「ビコーズ（根拠）」を書き換えました！");
+        showToast("✨ AIがご要望に合わせて「ビコーズ（根拠）」を書き換えました！");
       };
 
       window.submitEvidenceChatInput = () => {
         const inputEl = document.getElementById("aiEvidenceChatInput");
-        if (!inputEl) return;
+        if (!inputEl || inputEl.disabled) return;
         const val = inputEl.value.trim();
         if (!val) {
           showToast("AIへの要望を入力してください");
