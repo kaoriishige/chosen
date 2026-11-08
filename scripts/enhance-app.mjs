@@ -195,3 +195,4 @@ ${enhancedAiLogic}
 
 fs.writeFileSync('dist/index.html', updatedHtml, 'utf8');
 console.log('Successfully enhanced dist/index.html!');
+

@@ -1624,7 +1624,7 @@
               <label class="form-label" for="companyNameInput">
                 <span>会社名・屋号・ブランド名</span>
               </label>
-              <input type="text" id="companyNameInput" class="form-input" placeholder="例：赤沢温泉旅館、株式会社グロースIT" value="${escapeHtml(state.answers.companyName)}" />
+              <input type="text" id="companyNameInput" class="form-input" placeholder="例：月見の湯 翠水亭、株式会社グロースIT" value="${escapeHtml(state.answers.companyName)}" />
             </div>
 
             <!-- 事業概要・商品サービスの特徴 -->
@@ -1634,7 +1634,7 @@
                 <span class="req">必須</span>
               </label>
               <p class="form-helper">どんな商品やサービスを提供しているか、特徴やこだわりを簡単に書いてください（HPから自動反映も可能）。</p>
-              <textarea id="businessInput" class="form-textarea" style="min-height:100px;" placeholder="例：塩原温泉で全室ペット同伴対応の客室と、加水加温なしの100%源泉かけ流し温泉、個室会席料理を提供する小さな温泉宿です。">${escapeHtml(state.answers.business)}</textarea>
+              <textarea id="businessInput" class="form-textarea" style="min-height:100px;" placeholder="例：静かな自然に囲まれた山あいで、全室ペット同伴対応の客室と、加水加温なしの100%源泉かけ流し温泉、個室会席料理を提供する小さな温泉宿です。">${escapeHtml(state.answers.business)}</textarea>
               <div class="voice-bar">
                 <button type="button" class="voice-btn" data-target="businessInput">🎙 話して入力</button>
                 <span class="voice-hint">マイクを押して話すと文字入力できます</span>
@@ -2484,9 +2484,9 @@ ${state.answers.evidence || "未入力"}
       function applyRyokanSample() {
         state.answers = {
           industryFamily: "宿泊・観光・温泉旅館",
-          companyWebsiteUrl: "https://akazawa-onsen.sample.jp",
-          companyName: "赤沢温泉旅館",
-          business: "那須塩原の静かな山間に佇む、全室ペット同伴対応の客室と、100%源泉かけ流し天然温泉、地元の旬の素材を活かした個室会席料理を提供する小さな温泉宿。",
+          companyWebsiteUrl: "https://example-ryokan.co.jp",
+          companyName: "月見の湯 翠水亭",
+          business: "静かな自然に囲まれた山あいに佇む、全室ペット同伴対応の客室と、100%源泉かけ流し天然温泉、地元の旬の素材を活かした個室会席料理を提供する小さな温泉宿。",
           friction: "ペット可の宿と書いてあっても、実際はケージ必須や他のお客さんの冷たい視線が気になり、結局心からくつろげない。",
           desired: "誰にも気兼ねせず、愛するペットと同じ部屋で本物の源泉かけ流し温泉と美味しい料理を心ゆくまで堪能したい。",
           target: "他の宿泊客に気をつかわず、愛猫・愛犬と一緒に本物の源泉かけ流し温泉と美味しい個室料理を堪能したいご夫婦・パートナー",
