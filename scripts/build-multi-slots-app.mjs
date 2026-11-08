@@ -2640,3 +2640,4 @@ const htmlContent = `<!doctype html>
 
 fs.writeFileSync('dist/index.html', htmlContent, 'utf8');
 console.log('Successfully generated dist/index.html with 5 slots framework! Length:', htmlContent.length);
+
