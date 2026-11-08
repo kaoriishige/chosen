@@ -249,3 +249,4 @@ newHtml = newHtml.replace(targetFetchStr, replacementFetchStr);
 
 fs.writeFileSync('dist/index.html', newHtml, 'utf8');
 console.log('Successfully fixed dynamic slot generation in dist/index.html!');
+

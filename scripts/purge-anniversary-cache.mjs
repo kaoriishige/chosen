@@ -85,3 +85,4 @@ html = html.replace(targetLoadState, replacementLoadState);
 
 fs.writeFileSync('dist/index.html', html, 'utf8');
 console.log('Successfully purged anniversary cache and updated STORAGE_KEY to v2!');
+
