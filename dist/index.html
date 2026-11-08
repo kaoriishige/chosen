@@ -2159,7 +2159,6 @@
         // ステップ3：顧客に対して約束できる成果は？
         else if (stepNum === 2) {
           const outcomeCandidates = getSlotOutcomeCandidates(slot);
-          const chatHistory = slot.outcomeChatHistory || [];
 
           contentHtml = `
             <div class="question-header">
@@ -2178,117 +2177,89 @@
               `).join("")}
             </div>
 
-            <!-- 現在の成果テキスト入力欄 -->
-            <div style="background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
-                <div style="font-size:0.8rem; color:var(--muted);">
-                  現在選択中: <strong>切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}</strong>（対象顧客：${escapeHtml(slot.target)}）
+            <!-- ★上と下を分けない「1つの統合ボックス」 -->
+            <div style="background:#ffffff; border:2px solid var(--teal); border-radius:14px; padding:18px; margin-top:10px; box-shadow:0 4px 14px rgba(13,148,136,0.06);">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+                <div style="font-size:0.84rem; color:var(--ink);">
+                  現在編集中: <strong style="color:var(--teal-dark);">切り口${state.selectedSlotIndex + 1}「${escapeHtml(slot.title)}」</strong>
+                  <span style="color:var(--muted); font-size:0.78rem;">（対象：${escapeHtml(slot.target)}）</span>
                 </div>
                 ${slot.previousOutcome ? `
-                  <button type="button" class="ai-append-btn" style="padding:3px 10px; font-size:0.74rem;" onclick="window.undoOutcomeChange()">
-                    ↩ 1つ前の文章に戻す
+                  <button type="button" class="ai-append-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="window.undoOutcomeChange()">
+                    ↩ 書き換え前の文章に戻す
                   </button>
                 ` : ''}
               </div>
-              <div class="form-group">
+
+              ${slot.lastOutcomeAiNote ? `
+                <div style="background:#f0fdfa; border:1px solid #5eead4; color:#115e59; border-radius:8px; padding:8px 12px; margin-bottom:10px; font-size:0.8rem; font-weight:700;">
+                  ✅ ${escapeHtml(slot.lastOutcomeAiNote)}
+                </div>
+              ` : ''}
+
+              <!-- ① メインの回答テキストエリア（ここにAIの回答が入り、直接手直しも可能） -->
+              <div class="form-group" style="margin-bottom:14px;">
                 <label class="form-label" for="slotOutcomeInput">
-                  <span>この顧客に約束できる具体的な成果（ビフォーアフター）</span>
+                  <span>この顧客に約束できる具体的な成果（決定文・直接編集も可）</span>
                   <span class="req">必須</span>
                 </label>
-                <p class="form-helper">直接書き換えることも、すぐ下の「💬 AIへの要望チャット」でAIに指示して回答を作り直させることもできます。</p>
-                <textarea id="slotOutcomeInput" class="form-textarea" style="min-height:95px;">${escapeHtml(slot.outcome)}</textarea>
-                <div class="voice-bar">
-                  <button type="button" class="voice-btn" data-target="slotOutcomeInput">🎙 話して直接入力</button>
+                <textarea id="slotOutcomeInput" class="form-textarea" style="min-height:90px; font-size:0.95rem; font-weight:600; background:#f8fafc; border-color:#94a3b8;">${escapeHtml(slot.outcome)}</textarea>
+              </div>
+
+              <!-- ② 同じ枠内で直結：上の文章をAIに書き換えさせる指示バー -->
+              <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+                <div style="font-size:0.82rem; font-weight:800; color:#5b21b6; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <span>🤖</span>
+                  <span>上の文章にダメ出し・要望を送ってAIに書き直させる</span>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('もっと感情が動く温かい表現に変えて')">✨ 温かい表現に</button>
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('もっと短くシンプルでわかりやすい一文にして')">📏 短くシンプルに</button>
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('高級感よりも、気取らないアットホームな安心感を強調して')">🏡 アットホーム調に</button>
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('失敗しない安心感や気兼ねなさをもっと強調して')">🛡 気兼ねなさ・安心感を強調</button>
+                </div>
+                <div style="display:flex; gap:8px; align-items:stretch; flex-wrap:wrap;">
+                  <input
+                    type="text"
+                    id="aiOutcomeChatInput"
+                    class="form-input"
+                    style="flex:1; min-width:220px; background:#ffffff; border-color:#a78bfa;"
+                    placeholder="例：個室料理ではなく家庭料理に変えて／〇〇はやっていないので消して"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault(); window.submitOutcomeChatInput();}"
+                  />
+                  <button type="button" class="voice-btn" data-target="aiOutcomeChatInput" style="background:#fff;">🎙 音声で指示</button>
+                  <button
+                    type="button"
+                    id="aiOutcomeSendBtn"
+                    style="background:linear-gradient(135deg, #7c3aed, #0d9488); color:#fff; border:none; border-radius:8px; padding:0 16px; font-weight:800; font-size:0.84rem; cursor:pointer;"
+                    onclick="window.submitOutcomeChatInput()"
+                  >
+                    ✨ 上の文章をAIで書き換える
+                  </button>
                 </div>
               </div>
-            </div>
 
-            <!-- ★AI対話チャットボックス（要望を送ってAIの回答を変える） -->
-            <div style="background:linear-gradient(135deg, #f5f3ff, #f0fdfa); border:1.5px solid #c4b5fd; border-radius:12px; padding:16px; margin-top:12px;">
-              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="ai-badge" style="background:linear-gradient(135deg, #7c3aed, #0d9488);">💬 AI対話で回答変更</span>
-                  <strong style="font-size:0.94rem; color:var(--ink);">AIに要望を送って「約束できる成果」を作り直す</strong>
+              <!-- ③ 同じ枠内：他の表現パターン3案（クリックで上の文章に即反映） -->
+              <div style="border-top:1px dashed var(--line); padding-top:12px;">
+                <div style="font-size:0.82rem; font-weight:800; color:var(--ink-soft); margin-bottom:8px;">
+                  💡 別パターンの候補（クリックすると上の決定文に切り替わります）
                 </div>
-                <span style="font-size:0.74rem; color:#6d28d9; font-weight:700;">何回でも対話して調整できます</span>
-              </div>
-
-              <p style="margin:0 0 10px; font-size:0.8rem; color:var(--ink-soft); line-height:1.5;">
-                「個室料理ではなく手作り料理に変えて」「もっと短くシンプルにして」「看板猫と触れ合える喜びを入れて」など、<strong>文章で要望を送るとAIがその場で成果の回答を書き換えます。</strong>
-              </p>
-
-              <!-- ワンクリック要望チップ -->
-              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('もっと感情が動く温かい表現に変えて')">✨ 感情が動く温かい表現に</button>
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('もっと短くシンプルでわかりやすい一文にして')">📏 短くシンプルに</button>
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('高級感よりも、気取らないアットホームな安心感を強調して')">🏡 アットホーム・素朴さ重視に</button>
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('失敗しない安心感や気兼ねなさをもっと強調して')">🛡 気兼ねなさ・安心感を強調</button>
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendOutcomeChat('利用した後の具体的な変化（翌朝のすっきり感や満足感）を入れて')">🌅 利用後の具体的な変化を強調</button>
-              </div>
-
-              <!-- チャット履歴表示 -->
-              ${chatHistory.length > 0 ? `
-                <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; margin-bottom:10px; max-height:180px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;">
-                  ${chatHistory.map(msg => `
-                    <div style="display:flex; flex-direction:column; gap:4px; font-size:0.78rem;">
-                      <div style="align-self:flex-end; background:#ede9fe; color:#4c1d95; padding:6px 10px; border-radius:10px 10px 2px 10px; font-weight:700; max-width:88%;">
-                        🗣 あなた: 「${escapeHtml(msg.user)}」
+                <div class="ai-cards-grid">
+                  ${outcomeCandidates.map((cand, cIdx) => `
+                    <div class="ai-card" style="${slot.outcome === cand.body ? 'border:2px solid var(--teal); background:#f0fdfa;' : ''}">
+                      <div>
+                        <span class="ai-card-tag">${escapeHtml(cand.tag)}</span>
+                        <h4 class="ai-card-title">${escapeHtml(cand.title)}</h4>
+                        <p class="ai-card-body">${escapeHtml(cand.body)}</p>
                       </div>
-                      <div style="align-self:flex-start; background:#f0fdfa; color:#115e59; border:1px solid #99f6e4; padding:6px 10px; border-radius:10px 10px 10px 2px; max-width:92%;">
-                        🤖 AI: ${escapeHtml(msg.ai)}
+                      <div class="ai-card-actions">
+                        <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotOutcome(${cIdx})">
+                          ${slot.outcome === cand.body ? '✓ 上の欄に反映中' : '🎁 この文章を上の欄に反映'}
+                        </button>
                       </div>
                     </div>
                   `).join("")}
                 </div>
-              ` : ''}
-
-              <!-- 要望入力フォーム -->
-              <div style="display:flex; gap:8px; align-items:stretch; flex-wrap:wrap;">
-                <input
-                  type="text"
-                  id="aiOutcomeChatInput"
-                  class="form-input"
-                  style="flex:1; min-width:220px; background:#ffffff; border-color:#a78bfa;"
-                  placeholder="AIへの要望を入力（例：個室食ではなく手作り家庭料理に変えて／もっと短くして／〇〇を入れて）"
-                  onkeydown="if(event.key==='Enter'){event.preventDefault(); window.submitOutcomeChatInput();}"
-                />
-                <button type="button" class="voice-btn" data-target="aiOutcomeChatInput" style="background:#fff;">🎙 音声</button>
-                <button
-                  type="button"
-                  style="background:linear-gradient(135deg, #7c3aed, #0d9488); color:#fff; border:none; border-radius:8px; padding:0 18px; font-weight:800; font-size:0.84rem; cursor:pointer; box-shadow:0 3px 10px rgba(124,58,237,0.2);"
-                  onclick="window.submitOutcomeChatInput()"
-                >
-                  ✨ AIに要望を送って回答を変える
-                </button>
-              </div>
-            </div>
-
-            <!-- ★AIの成果提案エリア（3パターン表示・要望に応じてリアルタイム変化） -->
-            <div class="ai-suggest-section">
-              <div class="ai-suggest-header">
-                <div class="ai-suggest-title">
-                  <span class="ai-badge">AI成果提案（3パターン）</span>
-                  <span>この切り口に最適な「約束できる成果案」</span>
-                </div>
-              </div>
-              <p style="margin:0 0 10px; font-size:0.78rem; color:var(--muted);">
-                顧客の悩み（${escapeHtml(slot.friction)}）を解決する3つの成果パターンです。AIに要望を送るとこの3案も新しく書き換わります。
-              </p>
-              <div class="ai-cards-grid">
-                ${outcomeCandidates.map((cand, cIdx) => `
-                  <div class="ai-card" style="${slot.outcome === cand.body ? 'border:2px solid var(--teal); background:#f0fdfa;' : ''}">
-                    <div>
-                      <span class="ai-card-tag">${escapeHtml(cand.tag)}</span>
-                      <h4 class="ai-card-title">${escapeHtml(cand.title)}</h4>
-                      <p class="ai-card-body">${escapeHtml(cand.body)}</p>
-                    </div>
-                    <div class="ai-card-actions">
-                      <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotOutcome(${cIdx})">
-                        ${slot.outcome === cand.body ? '✓ 現在採用中' : '🎁 この成果を採用'}
-                      </button>
-                    </div>
-                  </div>
-                `).join("")}
               </div>
             </div>
           `;
@@ -2297,7 +2268,6 @@
         // ステップ4：顧客の信頼に足るビコーズは？（17のテクニック）
         else if (stepNum === 3) {
           const evidenceCandidates = getSlotEvidenceCandidates(slot);
-          const evChatHistory = slot.evidenceChatHistory || [];
 
           contentHtml = `
             <div class="question-header">
@@ -2316,107 +2286,88 @@
               `).join("")}
             </div>
 
-            <div style="background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:4px;">
-                <div style="font-size:0.8rem; color:var(--muted);">
-                  現在選択中: <strong>切り口${state.selectedSlotIndex + 1}: ${escapeHtml(slot.title)}</strong>（成果：${escapeHtml(slot.outcome)}）
+            <!-- ★上と下を分けない「1つの統合ボックス」 -->
+            <div style="background:#ffffff; border:2px solid var(--teal); border-radius:14px; padding:18px; margin-top:10px; box-shadow:0 4px 14px rgba(13,148,136,0.06);">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+                <div style="font-size:0.84rem; color:var(--ink);">
+                  現在編集中: <strong style="color:var(--teal-dark);">切り口${state.selectedSlotIndex + 1}「${escapeHtml(slot.title)}」</strong>
+                  <span style="color:var(--muted); font-size:0.78rem;">（約束する成果：${escapeHtml(slot.outcome)}）</span>
                 </div>
                 ${slot.previousEvidence ? `
-                  <button type="button" class="ai-append-btn" style="padding:3px 10px; font-size:0.74rem;" onclick="window.undoEvidenceChange()">
-                    ↩ 1つ前の文章に戻す
+                  <button type="button" class="ai-append-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="window.undoEvidenceChange()">
+                    ↩ 書き換え前の文章に戻す
                   </button>
                 ` : ''}
               </div>
-              <div class="form-group">
+
+              ${slot.lastEvidenceAiNote ? `
+                <div style="background:#f0fdfa; border:1px solid #5eead4; color:#115e59; border-radius:8px; padding:8px 12px; margin-bottom:10px; font-size:0.8rem; font-weight:700;">
+                  ✅ ${escapeHtml(slot.lastEvidenceAiNote)}
+                </div>
+              ` : ''}
+
+              <!-- ① メインの回答テキストエリア（ここにAIの回答が入り、直接手直しも可能） -->
+              <div class="form-group" style="margin-bottom:14px;">
                 <label class="form-label" for="slotEvidenceInput">
-                  <span>この成果を顧客が信じるためのビコーズ（根拠・なぜなら）</span>
+                  <span>この成果を顧客が信じるためのビコーズ（決定文・直接編集も可）</span>
                   <span class="req">必須</span>
                 </label>
-                <p class="form-helper">直接編集するか、すぐ下の「💬 AIへの要望チャット」で自社の事実に合ったビコーズへ作り直せます。</p>
-                <textarea id="slotEvidenceInput" class="form-textarea" style="min-height:105px;">${escapeHtml(slot.evidence)}</textarea>
-                <div class="voice-bar">
-                  <button type="button" class="voice-btn" data-target="slotEvidenceInput">🎙 話して直接入力</button>
+                <textarea id="slotEvidenceInput" class="form-textarea" style="min-height:95px; font-size:0.95rem; font-weight:600; background:#f8fafc; border-color:#94a3b8;">${escapeHtml(slot.evidence)}</textarea>
+              </div>
+
+              <!-- ② 同じ枠内で直結：上の文章をAIに書き換えさせる指示バー -->
+              <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+                <div style="font-size:0.82rem; font-weight:800; color:#5b21b6; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <span>🤖</span>
+                  <span>上のビコーズ（根拠）にダメ出し・要望を送ってAIに書き直させる</span>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendEvidenceChat('特別な設備ではなく、日々の丁寧な対応や工夫を根拠にして')">🤝 設備より「丁寧な対応・工夫」に</button>
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendEvidenceChat('もっと短くシンプルで説得力のある一文にして')">📏 短くシンプルに</button>
+                  <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendEvidenceChat('リピーターや口コミで選ばれている実績を根拠に入れて')">⭐ 口コミ・リピート実績を強調</button>
+                </div>
+                <div style="display:flex; gap:8px; align-items:stretch; flex-wrap:wrap;">
+                  <input
+                    type="text"
+                    id="aiEvidenceChatInput"
+                    class="form-input"
+                    style="flex:1; min-width:220px; background:#ffffff; border-color:#a78bfa;"
+                    placeholder="例：12歳未満の宿泊制限はしていないので変えて／貸切風呂があることに変えて"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault(); window.submitEvidenceChatInput();}"
+                  />
+                  <button type="button" class="voice-btn" data-target="aiEvidenceChatInput" style="background:#fff;">🎙 音声で指示</button>
+                  <button
+                    type="button"
+                    id="aiEvidenceSendBtn"
+                    style="background:linear-gradient(135deg, #7c3aed, #0d9488); color:#fff; border:none; border-radius:8px; padding:0 16px; font-weight:800; font-size:0.84rem; cursor:pointer;"
+                    onclick="window.submitEvidenceChatInput()"
+                  >
+                    ✨ 上の文章をAIで書き換える
+                  </button>
                 </div>
               </div>
-            </div>
 
-            <!-- ★AI対話チャットボックス（ビコーズも要望を送って変更可能） -->
-            <div style="background:linear-gradient(135deg, #f5f3ff, #f0fdfa); border:1.5px solid #c4b5fd; border-radius:12px; padding:16px; margin-top:12px;">
-              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="ai-badge" style="background:linear-gradient(135deg, #7c3aed, #0d9488);">💬 AI対話でビコーズ変更</span>
-                  <strong style="font-size:0.94rem; color:var(--ink);">AIに要望を送って「ビコーズ（根拠）」を作り直す</strong>
+              <!-- ③ 同じ枠内：他の表現パターン3案（クリックで上の文章に即反映） -->
+              <div style="border-top:1px dashed var(--line); padding-top:12px;">
+                <div style="font-size:0.82rem; font-weight:800; color:var(--ink-soft); margin-bottom:8px;">
+                  💡 別パターンのビコーズ候補（クリックすると上の決定文に切り替わります）
                 </div>
-              </div>
-              <p style="margin:0 0 10px; font-size:0.8rem; color:var(--ink-soft);">
-                「うちは〇〇という設備はないので△△に変えて」「創業30年の実績を入れて」「もっとシンプルにして」など自由に指示できます。
-              </p>
-
-              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendEvidenceChat('特別な設備ではなく、日々の丁寧な対応や工夫を根拠にして')">🤝 設備より「丁寧な対応・工夫」に</button>
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendEvidenceChat('もっと短くシンプルで説得力のある一文にして')">📏 短くシンプルに</button>
-                <button type="button" class="ai-append-btn" style="background:#fff; color:#5b21b6; border-color:#ddd6fe; font-weight:700;" onclick="window.sendEvidenceChat('リピーターや口コミで選ばれている実績を根拠に入れて')">⭐ 口コミ・リピート実績を強調</button>
-              </div>
-
-              ${evChatHistory.length > 0 ? `
-                <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; margin-bottom:10px; max-height:160px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;">
-                  ${evChatHistory.map(msg => `
-                    <div style="display:flex; flex-direction:column; gap:4px; font-size:0.78rem;">
-                      <div style="align-self:flex-end; background:#ede9fe; color:#4c1d95; padding:6px 10px; border-radius:10px 10px 2px 10px; font-weight:700; max-width:88%;">
-                        🗣 あなた: 「${escapeHtml(msg.user)}」
+                <div class="ai-cards-grid">
+                  ${evidenceCandidates.map((cand, cIdx) => `
+                    <div class="ai-card technique-card ${cand.category || 'systematic'}" style="${slot.evidence === cand.body ? 'border:2px solid var(--teal); background:#f0fdfa;' : ''}">
+                      <div>
+                        <span class="ai-card-tag">${escapeHtml(cand.tag)}</span>
+                        <h4 class="ai-card-title">${escapeHtml(cand.title)}</h4>
+                        <p class="ai-card-body">${escapeHtml(cand.body)}</p>
                       </div>
-                      <div style="align-self:flex-start; background:#f0fdfa; color:#115e59; border:1px solid #99f6e4; padding:6px 10px; border-radius:10px 10px 10px 2px; max-width:92%;">
-                        🤖 AI: ${escapeHtml(msg.ai)}
+                      <div class="ai-card-actions">
+                        <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotEvidence(${cIdx})">
+                          ${slot.evidence === cand.body ? '✓ 上の欄に反映中' : '💡 この文章を上の欄に反映'}
+                        </button>
                       </div>
                     </div>
                   `).join("")}
                 </div>
-              ` : ''}
-
-              <div style="display:flex; gap:8px; align-items:stretch; flex-wrap:wrap;">
-                <input
-                  type="text"
-                  id="aiEvidenceChatInput"
-                  class="form-input"
-                  style="flex:1; min-width:220px; background:#ffffff; border-color:#a78bfa;"
-                  placeholder="AIへの要望を入力（例：部屋食ではなく貸切風呂があることに変えて／〇〇の実績を入れて）"
-                  onkeydown="if(event.key==='Enter'){event.preventDefault(); window.submitEvidenceChatInput();}"
-                />
-                <button type="button" class="voice-btn" data-target="aiEvidenceChatInput" style="background:#fff;">🎙 音声</button>
-                <button
-                  type="button"
-                  style="background:linear-gradient(135deg, #7c3aed, #0d9488); color:#fff; border:none; border-radius:8px; padding:0 18px; font-weight:800; font-size:0.84rem; cursor:pointer;"
-                  onclick="window.submitEvidenceChatInput()"
-                >
-                  ✨ AIに要望を送って回答を変える
-                </button>
-              </div>
-            </div>
-
-            <!-- ★17テクニックからのAI提案 -->
-            <div class="ai-suggest-section">
-              <div class="ai-suggest-header">
-                <div class="ai-suggest-title">
-                  <span class="ai-badge">17のテクニック提案（3パターン）</span>
-                  <span>この切り口を支える強力なビコーズ候補</span>
-                </div>
-              </div>
-              <div class="ai-cards-grid">
-                ${evidenceCandidates.map((cand, cIdx) => `
-                  <div class="ai-card technique-card ${cand.category || 'systematic'}" style="${slot.evidence === cand.body ? 'border:2px solid var(--teal); background:#f0fdfa;' : ''}">
-                    <div>
-                      <span class="ai-card-tag">${escapeHtml(cand.tag)}</span>
-                      <h4 class="ai-card-title">${escapeHtml(cand.title)}</h4>
-                      <p class="ai-card-body">${escapeHtml(cand.body)}</p>
-                    </div>
-                    <div class="ai-card-actions">
-                      <button type="button" class="ai-adopt-btn" onclick="window.adoptSlotEvidence(${cIdx})">
-                        ${slot.evidence === cand.body ? '✓ 現在採用中' : '💡 このビコーズを採用'}
-                      </button>
-                    </div>
-                  </div>
-                `).join("")}
-              </div>
 
               <!-- 17のテクニック一覧（アコーディオン） -->
               <details style="margin-top:14px; background:#ffffff; border:1px solid var(--line); border-radius:8px; padding:10px 14px;">
@@ -3278,9 +3229,7 @@
         const instantResult = buildOutcomesFromUserRequest(slot, cleanReq);
         slot.outcome = instantResult.bestOutcome;
         slot.outcomeCandidates = instantResult.newCandidates;
-        if (!Array.isArray(slot.outcomeChatHistory)) slot.outcomeChatHistory = [];
-        const chatEntry = { user: cleanReq, ai: instantResult.aiReply };
-        slot.outcomeChatHistory.push(chatEntry);
+        slot.lastOutcomeAiNote = `ご要望「${cleanReq}」を反映して下の文章を書き換えました！`;
 
         saveState();
         renderQuestionPanel();
@@ -3289,11 +3238,11 @@
 
         // 2. バックグラウンドでLLMからも高度な別案を取得できれば追加更新
         try {
-          const aiData = await callRealAiChat("outcome", slot, cleanReq, slot.outcomeChatHistory);
+          const aiData = await callRealAiChat("outcome", slot, cleanReq, []);
           if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length === 3 && aiData.candidates[0].body) {
             slot.outcome = aiData.candidates[0].body;
             slot.outcomeCandidates = aiData.candidates;
-            if (aiData.reply) chatEntry.ai = aiData.reply;
+            slot.lastOutcomeAiNote = `AIがご要望「${cleanReq}」を踏まえて下の文章を書き換えました！`;
             saveState();
             renderQuestionPanel();
             renderStrategyBoard();
@@ -3410,9 +3359,7 @@
         const instantResult = buildEvidencesFromUserRequest(slot, cleanReq);
         slot.evidence = instantResult.bestEvidence;
         slot.evidenceCandidates = instantResult.newCandidates;
-        if (!Array.isArray(slot.evidenceChatHistory)) slot.evidenceChatHistory = [];
-        const chatEntry = { user: cleanReq, ai: instantResult.aiReply };
-        slot.evidenceChatHistory.push(chatEntry);
+        slot.lastEvidenceAiNote = `ご要望「${cleanReq}」を反映して下の文章を書き換えました！`;
 
         saveState();
         renderQuestionPanel();
@@ -3421,13 +3368,13 @@
 
         // 2. バックグラウンドでLLMからも自然な文章を取得（文末が「〜から。」の正しい形式かつ否定語を含まない場合のみ更新）
         try {
-          const aiData = await callRealAiChat("evidence", slot, cleanReq, slot.evidenceChatHistory);
+          const aiData = await callRealAiChat("evidence", slot, cleanReq, []);
           if (aiData && Array.isArray(aiData.candidates) && aiData.candidates.length === 3) {
             const c0 = aiData.candidates[0]?.body || "";
             if (c0.endsWith("から。") && !c0.includes("12歳")) {
               slot.evidence = c0;
               slot.evidenceCandidates = aiData.candidates;
-              if (aiData.reply) chatEntry.ai = aiData.reply;
+              slot.lastEvidenceAiNote = `AIがご要望「${cleanReq}」を踏まえて下の文章を書き換えました！`;
               saveState();
               renderQuestionPanel();
               renderStrategyBoard();
